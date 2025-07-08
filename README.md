@@ -15,14 +15,14 @@ Civic24 uses **Google’s Generative AI** to validate submitted posts and images
 
 And the best part? It’s **Open Source**. 🧑🏾‍💻
 
-[Civic24 Design Case Study](https://www.behance.net/gallery/229296271/Civic24-Mobile-App-Design-UIUX-Case-Study)
+👉 Click here to view the [Design Case study](https://www.behance.net/gallery/229296271/Civic24-Mobile-App-Design-UIUX-Case-Study)
 
 ---
 
 ## Description
 This repository contains the source code for the **Civic24** mobile applications, including:
 - **Citizen App**: The main user-facing app that enables individuals to report civic issues, view updates, and participate in public conversations.
-- **Admin App**: A web-based dashboard for moderators and administrators to review reports, manage feedback, and oversee community activity.
+- **Admin App**: A web-based dashboard for government officials and administrators to review reports, manage feedback, and oversee community activity.
 - **Shared Packages**: Modular Dart packages used across both apps to ensure consistent design, localization, and functionality:
   - `components/`: Reusable UI widgets.
   - `styles/`: Design system and typography.
@@ -99,14 +99,6 @@ melos test                # Run all tests
 melos format              # Format all code
 melos analyze             # Static code analysis
 melos build_runner        # Run code generators
-melos pub:outdated        # Check outdated dependencies
-```
-
-You can also define app-specific scripts inside `melos.yaml` for example:
-
-```bash
-yarn citizen:build        # Run build_runner on citizen app
-yarn admin:build          # Run build_runner on admin app
 ```
 
 ---
@@ -141,10 +133,10 @@ To test the latest builds without setting up your dev environment:
 
 1. Fork the repository
 2. Create a new branch from `develop`: `git checkout -b feat/amazing-feature`
-3. Make your changes, test locally and write a clear well-commented code
+3. Make your changes and test locally.
 4. Commit your changes: `git commit -m 'Add amazing feature'`
 5. Push to the branch: `git push origin feature/amazing-feature`
-6. Open a Pull Request with a clear description and screenshots if necessary
+6. Open a Pull Request with a clear description and add screenshots if necessary
 
 ---
 
