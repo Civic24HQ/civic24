@@ -1,0 +1,17 @@
+{
+    "version": "0.1.0",
+    "configurations": [
+        {
+            "name": "Launch Citizen",
+            "request": "launch",
+            "type": "dart",
+            "program": "apps/citizen/lib/main.dart",
+        },
+        {
+            "name": "Launch Admin",
+            "request": "launch",
+            "type": "dart",
+            "program": "apps/admin/lib/main.dart",
+        }
+    ]
+}

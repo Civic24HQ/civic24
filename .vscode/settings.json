@@ -1,0 +1,38 @@
+{
+  "editor.formatOnSave": true,
+  "editor.formatOnType": true,
+  "dart.lineLength": 120,
+  "[dart]": {
+    "editor.formatOnSave": true,
+    "editor.formatOnType": true,
+    "editor.rulers": [120],
+    "editor.selectionHighlight": false,
+    "editor.suggest.snippetsPreventQuickSuggestions": false,
+    "editor.suggestSelection": "first",
+    "editor.tabCompletion": "onlySnippets",
+    "editor.wordBasedSuggestions": "off"
+  },
+  "files.exclude": {
+    "**/.git": true,
+    "**/.svn": true,
+    "**/.hg": true,
+    "**/CVS": true,
+    "**/.DS_Store": true,
+    "**/*.g.dart": true,
+    "**/*.freezed.dart": true,
+    "**/*.ast.gql.dart": true,
+    "**/*.op.gql.dart": true,
+    "**/*.var.gql.dart": true,
+    "**/*.gql.g.dart": true
+  },
+  "explorer.fileNesting.enabled": true,
+  "explorer.fileNesting.expand": false,
+  "explorer.fileNesting.patterns": {
+    "*.dart": "${capture}.mobile.dart, ${capture}.tablet.dart, ${capture}.desktop.dart, ${capture}.form.dart, ${capture}.g.dart, ${capture}.freezed.dart, ${capture}.logger.dart, ${capture}.locator.dart, ${capture}.router.dart, ${capture}.dialogs.dart, ${capture}.bottomsheets.dart"
+  },
+  "search.exclude": {
+    "**/node_modules": false,
+    "**/bower_components": true,
+    "**/*.code-search": true
+  }
+}
