@@ -1,0 +1,10 @@
+name: civic24_test
+publish_to: none
+version: 1.0.0+1
+
+environment:
+  sdk: ">=3.8.1 <4.0.0"
+  flutter: "3.29.2"
+
+dev_dependencies:
+  melos: 6.3.3
