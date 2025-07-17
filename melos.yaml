@@ -115,6 +115,10 @@ scripts:
       melos run admin:macos:pods
     description: Run macOS pod install for all apps
 
+  test:golden:
+    run: |
+      melos exec --scope="components" --dir-exists="test" -- "flutter test --update-goldens"
+
 
   # ─────────────────────────────
   # 📱 Citizen App-Specific Commands
