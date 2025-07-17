@@ -1,9 +1,8 @@
+import 'package:assets/asset_gen/fonts.gen.dart';
+import 'package:citizen/ui/views/home/home_viewmodel.dart';
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
-import 'package:citizen/ui/common/app_colors.dart';
-import 'package:citizen/ui/common/ui_helpers.dart';
-
-import 'home_viewmodel.dart';
+import 'package:styles/styles.dart';
 
 class HomeView extends StackedView<HomeViewModel> {
   const HomeView({super.key});
@@ -13,53 +12,28 @@ class HomeView extends StackedView<HomeViewModel> {
     return Scaffold(
       body: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 25.0),
+          padding: const EdgeInsets.symmetric(horizontal: 25),
           child: Center(
             child: Column(
-              mainAxisSize: MainAxisSize.max,
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                verticalSpaceLarge,
                 Column(
                   children: [
-                    const Text(
-                      'Hello, STACKED!',
+                    Text(
+                      'Hello, World!!!',
                       style: TextStyle(
+                        fontFamily: FontFamily.poppins,
                         fontSize: 35,
                         fontWeight: FontWeight.w900,
-                      ),
-                    ),
-                    verticalSpaceMedium,
-                    MaterialButton(
-                      color: Colors.black,
-                      onPressed: viewModel.incrementCounter,
-                      child: Text(
-                        viewModel.counterLabel,
-                        style: const TextStyle(color: Colors.white),
+                        color: context.onSurface,
                       ),
                     ),
                   ],
                 ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    MaterialButton(
-                      color: kcDarkGreyColor,
-                      onPressed: viewModel.showDialog,
-                      child: const Text(
-                        'Show Dialog',
-                        style: TextStyle(color: Colors.white),
-                      ),
-                    ),
-                    MaterialButton(
-                      color: kcDarkGreyColor,
-                      onPressed: viewModel.showBottomSheet,
-                      child: const Text(
-                        'Show Bottom Sheet',
-                        style: TextStyle(color: Colors.white),
-                      ),
-                    ),
-                  ],
+                Text(
+                  'This is the Citizen App sample page using Stacked View',
+                  style: TextStyle(fontFamily: FontFamily.poppins, fontSize: 20, color: context.onSurfaceVariant),
+                  textAlign: TextAlign.center,
                 ),
               ],
             ),
