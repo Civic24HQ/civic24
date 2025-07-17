@@ -1,4 +1,5 @@
 name: civic24
+
 packages:
   - apps/**
   - packages/**
@@ -8,170 +9,366 @@ scripts:
   # 📦 Global / Grouped Commands
   # ─────────────────────────────
 
-  pub:get:
-    run: melos exec -- "flutter pub get"
-    description: Run pub get for all apps and packages
+  flutter:clean:
+    run: melos exec --fail-fast --dir-exists="lib" -- "flutter clean"
+    description: Run flutter clean for all apps and packages
 
-  pub:get:apps:
-    run: melos exec --scope="apps/**" -- "flutter pub get"
-    description: Run pub get for all apps
+  flutter:get:
+    run: melos exec --fail-fast --dir-exists="lib" -- "flutter pub get"
+    description: Runs pub get for all apps and packages
 
-  pub:get:packages:
-    run: melos exec --scope="packages/**" -- "flutter pub get"
-    description: Run pub get for all packages
+  flutter:format:
+    run: |
+      melos run apps:format
+      melos run packages:format
+    description: Run custom format script for apps and packages that excludes generated files
 
-  clean:
-    run: melos exec -- "flutter clean"
-    description: Clean all apps and packages
+  apps:format:
+    run: |
+      melos run citizen:format
+      melos run admin:format
+    description: Run custom format script for apps that excludes generated files
 
-  clean:apps:
-    run: melos exec --scope="apps/**" -- "flutter clean"
-    description: Clean apps only
+  packages:format:
+    run: |
+      melos run assets:format
+      melos run components:format
+      melos run constants:format
+      melos run localization:format
+      melos run models:format
+      melos run services:format
+      melos run styles:format
+      melos run utils:format
+    description: Run custom format script for packages that excludes generated files
 
-  clean:packages:
-    run: melos exec --scope="packages/**" -- "flutter clean"
-    description: Clean packages only
+  flutter:build:
+    run: |
+      melos run apps:build
+      melos run packages:build
+    description: Runs build for all apps and packages depending on build_runner
 
-  analyze:
-    run: melos exec -- "flutter analyze"
-    description: Analyze all projects
+  apps:build:
+    run: |
+      melos run citizen:build
+      melos run admin:build
+    description: Runs build for all apps depending on build_runner
 
-  analyze:apps:
-    run: melos exec --scope="apps/**" -- "flutter analyze"
-    description: Analyze only apps
+  packages:build:
+    run: |
+      melos run assets:build
+      melos run localization:build
+      melos run models:build
+      melos run services:build
+    description: Runs build for all apps depending on build_runner
 
-  analyze:packages:
-    run: melos exec --scope="packages/**" -- "flutter analyze"
-    description: Analyze only packages
+  flutter:analyze:
+    run: |
+      melos run apps:analyze
+      melos run packages:analyze
+    description: Analyze all apps and packages
 
-  format:
-    run: melos exec -- "dart format ."
-    description: Format Dart files in all packages and apps
+  apps:analyze:
+    run: |
+      melos run citizen:analyze
+      melos run admin:analyze
+    description: Analyze all apps
 
-  test:
-    run: melos exec --dir-exists="test" -- "flutter test"
-    description: Run tests across all projects with tests
-
-  build_runner:
-    run: melos exec --depends-on="build_runner" -- "flutter pub run build_runner build --delete-conflicting-outputs"
-    description: Build all packages depending on build_runner
+  packages:analyze:
+    run: |
+      melos run assets:analyze
+      melos run components:analyze
+      melos run constants:analyze
+      melos run localization:analyze
+      melos run models:analyze
+      melos run services:analyze
+      melos run styles:analyze
+      melos run utils:analyze
+    description: Analyze all packages
 
   flutter:check:
     run: |
-      melos run format
-      melos run analyze
-      melos run build_runner
-    description: Format, analyze and build-runner for all
+      melos clean
+      melos bootstrap
+      melos run flutter:format
+      melos run localization:intl
+      melos run flutter:build
+      melos run flutter:analyze
+    description: Format, analyze and run build for apps and packages
+    exec:
+      failFast: true
+
+  flutter:pod:install:
+    run: |
+      melos run flutter:ios:pods
+      melos run flutter:macos:pods
+    description: Run pod install for both iOS and macOS targets
+
+  ios:pods:
+    run: |
+      melos run citizen:ios:pods
+      melos run admin:ios:pods
+    description: Run iOS pod install for all apps
+
+  macos:pods:
+    run: |
+      melos run citizen:macos:pods
+      melos run admin:macos:pods
+    description: Run macOS pod install for all apps
+
 
   # ─────────────────────────────
-  # 📱 App-Specific Commands
+  # 📱 Citizen App-Specific Commands
   # ─────────────────────────────
+
+  citizen:clean:
+    run: melos exec --fail-fast --scope="citizen" --dir-exists="lib" -- "flutter clean"
 
   citizen:get:
-    run: melos exec --scope="citizen" -- "flutter pub get"
-  citizen:clean:
-    run: melos exec --scope="citizen" -- "flutter clean"
+    run: melos exec --fail-fast --scope="citizen" --dir-exists="lib" -- "flutter pub get"
+
   citizen:analyze:
-    run: melos exec --scope="citizen" -- "flutter analyze"
+    run: melos exec --fail-fast --scope="citizen" --dir-exists="lib" -- "flutter analyze --no-pub"
+
   citizen:format:
-    run: melos exec --scope="citizen" -- "dart format ."
+    run: melos exec --fail-fast --scope="citizen" --dir-exists="lib" -- "../../bin/format.sh"
+
   citizen:test:
-    run: melos exec --scope="citizen" --dir-exists="test" -- "flutter test"
+    run: melos exec --fail-fast --scope="citizen" --dir-exists="test" -- "flutter test --no-pub"
+
+  citizen:service:
+    run: melos exec --fail-fast --scope="citizen" --dir-exists="lib" -- "stacked create service"
+
+  citizen:view:
+    run: melos exec --fail-fast --scope="citizen" --dir-exists="lib" -- "stacked create view"
+
+  citizen:dialog:
+    run: melos exec --fail-fast --scope="citizen" --dir-exists="lib" -- "stacked create dialog"
+
+  citizen:bottomsheet:
+    run: melos exec --fail-fast --scope="citizen" --dir-exists="lib" -- "stacked create bottom_sheet"
+
+  citizen:golden:
+    run: melos exec --fail-fast --scope="citizen" --dir-exists="lib" -- "flutter test --update-goldens --tags=golden --no-pub"
+
+  citizen:build:
+    run: melos exec --fail-fast --scope="citizen" --depends-on="build_runner" --dir-exists="lib" -- "dart run build_runner build --delete-conflicting-outputs"
+
+  citizen:ios:pods:
+    run: melos exec --fail-fast --scope="citizen" -- "cd ios && pod install --repo-update"
+
+  citizen:macos:pods:
+    run: melos exec --fail-fast --scope="citizen" -- "cd macos && pod install --repo-update"
+
+
+  # ─────────────────────────────
+  # 📱 Admin App-Specific Commands
+  # ─────────────────────────────
+
+  admin:clean:
+    run: melos exec --fail-fast --scope="admin" --dir-exists="lib" -- "flutter clean"
 
   admin:get:
-    run: melos exec --scope="admin" -- "flutter pub get"
-  admin:clean:
-    run: melos exec --scope="admin" -- "flutter clean"
+    run: melos exec --fail-fast --scope="admin" --dir-exists="lib" -- "flutter pub get"
+
   admin:analyze:
-    run: melos exec --scope="admin" -- "flutter analyze"
+    run: melos exec --fail-fast --scope="admin" --dir-exists="lib" -- "flutter analyze --no-pub"
+
   admin:format:
-    run: melos exec --scope="admin" -- "dart format ."
+    run: melos exec --fail-fast --scope="admin" --dir-exists="lib" -- "../../bin/format.sh"
+
   admin:test:
-    run: melos exec --scope="admin" --dir-exists="test" -- "flutter test"
+    run: melos exec --fail-fast --scope="admin" --dir-exists="test" -- "flutter test --no-pub"
+
+  admin:service:
+    run: melos exec --fail-fast --scope="admin" --dir-exists="lib" -- "stacked create service"
+
+  admin:view:
+    run: melos exec --fail-fast --scope="admin" --dir-exists="lib" -- "stacked create view"
+
+  admin:dialog:
+    run: melos exec --fail-fast --scope="admin" --dir-exists="lib" -- "stacked create dialog"
+
+  admin:bottomsheet:
+    run: melos exec --fail-fast --scope="admin" --dir-exists="lib" -- "stacked create bottom_sheet"
+
+  admin:golden:
+    run: melos exec --fail-fast --scope="admin" --dir-exists="lib" -- "flutter test --update-goldens --tags=golden --no-pub"
+
+  admin:build:
+    run: | 
+      melos exec --fail-fast --scope="admin" --depends-on="build_runner" --dir-exists="lib" -- "dart run build_runner build --delete-conflicting-outputs"
+
+  admin:ios:pods:
+    run: melos exec --fail-fast --scope="admin" -- "cd ios && pod install --repo-update"
+
+  admin:macos:pods:
+    run: melos exec --fail-fast --scope="citizen" -- "cd macos && pod install --repo-update"
+
 
   # ─────────────────────────────
-  # 📦 Package-Specific Commands
+  # 📦 Assets Package-Specific Commands
   # ─────────────────────────────
+
+  assets:clean:
+    run: melos exec --fail-fast --scope="assets" --dir-exists="lib" -- "flutter clean"
 
   assets:get:
-    run: melos exec --scope="assets" -- "flutter pub get"
-  assets:clean:
-    run: melos exec --scope="assets" -- "flutter clean"
+    run: melos exec --fail-fast --scope="assets" --dir-exists="lib" -- "flutter pub get"
+
   assets:analyze:
-    run: melos exec --scope="assets" -- "flutter analyze"
+    run: melos exec --fail-fast --scope="assets" --dir-exists="lib" -- "flutter analyze --no-pub"
+
   assets:format:
-    run: melos exec --scope="assets" -- "dart format ."
+    run: melos exec --fail-fast --scope="assets" --dir-exists="lib" -- "../../bin/format.sh"
+
+  assets:build:
+    run: melos exec --fail-fast --scope="assets" --depends-on="build_runner" --dir-exists="lib" -- "dart run build_runner build --delete-conflicting-outputs"
+
+  assets:test:
+    run: melos exec --fail-fast --scope="assets" --dir-exists="test" -- "flutter test --no-pub"
+
+
+  # ─────────────────────────────
+  # 📦 Components Package-Specific Commands
+  # ─────────────────────────────
+
+  components:clean:
+    run: melos exec --fail-fast --scope="components" --dir-exists="lib" -- "flutter clean"
 
   components:get:
-    run: melos exec --scope="components" -- "flutter pub get"
-  components:clean:
-    run: melos exec --scope="components" -- "flutter clean"
+    run: melos exec --fail-fast --scope="components" --dir-exists="lib" -- "flutter pub get"
+
   components:analyze:
-    run: melos exec --scope="components" -- "flutter analyze"
+    run: melos exec --fail-fast --scope="components" --dir-exists="lib" -- "flutter analyze --no-pub"
+
   components:format:
-    run: melos exec --scope="components" -- "dart format ."
+    run: melos exec --fail-fast --scope="components" --dir-exists="lib" -- "../../bin/format.sh"
+
+  components:test:
+    run: melos exec --fail-fast --scope="components" --dir-exists="test" -- "flutter test --no-pub"
+
+
+  # ─────────────────────────────
+  # 📦 Constants Package-Specific Commands
+  # ─────────────────────────────
+
+  constants:clean:
+    run: melos exec --fail-fast --scope="constants" --dir-exists="lib" -- "flutter clean"
 
   constants:get:
-    run: melos exec --scope="constants" -- "flutter pub get"
-  constants:clean:
-    run: melos exec --scope="constants" -- "flutter clean"
+    run: melos exec --fail-fast --scope="constants" --dir-exists="lib" -- "flutter pub get"
+
   constants:analyze:
-    run: melos exec --scope="constants" -- "flutter analyze"
+    run: melos exec --fail-fast --scope="constants" --dir-exists="lib" -- "flutter analyze --no-pub"
+
   constants:format:
-    run: melos exec --scope="constants" -- "dart format ."
+    run: melos exec --fail-fast --scope="constants" --dir-exists="lib" -- "../../bin/format.sh"
+
+  constants:test:
+    run: melos exec --fail-fast --scope="constants" --dir-exists="test" -- "flutter test --no-pub"
+
+
+  # ─────────────────────────────
+  # 📦 Localization Package-Specific Commands
+  # ─────────────────────────────
+
+  localization:clean:
+    run: melos exec --fail-fast --scope="localization" --dir-exists="lib" -- "flutter clean"
 
   localization:get:
-    run: melos exec --scope="localization" -- "flutter pub get"
-  localization:clean:
-    run: melos exec --scope="localization" -- "flutter clean"
+    run: melos exec --fail-fast --scope="localization" --dir-exists="lib" -- "flutter pub get"
+
   localization:analyze:
-    run: melos exec --scope="localization" -- "flutter analyze"
+    run: melos exec --fail-fast --scope="localization" --dir-exists="lib" -- "flutter analyze --no-pub"
+
   localization:format:
-    run: melos exec --scope="localization" -- "dart format ."
+    run: melos exec --fail-fast --scope="localization" --dir-exists="lib" -- "../../bin/format.sh"
+
+  localization:test:
+    run: melos exec --fail-fast --scope="localization" --dir-exists="test" -- "flutter test --no-pub"
+
   localization:intl:
-    run: melos exec --scope="localization" -- "flutter pub run intl_utils:generate"
+    run: melos exec --fail-fast --scope="localization" --dir-exists="lib" -- "dart run intl_utils:generate"
+
+  # ─────────────────────────────
+  # 📦 Models Package-Specific Commands
+  # ─────────────────────────────
+
+  models:clean:
+    run: melos exec --fail-fast --scope="models" --dir-exists="lib" -- "flutter clean"
 
   models:get:
-    run: melos exec --scope="models" -- "flutter pub get"
-  models:clean:
-    run: melos exec --scope="models" -- "flutter clean"
-  models:analyze:
-    run: melos exec --scope="models" -- "flutter analyze"
-  models:format:
-    run: melos exec --scope="models" -- "dart format ."
-  models:build:
-    run: melos exec --scope="models" -- "flutter pub run build_runner build --delete-conflicting-outputs"
+    run: melos exec --fail-fast --scope="models" --dir-exists="lib" -- "flutter pub get"
 
-  rules:get:
-    run: melos exec --scope="rules" -- "flutter pub get"
-  rules:analyze:
-    run: melos exec --scope="rules" -- "flutter analyze"
+  models:analyze:
+    run: melos exec --fail-fast --scope="models" --dir-exists="lib" -- "flutter analyze --no-pub"
+
+  models:format:
+    run: melos exec --fail-fast --scope="models" --dir-exists="lib" -- "../../bin/format.sh"
+
+  models:build:
+    run: melos exec --fail-fast --scope="models" --depends-on="build_runner" --dir-exists="lib" -- "dart run build_runner build --delete-conflicting-outputs"
+
+  models:test:
+    run: melos exec --fail-fast --scope="models" --dir-exists="test" -- "flutter test --no-pub"
+
+  # ─────────────────────────────
+  # 📦 Service Package-Specific Commands
+  # ─────────────────────────────
+
+  services:clean:
+    run: melos exec --fail-fast --scope="services" --dir-exists="lib" -- "flutter clean"
 
   services:get:
-    run: melos exec --scope="services" -- "flutter pub get"
-  services:clean:
-    run: melos exec --scope="services" -- "flutter clean"
+    run: melos exec --fail-fast --scope="services" --dir-exists="lib" -- "flutter pub get"
+
   services:analyze:
-    run: melos exec --scope="services" -- "flutter analyze"
+    run: melos exec --fail-fast --scope="services" --dir-exists="lib" -- "flutter analyze --no-pub"
+
   services:format:
-    run: melos exec --scope="services" -- "dart format ."
+    run: melos exec --fail-fast --scope="services" --dir-exists="lib" -- "../../bin/format.sh"
+
   services:build:
-    run: melos exec --scope="services" -- "flutter pub run build_runner build --delete-conflicting-outputs"
+    run: melos exec --fail-fast --scope="services" --depends-on="build_runner" --dir-exists="lib" -- "dart run build_runner build --delete-conflicting-outputs"
+
+  services:test:
+    run: melos exec --fail-fast --scope="services" --dir-exists="test" -- "flutter test --no-pub"
+
+  # ─────────────────────────────
+  # 📦 Styles Package-Specific Commands
+  # ─────────────────────────────
+
+  styles:clean:
+    run: melos exec --fail-fast --scope="styles" --dir-exists="lib" -- "flutter clean"
 
   styles:get:
-    run: melos exec --scope="styles" -- "flutter pub get"
-  styles:clean:
-    run: melos exec --scope="styles" -- "flutter clean"
+    run: melos exec --fail-fast --scope="styles" --dir-exists="lib" -- "flutter pub get"
+
   styles:analyze:
-    run: melos exec --scope="styles" -- "flutter analyze"
+    run: melos exec --fail-fast --scope="styles" --dir-exists="lib" -- "flutter analyze --no-pub"
+
   styles:format:
-    run: melos exec --scope="styles" -- "dart format ."
+    run: melos exec --fail-fast --scope="styles" --dir-exists="lib" -- "../../bin/format.sh"
+
+  styles:test:
+    run: melos exec --fail-fast --scope="styles" --dir-exists="test" -- "flutter test --no-pub"
+
+
+  # ─────────────────────────────
+  # 📦 Utils Package-Specific Commands
+  # ─────────────────────────────
+  
+  utils:clean:
+    run: melos exec --fail-fast --scope="utils" --dir-exists="lib" -- "flutter clean"
 
   utils:get:
-    run: melos exec --scope="utils" -- "flutter pub get"
-  utils:clean:
-    run: melos exec --scope="utils" -- "flutter clean"
+    run: melos exec --fail-fast --scope="utils" --dir-exists="lib" -- "flutter pub get"
+
   utils:analyze:
-    run: melos exec --scope="utils" -- "flutter analyze"
+    run: melos exec --fail-fast --scope="utils" --dir-exists="lib" -- "flutter analyze --no-pub"
+
   utils:format:
-    run: melos exec --scope="utils" -- "dart format ."
+    run: melos exec --fail-fast --scope="utils" --dir-exists="lib" -- "../../bin/format.sh"
+
+  utils:test:
+    run: melos exec --fail-fast --scope="utils" --dir-exists="test" -- "flutter test --no-pub"
