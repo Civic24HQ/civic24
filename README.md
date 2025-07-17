@@ -15,7 +15,7 @@ Civic24 uses **Google’s Generative AI** to validate submitted posts and images
 
 And the best part? It’s **Open Source**. 🧑🏾‍💻
 
-👉 Click here to view the [Design Case study](https://www.behance.net/gallery/229296271/Civic24-Mobile-App-Design-UIUX-Case-Study)
+[Civic24 Design Case Study](https://www.behance.net/gallery/229296271/Civic24-Mobile-App-Design-UIUX-Case-Study)
 
 ---
 
@@ -53,8 +53,8 @@ Make sure the following tools are installed:
 git clone https://github.com/Civic24HQ/civic24
 cd civic24
 dart pub global activate melos
+melos clean
 melos bootstrap
-melos run pub:get
 ```
 
 This will link all workspace dependencies across apps and packages.
@@ -92,13 +92,12 @@ civic24/
 ### **Common Commands**
 
 ```bash
-melos bootstrap           # Link and install all packages
-melos clean               # Clean all builds
-melos pub:get             # Run pub get across workspace
-melos test                # Run all tests
-melos format              # Format all code
-melos analyze             # Static code analysis
-melos build_runner        # Run code generators
+melos bootstrap            # Link and install all packages
+melos clean                # Clean all builds
+melos flutter:format       # Run custom format script for apps and packages
+melos localization:intl    # Generate localization files
+melos flutter:build        # Runs build for all apps and packages
+melos flutter:analyze      # Static code analysis for apps and packages
 ```
 
 ---
@@ -119,13 +118,17 @@ melos build_runner        # Run code generators
 
 ---
 
-## 📱 Download APK & IPA (Preview Builds)
+## 📱 Download Civic24 App (Preview Builds)
 
-To test the latest builds without setting up your dev environment:
+You can test the latest preview builds of the Civic24 mobile apps without setting up a development environment.
 
-- Go to [Actions → Distribute Workflow](https://github.com/Civic24HQ/civic24/actions/workflows/distribute.yml)
-- Click the latest successful run based on the last commit
-- Scroll to the bottom of the page → download the `.apk` or `.ipa` file from the `“Artifacts”` section.
+### 🔽 Download from Releases
+Go to the official [Releases page](https://github.com/Civic24HQ/civic24/releases/) to download:
+
+- `.apk` file for Android
+- `.ipa` file for iOS (TestFlight or manual install)
+
+Each release contains build artifacts generated from our CI pipelines.
 
 ---
 
@@ -133,10 +136,19 @@ To test the latest builds without setting up your dev environment:
 
 1. Fork the repository
 2. Create a new branch from `develop`: `git checkout -b feat/amazing-feature`
-3. Make your changes and test locally.
-4. Commit your changes: `git commit -m 'Add amazing feature'`
-5. Push to the branch: `git push origin feature/amazing-feature`
-6. Open a Pull Request with a clear description and add screenshots if necessary
+3. Make your changes, test locally and write a clear well-commented code
+4. Run the following commands:
+```bash
+  melos clean
+  melos bootstrap
+  melos run flutter:format
+  melos run localization:intl
+  melos run flutter:build
+  melos run flutter:analyze
+```
+5. Commit your changes: `git commit -m 'Add amazing feature'`
+6. Push to the branch: `git push origin feature/amazing-feature`
+7. Open a Pull Request with a clear description and screenshots if necessary
 
 ---
 
