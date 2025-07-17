@@ -1,28 +1,20 @@
-import 'package:flutter/material.dart';
-import 'package:citizen/app/app.bottomsheets.dart';
-import 'package:citizen/app/app.dialogs.dart';
+import 'package:citizen/app/app.dart';
 import 'package:citizen/app/app.locator.dart';
 import 'package:citizen/app/app.router.dart';
-import 'package:stacked_services/stacked_services.dart';
+import 'package:flutter/material.dart';
+import 'package:localization/localization.dart';
 
 Future<void> main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  await setupLocator();
-  setupDialogUi();
-  setupBottomSheetUi();
-  runApp(const MainApp());
+  await _preLocatorSetup();
+  await setupLocator(stackedRouter: stackedRouter);
+  await _postLocatorSetup();
 }
 
-class MainApp extends StatelessWidget {
-  const MainApp({super.key});
+Future<void> _preLocatorSetup() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await preloadFirstLocale();
+}
 
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      initialRoute: Routes.startupView,
-      onGenerateRoute: StackedRouter().onGenerateRoute,
-      navigatorKey: StackedService.navigatorKey,
-      navigatorObservers: [StackedService.routeObserver],
-    );
-  }
+Future<void> _postLocatorSetup() async {
+  runApp(const App());
 }
