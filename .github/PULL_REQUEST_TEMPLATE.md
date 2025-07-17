@@ -26,13 +26,4 @@ Examples:
 - [ ] 📝 Documentation update
 - [ ] 🗑️ Chore (e.g., dependency updates, lint fixes)
 
-## ✅ Checklist
-
-<!-- Optional: Add this section if you want contributors to self-check before submitting -->
-
-- [ ] Code compiles and passes analysis
-- [ ] Tests have been added or updated (if applicable)
-- [ ] I’ve tested the changes locally or on a staging environment
-- [ ] Relevant documentation has been updated
-
 <!-- Thank you for contributing to Civic24! 🚀 -->

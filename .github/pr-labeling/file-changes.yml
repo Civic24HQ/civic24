@@ -1,0 +1,71 @@
+automation:
+  - changed-files:
+      - any-glob-to-any-file:
+          [".github/**/*", "**/*analysis_options.yaml", "**/*.sh"]
+
+app:
+  - changed-files:
+      - any-glob-to-any-file: ["apps/**/*"]
+
+package:
+  - changed-files:
+      - any-glob-to-any-file: ["packages/**/*"]
+
+admin:
+  - changed-files:
+      - any-glob-to-any-file: ["apps/admin/**/*"]
+
+citizen:
+  - changed-files:
+      - any-glob-to-any-file: ["apps/citizen/**/*"]
+
+components:
+  - changed-files:
+      - any-glob-to-any-file: ["packages/components/**/*"]
+
+constants:
+  - changed-files:
+      - any-glob-to-any-file: ["packages/constants/**/*"]
+
+localization:
+  - changed-files:
+      - any-glob-to-any-file: ["packages/localization/**/*"]
+
+models:
+  - changed-files:
+      - any-glob-to-any-file: ["packages/models/**/*"]
+
+rules:
+  - changed-files:
+      - any-glob-to-any-file: ["packages/rules/**/*"]
+
+services:
+  - changed-files:
+      - any-glob-to-any-file: ["packages/services/**/*"]
+
+style:
+  - changed-files:
+      - any-glob-to-any-file: ["packages/style/**/*"]
+
+utils:
+  - changed-files:
+      - any-glob-to-any-file: ["packages/utils/**/*"]
+
+stacked:
+  - changed-files:
+      - any-glob-to-any-file: ["**/*app.dart", "**/*stacked.json"]
+
+pubspec:
+  - changed-files:
+      - any-glob-to-any-file: ["**/*pubspec.yaml", "**/*pubspec.lock"]
+
+docs:
+  - changed-files:
+      - any-glob-to-any-file: ["**/*.md"]
+
+scripts:
+  - changed-files:
+      - any-glob-to-any-file: ["**/*.sh"]
+
+release:
+  - base-branch: "main"
