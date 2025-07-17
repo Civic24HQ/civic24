@@ -9,21 +9,21 @@
 
 **Civic24** is a mobile platform that empowers people to report civic-related issues in their communities and engage with fellow citizens through feedback and discussion.
 
-This directly aligns with **SDG Goal 11: Sustainable Cities and Communities**, which aims to make urban areas inclusive, safe, resilient, and sustainable.
+This directly aligns with [**SDG Goal 11: Sustainable Cities and Communities**](https://globalgoals.org/goals/11-sustainable-cities-and-communities), which aims to make urban areas inclusive, safe, resilient, and sustainable.
 
-Civic24 uses **Google’s Generative AI** to validate submitted posts and images, ensuring that only genuinely civic-related content gets shared.
+Civic24 also uses **Google’s Generative AI** to validate submitted posts and images, ensuring that only genuinely civic-related content gets shared.
 
 And the best part? It’s **Open Source**. 🧑🏾‍💻
 
-[Civic24 Design Case Study](https://www.behance.net/gallery/229296271/Civic24-Mobile-App-Design-UIUX-Case-Study)
+👉 Click here to view the [Civic24 Design Case Study](https://www.behance.net/gallery/229296271/Civic24-Mobile-App-Design-UIUX-Case-Study)
 
 ---
 
 ## Description
 This repository contains the source code for the **Civic24** mobile applications, including:
 - **Citizen App**: The main user-facing app that enables individuals to report civic issues, view updates, and participate in public conversations.
-- **Admin App**: A web-based dashboard for government officials and administrators to review reports, manage feedback, and oversee community activity.
-- **Shared Packages**: Modular Dart packages used across both apps to ensure consistent design, localization, and functionality:
+- **Admin App**: A web-based dashboard for government officials and administrators to review reports, manage feedback and oversee community activity.
+- **Shared Packages**: Modular Dart packages used across both apps to ensure consistent design, localization and shared functionality:
   - `components/`: Reusable UI widgets.
   - `styles/`: Design system and typography.
   - `services/`: Firebase/Supabase integrations.
@@ -114,16 +114,16 @@ melos flutter:analyze      # Static code analysis for apps and packages
 - Follow the Flutter linter rules in `packages/rules/analysis_options.yaml`
 - Use consistent commit naming: `feat:`, `fix:`, `chore:`, `refactor:`
 - Document all new features in PR Description
-- Write unit and widget tests where necessary
+- Write unit and golden tests where necessary
 
 ---
 
 ## 🚦 CI/CD Pipelines
 
-Civic24 uses **GitHub Actions** to automate Continuous Integration (CI), Continuous Deployment (CD), and Pull Request (PR) management.
+Civic24 uses **GitHub Actions** to automate Continuous Integration (CI), Continuous Deployment (CD) and Pull Request (PR) management.
 
 ### Continuous Integration (`ci.yml`)
-Runs automatically on all **Pull Requests targeting the `develop` branch**.
+Runs automatically on all Pull Requests targeting the `develop` branch.
 
 **Key checks include:**
 - **Link Packages** – Sets up the monorepo using `melos bootstrap`
@@ -132,20 +132,14 @@ Runs automatically on all **Pull Requests targeting the `develop` branch**.
 - **Code Analysis** – Ensures static analysis using `melos run flutter:analyze`
 
 ### Continuous Deployment (`cd.yml`)
-Handles preview deployments and publishing of artifacts on **successful merges to `develop` or `main`**.
-
-- Builds `.apk` and `.ipa` preview builds for testers.
-- Publishes them as GitHub [Release Artifacts](https://github.com/Civic24HQ/civic24/releases/).
+Handles preview deployments and publishing of artifacts on successful merge to the `main` branch.
 
 ### Pull Request Intelligence (`open_pr.yml`)
-Triggered when a PR is opened or updated.
-
-- **Smart Labeling** – Automatically labels PRs (e.g. `apps/admin`, `packages/constants`) based on which files changed.
-- Helps reviewers quickly see the scope and impact of the PR.
+This is triggered when a PR is opened or updated. It automatically labels PRs (e.g. `apps/admin`, `packages/constants`) based on which files changed.
 
 ### Best Practices
-- Use **draft PRs** while work is in progress.
-- Ensure commits pass CI before requesting review.
+- Use **Draft PRs** while work is in progress.
+- Ensure commits pass the CI before requesting review.
 
 ---
 
@@ -154,7 +148,7 @@ Triggered when a PR is opened or updated.
 You can test the latest preview builds of the Civic24 mobile apps without setting up a development environment.
 
 ### Download from Releases
-Go to the official [Releases page](https://github.com/Civic24HQ/civic24/releases/) to download:
+Go to the official [Releases Page](https://github.com/Civic24HQ/civic24/releases/) to download:
 
 - `.apk` file for Android
 - `.ipa` file for iOS
