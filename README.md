@@ -122,7 +122,7 @@ melos flutter:analyze      # Static code analysis for apps and packages
 
 Civic24 uses **GitHub Actions** to automate Continuous Integration (CI), Continuous Deployment (CD), and Pull Request (PR) management.
 
-### Continuous Integration (`ci.yml`)
+#### Continuous Integration (`ci.yml`)
 Runs automatically on all **Pull Requests targeting the `develop` branch**.
 
 **Key checks include:**
@@ -131,19 +131,19 @@ Runs automatically on all **Pull Requests targeting the `develop` branch**.
 - **Code Generation** – Runs code generators using `melos run flutter:build`
 - **Code Analysis** – Ensures static analysis using `melos run flutter:analyze`
 
-### Continuous Deployment (`cd.yml`)
+#### Continuous Deployment (`cd.yml`)
 Handles preview deployments and publishing of artifacts on **successful merges to `develop` or `main`**.
 
 - Builds `.apk` and `.ipa` preview builds for testers.
 - Publishes them as GitHub [Release Artifacts](https://github.com/Civic24HQ/civic24/releases/).
 
-### Pull Request Intelligence (`open_pr.yml`)
+#### Pull Request Intelligence (`open_pr.yml`)
 Triggered when a PR is opened or updated.
 
 - **Smart Labeling** – Automatically labels PRs (e.g. `apps/admin`, `packages/constants`) based on which files changed.
 - Helps reviewers quickly see the scope and impact of the PR.
 
-### Best Practices
+#### Best Practices
 - Use **draft PRs** while work is in progress.
 - Ensure commits pass CI before requesting review.
 
@@ -153,7 +153,7 @@ Triggered when a PR is opened or updated.
 
 You can test the latest preview builds of the Civic24 mobile apps without setting up a development environment.
 
-### Download from Releases
+#### Download from Releases
 Go to the official [Releases page](https://github.com/Civic24HQ/civic24/releases/) to download:
 
 - `.apk` file for Android
