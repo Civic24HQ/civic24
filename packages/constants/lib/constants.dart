@@ -1,5 +1,5 @@
-/// A Calculator.
-class Calculator {
-  /// Returns [value] plus 1.
-  int addOne(int value) => value + 1;
-}
+/// Constants for Civic24
+library constants;
+
+export 'src/enum/appearance_mode.dart';
+export 'src/enum/language_type.dart';

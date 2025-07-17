@@ -1,0 +1,10 @@
+# Label pull requests automatically based on their branch name
+
+# Any branch that starts with 'feature/' will get the 'feature' label. It also has support for shorthand naming like 'feat/'
+feature: ["feature/*", "feat/*"]
+
+# Branches like 'fix/login-issue' get the 'fix' label
+fix: fix/*
+
+# For minor maintenance or non-functional changes
+chore: ["chore/*", "refactor/*"]

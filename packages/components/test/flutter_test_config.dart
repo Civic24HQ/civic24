@@ -1,0 +1,19 @@
+import 'dart:async';
+import 'dart:io';
+
+import 'package:flutter/foundation.dart';
+import 'package:golden_toolkit/golden_toolkit.dart';
+
+Future<void> testExecutable(FutureOr<void> Function() testMain) async {
+  await loadAppFonts();
+
+  return GoldenToolkit.runWithConfiguration(
+    testMain,
+    config: GoldenToolkitConfiguration(
+      skipGoldenAssertion:
+          () => kIsWeb || !Platform.isMacOS && !Platform.isWindows,
+      enableRealShadows: true,
+      defaultDevices: const [Device.iphone11],
+    ),
+  );
+}
