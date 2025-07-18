@@ -1,0 +1,195 @@
+name: Civic 24 Quality Assurance Continuous Integration (CI) / Continuous Deployment (CD) # Name of the workflow shown in GitHub Actions UI
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+env:
+  FLUTTER_VERSION: "3.32.6"
+  EXCLUDED_FILES: |
+    :!**/*app.router.dart
+    :!**/*test_helpers.mocks.dart
+    :!**/*assets.gen.dart
+
+jobs:
+  build-ios:
+    name: Build and Deploy IOS for ${{ matrix.app }} app
+    runs-on: macos-latest
+    strategy:
+      matrix:
+        app: [citizen, admin]
+    steps:
+      # Clone the repository
+      - name: 📚 Clone the repository
+        uses: actions/checkout@v4 # - This uses the actions/checkout@v4 action to clone the repository's code into the runner's workspace
+      
+      # Setup Java
+      - name: 🚧 Setup java
+        uses: actions/setup-java@v3 # - This uses the actions/setup-java@v3 action to set up a Java environment with Zulu distribution and Java version 18.x
+        with:
+            distribution: 'zulu'
+            java-version: "18.x"
+
+      # Set up Flutter
+      - name: 🐦 Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+            channel: 'stable'
+            flutter-version: ${{ env.FLUTTER_VERSION }} # This uses the subosito/flutter-action@v2 action to install Flutter with the stable channel and version 3.32.6
+
+      # Install Melos and bootstrap the packages. This installs dependencies across the monorepo
+      - name: 📦 Bootstrap packages with Melos
+        run: |
+          dart pub global activate melos
+          melos clean
+          melos bootstrap
+
+      # Format all Dart code using the standard format rules defined
+      - name: 🎩 Ensure the Dart code is formatted correctly
+        run: |
+            melos run flutter:format  
+
+      # Generate localization files
+      - name: 🧩 Generate localization files
+        run: |
+            melos run localization:intl 
+
+      # Run build_runner or any code gen scripts you've defined
+      - name: 🧬 Run code generation
+        run: |
+            melos run flutter:build
+
+      # Run analyzer across all packages to catch lint issues and unused code
+      - name: ✨ Analyze the Dart code
+        run: |
+            melos run flutter:analyze
+
+      # Verify no uncommitted changes in ${{ matrix.app }}
+      - name: 🧾 Verify no uncommitted changes in ${{ matrix.app }}
+        run: |
+          git diff --exit-code $EXCLUDED_FILES
+        working-directory: apps/${{ matrix.app }}
+
+      # Debug the runner environment to ensure all tools are available
+      - name: 🧠 Debug the runner environment
+        run: |
+          echo "Xcode version:"
+          xcodebuild -version
+          echo "CocoaPods version:"
+          pod --version
+          echo "Flutter version:"
+          flutter --version
+
+      # Clean and re-install CocoaPods to avoid build errors
+      - name: 🔧 Clean and reinstall CocoaPods
+        run: |
+          pod deintegrate
+          rm -rf Pods Podfile.lock
+          pod cache clean --all
+          pod install --repo-update
+        working-directory: apps/${{ matrix.app }}/ios
+
+      # Build the iOS application package (IPA) without code signing
+      - name: Build IPA
+        run: |
+          flutter clean
+          flutter pub get
+          flutter build ios --no-codesign
+        working-directory: apps/${{ matrix.app }}
+
+      # Upload the build artifacts including the compressed iOS build to the GitHub release
+      - name: Push to Release
+        run: |
+          cd build/ios/iphoneos
+          mkdir Payload
+          cd Payload
+          ln -s ../Runner.app
+          cd ..
+          zip -r app.ipa Payload
+        working-directory: apps/${{ matrix.app }}
+
+      # Upload the generated IPA to the GitHub release
+      - name: Push iOS IPA to Release
+        uses: ncipollo/release-action@v1
+        with:
+          artifacts: apps/${{ matrix.app }}/build/ios/iphoneos/app.ipa
+          tag: ${{ matrix.app }}-v1.0.${{ github.run_number }}
+          token: ${{ secrets.TOKEN }}
+          allowUpdates: true
+          replacesArtifacts: false
+
+  build-android:
+    name: Build and Deploy Android for ${{ matrix.app }} app
+    needs: build-ios
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        app: [citizen, admin]
+    steps:
+      # Clone the repository
+      - name: 📚 Clone the repository
+        uses: actions/checkout@v4 # - This uses the actions/checkout@v4 action to clone the repository's code into the runner's workspace
+      
+      # Setup Java
+      - name: 🚧 Setup java
+        uses: actions/setup-java@v3 # - This uses the actions/setup-java@v3 action to set up a Java environment with Zulu distribution and Java version 18.x
+        with:
+            distribution: 'zulu'
+            java-version: "18.x"
+
+      # Set up Flutter
+      - name: 🐦 Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+            channel: 'stable'
+            flutter-version: ${{ env.FLUTTER_VERSION }} # This uses the subosito/flutter-action@v2 action to install Flutter with the stable channel and version 3.32.6
+
+      # Install Melos and bootstrap the packages. This installs dependencies across the monorepo
+      - name: 📦 Bootstrap packages with Melos
+        run: |
+          dart pub global activate melos
+          melos clean
+          melos bootstrap
+      # Format all Dart code using the standard format rules defined
+      - name: 🎩 Ensure the Dart code is formatted correctly
+        run: |
+            melos run flutter:format  
+      # Generate localization files
+      - name: 🧩 Generate localization files
+        run: |
+            melos run localization:intl 
+      # Run build_runner or any code gen scripts you've defined.
+      - name: 🧬 Run code generation
+        run: |
+            melos run flutter:build
+
+      # Run analyzer across all packages to catch lint issues and unused code
+      - name: ✨ Analyze the Dart code
+        run: |
+            melos run flutter:analyze
+
+      # Verify no uncommitted changes in ${{ matrix.app }}
+      - name: 🧾 Verify no uncommitted changes in ${{ matrix.app }}
+        run: |
+          git diff --exit-code $EXCLUDED_FILES
+        working-directory: apps/${{ matrix.app }}
+      
+      # Build the Android application package (APK)
+      - name: Build APK
+        run: |
+          flutter build apk --debug --split-per-abi
+        working-directory: apps/${{ matrix.app }}
+
+      # Upload the build artifacts including the generated Android APK to the GitHub release
+      - name: Push to Release
+        uses: ncipollo/release-action@v1
+        with:
+            artifacts: "apps/${{ matrix.app }}/build/app/outputs/apk/debug/*.apk"
+            tag: ${{ matrix.app }}-v1.0.${{ github.run_number }}
+            token: ${{ secrets.TOKEN }}
+            allowUpdates: true
+            replacesArtifacts: false
