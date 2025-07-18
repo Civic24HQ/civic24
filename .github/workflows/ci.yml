@@ -1,0 +1,83 @@
+name: Civic 24 Quality Assurance Continuous Integration (CI) # Name of the workflow shown in GitHub Actions UI
+
+on:
+  pull_request: # Trigger this workflow when a Pull Request is created or updated
+    types: [opened, synchronize, reopened, ready_for_review] # Covers all relevant Pull Requests lifecycle events
+    branches:
+      - develop # Only trigger on Pull Requests targeting the develop branch
+
+concurrency:
+  group: pr-${{ github.event.pull_request.number }} # Ensure only one CI job for each Pull Request is running at a time
+  cancel-in-progress: true # Cancel previous runs if a new one is triggered for the same Pull Request
+
+permissions:
+  contents: read           # Allows reading the repository contents
+  pull-requests: read      # Allows accessing information about Pull Requests
+  checks: write            # Allows posting results to GitHub Checks UI
+
+env:
+  FLUTTER_VERSION: "3.32.6"
+  EXCLUDED_FILES: |
+    :!**/*app.router.dart
+    :!**/*app.locator.dart
+    :!**/*test_helpers.mocks.dart
+    :!**/*assets.gen.dart
+
+jobs:
+  security_hardening:
+    name: Quality Assurance for ${{ matrix.app }} app
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        app: [citizen, admin]
+    steps:
+      # Clone the repository
+      - name: 📚 Clone the repository
+        uses: actions/checkout@v4 # - This uses the actions/checkout@v4 action to clone the repository's code into the runner's workspace
+      
+      # Setup Java
+      - name: 🚧 Setup java
+        uses: actions/setup-java@v3 # - This uses the actions/setup-java@v3 action to set up a Java environment with Zulu distribution and Java version 18.x
+        with:
+            distribution: 'zulu'
+            java-version: "18.x"
+
+      # Set up Flutter
+      - name: 🐦 Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+            channel: 'stable'
+            flutter-version: ${{ env.FLUTTER_VERSION }} # This uses the subosito/flutter-action@v2 action to install Flutter with the stable channel and version 3.32.6
+
+      # Install Melos and bootstrap the packages. This installs dependencies across the monorepo
+      - name: 📦 Bootstrap packages with Melos
+        run: |
+          dart pub global activate melos
+          melos clean
+          melos bootstrap
+
+      # Format all Dart code using the standard format rules defined
+      - name: 🎩 Ensure the Dart code is formatted correctly
+        run: |
+            melos run flutter:format  
+
+      # Generate localization files
+      - name: 🧩 Generate localization files
+        run: |
+            melos run localization:intl 
+
+      # Run build_runner or any code gen scripts you've defined
+      - name: 🧬 Run code generation
+        run: |
+            melos run flutter:build
+
+      # Run analyzer across all packages to catch lint issues and unused code
+      - name: ✨ Analyze the Dart code
+        run: |
+            melos run flutter:analyze
+
+      # Verify no uncommitted changes in ${{ matrix.app }}
+      - name: 🧾 Verify no uncommitted changes in ${{ matrix.app }}
+        run: |
+          git diff --exit-code $EXCLUDED_FILES
+        working-directory: apps/${{ matrix.app }}

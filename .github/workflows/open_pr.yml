@@ -1,0 +1,60 @@
+name: 🏷️ Pull Request Labeling
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+    branches:
+      - develop
+
+permissions:
+  contents: read
+
+jobs:
+  security_hardening:
+    name: 🔐 Check security hardening
+    runs-on: ubuntu-latest
+    steps:
+      # Clone the repository
+      - name: 📚 Clone the repository
+        uses: actions/checkout@v4 # - This uses the actions/checkout@v4 action to clone the repository's code into the runner's workspace.
+      
+      # Setup Java
+      - name: 🚧 Setup java
+        uses: actions/setup-java@v3 # - This uses the actions/setup-java@v3 action to set up a Java environment with Zulu distribution and Java version 18.x
+        with:
+            distribution: 'zulu'
+            java-version: "18.x"
+
+  assign_author:
+    name: 🙋‍♂️ Assign Author to PR
+    needs: security_hardening
+    permissions:
+      contents: none
+      pull-requests: write
+    runs-on: ubuntu-latest
+    steps:
+      - name: 🔗 Auto-assign PR author
+        uses: technote-space/assign-author@9558557c5c4816f38bd06176fbc324ba14bb3160 # v1.6.2
+
+  labeler:
+    name: 🏷️ Add PR Labels
+    needs: security_hardening
+    permissions:
+      contents: read
+      pull-requests: write
+      issues: write
+    runs-on: ubuntu-latest
+    steps:
+      - name: 🏷️ Label PR by branch name
+        uses: TimonVS/pr-labeler-action@f9c084306ce8b3f488a8f3ee1ccedc6da131d1af # v5.0.0
+        with:
+          configuration-path: .github/pr-labeling/branch-name.yml
+        env:
+          GITHUB_TOKEN: ${{ secrets.TOKEN }}
+
+      - name: 🧠 Label PR by file changes
+        uses: actions/labeler@8558fd74291d67161a8a78ce36a881fa63b766a9 # v5.0.0
+        with:
+          configuration-path: .github/pr-labeling/file-changes.yml
+        env:
+          GITHUB_TOKEN: ${{ secrets.TOKEN }}
