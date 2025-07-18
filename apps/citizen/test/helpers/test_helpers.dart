@@ -1,7 +1,8 @@
+import 'package:citizen/app/app.locator.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
-import 'package:citizen/app/app.locator.dart';
 import 'package:stacked_services/stacked_services.dart';
+
 // @stacked-import
 
 import 'test_helpers.mocks.dart';
@@ -9,23 +10,23 @@ import 'test_helpers.mocks.dart';
 @GenerateMocks(
   [],
   customMocks: [
-    MockSpec<NavigationService>(onMissingStub: OnMissingStub.returnDefault),
+    MockSpec<RouterService>(onMissingStub: OnMissingStub.returnDefault),
     MockSpec<BottomSheetService>(onMissingStub: OnMissingStub.returnDefault),
     MockSpec<DialogService>(onMissingStub: OnMissingStub.returnDefault),
     // @stacked-mock-spec
   ],
 )
 void registerServices() {
-  getAndRegisterNavigationService();
+  getAndRegisterRouterService();
   getAndRegisterBottomSheetService();
   getAndRegisterDialogService();
   // @stacked-mock-register
 }
 
-MockNavigationService getAndRegisterNavigationService() {
-  _removeRegistrationIfExists<NavigationService>();
-  final service = MockNavigationService();
-  locator.registerSingleton<NavigationService>(service);
+MockRouterService getAndRegisterRouterService() {
+  _removeRegistrationIfExists<RouterService>();
+  final service = MockRouterService();
+  locator.registerSingleton<RouterService>(service);
   return service;
 }
 

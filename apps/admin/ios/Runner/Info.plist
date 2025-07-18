@@ -1,49 +1,123 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
-<dict>
-	<key>CFBundleDevelopmentRegion</key>
-	<string>$(DEVELOPMENT_LANGUAGE)</string>
-	<key>CFBundleDisplayName</key>
+	<dict>
+		<!-- Disables the default frame rate throttling on iPhones to improve animation smoothness -->
+		<key>CADisableMinimumFrameDurationOnPhone</key>
+		<true/>
+		<key>CFBundleDevelopmentRegion</key>
+		<string>$(DEVELOPMENT_LANGUAGE)</string>
+		<key>CFBundleDisplayName</key>
 	<string>Admin</string>
-	<key>CFBundleExecutable</key>
-	<string>$(EXECUTABLE_NAME)</string>
-	<key>CFBundleIdentifier</key>
-	<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
-	<key>CFBundleInfoDictionaryVersion</key>
-	<string>6.0</string>
-	<key>CFBundleName</key>
-	<string>admin</string>
-	<key>CFBundlePackageType</key>
-	<string>APPL</string>
-	<key>CFBundleShortVersionString</key>
-	<string>$(FLUTTER_BUILD_NAME)</string>
-	<key>CFBundleSignature</key>
-	<string>????</string>
-	<key>CFBundleVersion</key>
-	<string>$(FLUTTER_BUILD_NUMBER)</string>
-	<key>LSRequiresIPhoneOS</key>
-	<true/>
-	<key>UILaunchStoryboardName</key>
-	<string>LaunchScreen</string>
-	<key>UIMainStoryboardFile</key>
-	<string>Main</string>
-	<key>UISupportedInterfaceOrientations</key>
-	<array>
-		<string>UIInterfaceOrientationPortrait</string>
-		<string>UIInterfaceOrientationLandscapeLeft</string>
-		<string>UIInterfaceOrientationLandscapeRight</string>
-	</array>
-	<key>UISupportedInterfaceOrientations~ipad</key>
-	<array>
-		<string>UIInterfaceOrientationPortrait</string>
-		<string>UIInterfaceOrientationPortraitUpsideDown</string>
-		<string>UIInterfaceOrientationLandscapeLeft</string>
-		<string>UIInterfaceOrientationLandscapeRight</string>
-	</array>
-	<key>CADisableMinimumFrameDurationOnPhone</key>
-	<true/>
-	<key>UIApplicationSupportsIndirectInputEvents</key>
-	<true/>
-</dict>
+		<key>CFBundleExecutable</key>
+		<string>$(EXECUTABLE_NAME)</string>
+		<key>CFBundleIdentifier</key>
+		<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
+		<key>CFBundleInfoDictionaryVersion</key>
+		<string>6.0</string>
+		<!-- Specifies the localizations the app supports -->
+		<key>CFBundleLocalizations</key>
+		<array>
+			<string>en</string>
+			<!-- English -->
+			<string>es</string>
+			<!-- Spanish -->
+			<string>fr</string>
+			<!-- French -->
+			<string>pt</string>
+			<!-- Portuguese -->
+			<string>de</string>
+			<!-- German -->
+		</array>
+		<key>CFBundleName</key>
+	<string>Admin</string>
+		<key>CFBundlePackageType</key>
+		<string>APPL</string>
+		<key>CFBundleShortVersionString</key>
+		<string>$(FLUTTER_BUILD_NAME)</string>
+		<key>CFBundleSignature</key>
+		<string>????</string>
+		<key>CFBundleVersion</key>
+		<string>$(FLUTTER_BUILD_NUMBER)</string>
+		<!-- Lists the URL schemes the app is allowed to query using canOpenURL -->
+		<key>LSApplicationQueriesSchemes</key>
+		<array>
+			<string>https</string>
+			<!-- Allow launching secure websites -->
+			<string>http</string>
+			<!-- Allow launching non-secure websites -->
+			<string>sms</string>
+			<!-- Allow opening SMS apps -->
+			<string>tel</string>
+			<!-- Allow opening phone dialer -->
+			<string>mailto</string>
+			<!-- Allow opening email apps -->
+		</array>
+		<key>LSRequiresIPhoneOS</key>
+		<true/>
+		<!-- Allow app to access location both in foreground and background -->
+		<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+		<string>Enable your location at all times to easily locate nearby fuel stations, even if AnyFuel is in the background.</string>
+		<!-- Allow app to access location even when it's not running -->
+		<key>NSLocationAlwaysUsageDescription</key>
+		<string>Allow location access at all times to locate nearby fuel stations, even when AnyFuel is not actively in use.</string>
+		<!-- Fallback for older iOS versions requiring general location usage key -->
+		<key>NSLocationUsageDescription</key>
+		<string>Location access helps display fuel stations close to you on older devices.</string>
+		<!-- Allow app to access location only while it is being used -->
+		<key>NSLocationWhenInUseUsageDescription</key>
+		<string>Enable your location to find and display nearby fuel stations and estimate distances while using AnyFuel.</string>
+		<!-- Enables indirect input events like keyboard and pointer support -->
+		<key>UIApplicationSupportsIndirectInputEvents</key>
+		<true/>
+		<!-- Enables background capabilities for notifications and data fetching -->
+		<key>UIBackgroundModes</key>
+		<array>
+			<!-- Allows app to fetch data periodically while in the background -->
+			<string>fetch</string>
+			<!-- Allows app to receive and handle remote push notifications in the background -->
+			<string>remote-notification</string>
+		</array>
+		<key>UILaunchStoryboardName</key>
+		<string>LaunchScreen</string>
+		<key>UIMainStoryboardFile</key>
+		<string>Main</string>
+		<!-- Controls whether the status bar is hidden (false = visible) -->
+		<key>UIStatusBarHidden</key>
+		<false/>
+		<key>UISupportedInterfaceOrientations</key>
+		<array>
+			<string>UIInterfaceOrientationPortrait</string>
+			<string>UIInterfaceOrientationLandscapeLeft</string>
+			<string>UIInterfaceOrientationLandscapeRight</string>
+		</array>
+		<key>UISupportedInterfaceOrientations~ipad</key>
+		<array>
+			<string>UIInterfaceOrientationPortrait</string>
+			<string>UIInterfaceOrientationPortraitUpsideDown</string>
+			<string>UIInterfaceOrientationLandscapeLeft</string>
+			<string>UIInterfaceOrientationLandscapeRight</string>
+		</array>
+		<!-- Indicates whether each view controller manages the status bar style.
+			false = the app controls the status bar appearance globally -->
+		<key>UIViewControllerBasedStatusBarAppearance</key>
+		<false/>
+		<!-- Explains why Civic24 may use the local network (e.g. during development with Dart Observatory) -->
+		<key>NSLocalNetworkUsageDescription</key>
+		<string>This app requires access to the local network for debugging and development purposes.</string>
+		<!-- Declares Bonjour services the app supports (used for Flutter debugging tools like Dart Observatory) -->
+		<key>NSBonjourServices</key>
+		<array>
+			<string>_dartobservatory._tcp</string>
+		</array>
+		<!-- Declares whether the app uses non-exempt encryption (NO means standard encryption only) -->
+		<key>ITSAppUsesNonExemptEncryption</key>
+		<string>NO</string>
+		<!-- Explains why Civic24 needs access to the user’s photo library (e.g. to upload civic issue images) -->
+		<key>NSPhotoLibraryUsageDescription</key>
+		<string>Access to the photo library is required to select and upload images.</string>
+		<!-- Explains why Civic24 needs access to the camera (e.g. to take real-time photos of civic issues) -->
+		<key>NSCameraUsageDescription</key>
+		<string>Access to the camera is required to take photos.</string>
+	</dict>
 </plist>

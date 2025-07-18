@@ -8,21 +8,30 @@
 
 import 'package:stacked_services/src/bottom_sheet/bottom_sheet_service.dart';
 import 'package:stacked_services/src/dialog/dialog_service.dart';
-import 'package:stacked_services/src/navigation/navigation_service.dart';
+import 'package:stacked_services/src/navigation/router_service.dart';
 import 'package:stacked_shared/stacked_shared.dart';
+
+import 'app.router.dart';
 
 final locator = StackedLocator.instance;
 
 Future<void> setupLocator({
   String? environment,
   EnvironmentFilter? environmentFilter,
+  StackedRouterWeb? stackedRouter,
 }) async {
 // Register environments
   locator.registerEnvironment(
       environment: environment, environmentFilter: environmentFilter);
 
 // Register dependencies
+  locator.registerLazySingleton(() => RouterService());
   locator.registerLazySingleton(() => BottomSheetService());
   locator.registerLazySingleton(() => DialogService());
-  locator.registerLazySingleton(() => NavigationService());
+  if (stackedRouter == null) {
+    throw Exception(
+        'Stacked is building to use the Router (Navigator 2.0) navigation but no stackedRouter is supplied. Pass the stackedRouter to the setupLocator function in main.dart');
+  }
+
+  locator<RouterService>().setRouter(stackedRouter);
 }
