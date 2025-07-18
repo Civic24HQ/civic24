@@ -1,26 +1,84 @@
 name: admin
-description: A new Flutter project.
-publish_to: 'none'
-version: 0.1.0
+description: Admin app for Civic24
+version: 0.0.1+1
+publish_to: none
 
 environment:
-  sdk: '>=3.0.3 <4.0.0'
+  sdk: ">=3.8.1 <4.0.0"
+  flutter: "3.32.6"
 
 dependencies:
   flutter:
     sdk: flutter
-  stacked: ^3.4.0
-  stacked_services: ^1.1.0
+
+  # State Management
+  stacked: ^3.4.4
+  stacked_services: ^1.6.0
+
+  # Google/Firebase
+  firebase_core: ^3.15.1
+  firebase_auth: ^5.6.2
+  firebase_messaging: ^15.2.9
+  firebase_analytics: ^11.5.2
+  firebase_crashlytics: ^4.3.9
+  firebase_storage: ^12.4.9
+  # cloud_firestore: ^5.6.11
+  # firebase_performance: ^0.10.1+9
+  # firebase_app_check: ^0.3.2+9
+
+  # Internal Packages
+  assets:
+    path: ../../packages/assets
+  components:
+    path: ../../packages/components  
+  constants:
+    path: ../../packages/constants
+  models:
+    path: ../../packages/models
+  localization:
+    path: ../../packages/localization
+  services:
+    path: ../../packages/services
+  styles:
+    path: ../../packages/styles
+  utils:
+    path: ../../packages/utils
+
+  # Utility Packages
+
+  # UI Components
+  solar_icons: ^0.0.5
+  overlay_support: ^2.1.0
+  flutter_animate: ^4.5.2
+
 
 dev_dependencies:
-  build_runner: ^2.4.5
   flutter_test:
     sdk: flutter
-  flutter_lints: ^6.0.0
-  mockito: ^5.4.1
-  stacked_generator: ^1.3.3
+
+  # Internal Packages
+  rules:
+    path: ../../packages/rules
+    
+  # Utility Packages
+  build_runner: ^2.5.4
+  stacked_generator: ^1.6.1
+  mockito: ^5.4.4
   golden_toolkit: ^0.15.0
+  flutter_gen_runner: ^5.10.0
+  flutter_launcher_icons: ^0.14.4
+  flutter_native_splash: ^2.4.6
+  # change_app_package_name: ^1.5.0
+  # rename: ^3.1.0
 
 flutter:
   uses-material-design: true
+  generate: true
+  assets:
+    - assets/svg/
+    - assets/png/
 
+flutter_gen:
+  output: lib/ui/shared/src
+  integrations:
+    flutter_svg: true

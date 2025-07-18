@@ -1,116 +1,109 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
 // **************************************************************************
-// StackedNavigatorGenerator
+// StackedRouterGenerator
 // **************************************************************************
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:citizen/ui/views/home/home_view.dart' as _i2;
-import 'package:citizen/ui/views/startup/startup_view.dart' as _i3;
-import 'package:flutter/material.dart' as _i4;
-import 'package:flutter/material.dart';
-import 'package:stacked/stacked.dart' as _i1;
-import 'package:stacked_services/stacked_services.dart' as _i5;
+import 'package:flutter/material.dart' as _i5;
+import 'package:stacked/stacked.dart' as _i4;
+import 'package:stacked_services/stacked_services.dart' as _i3;
 
-class Routes {
-  static const homeView = '/home-view';
+import '../ui/views/home/home_view.dart' as _i1;
+import '../ui/views/startup/startup_view.dart' as _i2;
 
-  static const startupView = '/startup-view';
+final stackedRouter =
+    StackedRouterWeb(navigatorKey: _i3.StackedService.navigatorKey);
 
-  static const all = <String>{
-    homeView,
-    startupView,
-  };
-}
+class StackedRouterWeb extends _i4.RootStackRouter {
+  StackedRouterWeb({_i5.GlobalKey<_i5.NavigatorState>? navigatorKey})
+      : super(navigatorKey);
 
-class StackedRouter extends _i1.RouterBase {
-  final _routes = <_i1.RouteDef>[
-    _i1.RouteDef(
-      Routes.homeView,
-      page: _i2.HomeView,
-    ),
-    _i1.RouteDef(
-      Routes.startupView,
-      page: _i3.StartupView,
-    ),
-  ];
-
-  final _pagesMap = <Type, _i1.StackedRouteFactory>{
-    _i2.HomeView: (data) {
-      return _i4.MaterialPageRoute<dynamic>(
-        builder: (context) => const _i2.HomeView(),
-        settings: data,
+  @override
+  final Map<String, _i4.PageFactory> pagesMap = {
+    HomeViewRoute.name: (routeData) {
+      return _i4.AdaptivePage<dynamic>(
+        routeData: routeData,
+        child: const _i1.HomeView(),
+        opaque: true,
       );
     },
-    _i3.StartupView: (data) {
-      return _i4.MaterialPageRoute<dynamic>(
-        builder: (context) => const _i3.StartupView(),
-        settings: data,
+    StartupViewRoute.name: (routeData) {
+      return _i4.AdaptivePage<dynamic>(
+        routeData: routeData,
+        child: const _i2.StartupView(),
+        opaque: true,
       );
     },
   };
 
   @override
-  List<_i1.RouteDef> get routes => _routes;
-
-  @override
-  Map<Type, _i1.StackedRouteFactory> get pagesMap => _pagesMap;
+  List<_i4.RouteConfig> get routes => [
+        _i4.RouteConfig(
+          HomeViewRoute.name,
+          path: '/home-view',
+        ),
+        _i4.RouteConfig(
+          StartupViewRoute.name,
+          path: '/',
+        ),
+      ];
 }
 
-extension NavigatorStateExtension on _i5.NavigationService {
-  Future<dynamic> navigateToHomeView([
-    int? routerId,
-    bool preventDuplicates = true,
-    Map<String, String>? parameters,
-    Widget Function(BuildContext, Animation<double>, Animation<double>, Widget)?
-        transition,
-  ]) async {
-    return navigateTo<dynamic>(Routes.homeView,
-        id: routerId,
-        preventDuplicates: preventDuplicates,
-        parameters: parameters,
-        transition: transition);
+/// generated route for
+/// [_i1.HomeView]
+class HomeViewRoute extends _i4.PageRouteInfo<void> {
+  const HomeViewRoute()
+      : super(
+          HomeViewRoute.name,
+          path: '/home-view',
+        );
+
+  static const String name = 'HomeView';
+}
+
+/// generated route for
+/// [_i2.StartupView]
+class StartupViewRoute extends _i4.PageRouteInfo<void> {
+  const StartupViewRoute()
+      : super(
+          StartupViewRoute.name,
+          path: '/',
+        );
+
+  static const String name = 'StartupView';
+}
+
+extension RouterStateExtension on _i3.RouterService {
+  Future<dynamic> navigateToHomeView(
+      {void Function(_i4.NavigationFailure)? onFailure}) async {
+    return navigateTo(
+      const HomeViewRoute(),
+      onFailure: onFailure,
+    );
   }
 
-  Future<dynamic> navigateToStartupView([
-    int? routerId,
-    bool preventDuplicates = true,
-    Map<String, String>? parameters,
-    Widget Function(BuildContext, Animation<double>, Animation<double>, Widget)?
-        transition,
-  ]) async {
-    return navigateTo<dynamic>(Routes.startupView,
-        id: routerId,
-        preventDuplicates: preventDuplicates,
-        parameters: parameters,
-        transition: transition);
+  Future<dynamic> navigateToStartupView(
+      {void Function(_i4.NavigationFailure)? onFailure}) async {
+    return navigateTo(
+      const StartupViewRoute(),
+      onFailure: onFailure,
+    );
   }
 
-  Future<dynamic> replaceWithHomeView([
-    int? routerId,
-    bool preventDuplicates = true,
-    Map<String, String>? parameters,
-    Widget Function(BuildContext, Animation<double>, Animation<double>, Widget)?
-        transition,
-  ]) async {
-    return replaceWith<dynamic>(Routes.homeView,
-        id: routerId,
-        preventDuplicates: preventDuplicates,
-        parameters: parameters,
-        transition: transition);
+  Future<dynamic> replaceWithHomeView(
+      {void Function(_i4.NavigationFailure)? onFailure}) async {
+    return replaceWith(
+      const HomeViewRoute(),
+      onFailure: onFailure,
+    );
   }
 
-  Future<dynamic> replaceWithStartupView([
-    int? routerId,
-    bool preventDuplicates = true,
-    Map<String, String>? parameters,
-    Widget Function(BuildContext, Animation<double>, Animation<double>, Widget)?
-        transition,
-  ]) async {
-    return replaceWith<dynamic>(Routes.startupView,
-        id: routerId,
-        preventDuplicates: preventDuplicates,
-        parameters: parameters,
-        transition: transition);
+  Future<dynamic> replaceWithStartupView(
+      {void Function(_i4.NavigationFailure)? onFailure}) async {
+    return replaceWith(
+      const StartupViewRoute(),
+      onFailure: onFailure,
+    );
   }
 }
