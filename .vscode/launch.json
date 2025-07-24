@@ -12,6 +12,17 @@
             "request": "launch",
             "type": "dart",
             "program": "apps/admin/lib/main.dart",
+        },
+        {
+            "name": "Update Golden Tests (Components)",
+            "request": "launch",
+            "type": "dart",
+            "program": "packages/components/test",
+            "args": [
+                "--update-goldens",
+                "--tags",
+                "golden"
+            ]
         }
     ]
 }

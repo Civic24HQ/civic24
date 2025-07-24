@@ -147,3 +147,11 @@
 # Firebase related
 **.firebase/
 **.firebase/hosting/
+
+# Golden Tests related
+**/failures/**/*.png
+
+# Ignore platform-specific goldens
+**/goldens/macos
+**/goldens/linux
+**/goldens/windows
