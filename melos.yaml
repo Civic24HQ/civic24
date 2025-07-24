@@ -251,6 +251,12 @@ scripts:
   components:test:
     run: melos exec --fail-fast --scope="components" --dir-exists="test" -- "flutter test --no-pub"
 
+  components:golden:
+    run: melos exec --fail-fast --scope="components" --dir-exists="test" -- "flutter test --tags golden --no-pub"
+
+  components:update:golden:
+    run: melos exec --fail-fast --scope="components" --dir-exists="test" -- "flutter test --tags golden --update-goldens --no-pub"
+
 
   # ─────────────────────────────
   # 📦 Constants Package-Specific Commands
