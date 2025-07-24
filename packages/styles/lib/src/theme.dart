@@ -67,8 +67,8 @@ class AppTheme {
       colorScheme: SeedColorScheme.fromSeeds(
         primaryKey: AppColors.primary,
         primary: AppColors.primary.shade400,
-        onPrimary: AppColors.black,
-        primaryContainer: AppColors.primary.shade700,
+        onPrimary: AppColors.white,
+        primaryContainer: AppColors.primary.shade800,
         onPrimaryContainer: AppColors.primary.shade50,
         secondary: AppColors.secondary,
         onSecondary: AppColors.white,
@@ -85,6 +85,7 @@ class AppTheme {
       ),
       extensions: <ThemeExtension<dynamic>>{_darkCustomColorsTheme},
     ).copyWith(
+      scaffoldBackgroundColor: AppColors.blackAlt,
       appBarTheme: AppBarTheme(
         elevation: 0,
         centerTitle: true,
