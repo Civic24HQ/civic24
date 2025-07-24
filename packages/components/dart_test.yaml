@@ -1,0 +1,4 @@
+# dart_test.yaml
+tags:
+  golden:
+    description: "Marks tests that generate or verify golden images"
