@@ -1,3 +1,4 @@
+import 'package:components/components.dart';
 import 'package:flutter/material.dart';
 import 'package:styles/styles.dart';
 
@@ -10,7 +11,9 @@ class ComponentGridShowcase extends StatelessWidget {
     // Each entry is a MapEntry with a string key (component name) and a widget value (the component itself)
     // This allows for easy expansion in the future if more components are added
     // final widgets = <Widget>[const TestComponent(), const ExpandingDotsIndicator(count: 3, currentIndex: 0)];
-    final items = <MapEntry<String, Widget>>[];
+    final items = <MapEntry<String, Widget>>[
+      const MapEntry('Expanding Dots Indicator', ExpandingDotsIndicator(count: 3, currentIndex: 0)),
+    ];
 
     // Build a grid view to display the components
     // Each component is wrapped in a Card with padding and a title below it
