@@ -22,6 +22,35 @@ class MessageLookup extends MessageLookupByLibrary {
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
+    "generalClickToUpload": MessageLookupByLibrary.simpleMessage(
+      "Click to Upload",
+    ),
+    "generalConfirmPassword": MessageLookupByLibrary.simpleMessage(
+      "Confirm Password",
+    ),
+    "generalContinueWithApple": MessageLookupByLibrary.simpleMessage(
+      "Continue with Apple",
+    ),
+    "generalContinueWithGoogle": MessageLookupByLibrary.simpleMessage(
+      "Continue with Google",
+    ),
+    "generalEmail": MessageLookupByLibrary.simpleMessage("Email"),
+    "generalEmailHint": MessageLookupByLibrary.simpleMessage(
+      "Enter your email",
+    ),
+    "generalForgotPassword": MessageLookupByLibrary.simpleMessage(
+      "Forgot Password?",
+    ),
+    "generalLogin": MessageLookupByLibrary.simpleMessage("Login"),
+    "generalPassword": MessageLookupByLibrary.simpleMessage("Password"),
+    "generalRegister": MessageLookupByLibrary.simpleMessage("Register"),
+    "generalSupportedFormats": MessageLookupByLibrary.simpleMessage(
+      "Supported: jpg, png, mp4 (max. 800x400px)",
+    ),
+    "pageHome": MessageLookupByLibrary.simpleMessage("Home"),
+    "pageNotifications": MessageLookupByLibrary.simpleMessage("Notifications"),
+    "pageReports": MessageLookupByLibrary.simpleMessage("Reports"),
+    "pageSettings": MessageLookupByLibrary.simpleMessage("Settings"),
     "title": MessageLookupByLibrary.simpleMessage("Civic24"),
   };
 }
