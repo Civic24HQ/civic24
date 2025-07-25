@@ -3,5 +3,65 @@
     "title": "Civic24",
     "@title": {
         "description": "Civic24"
+    },
+    "pageHome": "Home",
+    "@pageHome": {
+        "description": "Home page title"
+    },
+    "pageReports": "Reports",
+    "@pageReports": {
+        "description": "Reports page title"
+    },
+    "pageNotifications": "Notifications",
+    "@pageNotifications": {
+        "description": "Notifications page title"
+    },
+    "pageSettings": "Settings",
+    "@pageSettings": {
+        "description": "Settings page title"
+    },
+    "generalClickToUpload": "Click to Upload",
+    "@generalClickToUpload": {
+        "description": "Text for the upload button"
+    },
+    "generalSupportedFormats": "Supported: jpg, png, mp4 (max. 800x400px)",
+    "@generalSupportedFormats": {
+        "description": "Text for the supported file formats"
+    },
+    "generalContinueWithGoogle": "Continue with Google",
+    "@generalContinueWithGoogle": {
+        "description": "Text for the Google sign-in button"
+    },
+    "generalContinueWithApple": "Continue with Apple",
+    "@generalContinueWithApple": {
+        "description": "Text for the Apple sign-in button"
+    },
+    "generalLogin": "Login",
+    "@generalLogin": {
+        "description": "Text for the login button"
+    },
+    "generalRegister": "Register",
+    "@generalRegister": {
+        "description": "Text for the register button"
+    },
+    "generalEmail": "Email",
+    "@generalEmail": {
+        "description": "Label for the email input field"
+    },
+    "generalPassword": "Password",
+    "@generalPassword": {
+        "description": "Label for the password input field"
+    },
+    "generalConfirmPassword": "Confirm Password",
+    "@generalConfirmPassword": {
+        "description": "Label for the confirm password input field"
+    },
+    "generalForgotPassword": "Forgot Password?",
+    "@generalForgotPassword": {
+        "description": "Text for the forgot password link"
+    },
+    "generalEmailHint": "Enter your email",
+    "@generalEmailHint": {
+        "description": "Hint text for the email input field"
     }
 }
