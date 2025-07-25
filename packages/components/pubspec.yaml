@@ -12,6 +12,11 @@ dependencies:
     sdk: flutter
   # General Dependencies
   smooth_page_indicator: ^1.2.1
+  solar_icons: ^0.0.5
+  iconsax_plus: ^1.0.0
+  font_awesome_flutter: ^10.4.0
+  dotted_border: ^2.1.0
+  flutter_animate: ^4.5.2
 
   # Package Dependencies
   assets:
