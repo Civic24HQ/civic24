@@ -43,6 +43,8 @@ extension ThemeContextX on BuildContext {
 
   Color get onPrimaryContainer => Theme.of(this).colorScheme.onPrimaryContainer;
 
+  Color get primaryFixed => Theme.of(this).colorScheme.primaryFixed;
+
   Color get secondary => Theme.of(this).colorScheme.secondary;
 
   Color get secondaryContainer => Theme.of(this).colorScheme.secondaryContainer;
@@ -50,6 +52,10 @@ extension ThemeContextX on BuildContext {
   Color get onSecondary => Theme.of(this).colorScheme.onSecondary;
 
   Color get onSecondaryContainer => Theme.of(this).colorScheme.onSecondaryContainer;
+
+  Color get tertiaryContainer => Theme.of(this).colorScheme.tertiaryContainer;
+
+  Color get onTertiaryContainer => Theme.of(this).colorScheme.onTertiaryContainer;
 
   Color get onSurfaceVariant => Theme.of(this).colorScheme.onSurfaceVariant;
 

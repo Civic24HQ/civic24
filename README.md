@@ -143,6 +143,54 @@ This is triggered when a PR is opened or updated. It automatically labels PRs (e
 
 ---
 
+## 🖼️ Golden Tests Guide
+
+Golden tests capture pixel-perfect snapshots of widgets to catch visual regressions.
+
+### How to Write a Golden Test
+
+Use the `testableWidget` helper to wrap your widget with theme, localization, and layout context.
+
+```dart
+testGoldens('MyWidget', (tester) async {
+  final builder = GoldenBuilder.column()
+    ..addScenario('MyWidget - Active State', testableWidget(const MyWidget()));
+
+  await tester.pumpWidgetBuilder(builder.build());
+  await screenMatchesGolden(tester, 'my_widget');
+});
+```
+
+You can also use `DeviceBuilder` if you want to test responsiveness across devices.
+
+### Running Golden Tests
+
+Run golden tests with:
+
+```bash
+flutter test --tags golden
+```
+
+To update reference images:
+
+```bash
+flutter test --tags golden --update-goldens
+```
+
+> Only use `--update-goldens` when you intentionally want to refresh the snapshots.
+
+### Output Location
+
+Golden snapshot images are saved under:
+
+```
+goldens/
+```
+
+> Each `.png` file is matched against its test description name.
+
+---
+
 ## Download Civic24 App (Preview Builds)
 
 You can test the latest preview builds of the Civic24 mobile apps without setting up a development environment.

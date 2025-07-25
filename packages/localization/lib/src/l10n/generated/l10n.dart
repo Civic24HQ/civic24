@@ -58,6 +58,156 @@ class S {
   String get title {
     return Intl.message('Civic24', name: 'title', desc: 'Civic24', args: []);
   }
+
+  /// `Home`
+  String get pageHome {
+    return Intl.message(
+      'Home',
+      name: 'pageHome',
+      desc: 'Home page title',
+      args: [],
+    );
+  }
+
+  /// `Reports`
+  String get pageReports {
+    return Intl.message(
+      'Reports',
+      name: 'pageReports',
+      desc: 'Reports page title',
+      args: [],
+    );
+  }
+
+  /// `Notifications`
+  String get pageNotifications {
+    return Intl.message(
+      'Notifications',
+      name: 'pageNotifications',
+      desc: 'Notifications page title',
+      args: [],
+    );
+  }
+
+  /// `Settings`
+  String get pageSettings {
+    return Intl.message(
+      'Settings',
+      name: 'pageSettings',
+      desc: 'Settings page title',
+      args: [],
+    );
+  }
+
+  /// `Click to Upload`
+  String get generalClickToUpload {
+    return Intl.message(
+      'Click to Upload',
+      name: 'generalClickToUpload',
+      desc: 'Text for the upload button',
+      args: [],
+    );
+  }
+
+  /// `Supported: jpg, png, mp4 (max. 800x400px)`
+  String get generalSupportedFormats {
+    return Intl.message(
+      'Supported: jpg, png, mp4 (max. 800x400px)',
+      name: 'generalSupportedFormats',
+      desc: 'Text for the supported file formats',
+      args: [],
+    );
+  }
+
+  /// `Continue with Google`
+  String get generalContinueWithGoogle {
+    return Intl.message(
+      'Continue with Google',
+      name: 'generalContinueWithGoogle',
+      desc: 'Text for the Google sign-in button',
+      args: [],
+    );
+  }
+
+  /// `Continue with Apple`
+  String get generalContinueWithApple {
+    return Intl.message(
+      'Continue with Apple',
+      name: 'generalContinueWithApple',
+      desc: 'Text for the Apple sign-in button',
+      args: [],
+    );
+  }
+
+  /// `Login`
+  String get generalLogin {
+    return Intl.message(
+      'Login',
+      name: 'generalLogin',
+      desc: 'Text for the login button',
+      args: [],
+    );
+  }
+
+  /// `Register`
+  String get generalRegister {
+    return Intl.message(
+      'Register',
+      name: 'generalRegister',
+      desc: 'Text for the register button',
+      args: [],
+    );
+  }
+
+  /// `Email`
+  String get generalEmail {
+    return Intl.message(
+      'Email',
+      name: 'generalEmail',
+      desc: 'Label for the email input field',
+      args: [],
+    );
+  }
+
+  /// `Password`
+  String get generalPassword {
+    return Intl.message(
+      'Password',
+      name: 'generalPassword',
+      desc: 'Label for the password input field',
+      args: [],
+    );
+  }
+
+  /// `Confirm Password`
+  String get generalConfirmPassword {
+    return Intl.message(
+      'Confirm Password',
+      name: 'generalConfirmPassword',
+      desc: 'Label for the confirm password input field',
+      args: [],
+    );
+  }
+
+  /// `Forgot Password?`
+  String get generalForgotPassword {
+    return Intl.message(
+      'Forgot Password?',
+      name: 'generalForgotPassword',
+      desc: 'Text for the forgot password link',
+      args: [],
+    );
+  }
+
+  /// `Enter your email`
+  String get generalEmailHint {
+    return Intl.message(
+      'Enter your email',
+      name: 'generalEmailHint',
+      desc: 'Hint text for the email input field',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {
