@@ -30,7 +30,7 @@ void main() {
   });
 
 
-  // Run device-specific golden tests for TestComponent
+  // Run device-specific golden tests for ExpandingDotsIndicator
   testGoldens('$ExpandingDotsIndicator – General', (tester) async {
     const scenarioHeight = 120.0;
 
