@@ -56,7 +56,7 @@ scripts:
   packages:build:
     run: |
       melos run assets:build
-      melos run localization:build
+      melos run localization:intl
       melos run models:build
       melos run services:build
     description: Runs build for all apps depending on build_runner
@@ -256,7 +256,6 @@ scripts:
 
   components:update:golden:
     run: melos exec --fail-fast --scope="components" --dir-exists="test" -- "flutter test --tags golden --update-goldens --no-pub"
-
 
   # ─────────────────────────────
   # 📦 Constants Package-Specific Commands
