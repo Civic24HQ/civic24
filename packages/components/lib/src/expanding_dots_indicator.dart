@@ -24,7 +24,7 @@ class ExpandingDotsIndicator extends StatelessWidget {
       onDotClicked: onDotClicked,
       effect: ExpandingDotsEffect(
         activeDotColor: context.primary,
-        dotColor: context.outline,
+        dotColor: context.neutralLow,
         dotHeight: AppDimensions.size8,
         dotWidth: AppDimensions.size12,
       ),

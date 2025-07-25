@@ -2,6 +2,7 @@ import 'package:components/components.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:golden_toolkit/golden_toolkit.dart';
+import 'package:styles/styles.dart';
 import '../helpers/golden_test_helpers.dart';
 
 void main() {
@@ -32,18 +33,24 @@ void main() {
 
   // Run device-specific golden tests for ExpandingDotsIndicator
   testGoldens('$ExpandingDotsIndicator – General', (tester) async {
-    const scenarioHeight = 120.0;
-
     final builder = DeviceBuilder()
       ..overrideDevicesForAllScenarios(devices: devices)
       ..addScenario(
-        widget: testableWidget(const ExpandingDotsIndicator(count: 3, currentIndex: 0)),
+        widget: testableWidget(
+          Container(
+            padding: const EdgeInsets.all(AppDimensions.padding16),
+            child: const ExpandingDotsIndicator(count: 3, currentIndex: 0),
+          ),
+        ),
         name: '$ExpandingDotsIndicator – General with light theme',
       )
       ..addScenario(
-        widget: SizedBox(
-          height: scenarioHeight,
-          child: testableWidget(const ExpandingDotsIndicator(count: 3, currentIndex: 0), dark: true),
+        widget: testableWidget(
+          Container(
+            padding: const EdgeInsets.all(AppDimensions.padding16),
+            child: const ExpandingDotsIndicator(count: 3, currentIndex: 0),
+          ),
+          dark: true,
         ),
         name: '$ExpandingDotsIndicator – General with dark theme',
       );
