@@ -41,6 +41,8 @@ extension ThemeContextX on BuildContext {
 
   Color get primaryContainer => Theme.of(this).colorScheme.primaryContainer;
 
+  Color get primaryFixedDim => Theme.of(this).colorScheme.primaryFixedDim;
+
   Color get onPrimaryContainer => Theme.of(this).colorScheme.onPrimaryContainer;
 
   Color get primaryFixed => Theme.of(this).colorScheme.primaryFixed;

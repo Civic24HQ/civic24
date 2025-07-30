@@ -19,6 +19,14 @@ class $AssetsPngGen {
   AssetGenImage get civic24AppLogo =>
       const AssetGenImage('assets/png/civic24-app-logo.png');
 
+  /// File path: assets/png/civic24-logo.png
+  AssetGenImage get civic24Logo =>
+      const AssetGenImage('assets/png/civic24-logo.png');
+
+  /// File path: assets/png/civic24-logo2.png
+  AssetGenImage get civic24Logo2 =>
+      const AssetGenImage('assets/png/civic24-logo2.png');
+
   /// File path: assets/png/civic24-splash-screen-IOS.png
   AssetGenImage get civic24SplashScreenIOS =>
       const AssetGenImage('assets/png/civic24-splash-screen-IOS.png');
@@ -37,6 +45,8 @@ class $AssetsPngGen {
   /// List of all assets
   List<AssetGenImage> get values => [
         civic24AppLogo,
+        civic24Logo,
+        civic24Logo2,
         civic24SplashScreenIOS,
         civic24SplashScreen,
         iosDark,
@@ -47,12 +57,46 @@ class $AssetsPngGen {
 class $AssetsSvgGen {
   const $AssetsSvgGen();
 
+  /// File path: assets/svg/bold-circle1.svg
+  SvgGenImage get boldCircle1 =>
+      const SvgGenImage('assets/svg/bold-circle1.svg');
+
+  /// File path: assets/svg/bold-circle2.svg
+  SvgGenImage get boldCircle2 =>
+      const SvgGenImage('assets/svg/bold-circle2.svg');
+
   /// File path: assets/svg/civic24-app-logo.svg
   SvgGenImage get civic24AppLogo =>
       const SvgGenImage('assets/svg/civic24-app-logo.svg');
 
+  /// File path: assets/svg/civic24-logo.svg
+  SvgGenImage get civic24Logo =>
+      const SvgGenImage('assets/svg/civic24-logo.svg');
+
+  /// File path: assets/svg/left-side.svg
+  SvgGenImage get leftSide => const SvgGenImage('assets/svg/left-side.svg');
+
+  /// File path: assets/svg/light.svg
+  SvgGenImage get light => const SvgGenImage('assets/svg/light.svg');
+
+  /// File path: assets/svg/outline-circle.svg
+  SvgGenImage get outlineCircle =>
+      const SvgGenImage('assets/svg/outline-circle.svg');
+
+  /// File path: assets/svg/right-side.svg
+  SvgGenImage get rightSide => const SvgGenImage('assets/svg/right-side.svg');
+
   /// List of all assets
-  List<SvgGenImage> get values => [civic24AppLogo];
+  List<SvgGenImage> get values => [
+        boldCircle1,
+        boldCircle2,
+        civic24AppLogo,
+        civic24Logo,
+        leftSide,
+        light,
+        outlineCircle,
+        rightSide
+      ];
 }
 
 class Assets {
