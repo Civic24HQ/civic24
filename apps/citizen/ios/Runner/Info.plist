@@ -84,6 +84,8 @@
 		<string>Main</string>
 		<!-- Controls whether the status bar is hidden (false = visible) -->
 		<key>UIStatusBarHidden</key>
+<false/>
+
 		<key>UISupportedInterfaceOrientations</key>
 		<array>
 			<string>UIInterfaceOrientationPortrait</string>

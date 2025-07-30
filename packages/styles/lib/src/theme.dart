@@ -25,6 +25,7 @@ class AppTheme {
         primaryContainer: AppColors.primary.shade50,
         onPrimaryContainer: AppColors.primary.shade800,
         primaryFixed: AppColors.primary.shade200,
+        primaryFixedDim: AppColors.primary.shade50,
         secondary: AppColors.secondary,
         onSecondary: AppColors.white,
         secondaryContainer: AppColors.secondary.shade100,
@@ -40,6 +41,7 @@ class AppTheme {
         onSurface: AppColors.black,
         onSurfaceVariant: AppColors.neutral.shade600,
         outline: AppColors.neutral.shade100,
+        
         outlineVariant: AppColors.neutral.shade300,
       ),
       extensions: <ThemeExtension<dynamic>>{_lightCustomColorsTheme},
@@ -74,6 +76,7 @@ class AppTheme {
         primaryContainer: AppColors.primary.shade800,
         onPrimaryContainer: AppColors.primary.shade50,
         primaryFixed: AppColors.primary.shade700,
+        primaryFixedDim: AppColors.black,
         secondary: AppColors.secondary,
         onSecondary: AppColors.white,
         secondaryContainer: AppColors.secondary.shade800,
