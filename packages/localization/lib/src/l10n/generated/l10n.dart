@@ -208,6 +208,76 @@ class S {
       args: [],
     );
   }
+
+  /// `Get Started`
+  String get featureonboardingGetStarted {
+    return Intl.message(
+      'Get Started',
+      name: 'featureonboardingGetStarted',
+      desc: 'Text for Onboarding Get Started Button',
+      args: [],
+    );
+  }
+
+  /// `Voice Your Report`
+  String get featureonboardingVoiceReport {
+    return Intl.message(
+      'Voice Your Report',
+      name: 'featureonboardingVoiceReport',
+      desc: 'Title 1 for Onboarding Sets',
+      args: [],
+    );
+  }
+
+  /// `Civic24 allows you to speak up about pressing problems in your community and make your voice heard`
+  String get featureonboardingVoiceReportDesc {
+    return Intl.message(
+      'Civic24 allows you to speak up about pressing problems in your community and make your voice heard',
+      name: 'featureonboardingVoiceReportDesc',
+      desc: 'Title Description 1 for Onboarding Sets',
+      args: [],
+    );
+  }
+
+  /// `Make Your Voice Count`
+  String get featureonboardingVoiceCount {
+    return Intl.message(
+      'Make Your Voice Count',
+      name: 'featureonboardingVoiceCount',
+      desc: 'Title 2 for Onboarding Sets',
+      args: [],
+    );
+  }
+
+  /// `With Civic24, your thumbs up or down helps prioritize civic problems that matter most to the people around you`
+  String get featureonboardingVoiceCountDesc {
+    return Intl.message(
+      'With Civic24, your thumbs up or down helps prioritize civic problems that matter most to the people around you',
+      name: 'featureonboardingVoiceCountDesc',
+      desc: 'Title Description 2 for Onboarding Sets',
+      args: [],
+    );
+  }
+
+  /// `Connect with Other Voices`
+  String get featureonboardingConnectVoice {
+    return Intl.message(
+      'Connect with Other Voices',
+      name: 'featureonboardingConnectVoice',
+      desc: 'Title 2 for Onboarding Sets',
+      args: [],
+    );
+  }
+
+  /// `Civic24 provides a platform for you to engage with fellow citizens by expressing your opinion on civic issues`
+  String get featureonboardingConnectVoiceDesc {
+    return Intl.message(
+      'Civic24 provides a platform for you to engage with fellow citizens by expressing your opinion on civic issues',
+      name: 'featureonboardingConnectVoiceDesc',
+      desc: 'Title Description 3 for Onboarding Sets',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {
