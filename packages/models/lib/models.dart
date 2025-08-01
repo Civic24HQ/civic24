@@ -2,3 +2,4 @@
 library models;
 
 export 'src/display_preferences.dart';
+export 'src/onboarding.dart';

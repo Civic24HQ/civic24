@@ -33,6 +33,6 @@ class StartupViewModel extends BaseViewModel {
     rotate();
     animateLight();
     await Future.delayed(const Duration(milliseconds: 6500));
-    await _navigationService.replaceWithHomeView();
+    await _navigationService.replaceWithOnboardingView();
   }
 }

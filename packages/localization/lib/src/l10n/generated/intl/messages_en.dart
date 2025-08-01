@@ -22,6 +22,27 @@ class MessageLookup extends MessageLookupByLibrary {
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
+    "featureonboardingConnectVoice": MessageLookupByLibrary.simpleMessage(
+      "Connect with Other Voices",
+    ),
+    "featureonboardingConnectVoiceDesc": MessageLookupByLibrary.simpleMessage(
+      "Civic24 provides a platform for you to engage with fellow citizens by expressing your opinion on civic issues",
+    ),
+    "featureonboardingGetStarted": MessageLookupByLibrary.simpleMessage(
+      "Get Started",
+    ),
+    "featureonboardingVoiceCount": MessageLookupByLibrary.simpleMessage(
+      "Make Your Voice Count",
+    ),
+    "featureonboardingVoiceCountDesc": MessageLookupByLibrary.simpleMessage(
+      "With Civic24, your thumbs up or down helps prioritize civic problems that matter most to the people around you",
+    ),
+    "featureonboardingVoiceReport": MessageLookupByLibrary.simpleMessage(
+      "Voice Your Report",
+    ),
+    "featureonboardingVoiceReportDesc": MessageLookupByLibrary.simpleMessage(
+      "Civic24 allows you to speak up about pressing problems in your community and make your voice heard",
+    ),
     "generalClickToUpload": MessageLookupByLibrary.simpleMessage(
       "Click to Upload",
     ),

@@ -3,6 +3,7 @@ import 'dart:ui';
 import 'package:citizen/app/app.router.dart';
 import 'package:citizen/app_builder.dart';
 import 'package:citizen/ui/views/home/home_view.dart';
+import 'package:citizen/ui/views/onboarding/onboarding_view.dart';
 import 'package:citizen/ui/views/startup/startup_view.dart';
 import 'package:flutter/material.dart';
 import 'package:localization/localization.dart';
@@ -15,6 +16,7 @@ import 'package:styles/styles.dart';
   routes: [
     AdaptiveRoute(page: HomeView),
     AdaptiveRoute(page: StartupView, initial: true),
+    AdaptiveRoute(page: OnboardingView),
     // @stacked-route
   ],
   dependencies: [

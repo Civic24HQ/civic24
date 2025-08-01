@@ -63,5 +63,33 @@
     "generalEmailHint": "Enter your email",
     "@generalEmailHint": {
         "description": "Hint text for the email input field"
+    },
+    "featureonboardingGetStarted": "Get Started",
+    "@featureonboardingGetStarted": {
+        "description": "Text for Onboarding Get Started Button"
+    },
+    "featureonboardingVoiceReport": "Voice Your Report",
+    "@featureonboardingVoiceReport": {
+        "description": "Title 1 for Onboarding Sets"
+    },
+    "featureonboardingVoiceReportDesc": "Civic24 allows you to speak up about pressing problems in your community and make your voice heard",
+    "@featureonboardingVoiceReportDesc": {
+        "description": "Title Description 1 for Onboarding Sets"
+    },
+    "featureonboardingVoiceCount": "Make Your Voice Count",
+    "@featureonboardingVoiceCount": {
+        "description": "Title 2 for Onboarding Sets"
+    },
+    "featureonboardingVoiceCountDesc": "With Civic24, your thumbs up or down helps prioritize civic problems that matter most to the people around you",
+    "@featureonboardingVoiceCountDesc": {
+        "description": "Title Description 2 for Onboarding Sets"
+    },
+    "featureonboardingConnectVoice": "Connect with Other Voices",
+    "@featureonboardingConnectVoice": {
+        "description": "Title 2 for Onboarding Sets"
+    },
+    "featureonboardingConnectVoiceDesc": "Civic24 provides a platform for you to engage with fellow citizens by expressing your opinion on civic issues",
+    "@featureonboardingConnectVoiceDesc": {
+        "description": "Title Description 3 for Onboarding Sets"
     }
 }
