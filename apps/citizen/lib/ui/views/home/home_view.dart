@@ -32,7 +32,11 @@ class HomeView extends StackedView<HomeViewModel> {
                 ),
                 Text(
                   'This is the Citizen App sample page using Stacked View',
-                  style: TextStyle(fontFamily: FontFamily.poppins, fontSize: 20, color: context.onSurfaceVariant),
+                  style: TextStyle(
+                    fontFamily: FontFamily.poppins,
+                    fontSize: 20,
+                    color: context.onSurfaceVariant,
+                  ),
                   textAlign: TextAlign.center,
                 ),
               ],

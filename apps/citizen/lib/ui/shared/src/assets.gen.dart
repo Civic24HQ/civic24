@@ -79,6 +79,18 @@ class $AssetsSvgGen {
   /// File path: assets/svg/light.svg
   SvgGenImage get light => const SvgGenImage('assets/svg/light.svg');
 
+  /// File path: assets/svg/onboardingOne.svg
+  SvgGenImage get onboardingOne =>
+      const SvgGenImage('assets/svg/onboardingOne.svg');
+
+  /// File path: assets/svg/onboardingThree.svg
+  SvgGenImage get onboardingThree =>
+      const SvgGenImage('assets/svg/onboardingThree.svg');
+
+  /// File path: assets/svg/onboardingTwo.svg
+  SvgGenImage get onboardingTwo =>
+      const SvgGenImage('assets/svg/onboardingTwo.svg');
+
   /// File path: assets/svg/outline-circle.svg
   SvgGenImage get outlineCircle =>
       const SvgGenImage('assets/svg/outline-circle.svg');
@@ -94,6 +106,9 @@ class $AssetsSvgGen {
         civic24Logo,
         leftSide,
         light,
+        onboardingOne,
+        onboardingThree,
+        onboardingTwo,
         outlineCircle,
         rightSide
       ];
