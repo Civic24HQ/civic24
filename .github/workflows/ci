@@ -17,11 +17,7 @@ permissions:
 
 env:
   FLUTTER_VERSION: "3.32.6"
-  EXCLUDED_FILES: |
-    :!**/*app.router.dart
-    :!**/*app.locator.dart
-    :!**/*test_helpers.mocks.dart
-    :!**/*assets.gen.dart
+  EXCLUDED_FILES: ":(exclude)**/*app.router.dart :(exclude)**/*test_helpers.mocks.dart :(exclude)**/*assets.gen.dart"
 
 jobs:
   security_hardening:
@@ -79,5 +75,5 @@ jobs:
       # Verify no uncommitted changes in ${{ matrix.app }}
       - name: 🧾 Verify no uncommitted changes in ${{ matrix.app }}
         run: |
-          git diff --exit-code $EXCLUDED_FILES
+          git diff --exit-code -- . $EXCLUDED_FILES
         working-directory: apps/${{ matrix.app }}
