@@ -10,15 +10,12 @@ on:
 
 env:
   FLUTTER_VERSION: "3.32.6"
-  EXCLUDED_FILES: |
-    :!**/*app.router.dart
-    :!**/*test_helpers.mocks.dart
-    :!**/*assets.gen.dart
+  EXCLUDED_FILES: ":(exclude)**/*app.router.dart :(exclude)**/*test_helpers.mocks.dart :(exclude)**/*assets.gen.dart"
 
 jobs:
   build-ios:
     name: Build and Deploy IOS for ${{ matrix.app }} app
-    runs-on: macos-latest
+    runs-on: macos-15
     strategy:
       matrix:
         app: [citizen, admin]
@@ -71,7 +68,7 @@ jobs:
       # Verify no uncommitted changes in ${{ matrix.app }}
       - name: 🧾 Verify no uncommitted changes in ${{ matrix.app }}
         run: |
-          git diff --exit-code $EXCLUDED_FILES
+          git diff --exit-code -- . $EXCLUDED_FILES
         working-directory: apps/${{ matrix.app }}
 
       # Debug the runner environment to ensure all tools are available
@@ -175,7 +172,7 @@ jobs:
       # Verify no uncommitted changes in ${{ matrix.app }}
       - name: 🧾 Verify no uncommitted changes in ${{ matrix.app }}
         run: |
-          git diff --exit-code $EXCLUDED_FILES
+          git diff --exit-code -- . $EXCLUDED_FILES
         working-directory: apps/${{ matrix.app }}
       
       # Build the Android application package (APK)

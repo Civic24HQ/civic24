@@ -22,9 +22,9 @@ dependencies:
   firebase_analytics: ^11.5.2
   firebase_crashlytics: ^4.3.9
   firebase_storage: ^12.4.9
-  # cloud_firestore: ^5.6.11
-  # firebase_performance: ^0.10.1+9
-  # firebase_app_check: ^0.3.2+9
+  cloud_firestore: ^5.6.11
+  firebase_performance: ^0.10.1+9
+  firebase_app_check: ^0.3.2+9
 
   # Internal Packages
   assets:
