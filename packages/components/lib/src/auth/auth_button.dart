@@ -24,23 +24,24 @@ class AuthButton extends StatelessWidget {
     return Column(
       children: [
         if (onGoogleTap != null)
-          PrimaryButton(
-            borderColor: context.neutralHigh,
+          OutlineButton(
+            borderColor: context.neutralLow,
+            textStyle: context.titleMedium?.copyWith(fontWeight: FontWeight.w500),
             leading: Assets.svg.googleLogo.svg(width: AppDimensions.size20, height: AppDimensions.size20),
             isBusy: isGoogleButtonBusy,
             title: l10n.generalContinueWithGoogle,
-            titleColor: context.neutralHigh,
-            backgroundColor: context.surface,
             onTap: onGoogleTap,
           ),
         AppSpacing.normal,
         if (onAppleTap != null)
-          PrimaryButton(
-            backgroundColor: context.onSurface,
+          OutlineButton(
             leadingIcon: FontAwesomeIcons.apple,
+            iconColor: context.onSurface,
             title: l10n.generalContinueWithApple,
+            textStyle: context.titleMedium?.copyWith(fontWeight: FontWeight.w500),
             isBusy: isAppleButtonBusy,
             onTap: onAppleTap,
+            borderColor: context.neutralLow,
           ),
       ],
     );

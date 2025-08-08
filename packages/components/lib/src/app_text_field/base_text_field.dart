@@ -87,8 +87,7 @@ class _BaseTextFieldState extends State<_BaseTextField> {
       children: [
         if (widget.label != null) ...[
           Text.rich(
-            style: context.bodySmall?.copyWith(color: context.colorScheme.onSurfaceVariant),
-            maxLines: widget.maxLines,
+            style: context.bodyMedium?.copyWith(color: context.colorScheme.onSurfaceVariant),
             overflow: TextOverflow.ellipsis,
             softWrap: false,
             TextSpan(
@@ -97,7 +96,7 @@ class _BaseTextFieldState extends State<_BaseTextField> {
                 if (widget.showRequiredIndicator)
                   TextSpan(
                     text: ' *',
-                    style: context.bodySmall?.copyWith(color: context.error),
+                    style: context.bodyMedium?.copyWith(color: context.error),
                   ),
               ],
             ),
@@ -111,7 +110,7 @@ class _BaseTextFieldState extends State<_BaseTextField> {
           autofocus: widget.autofocus,
           focusNode: widget.focusNode,
           keyboardType: widget.keyboardType,
-          style: context.bodyLarge?.copyWith(color: context.colorScheme.onSurface),
+          style: context.bodyMedium?.copyWith(color: context.colorScheme.onSurface),
           enabled: widget.enabled,
           onChanged: widget.onChanged,
           validator: widget.validator,
@@ -134,11 +133,11 @@ class _BaseTextFieldState extends State<_BaseTextField> {
             helperText: widget.helperText,
             helperMaxLines: 3,
             hintText: widget.hintText,
-            errorStyle: context.bodyMedium?.copyWith(color: context.colorScheme.onErrorContainer),
+            errorStyle: context.bodyMedium?.copyWith(color: context.colorScheme.error),
             helperStyle: context.bodyMedium?.copyWith(
               color: widget.enabled ? context.colorScheme.onSurfaceVariant : context.neutralHigh,
             ),
-            hintStyle: context.bodySmall?.copyWith(color: context.neutralHigh),
+            hintStyle: context.bodyMedium?.copyWith(color: context.neutralHigh),
             hintMaxLines: 1,
             border: OutlineInputBorder(
               borderRadius: AppBorderRadius.radius8,
