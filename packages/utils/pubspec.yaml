@@ -13,6 +13,7 @@ dependencies:
 
   # General Dependencies
   platform: ^3.1.6
+  email_validator: ^3.0.0
 
   # Package Dependencies
   # localization:
