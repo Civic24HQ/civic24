@@ -2,6 +2,9 @@ import 'dart:ui';
 
 import 'package:citizen/app/app.router.dart';
 import 'package:citizen/app_builder.dart';
+import 'package:citizen/ui/shared/src/success/success_view.dart';
+import 'package:citizen/ui/views/auth/login/login_view.dart';
+import 'package:citizen/ui/views/auth/signup/signup_view.dart';
 import 'package:citizen/ui/views/home/home_view.dart';
 import 'package:citizen/ui/views/onboarding/onboarding_view.dart';
 import 'package:citizen/ui/views/startup/startup_view.dart';
@@ -17,6 +20,9 @@ import 'package:styles/styles.dart';
     AdaptiveRoute(page: HomeView),
     AdaptiveRoute(page: StartupView, initial: true),
     AdaptiveRoute(page: OnboardingView),
+    AdaptiveRoute(page: LoginView),
+    AdaptiveRoute(page: SignupView),
+    AdaptiveRoute(page: SuccessView),
     // @stacked-route
   ],
   dependencies: [

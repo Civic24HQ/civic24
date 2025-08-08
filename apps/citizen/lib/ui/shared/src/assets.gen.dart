@@ -12,12 +12,34 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/flutter_svg.dart' as _svg;
 import 'package:vector_graphics/vector_graphics.dart' as _vg;
 
+class $AssetsLottieGen {
+  const $AssetsLottieGen();
+
+  /// File path: assets/lottie/Success.json
+  String get success => 'assets/lottie/Success.json';
+
+  /// List of all assets
+  List<String> get values => [success];
+}
+
 class $AssetsPngGen {
   const $AssetsPngGen();
 
   /// File path: assets/png/civic24-app-logo.png
   AssetGenImage get civic24AppLogo =>
       const AssetGenImage('assets/png/civic24-app-logo.png');
+
+  /// File path: assets/png/civic24-citizen-dark.png
+  AssetGenImage get civic24CitizenDark =>
+      const AssetGenImage('assets/png/civic24-citizen-dark.png');
+
+  /// File path: assets/png/civic24-citizen-light.png
+  AssetGenImage get civic24CitizenLight =>
+      const AssetGenImage('assets/png/civic24-citizen-light.png');
+
+  /// File path: assets/png/civic24-citizen-tinted.png
+  AssetGenImage get civic24CitizenTinted =>
+      const AssetGenImage('assets/png/civic24-citizen-tinted.png');
 
   /// File path: assets/png/civic24-logo.png
   AssetGenImage get civic24Logo =>
@@ -38,19 +60,17 @@ class $AssetsPngGen {
   /// File path: assets/png/ios-Dark.png
   AssetGenImage get iosDark => const AssetGenImage('assets/png/ios-Dark.png');
 
-  /// File path: assets/png/ios-Tinted.png
-  AssetGenImage get iosTinted =>
-      const AssetGenImage('assets/png/ios-Tinted.png');
-
   /// List of all assets
   List<AssetGenImage> get values => [
         civic24AppLogo,
+        civic24CitizenDark,
+        civic24CitizenLight,
+        civic24CitizenTinted,
         civic24Logo,
         civic24Logo2,
         civic24SplashScreenIOS,
         civic24SplashScreen,
-        iosDark,
-        iosTinted
+        iosDark
       ];
 }
 
@@ -117,6 +137,7 @@ class $AssetsSvgGen {
 class Assets {
   const Assets._();
 
+  static const $AssetsLottieGen lottie = $AssetsLottieGen();
   static const $AssetsPngGen png = $AssetsPngGen();
   static const $AssetsSvgGen svg = $AssetsSvgGen();
 }
