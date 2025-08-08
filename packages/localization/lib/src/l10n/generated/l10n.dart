@@ -139,6 +139,16 @@ class S {
     );
   }
 
+  /// `Proceed`
+  String get generalProceed {
+    return Intl.message(
+      'Proceed',
+      name: 'generalProceed',
+      desc: 'General Label for Primary Button',
+      args: [],
+    );
+  }
+
   /// `Login`
   String get generalLogin {
     return Intl.message(
@@ -149,20 +159,20 @@ class S {
     );
   }
 
-  /// `Register`
-  String get generalRegister {
+  /// `SignUp`
+  String get generalSignUp {
     return Intl.message(
-      'Register',
-      name: 'generalRegister',
-      desc: 'Text for the register button',
+      'SignUp',
+      name: 'generalSignUp',
+      desc: 'Text for the SignUp button',
       args: [],
     );
   }
 
-  /// `Email`
+  /// `Email Address`
   String get generalEmail {
     return Intl.message(
-      'Email',
+      'Email Address',
       name: 'generalEmail',
       desc: 'Label for the email input field',
       args: [],
@@ -209,6 +219,56 @@ class S {
     );
   }
 
+  /// `Required`
+  String get generalRequired {
+    return Intl.message(
+      'Required',
+      name: 'generalRequired',
+      desc: 'Text for Required Label',
+      args: [],
+    );
+  }
+
+  /// `Enter your email address`
+  String get generalEnterEmail {
+    return Intl.message(
+      'Enter your email address',
+      name: 'generalEnterEmail',
+      desc: 'Text for Enter your Email address Label',
+      args: [],
+    );
+  }
+
+  /// `A valid email address is required`
+  String get generalValidEmail {
+    return Intl.message(
+      'A valid email address is required',
+      name: 'generalValidEmail',
+      desc: 'Text for Valid email address Label',
+      args: [],
+    );
+  }
+
+  /// `Enter your password`
+  String get generalEnterPassword {
+    return Intl.message(
+      'Enter your password',
+      name: 'generalEnterPassword',
+      desc: 'Text for Enter your Password Label',
+      args: [],
+    );
+  }
+
+  /// `Password must be at least 8 characters`
+  String get generalValidPassword {
+    return Intl.message(
+      'Password must be at least 8 characters',
+      name: 'generalValidPassword',
+      desc: 'Text for Valid Password Label',
+      args: [],
+    );
+  }
+
   /// `Get Started`
   String get featureonboardingGetStarted {
     return Intl.message(
@@ -220,61 +280,151 @@ class S {
   }
 
   /// `Voice Your Report`
-  String get featureonboardingVoiceReport {
+  String get featureOnboardingVoiceReport {
     return Intl.message(
       'Voice Your Report',
-      name: 'featureonboardingVoiceReport',
+      name: 'featureOnboardingVoiceReport',
       desc: 'Title 1 for Onboarding Sets',
       args: [],
     );
   }
 
   /// `Civic24 allows you to speak up about pressing problems in your community and make your voice heard`
-  String get featureonboardingVoiceReportDesc {
+  String get featureOnboardingVoiceReportDesc {
     return Intl.message(
       'Civic24 allows you to speak up about pressing problems in your community and make your voice heard',
-      name: 'featureonboardingVoiceReportDesc',
+      name: 'featureOnboardingVoiceReportDesc',
       desc: 'Title Description 1 for Onboarding Sets',
       args: [],
     );
   }
 
   /// `Make Your Voice Count`
-  String get featureonboardingVoiceCount {
+  String get featureOnboardingVoiceCount {
     return Intl.message(
       'Make Your Voice Count',
-      name: 'featureonboardingVoiceCount',
+      name: 'featureOnboardingVoiceCount',
       desc: 'Title 2 for Onboarding Sets',
       args: [],
     );
   }
 
   /// `With Civic24, your thumbs up or down helps prioritize civic problems that matter most to the people around you`
-  String get featureonboardingVoiceCountDesc {
+  String get featureOnboardingVoiceCountDesc {
     return Intl.message(
       'With Civic24, your thumbs up or down helps prioritize civic problems that matter most to the people around you',
-      name: 'featureonboardingVoiceCountDesc',
+      name: 'featureOnboardingVoiceCountDesc',
       desc: 'Title Description 2 for Onboarding Sets',
       args: [],
     );
   }
 
   /// `Connect with Other Voices`
-  String get featureonboardingConnectVoice {
+  String get featureOnboardingConnectVoice {
     return Intl.message(
       'Connect with Other Voices',
-      name: 'featureonboardingConnectVoice',
+      name: 'featureOnboardingConnectVoice',
       desc: 'Title 2 for Onboarding Sets',
       args: [],
     );
   }
 
   /// `Civic24 provides a platform for you to engage with fellow citizens by expressing your opinion on civic issues`
-  String get featureonboardingConnectVoiceDesc {
+  String get featureOnboardingConnectVoiceDesc {
     return Intl.message(
       'Civic24 provides a platform for you to engage with fellow citizens by expressing your opinion on civic issues',
-      name: 'featureonboardingConnectVoiceDesc',
+      name: 'featureOnboardingConnectVoiceDesc',
       desc: 'Title Description 3 for Onboarding Sets',
+      args: [],
+    );
+  }
+
+  /// `Don’t have an account?`
+  String get featureDontHaveAccount {
+    return Intl.message(
+      'Don’t have an account?',
+      name: 'featureDontHaveAccount',
+      desc: 'Don\'t have an account Description',
+      args: [],
+    );
+  }
+
+  /// `Welcome Back!`
+  String get featureLoginWelcome {
+    return Intl.message(
+      'Welcome Back!',
+      name: 'featureLoginWelcome',
+      desc: 'Login Welcome Description',
+      args: [],
+    );
+  }
+
+  /// `Log in to your account`
+  String get featureLoginWelcomeHint {
+    return Intl.message(
+      'Log in to your account',
+      name: 'featureLoginWelcomeHint',
+      desc: 'Login Welcome Hint Description',
+      args: [],
+    );
+  }
+
+  /// `Already have an account?`
+  String get featureAlreadyHaveAnAccount {
+    return Intl.message(
+      'Already have an account?',
+      name: 'featureAlreadyHaveAnAccount',
+      desc: 'Already Have An Account Description',
+      args: [],
+    );
+  }
+
+  /// `Create Account`
+  String get featureSignUpCreateAccount {
+    return Intl.message(
+      'Create Account',
+      name: 'featureSignUpCreateAccount',
+      desc: 'SignUp Create Account Description',
+      args: [],
+    );
+  }
+
+  /// `Sign up to get started!`
+  String get featureSignUpCreateAccountHint {
+    return Intl.message(
+      'Sign up to get started!',
+      name: 'featureSignUpCreateAccountHint',
+      desc: 'SignUp Create Account Hint Description',
+      args: [],
+    );
+  }
+
+  /// `Account Created`
+  String get featureSignUpSuccess {
+    return Intl.message(
+      'Account Created',
+      name: 'featureSignUpSuccess',
+      desc: 'SignUp Success Description',
+      args: [],
+    );
+  }
+
+  /// `Get ready to explore the amazing features Civic24 has to offer.`
+  String get featureSignUpSuccessHint {
+    return Intl.message(
+      'Get ready to explore the amazing features Civic24 has to offer.',
+      name: 'featureSignUpSuccessHint',
+      desc: 'SignUp Success Hint Description',
+      args: [],
+    );
+  }
+
+  /// `Forgot Password?`
+  String get featureForgotPassword {
+    return Intl.message(
+      'Forgot Password?',
+      name: 'featureForgotPassword',
+      desc: 'Forgot Password Description',
       args: [],
     );
   }

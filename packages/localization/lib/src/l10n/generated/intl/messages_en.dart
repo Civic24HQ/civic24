@@ -22,26 +22,53 @@ class MessageLookup extends MessageLookupByLibrary {
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
-    "featureonboardingConnectVoice": MessageLookupByLibrary.simpleMessage(
+    "featureAlreadyHaveAnAccount": MessageLookupByLibrary.simpleMessage(
+      "Already have an account?",
+    ),
+    "featureDontHaveAccount": MessageLookupByLibrary.simpleMessage(
+      "Don’t have an account?",
+    ),
+    "featureForgotPassword": MessageLookupByLibrary.simpleMessage(
+      "Forgot Password?",
+    ),
+    "featureLoginWelcome": MessageLookupByLibrary.simpleMessage(
+      "Welcome Back!",
+    ),
+    "featureLoginWelcomeHint": MessageLookupByLibrary.simpleMessage(
+      "Log in to your account",
+    ),
+    "featureOnboardingConnectVoice": MessageLookupByLibrary.simpleMessage(
       "Connect with Other Voices",
     ),
-    "featureonboardingConnectVoiceDesc": MessageLookupByLibrary.simpleMessage(
+    "featureOnboardingConnectVoiceDesc": MessageLookupByLibrary.simpleMessage(
       "Civic24 provides a platform for you to engage with fellow citizens by expressing your opinion on civic issues",
+    ),
+    "featureOnboardingVoiceCount": MessageLookupByLibrary.simpleMessage(
+      "Make Your Voice Count",
+    ),
+    "featureOnboardingVoiceCountDesc": MessageLookupByLibrary.simpleMessage(
+      "With Civic24, your thumbs up or down helps prioritize civic problems that matter most to the people around you",
+    ),
+    "featureOnboardingVoiceReport": MessageLookupByLibrary.simpleMessage(
+      "Voice Your Report",
+    ),
+    "featureOnboardingVoiceReportDesc": MessageLookupByLibrary.simpleMessage(
+      "Civic24 allows you to speak up about pressing problems in your community and make your voice heard",
+    ),
+    "featureSignUpCreateAccount": MessageLookupByLibrary.simpleMessage(
+      "Create Account",
+    ),
+    "featureSignUpCreateAccountHint": MessageLookupByLibrary.simpleMessage(
+      "Sign up to get started!",
+    ),
+    "featureSignUpSuccess": MessageLookupByLibrary.simpleMessage(
+      "Account Created",
+    ),
+    "featureSignUpSuccessHint": MessageLookupByLibrary.simpleMessage(
+      "Get ready to explore the amazing features Civic24 has to offer.",
     ),
     "featureonboardingGetStarted": MessageLookupByLibrary.simpleMessage(
       "Get Started",
-    ),
-    "featureonboardingVoiceCount": MessageLookupByLibrary.simpleMessage(
-      "Make Your Voice Count",
-    ),
-    "featureonboardingVoiceCountDesc": MessageLookupByLibrary.simpleMessage(
-      "With Civic24, your thumbs up or down helps prioritize civic problems that matter most to the people around you",
-    ),
-    "featureonboardingVoiceReport": MessageLookupByLibrary.simpleMessage(
-      "Voice Your Report",
-    ),
-    "featureonboardingVoiceReportDesc": MessageLookupByLibrary.simpleMessage(
-      "Civic24 allows you to speak up about pressing problems in your community and make your voice heard",
     ),
     "generalClickToUpload": MessageLookupByLibrary.simpleMessage(
       "Click to Upload",
@@ -55,18 +82,32 @@ class MessageLookup extends MessageLookupByLibrary {
     "generalContinueWithGoogle": MessageLookupByLibrary.simpleMessage(
       "Continue with Google",
     ),
-    "generalEmail": MessageLookupByLibrary.simpleMessage("Email"),
+    "generalEmail": MessageLookupByLibrary.simpleMessage("Email Address"),
     "generalEmailHint": MessageLookupByLibrary.simpleMessage(
       "Enter your email",
+    ),
+    "generalEnterEmail": MessageLookupByLibrary.simpleMessage(
+      "Enter your email address",
+    ),
+    "generalEnterPassword": MessageLookupByLibrary.simpleMessage(
+      "Enter your password",
     ),
     "generalForgotPassword": MessageLookupByLibrary.simpleMessage(
       "Forgot Password?",
     ),
     "generalLogin": MessageLookupByLibrary.simpleMessage("Login"),
     "generalPassword": MessageLookupByLibrary.simpleMessage("Password"),
-    "generalRegister": MessageLookupByLibrary.simpleMessage("Register"),
+    "generalProceed": MessageLookupByLibrary.simpleMessage("Proceed"),
+    "generalRequired": MessageLookupByLibrary.simpleMessage("Required"),
+    "generalSignUp": MessageLookupByLibrary.simpleMessage("SignUp"),
     "generalSupportedFormats": MessageLookupByLibrary.simpleMessage(
       "Supported: jpg, png, mp4 (max. 800x400px)",
+    ),
+    "generalValidEmail": MessageLookupByLibrary.simpleMessage(
+      "A valid email address is required",
+    ),
+    "generalValidPassword": MessageLookupByLibrary.simpleMessage(
+      "Password must be at least 8 characters",
     ),
     "pageHome": MessageLookupByLibrary.simpleMessage("Home"),
     "pageNotifications": MessageLookupByLibrary.simpleMessage("Notifications"),
