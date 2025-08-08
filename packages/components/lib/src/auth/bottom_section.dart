@@ -2,8 +2,8 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:styles/styles.dart';
 
-class AuthBottomSection extends StatelessWidget {
-  const AuthBottomSection({
+class BottomSection extends StatelessWidget {
+  const BottomSection({
     required this.title,
     required this.onTapped,
     required this.subTitle,
@@ -21,7 +21,7 @@ class AuthBottomSection extends StatelessWidget {
     return Text.rich(
       style: titleTextStyle ?? context.bodyLarge?.copyWith(color: context.neutralHigh),
       TextSpan(
-        text: title,
+        text: '$title ',
         children: [
           TextSpan(
             text: subTitle,

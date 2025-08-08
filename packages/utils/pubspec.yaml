@@ -13,12 +13,13 @@ dependencies:
 
   # General Dependencies
   platform: ^3.1.6
+  email_validator: ^3.0.0
 
   # Package Dependencies
-  # localization:
-  #   path: ../localization
-  # models:
-  #   path: ../models
+  localization:
+    path: ../localization
+  models:
+    path: ../models
 
 dev_dependencies:
   flutter_test:

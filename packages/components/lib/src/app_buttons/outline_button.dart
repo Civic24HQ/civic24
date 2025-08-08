@@ -68,7 +68,7 @@ class OutlineButton extends StatelessWidget {
       iconSize: iconSize,
       fillColorBuilder: Colors.transparent,
       textColorBuilder: disabled ? context.outline : context.onSurface,
-      borderColor: context.primary,
+      borderColor: borderColor,
       leading: leading,
       leadingIcon: leadingIcon,
       trailingIcon: trailingIcon,

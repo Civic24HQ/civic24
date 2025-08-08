@@ -21,18 +21,18 @@ class OnboardingViewState extends State<OnboardingView> {
   late PageController pageController;
   List<Onboarding> selectedBuilder = [
     Onboarding(
-      title: l10n.featureonboardingVoiceReport,
-      subtitle: l10n.featureonboardingVoiceReportDesc,
+      title: l10n.featureOnboardingVoiceReport,
+      subtitle: l10n.featureOnboardingVoiceReportDesc,
       illustration: Assets.svg.onboardingOne.svg(),
     ),
     Onboarding(
-      title: l10n.featureonboardingConnectVoice,
-      subtitle: l10n.featureonboardingConnectVoiceDesc,
+      title: l10n.featureOnboardingConnectVoice,
+      subtitle: l10n.featureOnboardingConnectVoiceDesc,
       illustration: Assets.svg.onboardingTwo.svg(),
     ),
     Onboarding(
-      title: l10n.featureonboardingVoiceCount,
-      subtitle: l10n.featureonboardingVoiceCountDesc,
+      title: l10n.featureOnboardingVoiceCount,
+      subtitle: l10n.featureOnboardingVoiceCountDesc,
       illustration: Assets.svg.onboardingThree.svg(),
     ),
   ];
@@ -50,30 +50,41 @@ class OnboardingViewState extends State<OnboardingView> {
   }
 
   Future<void> changePage() async {
+    if (!mounted) return; // prevent running after dispose
+
     if (_currentIndex < selectedBuilder.length - 1) {
-      // Forward animation
-      setState(() => _currentIndex++);
+      if (mounted) {
+        setState(() => _currentIndex++);
+      }
       await pageController.animateToPage(
         _currentIndex,
         duration: Duration(milliseconds: _pageAnimeSecs),
         curve: Curves.easeInOut,
       );
     } else {
-      // At the last page, animate back to the first page
-      setState(() => _currentIndex = 0);
+      if (mounted) {
+        setState(() => _currentIndex = 0);
+      }
       await pageController.animateToPage(
         0,
         duration: Duration(milliseconds: _pageAnimeSecs),
         curve: Curves.easeInOut,
       );
     }
-    restartTimer(_currentIndex);
+
+    if (mounted) {
+      restartTimer(_currentIndex);
+    }
   }
 
   void restartTimer(int index) {
     if (widget.stopAnimation) return;
     _animationTimer?.cancel();
-    _animationTimer = Timer(Duration(seconds: timerSeconds), changePage);
+    _animationTimer = Timer(Duration(seconds: timerSeconds), () {
+      if (mounted) {
+        changePage();
+      }
+    });
   }
 
   @override
@@ -129,7 +140,7 @@ class OnboardingViewState extends State<OnboardingView> {
                           onDotClicked: restartTimer,
                         ),
                         AppSpacing.large,
-                        PrimaryButton(title: 'Proceed', onTap: () {}),
+                        PrimaryButton(title: 'Proceed', onTap: viewModel.handleLogin),
                         AppSpacing.large,
                       ],
                     ),

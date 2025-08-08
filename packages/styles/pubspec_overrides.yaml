@@ -1,7 +1,13 @@
-# melos_managed_dependency_overrides: assets,rules,utils
+# melos_managed_dependency_overrides: assets,constants,localization,models,rules,utils
 dependency_overrides:
   assets:
     path: ../assets
+  constants:
+    path: ../constants
+  localization:
+    path: ../localization
+  models:
+    path: ../models
   rules:
     path: ../rules
   utils:

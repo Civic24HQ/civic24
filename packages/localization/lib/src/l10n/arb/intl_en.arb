@@ -36,15 +36,19 @@
     "@generalContinueWithApple": {
         "description": "Text for the Apple sign-in button"
     },
+    "generalProceed": "Proceed",
+    "@generalProceed": {
+        "description": "General Label for Primary Button"
+    },
     "generalLogin": "Login",
     "@generalLogin": {
         "description": "Text for the login button"
     },
-    "generalRegister": "Register",
-    "@generalRegister": {
-        "description": "Text for the register button"
+    "generalSignUp": "SignUp",
+    "@generalSignUp": {
+        "description": "Text for the SignUp button"
     },
-    "generalEmail": "Email",
+    "generalEmail": "Email Address",
     "@generalEmail": {
         "description": "Label for the email input field"
     },
@@ -64,32 +68,88 @@
     "@generalEmailHint": {
         "description": "Hint text for the email input field"
     },
+    "generalRequired": "Required",
+    "@generalRequired": {
+        "description": "Text for Required Label"
+    },
+    "generalEnterEmail": "Enter your email address",
+    "@generalEnterEmail": {
+        "description": "Text for Enter your Email address Label"
+    },
+    "generalValidEmail": "A valid email address is required",
+    "@generalValidEmail": {
+        "description": "Text for Valid email address Label"
+    },
+    "generalEnterPassword": "Enter your password",
+    "@generalEnterPassword": {
+        "description": "Text for Enter your Password Label"
+    },
+    "generalValidPassword": "Password must be at least 8 characters",
+    "@generalValidPassword": {
+        "description": "Text for Valid Password Label"
+    },
     "featureonboardingGetStarted": "Get Started",
     "@featureonboardingGetStarted": {
         "description": "Text for Onboarding Get Started Button"
     },
-    "featureonboardingVoiceReport": "Voice Your Report",
-    "@featureonboardingVoiceReport": {
+    "featureOnboardingVoiceReport": "Voice Your Report",
+    "@featureOnboardingVoiceReport": {
         "description": "Title 1 for Onboarding Sets"
     },
-    "featureonboardingVoiceReportDesc": "Civic24 allows you to speak up about pressing problems in your community and make your voice heard",
-    "@featureonboardingVoiceReportDesc": {
+    "featureOnboardingVoiceReportDesc": "Civic24 allows you to speak up about pressing problems in your community and make your voice heard",
+    "@featureOnboardingVoiceReportDesc": {
         "description": "Title Description 1 for Onboarding Sets"
     },
-    "featureonboardingVoiceCount": "Make Your Voice Count",
-    "@featureonboardingVoiceCount": {
+    "featureOnboardingVoiceCount": "Make Your Voice Count",
+    "@featureOnboardingVoiceCount": {
         "description": "Title 2 for Onboarding Sets"
     },
-    "featureonboardingVoiceCountDesc": "With Civic24, your thumbs up or down helps prioritize civic problems that matter most to the people around you",
-    "@featureonboardingVoiceCountDesc": {
+    "featureOnboardingVoiceCountDesc": "With Civic24, your thumbs up or down helps prioritize civic problems that matter most to the people around you",
+    "@featureOnboardingVoiceCountDesc": {
         "description": "Title Description 2 for Onboarding Sets"
     },
-    "featureonboardingConnectVoice": "Connect with Other Voices",
-    "@featureonboardingConnectVoice": {
+    "featureOnboardingConnectVoice": "Connect with Other Voices",
+    "@featureOnboardingConnectVoice": {
         "description": "Title 2 for Onboarding Sets"
     },
-    "featureonboardingConnectVoiceDesc": "Civic24 provides a platform for you to engage with fellow citizens by expressing your opinion on civic issues",
-    "@featureonboardingConnectVoiceDesc": {
+    "featureOnboardingConnectVoiceDesc": "Civic24 provides a platform for you to engage with fellow citizens by expressing your opinion on civic issues",
+    "@featureOnboardingConnectVoiceDesc": {
         "description": "Title Description 3 for Onboarding Sets"
+    },
+    "featureDontHaveAccount": "Don’t have an account?",
+    "@featureDontHaveAccount": {
+        "description": "Don't have an account Description"
+    },
+    "featureLoginWelcome": "Welcome Back!",
+    "@featureLoginWelcome": {
+        "description": "Login Welcome Description"
+    },
+    "featureLoginWelcomeHint": "Log in to your account",
+    "@featureLoginWelcomeHint": {
+        "description": "Login Welcome Hint Description"
+    },
+    "featureAlreadyHaveAnAccount": "Already have an account?",
+    "@featureAlreadyHaveAnAccount": {
+        "description": "Already Have An Account Description"
+    },
+    "featureSignUpCreateAccount": "Create Account",
+    "@featureSignUpCreateAccount": {
+        "description": "SignUp Create Account Description"
+    },
+    "featureSignUpCreateAccountHint": "Sign up to get started!",
+    "@featureSignUpCreateAccountHint": {
+        "description": "SignUp Create Account Hint Description"
+    },
+    "featureSignUpSuccess": "Account Created",
+    "@featureSignUpSuccess": {
+        "description": "SignUp Success Description"
+    },
+    "featureSignUpSuccessHint": "Get ready to explore the amazing features Civic24 has to offer.",
+    "@featureSignUpSuccessHint": {
+        "description": "SignUp Success Hint Description"
+    },
+    "featureForgotPassword": "Forgot Password?",
+    "@featureForgotPassword": {
+        "description": "Forgot Password Description"
     }
 }
