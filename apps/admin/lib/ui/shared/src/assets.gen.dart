@@ -15,6 +15,22 @@ import 'package:vector_graphics/vector_graphics.dart' as _vg;
 class $AssetsPngGen {
   const $AssetsPngGen();
 
+  /// File path: assets/png/civic24-admin-adaptive.png
+  AssetGenImage get civic24AdminAdaptive =>
+      const AssetGenImage('assets/png/civic24-admin-adaptive.png');
+
+  /// File path: assets/png/civic24-admin-dark.png
+  AssetGenImage get civic24AdminDark =>
+      const AssetGenImage('assets/png/civic24-admin-dark.png');
+
+  /// File path: assets/png/civic24-admin-light.png
+  AssetGenImage get civic24AdminLight =>
+      const AssetGenImage('assets/png/civic24-admin-light.png');
+
+  /// File path: assets/png/civic24-admin-tinted.png
+  AssetGenImage get civic24AdminTinted =>
+      const AssetGenImage('assets/png/civic24-admin-tinted.png');
+
   /// File path: assets/png/civic24-app-logo.png
   AssetGenImage get civic24AppLogo =>
       const AssetGenImage('assets/png/civic24-app-logo.png');
@@ -30,17 +46,16 @@ class $AssetsPngGen {
   /// File path: assets/png/ios-Dark.png
   AssetGenImage get iosDark => const AssetGenImage('assets/png/ios-Dark.png');
 
-  /// File path: assets/png/ios-Tinted.png
-  AssetGenImage get iosTinted =>
-      const AssetGenImage('assets/png/ios-Tinted.png');
-
   /// List of all assets
   List<AssetGenImage> get values => [
+        civic24AdminAdaptive,
+        civic24AdminDark,
+        civic24AdminLight,
+        civic24AdminTinted,
         civic24AppLogo,
         civic24SplashScreenIOS,
         civic24SplashScreen,
-        iosDark,
-        iosTinted
+        iosDark
       ];
 }
 
