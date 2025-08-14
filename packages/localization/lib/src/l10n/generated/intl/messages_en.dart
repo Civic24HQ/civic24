@@ -25,11 +25,20 @@ class MessageLookup extends MessageLookupByLibrary {
     "featureAlreadyHaveAnAccount": MessageLookupByLibrary.simpleMessage(
       "Already have an account?",
     ),
+    "featureCompleteProfile": MessageLookupByLibrary.simpleMessage(
+      "Complete Profile",
+    ),
     "featureDontHaveAccount": MessageLookupByLibrary.simpleMessage(
       "Don’t have an account?",
     ),
     "featureForgotPassword": MessageLookupByLibrary.simpleMessage(
       "Forgot Password?",
+    ),
+    "featureForgotPasswordGoTo": MessageLookupByLibrary.simpleMessage(
+      "Go back to",
+    ),
+    "featureForgotPasswordHint": MessageLookupByLibrary.simpleMessage(
+      "Begin a reset process by filling your Email Address",
     ),
     "featureLoginWelcome": MessageLookupByLibrary.simpleMessage(
       "Welcome Back!",
@@ -76,12 +85,14 @@ class MessageLookup extends MessageLookupByLibrary {
     "generalConfirmPassword": MessageLookupByLibrary.simpleMessage(
       "Confirm Password",
     ),
+    "generalContinue": MessageLookupByLibrary.simpleMessage("Continue"),
     "generalContinueWithApple": MessageLookupByLibrary.simpleMessage(
       "Continue with Apple",
     ),
     "generalContinueWithGoogle": MessageLookupByLibrary.simpleMessage(
       "Continue with Google",
     ),
+    "generalCountry": MessageLookupByLibrary.simpleMessage("Country"),
     "generalEmail": MessageLookupByLibrary.simpleMessage("Email Address"),
     "generalEmailHint": MessageLookupByLibrary.simpleMessage(
       "Enter your email",
@@ -89,19 +100,39 @@ class MessageLookup extends MessageLookupByLibrary {
     "generalEnterEmail": MessageLookupByLibrary.simpleMessage(
       "Enter your email address",
     ),
+    "generalEnterFirstname": MessageLookupByLibrary.simpleMessage(
+      "Enter your first name",
+    ),
+    "generalEnterLastname": MessageLookupByLibrary.simpleMessage(
+      "Enter your last name",
+    ),
     "generalEnterPassword": MessageLookupByLibrary.simpleMessage(
       "Enter your password",
     ),
+    "generalFirstname": MessageLookupByLibrary.simpleMessage("First name"),
     "generalForgotPassword": MessageLookupByLibrary.simpleMessage(
       "Forgot Password?",
     ),
+    "generalLastname": MessageLookupByLibrary.simpleMessage("Last name"),
     "generalLogin": MessageLookupByLibrary.simpleMessage("Login"),
+    "generalNoResults": MessageLookupByLibrary.simpleMessage("No results"),
     "generalPassword": MessageLookupByLibrary.simpleMessage("Password"),
     "generalProceed": MessageLookupByLibrary.simpleMessage("Proceed"),
     "generalRequired": MessageLookupByLibrary.simpleMessage("Required"),
+    "generalSearch": MessageLookupByLibrary.simpleMessage("Search here"),
+    "generalSelectCountry": MessageLookupByLibrary.simpleMessage(
+      "Select a country",
+    ),
+    "generalSelectState": MessageLookupByLibrary.simpleMessage(
+      "Select a state",
+    ),
     "generalSignUp": MessageLookupByLibrary.simpleMessage("SignUp"),
+    "generalState": MessageLookupByLibrary.simpleMessage("State"),
     "generalSupportedFormats": MessageLookupByLibrary.simpleMessage(
       "Supported: jpg, png, mp4 (max. 800x400px)",
+    ),
+    "generalUseAccurateLocation": MessageLookupByLibrary.simpleMessage(
+      "Use accurate location",
     ),
     "generalValidEmail": MessageLookupByLibrary.simpleMessage(
       "A valid email address is required",
