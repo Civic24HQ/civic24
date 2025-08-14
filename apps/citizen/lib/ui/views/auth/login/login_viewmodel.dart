@@ -21,7 +21,7 @@ class LoginViewModel extends AuthViewModel {
     }
   }
 
-  void navigateToForgetPassword() {}
+  void navigateToForgetPassword() => _navigationService.navigateToForgotPasswordView(email: emailValue ?? '');
 
   void navigateToSignUp() => _navigationService.replaceWithSignupView();
 }

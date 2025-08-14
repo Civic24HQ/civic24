@@ -119,6 +119,16 @@ class S {
     );
   }
 
+  /// `Continue`
+  String get generalContinue {
+    return Intl.message(
+      'Continue',
+      name: 'generalContinue',
+      desc: 'Text for Continue button',
+      args: [],
+    );
+  }
+
   /// `Continue with Google`
   String get generalContinueWithGoogle {
     return Intl.message(
@@ -265,6 +275,116 @@ class S {
       'Password must be at least 8 characters',
       name: 'generalValidPassword',
       desc: 'Text for Valid Password Label',
+      args: [],
+    );
+  }
+
+  /// `Use accurate location`
+  String get generalUseAccurateLocation {
+    return Intl.message(
+      'Use accurate location',
+      name: 'generalUseAccurateLocation',
+      desc: 'Text for Use accurate location Label',
+      args: [],
+    );
+  }
+
+  /// `First name`
+  String get generalFirstname {
+    return Intl.message(
+      'First name',
+      name: 'generalFirstname',
+      desc: 'Text for First name Label',
+      args: [],
+    );
+  }
+
+  /// `Last name`
+  String get generalLastname {
+    return Intl.message(
+      'Last name',
+      name: 'generalLastname',
+      desc: 'Text for Last name Label',
+      args: [],
+    );
+  }
+
+  /// `Enter your first name`
+  String get generalEnterFirstname {
+    return Intl.message(
+      'Enter your first name',
+      name: 'generalEnterFirstname',
+      desc: 'Text for Enter your last name',
+      args: [],
+    );
+  }
+
+  /// `Enter your last name`
+  String get generalEnterLastname {
+    return Intl.message(
+      'Enter your last name',
+      name: 'generalEnterLastname',
+      desc: 'Text for Enter your last name',
+      args: [],
+    );
+  }
+
+  /// `Country`
+  String get generalCountry {
+    return Intl.message(
+      'Country',
+      name: 'generalCountry',
+      desc: 'Text for Country Label',
+      args: [],
+    );
+  }
+
+  /// `State`
+  String get generalState {
+    return Intl.message(
+      'State',
+      name: 'generalState',
+      desc: 'Text for State Label',
+      args: [],
+    );
+  }
+
+  /// `Select a country`
+  String get generalSelectCountry {
+    return Intl.message(
+      'Select a country',
+      name: 'generalSelectCountry',
+      desc: 'Hint Text for Select a country',
+      args: [],
+    );
+  }
+
+  /// `Select a state`
+  String get generalSelectState {
+    return Intl.message(
+      'Select a state',
+      name: 'generalSelectState',
+      desc: 'Hint Text for Select a state',
+      args: [],
+    );
+  }
+
+  /// `No results`
+  String get generalNoResults {
+    return Intl.message(
+      'No results',
+      name: 'generalNoResults',
+      desc: 'Text for No results Label',
+      args: [],
+    );
+  }
+
+  /// `Search here`
+  String get generalSearch {
+    return Intl.message(
+      'Search here',
+      name: 'generalSearch',
+      desc: 'Text for Search Label',
       args: [],
     );
   }
@@ -425,6 +545,36 @@ class S {
       'Forgot Password?',
       name: 'featureForgotPassword',
       desc: 'Forgot Password Description',
+      args: [],
+    );
+  }
+
+  /// `Begin a reset process by filling your Email Address`
+  String get featureForgotPasswordHint {
+    return Intl.message(
+      'Begin a reset process by filling your Email Address',
+      name: 'featureForgotPasswordHint',
+      desc: 'Forgot Password Hint Description',
+      args: [],
+    );
+  }
+
+  /// `Go back to`
+  String get featureForgotPasswordGoTo {
+    return Intl.message(
+      'Go back to',
+      name: 'featureForgotPasswordGoTo',
+      desc: 'Go back to description',
+      args: [],
+    );
+  }
+
+  /// `Complete Profile`
+  String get featureCompleteProfile {
+    return Intl.message(
+      'Complete Profile',
+      name: 'featureCompleteProfile',
+      desc: 'Complete Profile Description',
       args: [],
     );
   }

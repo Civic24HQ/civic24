@@ -28,6 +28,10 @@
     "@generalSupportedFormats": {
         "description": "Text for the supported file formats"
     },
+    "generalContinue": "Continue",
+    "@generalContinue": {
+        "description": "Text for Continue button"
+    },
     "generalContinueWithGoogle": "Continue with Google",
     "@generalContinueWithGoogle": {
         "description": "Text for the Google sign-in button"
@@ -87,6 +91,50 @@
     "generalValidPassword": "Password must be at least 8 characters",
     "@generalValidPassword": {
         "description": "Text for Valid Password Label"
+    },
+    "generalUseAccurateLocation": "Use accurate location",
+    "@generalUseAccurateLocation": {
+        "description": "Text for Use accurate location Label"
+    },
+    "generalFirstname": "First name",
+    "@generalFirstname": {
+        "description": "Text for First name Label"
+    },
+    "generalLastname": "Last name",
+    "@generalLastname": {
+        "description": "Text for Last name Label"
+    },
+    "generalEnterFirstname": "Enter your first name",
+    "@generalEnterFirstname": {
+        "description": "Text for Enter your last name"
+    },
+    "generalEnterLastname": "Enter your last name",
+    "@generalEnterLastname": {
+        "description": "Text for Enter your last name"
+    },
+    "generalCountry": "Country",
+    "@generalCountry": {
+        "description": "Text for Country Label"
+    },
+    "generalState": "State",
+    "@generalState": {
+        "description": "Text for State Label"
+    },
+    "generalSelectCountry": "Select a country",
+    "@generalSelectCountry": {
+        "description": "Hint Text for Select a country"
+    },
+    "generalSelectState": "Select a state",
+    "@generalSelectState": {
+        "description": "Hint Text for Select a state"
+    },
+    "generalNoResults": "No results",
+    "@generalNoResults": {
+        "description": "Text for No results Label"
+    },
+    "generalSearch": "Search here",
+    "@generalSearch": {
+        "description": "Text for Search Label"
     },
     "featureonboardingGetStarted": "Get Started",
     "@featureonboardingGetStarted": {
@@ -151,5 +199,17 @@
     "featureForgotPassword": "Forgot Password?",
     "@featureForgotPassword": {
         "description": "Forgot Password Description"
+    },
+    "featureForgotPasswordHint": "Begin a reset process by filling your Email Address",
+    "@featureForgotPasswordHint": {
+        "description": "Forgot Password Hint Description"
+    },
+    "featureForgotPasswordGoTo": "Go back to",
+    "@featureForgotPasswordGoTo": {
+        "description": "Go back to description"
+    },
+    "featureCompleteProfile": "Complete Profile",
+    "@featureCompleteProfile": {
+        "description": "Complete Profile Description"
     }
 }
