@@ -119,6 +119,16 @@ class S {
     );
   }
 
+  /// `Continue`
+  String get generalContinue {
+    return Intl.message(
+      'Continue',
+      name: 'generalContinue',
+      desc: 'Text for Continue button',
+      args: [],
+    );
+  }
+
   /// `Continue with Google`
   String get generalContinueWithGoogle {
     return Intl.message(
@@ -535,6 +545,26 @@ class S {
       'Forgot Password?',
       name: 'featureForgotPassword',
       desc: 'Forgot Password Description',
+      args: [],
+    );
+  }
+
+  /// `Begin a reset process by filling your Email Address`
+  String get featureForgotPasswordHint {
+    return Intl.message(
+      'Begin a reset process by filling your Email Address',
+      name: 'featureForgotPasswordHint',
+      desc: 'Forgot Password Hint Description',
+      args: [],
+    );
+  }
+
+  /// `Go back to`
+  String get featureForgotPasswordGoTo {
+    return Intl.message(
+      'Go back to',
+      name: 'featureForgotPasswordGoTo',
+      desc: 'Go back to description',
       args: [],
     );
   }
