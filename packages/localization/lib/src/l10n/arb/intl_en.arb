@@ -88,6 +88,50 @@
     "@generalValidPassword": {
         "description": "Text for Valid Password Label"
     },
+    "generalUseAccurateLocation": "Use accurate location",
+    "@generalUseAccurateLocation": {
+        "description": "Text for Use accurate location Label"
+    },
+    "generalFirstname": "First name",
+    "@generalFirstname": {
+        "description": "Text for First name Label"
+    },
+    "generalLastname": "Last name",
+    "@generalLastname": {
+        "description": "Text for Last name Label"
+    },
+    "generalEnterFirstname": "Enter your first name",
+    "@generalEnterFirstname": {
+        "description": "Text for Enter your last name"
+    },
+    "generalEnterLastname": "Enter your last name",
+    "@generalEnterLastname": {
+        "description": "Text for Enter your last name"
+    },
+    "generalCountry": "Country",
+    "@generalCountry": {
+        "description": "Text for Country Label"
+    },
+    "generalState": "State",
+    "@generalState": {
+        "description": "Text for State Label"
+    },
+    "generalSelectCountry": "Select a country",
+    "@generalSelectCountry": {
+        "description": "Hint Text for Select a country"
+    },
+    "generalSelectState": "Select a state",
+    "@generalSelectState": {
+        "description": "Hint Text for Select a state"
+    },
+    "generalNoResults": "No results",
+    "@generalNoResults": {
+        "description": "Text for No results Label"
+    },
+    "generalSearch": "Search here",
+    "@generalSearch": {
+        "description": "Text for Search Label"
+    },
     "featureonboardingGetStarted": "Get Started",
     "@featureonboardingGetStarted": {
         "description": "Text for Onboarding Get Started Button"
@@ -151,5 +195,9 @@
     "featureForgotPassword": "Forgot Password?",
     "@featureForgotPassword": {
         "description": "Forgot Password Description"
+    },
+    "featureCompleteProfile": "Complete Profile",
+    "@featureCompleteProfile": {
+        "description": "Complete Profile Description"
     }
 }
