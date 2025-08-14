@@ -3,8 +3,10 @@ import 'dart:ui';
 import 'package:citizen/app/app.router.dart';
 import 'package:citizen/app_builder.dart';
 import 'package:citizen/ui/shared/src/success/success_view.dart';
+import 'package:citizen/ui/views/auth/forgot_password/forgot_password_view.dart';
 import 'package:citizen/ui/views/auth/login/login_view.dart';
 import 'package:citizen/ui/views/auth/signup/signup_view.dart';
+import 'package:citizen/ui/views/complete_profile/complete_profile_view.dart';
 import 'package:citizen/ui/views/home/home_view.dart';
 import 'package:citizen/ui/views/onboarding/onboarding_view.dart';
 import 'package:citizen/ui/views/startup/startup_view.dart';
@@ -23,6 +25,8 @@ import 'package:styles/styles.dart';
     AdaptiveRoute(page: LoginView),
     AdaptiveRoute(page: SignupView),
     AdaptiveRoute(page: SuccessView),
+    AdaptiveRoute(page: ForgotPasswordView),
+    AdaptiveRoute(page: CompleteProfileView),
     // @stacked-route
   ],
   dependencies: [
