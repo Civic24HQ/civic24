@@ -11,3 +11,7 @@ final TextInputFormatter alphabetsWithSpaceFormatter = FilteringTextInputFormatt
 
 /// A formatter that allows only numbers
 final TextInputFormatter numbersOnlyFormatter = FilteringTextInputFormatter.digitsOnly;
+
+/// A formatter that limits the number of characters
+/// that can be entered in the text field
+TextInputFormatter maxLengthFormatter(int maxLength) => LengthLimitingTextInputFormatter(maxLength);
