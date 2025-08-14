@@ -28,6 +28,10 @@
     "@generalSupportedFormats": {
         "description": "Text for the supported file formats"
     },
+    "generalContinue": "Continue",
+    "@generalContinue": {
+        "description": "Text for Continue button"
+    },
     "generalContinueWithGoogle": "Continue with Google",
     "@generalContinueWithGoogle": {
         "description": "Text for the Google sign-in button"
@@ -195,6 +199,14 @@
     "featureForgotPassword": "Forgot Password?",
     "@featureForgotPassword": {
         "description": "Forgot Password Description"
+    },
+    "featureForgotPasswordHint": "Begin a reset process by filling your Email Address",
+    "@featureForgotPasswordHint": {
+        "description": "Forgot Password Hint Description"
+    },
+    "featureForgotPasswordGoTo": "Go back to",
+    "@featureForgotPasswordGoTo": {
+        "description": "Go back to description"
     },
     "featureCompleteProfile": "Complete Profile",
     "@featureCompleteProfile": {

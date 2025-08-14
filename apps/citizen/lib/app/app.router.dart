@@ -83,9 +83,13 @@ class StackedRouterWeb extends _i10.RootStackRouter {
       );
     },
     ForgotPasswordViewRoute.name: (routeData) {
+      final args = routeData.argsAs<ForgotPasswordViewArgs>();
       return _i10.AdaptivePage<dynamic>(
         routeData: routeData,
-        child: const _i7.ForgotPasswordView(),
+        child: _i7.ForgotPasswordView(
+          args.email,
+          key: args.key,
+        ),
         opaque: true,
       );
     },
@@ -273,14 +277,37 @@ class SuccessViewArgs {
 
 /// generated route for
 /// [_i7.ForgotPasswordView]
-class ForgotPasswordViewRoute extends _i10.PageRouteInfo<void> {
-  const ForgotPasswordViewRoute()
-      : super(
+class ForgotPasswordViewRoute
+    extends _i10.PageRouteInfo<ForgotPasswordViewArgs> {
+  ForgotPasswordViewRoute({
+    required String email,
+    _i11.Key? key,
+  }) : super(
           ForgotPasswordViewRoute.name,
           path: '/forgot-password-view',
+          args: ForgotPasswordViewArgs(
+            email: email,
+            key: key,
+          ),
         );
 
   static const String name = 'ForgotPasswordView';
+}
+
+class ForgotPasswordViewArgs {
+  const ForgotPasswordViewArgs({
+    required this.email,
+    this.key,
+  });
+
+  final String email;
+
+  final _i11.Key? key;
+
+  @override
+  String toString() {
+    return 'ForgotPasswordViewArgs{email: $email, key: $key}';
+  }
 }
 
 /// generated route for
@@ -364,10 +391,16 @@ extension RouterStateExtension on _i9.RouterService {
     );
   }
 
-  Future<dynamic> navigateToForgotPasswordView(
-      {void Function(_i10.NavigationFailure)? onFailure}) async {
+  Future<dynamic> navigateToForgotPasswordView({
+    required String email,
+    _i11.Key? key,
+    void Function(_i10.NavigationFailure)? onFailure,
+  }) async {
     return navigateTo(
-      const ForgotPasswordViewRoute(),
+      ForgotPasswordViewRoute(
+        email: email,
+        key: key,
+      ),
       onFailure: onFailure,
     );
   }
@@ -448,10 +481,16 @@ extension RouterStateExtension on _i9.RouterService {
     );
   }
 
-  Future<dynamic> replaceWithForgotPasswordView(
-      {void Function(_i10.NavigationFailure)? onFailure}) async {
+  Future<dynamic> replaceWithForgotPasswordView({
+    required String email,
+    _i11.Key? key,
+    void Function(_i10.NavigationFailure)? onFailure,
+  }) async {
     return replaceWith(
-      const ForgotPasswordViewRoute(),
+      ForgotPasswordViewRoute(
+        email: email,
+        key: key,
+      ),
       onFailure: onFailure,
     );
   }

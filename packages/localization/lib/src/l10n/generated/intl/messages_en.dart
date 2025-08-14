@@ -34,6 +34,12 @@ class MessageLookup extends MessageLookupByLibrary {
     "featureForgotPassword": MessageLookupByLibrary.simpleMessage(
       "Forgot Password?",
     ),
+    "featureForgotPasswordGoTo": MessageLookupByLibrary.simpleMessage(
+      "Go back to",
+    ),
+    "featureForgotPasswordHint": MessageLookupByLibrary.simpleMessage(
+      "Begin a reset process by filling your Email Address",
+    ),
     "featureLoginWelcome": MessageLookupByLibrary.simpleMessage(
       "Welcome Back!",
     ),
@@ -79,6 +85,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "generalConfirmPassword": MessageLookupByLibrary.simpleMessage(
       "Confirm Password",
     ),
+    "generalContinue": MessageLookupByLibrary.simpleMessage("Continue"),
     "generalContinueWithApple": MessageLookupByLibrary.simpleMessage(
       "Continue with Apple",
     ),
