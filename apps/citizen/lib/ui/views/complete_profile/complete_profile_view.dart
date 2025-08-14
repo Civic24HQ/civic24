@@ -61,32 +61,6 @@ class CompleteProfileView extends StackedView<CompleteProfileViewModel> with $Co
                           autofillHints: const [AutofillHints.givenName],
                         ),
                         AppSpacing.normal,
-                        // AppDropdownButtonTextField(
-                        //   label: l10n.generalCountry,
-                        //   hintText: l10n.generalSelectCountry,
-                        //   value: viewModel.countryValue,
-                        //   items: viewModel.countryOptions.map<DropdownMenuItem<String>>((c) {
-                        //     return DropdownMenuItem<String>(
-                        //       value: c.name,
-                        //       child: Row(
-                        //         children: [
-                        //           CountryFlag.fromCountryCode(
-                        //             c.iso2,
-                        //             height: AppDimensions.size16,
-                        //             width: AppDimensions.size24,
-                        //           ),
-                        //           AppSpacing.standard,
-                        //           Text(
-                        //             c.name,
-                        //             style: context.bodyMedium?.copyWith(color: context.colorScheme.onSurface),
-                        //           ),
-                        //         ],
-                        //       ),
-                        //     );
-                        //   }).toList(),
-                        //   onChanged: viewModel.onCountryChanged,
-                        // ),
-                        // AppSpacing.normal,
                         AppSearchableDropdownTextField<CountryOption>(
                           label: l10n.generalCountry,
                           hintText: l10n.generalSelectCountry,
@@ -114,16 +88,6 @@ class CompleteProfileView extends StackedView<CompleteProfileViewModel> with $Co
                           itemLabel: (s) => s.name,
                           onChanged: (selected) => viewModel.onStateChanged(selected?.name),
                         ),
-                        // AppSpacing.normal,
-                        // AppDropdownButtonTextField(
-                        //   label: l10n.generalState,
-                        //   hintText: l10n.generalSelectState,
-                        //   value: viewModel.stateValue,
-                        //   items: viewModel.stateOptions.map<DropdownMenuItem<String>>((s) {
-                        //     return DropdownMenuItem<String>(value: s.name, child: Text(s.name));
-                        //   }).toList(),
-                        //   onChanged: viewModel.onStateChanged,
-                        // ),
                         AppSpacing.standard,
                         TextButton.icon(
                           style: TextButton.styleFrom(
