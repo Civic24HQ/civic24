@@ -45,6 +45,10 @@ dependencies:
     path: ../../packages/utils
 
   # Utility Packages
+  nigerian_states_and_lga: ^1.0.0
+  country_state_city: ^0.1.6
+  country_flags: ^3.3.0
+  rxdart: ^0.28.0
 
   # UI Components
   solar_icons: ^0.0.5

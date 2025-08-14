@@ -1,7 +1,6 @@
 import 'package:email_validator/email_validator.dart';
 import 'package:localization/localization.dart';
 
-
 String? validateFirstName(String? name) {
   if (name != null && name.trim().isEmpty) {
     return l10n.generalEnterFirstname;
