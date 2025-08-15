@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:localization/localization.dart';
 import 'package:solar_icons/solar_icons.dart';
@@ -49,16 +48,21 @@ class _AppSearchableDropdownTextFieldState<T> extends State<AppSearchableDropdow
   final TextEditingController _searchCtrl = TextEditingController();
   final FocusNode _searchFocus = FocusNode();
   final GlobalKey _fieldKey = GlobalKey();
-  Timer? _debounce;
 
+  Timer? _debounce;
   OverlayEntry? _entry;
   bool _isOpen = false;
+
   late List<T> _filtered;
+  StateSetter? _overlaySetState;
 
   @override
   void initState() {
     super.initState();
     _filtered = List<T>.from(widget.items);
+    _searchCtrl.addListener(() {
+      _overlaySetState?.call(() {});
+    });
   }
 
   @override
@@ -66,6 +70,7 @@ class _AppSearchableDropdownTextFieldState<T> extends State<AppSearchableDropdow
     super.didUpdateWidget(oldWidget);
     if (oldWidget.items != widget.items) {
       _filtered = _applyFilter(_searchCtrl.text);
+      _overlaySetState?.call(() {});
     }
   }
 
@@ -74,6 +79,7 @@ class _AppSearchableDropdownTextFieldState<T> extends State<AppSearchableDropdow
     _removeOverlay();
     _searchCtrl.dispose();
     _searchFocus.dispose();
+    _debounce?.cancel();
     super.dispose();
   }
 
@@ -105,6 +111,7 @@ class _AppSearchableDropdownTextFieldState<T> extends State<AppSearchableDropdow
   void _removeOverlay() {
     _entry?.remove();
     _entry = null;
+    _overlaySetState = null;
   }
 
   InputDecoration _fieldDecoration(BuildContext context) {
@@ -164,99 +171,106 @@ class _AppSearchableDropdownTextFieldState<T> extends State<AppSearchableDropdow
                     color: context.colorScheme.surface,
                     shape: RoundedRectangleBorder(borderRadius: AppBorderRadius.radius8),
                     clipBehavior: Clip.antiAlias,
-                    child: ConstrainedBox(
-                      constraints: BoxConstraints(maxWidth: fieldSize.width, maxHeight: widget.maxMenuHeight),
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.all(AppDimensions.padding8),
-                            child: TextField(
-                              controller: _searchCtrl,
-                              focusNode: _searchFocus,
-                              style: context.bodyMedium?.copyWith(color: context.colorScheme.onSurface),
-                              decoration: InputDecoration(
-                                isDense: widget.isDense,
-                                prefixIcon: const Icon(SolarIconsOutline.magnifier),
-                                hintText: l10n.generalSearch,
-                                hintStyle: context.bodyMedium?.copyWith(color: context.onSurfaceVariant),
-                                border: OutlineInputBorder(
-                                  borderRadius: AppBorderRadius.radius8,
-                                  borderSide: BorderSide(color: context.neutralLow),
-                                ),
-                                enabledBorder: OutlineInputBorder(
-                                  borderRadius: AppBorderRadius.radius8,
-                                  borderSide: BorderSide(color: context.colorScheme.outlineVariant),
-                                ),
-                                disabledBorder: OutlineInputBorder(
-                                  borderRadius: AppBorderRadius.radius8,
-                                  borderSide: BorderSide(
-                                    color: context.colorScheme.outlineVariant.withValues(alpha: 0.5),
+                    child: StatefulBuilder(
+                      builder: (context, setOverlayState) {
+                        _overlaySetState = setOverlayState;
+                        return ConstrainedBox(
+                          constraints: BoxConstraints(maxWidth: fieldSize.width, maxHeight: widget.maxMenuHeight),
+                          child: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.all(AppDimensions.padding8),
+                                child: TextField(
+                                  controller: _searchCtrl,
+                                  focusNode: _searchFocus,
+                                  style: context.bodyMedium?.copyWith(color: context.colorScheme.onSurface),
+                                  decoration: InputDecoration(
+                                    isDense: widget.isDense,
+                                    prefixIcon: const Icon(SolarIconsOutline.magnifier),
+                                    hintText: l10n.generalSearch,
+                                    hintStyle: context.bodyMedium?.copyWith(color: context.onSurfaceVariant),
+                                    border: OutlineInputBorder(
+                                      borderRadius: AppBorderRadius.radius8,
+                                      borderSide: BorderSide(color: context.neutralLow),
+                                    ),
+                                    enabledBorder: OutlineInputBorder(
+                                      borderRadius: AppBorderRadius.radius8,
+                                      borderSide: BorderSide(color: context.colorScheme.outlineVariant),
+                                    ),
+                                    disabledBorder: OutlineInputBorder(
+                                      borderRadius: AppBorderRadius.radius8,
+                                      borderSide: BorderSide(
+                                        color: context.colorScheme.outlineVariant.withValues(alpha: 0.5),
+                                      ),
+                                    ),
+                                    focusedBorder: OutlineInputBorder(
+                                      borderRadius: AppBorderRadius.radius8,
+                                      borderSide: BorderSide(color: context.primaryColor),
+                                    ),
+                                    contentPadding: const EdgeInsets.symmetric(
+                                      horizontal: AppDimensions.padding16,
+                                      vertical: AppDimensions.padding4,
+                                    ),
                                   ),
-                                ),
-                                focusedBorder: OutlineInputBorder(
-                                  borderRadius: AppBorderRadius.radius8,
-                                  borderSide: BorderSide(color: context.primaryColor),
-                                ),
-                                contentPadding: const EdgeInsets.symmetric(
-                                  horizontal: AppDimensions.padding16,
-                                  vertical: AppDimensions.padding4,
+                                  onChanged: (q) {
+                                    if (_debounce?.isActive ?? false) _debounce!.cancel();
+                                    _debounce = Timer(const Duration(milliseconds: 200), () {
+                                      _overlaySetState?.call(() {
+                                        _filtered = _applyFilter(q);
+                                      });
+                                    });
+                                  },
                                 ),
                               ),
-                              onChanged: (q) {
-                                if (_debounce?.isActive ?? false) _debounce!.cancel();
-                                _debounce = Timer(const Duration(milliseconds: 200), () {
-                                  setState(() => _filtered = _applyFilter(q));
-                                });
-                              },
-                            ),
-                          ),
-                          Flexible(
-                            child: _filtered.isEmpty
-                                ? Padding(
-                                    padding: const EdgeInsets.all(AppDimensions.size16),
-                                    child: Text(l10n.generalNoResults, style: context.bodyMedium),
-                                  )
-                                : ListView.builder(
-                                    padding: EdgeInsets.zero,
-                                    itemCount: _filtered.length,
-                                    itemBuilder: (context, index) {
-                                      final item = _filtered[index];
-                                      return InkWell(
-                                        onTap: () {
-                                          widget.onChanged(item);
-                                          _close();
-                                        },
-                                        child: Padding(
-                                          padding: const EdgeInsets.symmetric(
-                                            horizontal: AppDimensions.padding12,
-                                            vertical: AppDimensions.padding12,
-                                          ),
-                                          child: Row(
-                                            children: [
-                                              if (widget.leading != null) ...[
-                                                widget.leading!(item),
-                                                const SizedBox(width: AppDimensions.size8),
-                                              ],
-                                              Expanded(
-                                                child: Text(
-                                                  widget.itemLabel(item),
-                                                  style: context.bodyMedium?.copyWith(
-                                                    color: context.colorScheme.onSurface,
-                                                  ),
-                                                  maxLines: 1,
-                                                  overflow: TextOverflow.ellipsis,
-                                                ),
+                              Flexible(
+                                child: _filtered.isEmpty
+                                    ? Padding(
+                                        padding: const EdgeInsets.all(AppDimensions.size16),
+                                        child: Text(l10n.generalNoResults, style: context.bodyMedium),
+                                      )
+                                    : ListView.builder(
+                                        padding: EdgeInsets.zero,
+                                        itemCount: _filtered.length,
+                                        itemBuilder: (context, index) {
+                                          final item = _filtered[index];
+                                          return InkWell(
+                                            onTap: () {
+                                              widget.onChanged(item);
+                                              _close();
+                                            },
+                                            child: Padding(
+                                              padding: const EdgeInsets.symmetric(
+                                                horizontal: AppDimensions.padding12,
+                                                vertical: AppDimensions.padding12,
                                               ),
-                                            ],
-                                          ),
-                                        ),
-                                      );
-                                    },
-                                  ),
+                                              child: Row(
+                                                children: [
+                                                  if (widget.leading != null) ...[
+                                                    widget.leading!(item),
+                                                    const SizedBox(width: AppDimensions.size8),
+                                                  ],
+                                                  Expanded(
+                                                    child: Text(
+                                                      widget.itemLabel(item),
+                                                      style: context.bodyMedium?.copyWith(
+                                                        color: context.colorScheme.onSurface,
+                                                      ),
+                                                      maxLines: 1,
+                                                      overflow: TextOverflow.ellipsis,
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                          );
+                                        },
+                                      ),
+                              ),
+                            ],
                           ),
-                        ],
-                      ),
+                        );
+                      },
                     ),
                   ),
                 ),
@@ -296,6 +310,7 @@ class _AppSearchableDropdownTextFieldState<T> extends State<AppSearchableDropdow
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
           );
+
     return Column(
       key: _fieldKey,
       crossAxisAlignment: CrossAxisAlignment.start,

@@ -1,8 +1,6 @@
-import 'package:assets/asset_gen/fonts.gen.dart';
 import 'package:citizen/ui/views/home/home_viewmodel.dart';
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
-import 'package:styles/styles.dart';
 
 class HomeView extends StackedView<HomeViewModel> {
   const HomeView({super.key});
@@ -10,35 +8,9 @@ class HomeView extends StackedView<HomeViewModel> {
   @override
   Widget builder(BuildContext context, HomeViewModel viewModel, Widget? child) {
     return Scaffold(
-      body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 25),
-          child: Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Column(
-                  children: [
-                    Text(
-                      'Hello, World!!!',
-                      style: TextStyle(
-                        fontFamily: FontFamily.poppins,
-                        fontSize: 35,
-                        fontWeight: FontWeight.w900,
-                        color: context.onSurface,
-                      ),
-                    ),
-                  ],
-                ),
-                Text(
-                  'This is the Citizen App sample page using Stacked View',
-                  style: TextStyle(fontFamily: FontFamily.poppins, fontSize: 20, color: context.onSurfaceVariant),
-                  textAlign: TextAlign.center,
-                ),
-              ],
-            ),
-          ),
-        ),
+      body: Container(
+        padding: const EdgeInsets.only(left: 25, right: 25),
+        child: const Center(child: Text('Home View')),
       ),
     );
   }
