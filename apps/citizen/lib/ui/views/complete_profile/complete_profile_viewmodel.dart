@@ -1,9 +1,14 @@
+import 'package:citizen/app/app.locator.dart';
+import 'package:citizen/app/app.router.dart';
 import 'package:citizen/ui/views/complete_profile/complete_profile_view.form.dart';
 import 'package:country_state_city/country_state_city.dart' as csc;
 import 'package:models/models.dart';
 import 'package:stacked/stacked.dart';
+import 'package:stacked_services/stacked_services.dart';
 
 class CompleteProfileViewModel extends FormViewModel {
+  final _navigationService = locator<RouterService>();
+
   String? countryValue;
   String? stateValue;
   String? cityValue;
@@ -103,5 +108,6 @@ class CompleteProfileViewModel extends FormViewModel {
 
   void onSave() {
     if (!isFormValid) return;
+    _navigationService.clearStackAndShow(const MainViewRoute());
   }
 }
