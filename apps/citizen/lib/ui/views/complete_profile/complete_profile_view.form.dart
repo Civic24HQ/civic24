@@ -16,12 +16,12 @@ const String FirstNameValueKey = 'firstName';
 const String LastNameValueKey = 'lastName';
 
 final Map<String, TextEditingController>
-    _CompleteProfileViewTextEditingControllers = {};
+_CompleteProfileViewTextEditingControllers = {};
 
 final Map<String, FocusNode> _CompleteProfileViewFocusNodes = {};
 
 final Map<String, String? Function(String?)?>
-    _CompleteProfileViewTextValidations = {
+_CompleteProfileViewTextValidations = {
   FirstNameValueKey: validateFirstName,
   LastNameValueKey: validateLastName,
 };
@@ -43,8 +43,9 @@ mixin $CompleteProfileView {
       return _CompleteProfileViewTextEditingControllers[key]!;
     }
 
-    _CompleteProfileViewTextEditingControllers[key] =
-        TextEditingController(text: initialValue);
+    _CompleteProfileViewTextEditingControllers[key] = TextEditingController(
+      text: initialValue,
+    );
     return _CompleteProfileViewTextEditingControllers[key]!;
   }
 
@@ -81,11 +82,10 @@ mixin $CompleteProfileView {
   /// Updates the formData on the FormViewModel
   void _updateFormData(FormStateHelper model, {bool forceValidate = false}) {
     model.setData(
-      model.formValueMap
-        ..addAll({
-          FirstNameValueKey: firstNameController.text,
-          LastNameValueKey: lastNameController.text,
-        }),
+      model.formValueMap..addAll({
+        FirstNameValueKey: firstNameController.text,
+        LastNameValueKey: lastNameController.text,
+      }),
     );
 
     if (_autoTextFieldValidation || forceValidate) {
@@ -115,10 +115,9 @@ mixin $CompleteProfileView {
 }
 
 extension ValueProperties on FormStateHelper {
-  bool get hasAnyValidationMessage => this
-      .fieldsValidationMessages
-      .values
-      .any((validation) => validation != null);
+  bool get hasAnyValidationMessage => this.fieldsValidationMessages.values.any(
+    (validation) => validation != null,
+  );
 
   bool get isFormValid {
     if (!_autoTextFieldValidation) this.validateForm();
@@ -130,24 +129,22 @@ extension ValueProperties on FormStateHelper {
   String? get lastNameValue => this.formValueMap[LastNameValueKey] as String?;
 
   set firstNameValue(String? value) {
-    this.setData(
-      this.formValueMap..addAll({FirstNameValueKey: value}),
-    );
+    this.setData(this.formValueMap..addAll({FirstNameValueKey: value}));
 
     if (_CompleteProfileViewTextEditingControllers.containsKey(
-        FirstNameValueKey)) {
+      FirstNameValueKey,
+    )) {
       _CompleteProfileViewTextEditingControllers[FirstNameValueKey]?.text =
           value ?? '';
     }
   }
 
   set lastNameValue(String? value) {
-    this.setData(
-      this.formValueMap..addAll({LastNameValueKey: value}),
-    );
+    this.setData(this.formValueMap..addAll({LastNameValueKey: value}));
 
     if (_CompleteProfileViewTextEditingControllers.containsKey(
-        LastNameValueKey)) {
+      LastNameValueKey,
+    )) {
       _CompleteProfileViewTextEditingControllers[LastNameValueKey]?.text =
           value ?? '';
     }

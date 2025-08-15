@@ -8,7 +8,11 @@ import 'package:citizen/ui/views/auth/login/login_view.dart';
 import 'package:citizen/ui/views/auth/signup/signup_view.dart';
 import 'package:citizen/ui/views/complete_profile/complete_profile_view.dart';
 import 'package:citizen/ui/views/home/home_view.dart';
+import 'package:citizen/ui/views/main/main_view.dart';
+import 'package:citizen/ui/views/notification/notification_view.dart';
 import 'package:citizen/ui/views/onboarding/onboarding_view.dart';
+import 'package:citizen/ui/views/reports/reports_view.dart';
+import 'package:citizen/ui/views/settings/settings_view.dart';
 import 'package:citizen/ui/views/startup/startup_view.dart';
 import 'package:flutter/material.dart';
 import 'package:localization/localization.dart';
@@ -27,6 +31,10 @@ import 'package:styles/styles.dart';
     AdaptiveRoute(page: SuccessView),
     AdaptiveRoute(page: ForgotPasswordView),
     AdaptiveRoute(page: CompleteProfileView),
+    AdaptiveRoute(page: MainView),
+    AdaptiveRoute(page: ReportsView),
+    AdaptiveRoute(page: NotificationView),
+    AdaptiveRoute(page: SettingsView),
     // @stacked-route
   ],
   dependencies: [
