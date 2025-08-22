@@ -17,6 +17,7 @@ dependencies:
   font_awesome_flutter: ^10.4.0
   dotted_border: ^2.1.0
   flutter_animate: ^4.5.2
+  cached_network_image: ^3.4.1
 
   # Package Dependencies
   assets:

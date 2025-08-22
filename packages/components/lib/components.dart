@@ -3,6 +3,8 @@ library components;
 
 export 'src/app_busy_indicator.dart';
 export 'src/app_buttons/base_button.dart';
+export 'src/app_cards/app_cached_image.dart';
+export 'src/app_cards/app_posts_card.dart';
 export 'src/app_dropdown/app_dropdown_button_textfield.dart';
 export 'src/app_dropdown/app_searchable_dropdown_text_field.dart';
 export 'src/app_filter_chip.dart';
