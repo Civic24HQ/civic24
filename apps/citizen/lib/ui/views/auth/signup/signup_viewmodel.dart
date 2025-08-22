@@ -35,5 +35,6 @@ class SignupViewModel extends AuthViewModel {
 
   void navigateToLogin() => _navigationService.replaceWithLoginView();
 
-  void navigateToHomeView() => _navigationService.clearStackAndShow(const CompleteProfileViewRoute());
+  void navigateToHomeView() =>
+      _navigationService.clearStackAndShow(const CompleteProfileViewRoute());
 }

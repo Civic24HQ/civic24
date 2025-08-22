@@ -10,7 +10,11 @@ class StartupView extends StackedView<StartupViewModel> {
   const StartupView({super.key});
 
   @override
-  Widget builder(BuildContext context, StartupViewModel viewModel, Widget? child) {
+  Widget builder(
+    BuildContext context,
+    StartupViewModel viewModel,
+    Widget? child,
+  ) {
     final size = MediaQuery.of(context).size;
     final width = size.width;
     final height = size.height;
@@ -39,27 +43,44 @@ class StartupView extends StackedView<StartupViewModel> {
                 builder: (context, value, child) {
                   final dx = AppDimensions.size12 * cos(value);
                   final dy = AppDimensions.size12 * sin(value);
-                  return Transform.translate(offset: Offset(dx, -dy), child: child);
+                  return Transform.translate(
+                    offset: Offset(dx, -dy),
+                    child: child,
+                  );
                 },
                 child: Align(
                   alignment: Alignment.topCenter,
-                  child: Assets.svg.light.svg(colorFilter: ColorFilter.mode(context.primary, BlendMode.srcIn)),
+                  child: Assets.svg.light.svg(
+                    colorFilter: ColorFilter.mode(
+                      context.primary,
+                      BlendMode.srcIn,
+                    ),
+                  ),
                 ),
               ),
             ),
           ),
           Positioned(
             left: (width / 2) - (AppDimensions.size150 / 2),
-            top: viewModel.isAnimate ? (height / 2) - (AppDimensions.size200 / 2) : -height,
+            top: viewModel.isAnimate
+                ? (height / 2) - (AppDimensions.size200 / 2)
+                : -height,
             child: AnimatedScale(
               duration: const Duration(milliseconds: 5000),
               scale: viewModel.isAnimate ? 1.0 : 0.0,
-              child: Assets.png.iosDark.image(width: AppDimensions.size150, height: AppDimensions.size150),
+              child: Assets.png.iosDark.image(
+                width: AppDimensions.size150,
+                height: AppDimensions.size150,
+              ),
             ),
           ),
           Positioned(
             left: (width / 2) - (AppDimensions.size320 / 2),
-            top: viewModel.isAnimate ? (height / 2) - (AppDimensions.size200 / 2) + AppDimensions.size24 : -height,
+            top: viewModel.isAnimate
+                ? (height / 2) -
+                      (AppDimensions.size200 / 2) +
+                      AppDimensions.size24
+                : -height,
             child: AnimatedScale(
               duration: const Duration(milliseconds: 5000),
               scale: viewModel.isAnimate ? 1.0 : 0.0,
@@ -81,7 +102,12 @@ class StartupView extends StackedView<StartupViewModel> {
                 turns: viewModel.turns,
                 duration: const Duration(seconds: 2),
                 onEnd: viewModel.rotate,
-                child: Assets.svg.outlineCircle.svg(colorFilter: ColorFilter.mode(context.primary, BlendMode.srcIn)),
+                child: Assets.svg.outlineCircle.svg(
+                  colorFilter: ColorFilter.mode(
+                    context.primary,
+                    BlendMode.srcIn,
+                  ),
+                ),
               ),
             ),
           ),
@@ -100,6 +126,6 @@ class StartupView extends StackedView<StartupViewModel> {
   StartupViewModel viewModelBuilder(BuildContext context) => StartupViewModel();
 
   @override
-  void onViewModelReady(StartupViewModel viewModel) =>
-      SchedulerBinding.instance.addPostFrameCallback((timeStamp) => viewModel.runStartupLogic());
+  void onViewModelReady(StartupViewModel viewModel) => SchedulerBinding.instance
+      .addPostFrameCallback((timeStamp) => viewModel.runStartupLogic());
 }

@@ -82,6 +82,7 @@ flutter:
   assets:
     - assets/svg/
     - assets/png/
+    - assets/jpg/
     - assets/lottie/
 
 flutter_gen:
