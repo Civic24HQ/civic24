@@ -18,6 +18,7 @@ abstract class AppDimensions {
   static const double size6 = 6;
   static const double size8 = 8;
   static const double size12 = 12;
+  static const double size14 = 14;
   static const double size16 = 16;
   static const double size20 = 20;
   static const double size24 = 24;
@@ -40,6 +41,7 @@ abstract class AppDimensions {
   static const double size300 = 300;
   static const double size320 = 320;
   static const double size350 = 350;
+  static const double size375 = 375;
 }
 
 /// Derives a global constraint for pages based on client
