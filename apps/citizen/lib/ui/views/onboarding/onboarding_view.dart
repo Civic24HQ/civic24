@@ -109,8 +109,14 @@ class OnboardingViewState extends State<OnboardingView> {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Assets.png.iosDark.image(width: AppDimensions.size56, height: AppDimensions.size56),
-                      Assets.png.civic24Logo2.image(color: context.onSurface, width: AppDimensions.size150),
+                      Assets.png.iosDark.image(
+                        width: AppDimensions.size56,
+                        height: AppDimensions.size56,
+                      ),
+                      Assets.png.civic24Logo2.image(
+                        color: context.onSurface,
+                        width: AppDimensions.size150,
+                      ),
                     ],
                   ),
                 ),
@@ -122,7 +128,9 @@ class OnboardingViewState extends State<OnboardingView> {
                       controller: pageController,
                       physics: const NeverScrollableScrollPhysics(),
                       onPageChanged: restartTimer,
-                      children: selectedBuilder.map((builder) => _OnboardingItem(builder: builder)).toList(),
+                      children: selectedBuilder
+                          .map((builder) => _OnboardingItem(builder: builder))
+                          .toList(),
                     ),
                   ),
                 ),
@@ -140,7 +148,10 @@ class OnboardingViewState extends State<OnboardingView> {
                           onDotClicked: restartTimer,
                         ),
                         AppSpacing.large,
-                        PrimaryButton(title: 'Proceed', onTap: viewModel.handleLogin),
+                        PrimaryButton(
+                          title: 'Proceed',
+                          onTap: viewModel.handleLogin,
+                        ),
                         AppSpacing.large,
                       ],
                     ),
@@ -163,13 +174,17 @@ class _OnboardingItem extends StatefulWidget {
   State<_OnboardingItem> createState() => _OnboardingItemState();
 }
 
-class _OnboardingItemState extends State<_OnboardingItem> with SingleTickerProviderStateMixin {
+class _OnboardingItemState extends State<_OnboardingItem>
+    with SingleTickerProviderStateMixin {
   late AnimationController _controller;
 
   @override
   void initState() {
     super.initState();
-    _controller = AnimationController(vsync: this, duration: const Duration(seconds: 4))..repeat(reverse: true);
+    _controller = AnimationController(
+      vsync: this,
+      duration: const Duration(seconds: 4),
+    )..repeat(reverse: true);
   }
 
   @override
@@ -184,13 +199,19 @@ class _OnboardingItemState extends State<_OnboardingItem> with SingleTickerProvi
       children: [
         Expanded(
           child: ScaleTransition(
-            scale: Tween(begin: 0.8, end: 1.01).animate(CurvedAnimation(parent: _controller, curve: Curves.easeInOut)),
+            scale: Tween(begin: 0.8, end: 1.01).animate(
+              CurvedAnimation(parent: _controller, curve: Curves.easeInOut),
+            ),
             child: widget.builder.illustration,
           ),
         ),
         FractionallySizedBox(
           widthFactor: 0.9,
-          child: Text(widget.builder.title, style: context.headlineLarge, textAlign: TextAlign.center),
+          child: Text(
+            widget.builder.title,
+            style: context.headlineLarge,
+            textAlign: TextAlign.center,
+          ),
         ),
         AppSpacing.standard,
         FractionallySizedBox(

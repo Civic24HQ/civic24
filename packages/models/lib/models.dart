@@ -1,6 +1,11 @@
 /// Models for Civic24
 library models;
 
-export 'src/country.dart';
-export 'src/display_preferences.dart';
-export 'src/onboarding.dart';
+export 'factories/fake.dart';
+export 'src/comment/comment_data.dart';
+export 'src/post/post_data.dart';
+export 'src/user/country.dart';
+export 'src/user/display_preferences.dart';
+export 'src/user/onboarding.dart';
+export 'utils/serializable_type.dart';
+export 'utils/time.dart';

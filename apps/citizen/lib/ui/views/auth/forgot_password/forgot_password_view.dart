@@ -13,12 +13,17 @@ import 'package:utils/utils.dart';
   autoTextFieldValidation: false,
   fields: [FormTextField(name: 'email', validator: validateEmail)],
 )
-class ForgotPasswordView extends StackedView<ForgotPasswordViewModel> with $ForgotPasswordView {
+class ForgotPasswordView extends StackedView<ForgotPasswordViewModel>
+    with $ForgotPasswordView {
   const ForgotPasswordView(this.email, {super.key});
   final String email;
 
   @override
-  Widget builder(BuildContext context, ForgotPasswordViewModel viewModel, Widget? child) {
+  Widget builder(
+    BuildContext context,
+    ForgotPasswordViewModel viewModel,
+    Widget? child,
+  ) {
     return GestureDetector(
       onTap: () => FocusScope.of(context).unfocus(),
       child: AbsorbPointer(
@@ -35,7 +40,9 @@ class ForgotPasswordView extends StackedView<ForgotPasswordViewModel> with $Forg
                 return SingleChildScrollView(
                   padding: AppEdgeInsets.adaptiveHorizontalPadding(context),
                   child: ConstrainedBox(
-                    constraints: BoxConstraints(minHeight: constraints.maxHeight),
+                    constraints: BoxConstraints(
+                      minHeight: constraints.maxHeight,
+                    ),
                     child: IntrinsicHeight(
                       child: Column(
                         children: [
@@ -103,7 +110,8 @@ class ForgotPasswordView extends StackedView<ForgotPasswordViewModel> with $Forg
   }
 
   @override
-  ForgotPasswordViewModel viewModelBuilder(BuildContext context) => ForgotPasswordViewModel();
+  ForgotPasswordViewModel viewModelBuilder(BuildContext context) =>
+      ForgotPasswordViewModel();
 
   @override
   void onViewModelReady(ForgotPasswordViewModel viewModel) {

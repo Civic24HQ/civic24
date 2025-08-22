@@ -79,6 +79,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "featureonboardingGetStarted": MessageLookupByLibrary.simpleMessage(
       "Get Started",
     ),
+    "generalAddComment": MessageLookupByLibrary.simpleMessage("Add a comment"),
+    "generalAllIssues": MessageLookupByLibrary.simpleMessage("All Issues"),
+    "generalCategory": MessageLookupByLibrary.simpleMessage("Category"),
     "generalClickToUpload": MessageLookupByLibrary.simpleMessage(
       "Click to Upload",
     ),
@@ -131,6 +134,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "generalSupportedFormats": MessageLookupByLibrary.simpleMessage(
       "Supported: jpg, png, mp4 (max. 800x400px)",
     ),
+    "generalTrending": MessageLookupByLibrary.simpleMessage("Trending"),
     "generalUseAccurateLocation": MessageLookupByLibrary.simpleMessage(
       "Use accurate location",
     ),

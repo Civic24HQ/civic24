@@ -105,27 +105,36 @@ class StackedRouterWeb extends _i14.RootStackRouter {
       );
     },
     MainViewRoute.name: (routeData) {
-      return _i14.MaterialPageX<dynamic>(
+      final args =
+          routeData.argsAs<MainViewArgs>(orElse: () => const MainViewArgs());
+      return _i14.AdaptivePage<dynamic>(
         routeData: routeData,
-        child: const _i9.MainView(),
+        child: _i9.MainView(
+          key: args.key,
+          initialIndex: args.initialIndex,
+        ),
+        opaque: true,
       );
     },
     ReportsViewRoute.name: (routeData) {
-      return _i14.MaterialPageX<dynamic>(
+      return _i14.AdaptivePage<dynamic>(
         routeData: routeData,
         child: const _i10.ReportsView(),
+        opaque: true,
       );
     },
     NotificationViewRoute.name: (routeData) {
-      return _i14.MaterialPageX<dynamic>(
+      return _i14.AdaptivePage<dynamic>(
         routeData: routeData,
         child: const _i11.NotificationView(),
+        opaque: true,
       );
     },
     SettingsViewRoute.name: (routeData) {
-      return _i14.MaterialPageX<dynamic>(
+      return _i14.AdaptivePage<dynamic>(
         routeData: routeData,
         child: const _i12.SettingsView(),
+        opaque: true,
       );
     },
   };
@@ -368,14 +377,36 @@ class CompleteProfileViewRoute extends _i14.PageRouteInfo<void> {
 
 /// generated route for
 /// [_i9.MainView]
-class MainViewRoute extends _i14.PageRouteInfo<void> {
-  const MainViewRoute()
-      : super(
+class MainViewRoute extends _i14.PageRouteInfo<MainViewArgs> {
+  MainViewRoute({
+    _i15.Key? key,
+    int initialIndex = 0,
+  }) : super(
           MainViewRoute.name,
           path: '/main-view',
+          args: MainViewArgs(
+            key: key,
+            initialIndex: initialIndex,
+          ),
         );
 
   static const String name = 'MainView';
+}
+
+class MainViewArgs {
+  const MainViewArgs({
+    this.key,
+    this.initialIndex = 0,
+  });
+
+  final _i15.Key? key;
+
+  final int initialIndex;
+
+  @override
+  String toString() {
+    return 'MainViewArgs{key: $key, initialIndex: $initialIndex}';
+  }
 }
 
 /// generated route for
@@ -505,10 +536,16 @@ extension RouterStateExtension on _i13.RouterService {
     );
   }
 
-  Future<dynamic> navigateToMainView(
-      {void Function(_i14.NavigationFailure)? onFailure}) async {
+  Future<dynamic> navigateToMainView({
+    _i15.Key? key,
+    int initialIndex = 0,
+    void Function(_i14.NavigationFailure)? onFailure,
+  }) async {
     return navigateTo(
-      const MainViewRoute(),
+      MainViewRoute(
+        key: key,
+        initialIndex: initialIndex,
+      ),
       onFailure: onFailure,
     );
   }
@@ -627,10 +664,16 @@ extension RouterStateExtension on _i13.RouterService {
     );
   }
 
-  Future<dynamic> replaceWithMainView(
-      {void Function(_i14.NavigationFailure)? onFailure}) async {
+  Future<dynamic> replaceWithMainView({
+    _i15.Key? key,
+    int initialIndex = 0,
+    void Function(_i14.NavigationFailure)? onFailure,
+  }) async {
     return replaceWith(
-      const MainViewRoute(),
+      MainViewRoute(
+        key: key,
+        initialIndex: initialIndex,
+      ),
       onFailure: onFailure,
     );
   }

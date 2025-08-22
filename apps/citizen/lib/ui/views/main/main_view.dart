@@ -58,7 +58,12 @@ class _MainViewState extends State<MainView> {
             controller: _pageController,
             physics: const ClampingScrollPhysics(),
             onPageChanged: updateIndex,
-            children: const <Widget>[HomeView(), ReportsView(), NotificationView(), SettingsView()],
+            children: const <Widget>[
+              HomeView(),
+              ReportsView(),
+              NotificationView(),
+              SettingsView(),
+            ],
           ),
           bottomNavigationBar: AppNavigationBar.citizen(
             selectedIndex: _selectedIndex,
