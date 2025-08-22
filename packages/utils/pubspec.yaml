@@ -14,12 +14,16 @@ dependencies:
   # General Dependencies
   platform: ^3.1.6
   email_validator: ^3.0.0
+  intl: ^0.20.2
+  flutter_timezone: ^4.1.0
+  timezone: ^0.10.0
 
   # Package Dependencies
   localization:
     path: ../localization
   models:
     path: ../models
+
 
 dev_dependencies:
   flutter_test:

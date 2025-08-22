@@ -6,7 +6,11 @@ class ReportsView extends StackedView<ReportsViewModel> {
   const ReportsView({super.key});
 
   @override
-  Widget builder(BuildContext context, ReportsViewModel viewModel, Widget? child) {
+  Widget builder(
+    BuildContext context,
+    ReportsViewModel viewModel,
+    Widget? child,
+  ) {
     return Scaffold(
       body: Container(
         padding: const EdgeInsets.only(left: 25, right: 25),

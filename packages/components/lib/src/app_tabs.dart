@@ -56,7 +56,7 @@ class _AppTabsState extends State<AppTabs> with SingleTickerProviderStateMixin {
           controller: _tabController,
           indicatorSize: TabBarIndicatorSize.tab,
           dividerColor: context.neutralLow,
-          indicatorPadding: AppEdgeInsets.horizontalPadding24,
+          // indicatorPadding: AppEdgeInsets.horizontalPadding24,
           indicator: UnderlineTabIndicator(
             borderSide: BorderSide(color: context.primaryColor, width: AppDimensions.size2),
             borderRadius: AppBorderRadius.radius16,
