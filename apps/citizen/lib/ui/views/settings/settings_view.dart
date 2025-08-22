@@ -6,7 +6,11 @@ class SettingsView extends StackedView<SettingsViewModel> {
   const SettingsView({super.key});
 
   @override
-  Widget builder(BuildContext context, SettingsViewModel viewModel, Widget? child) {
+  Widget builder(
+    BuildContext context,
+    SettingsViewModel viewModel,
+    Widget? child,
+  ) {
     return Scaffold(
       body: Container(
         padding: const EdgeInsets.only(left: 25, right: 25),
@@ -16,5 +20,6 @@ class SettingsView extends StackedView<SettingsViewModel> {
   }
 
   @override
-  SettingsViewModel viewModelBuilder(BuildContext context) => SettingsViewModel();
+  SettingsViewModel viewModelBuilder(BuildContext context) =>
+      SettingsViewModel();
 }

@@ -2,6 +2,7 @@ import 'dart:ui';
 
 import 'package:citizen/app/app.router.dart';
 import 'package:citizen/app_builder.dart';
+import 'package:citizen/ui/bottom_sheets/comment/comment_sheet.dart';
 import 'package:citizen/ui/shared/src/success/success_view.dart';
 import 'package:citizen/ui/views/auth/forgot_password/forgot_password_view.dart';
 import 'package:citizen/ui/views/auth/login/login_view.dart';
@@ -36,6 +37,10 @@ import 'package:styles/styles.dart';
     AdaptiveRoute(page: NotificationView),
     AdaptiveRoute(page: SettingsView),
     // @stacked-route
+  ],
+  bottomsheets: [
+    StackedBottomsheet(classType: CommentSheet),
+    // @stacked-bottom-sheet
   ],
   dependencies: [
     LazySingleton(classType: RouterService),

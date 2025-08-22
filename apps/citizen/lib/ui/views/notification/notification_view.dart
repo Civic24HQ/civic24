@@ -6,7 +6,11 @@ class NotificationView extends StackedView<NotificationViewModel> {
   const NotificationView({super.key});
 
   @override
-  Widget builder(BuildContext context, NotificationViewModel viewModel, Widget? child) {
+  Widget builder(
+    BuildContext context,
+    NotificationViewModel viewModel,
+    Widget? child,
+  ) {
     return Scaffold(
       body: Container(
         padding: const EdgeInsets.only(left: 25, right: 25),
@@ -16,5 +20,6 @@ class NotificationView extends StackedView<NotificationViewModel> {
   }
 
   @override
-  NotificationViewModel viewModelBuilder(BuildContext context) => NotificationViewModel();
+  NotificationViewModel viewModelBuilder(BuildContext context) =>
+      NotificationViewModel();
 }

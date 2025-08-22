@@ -108,6 +108,6 @@ class CompleteProfileViewModel extends FormViewModel {
 
   void onSave() {
     if (!isFormValid) return;
-    _navigationService.clearStackAndShow(const MainViewRoute());
+    _navigationService.clearStackAndShow(MainViewRoute());
   }
 }

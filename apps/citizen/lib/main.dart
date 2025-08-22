@@ -1,3 +1,4 @@
+import 'package:citizen/app/app.bottomsheets.dart';
 import 'package:citizen/app/app.dart';
 import 'package:citizen/app/app.locator.dart';
 import 'package:citizen/app/app.router.dart';
@@ -16,5 +17,6 @@ Future<void> _preLocatorSetup() async {
 }
 
 Future<void> _postLocatorSetup() async {
+  setupBottomSheetUi();
   runApp(const App());
 }
