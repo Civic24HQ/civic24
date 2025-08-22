@@ -389,6 +389,46 @@ class S {
     );
   }
 
+  /// `Add a comment`
+  String get generalAddComment {
+    return Intl.message(
+      'Add a comment',
+      name: 'generalAddComment',
+      desc: 'Text for AddComment TextField',
+      args: [],
+    );
+  }
+
+  /// `All Issues`
+  String get generalAllIssues {
+    return Intl.message(
+      'All Issues',
+      name: 'generalAllIssues',
+      desc: 'Text for All Issues TextField',
+      args: [],
+    );
+  }
+
+  /// `Trending`
+  String get generalTrending {
+    return Intl.message(
+      'Trending',
+      name: 'generalTrending',
+      desc: 'Text for Trending TextField',
+      args: [],
+    );
+  }
+
+  /// `Category`
+  String get generalCategory {
+    return Intl.message(
+      'Category',
+      name: 'generalCategory',
+      desc: 'Text for Category TextField',
+      args: [],
+    );
+  }
+
   /// `Get Started`
   String get featureonboardingGetStarted {
     return Intl.message(
