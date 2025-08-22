@@ -136,6 +136,22 @@
     "@generalSearch": {
         "description": "Text for Search Label"
     },
+    "generalAddComment": "Add a comment",
+    "@generalAddComment": {
+        "description": "Text for AddComment TextField"
+    },
+    "generalAllIssues": "All Issues",
+    "@generalAllIssues": {
+        "description": "Text for All Issues TextField"
+    },
+    "generalTrending": "Trending",
+    "@generalTrending": {
+        "description": "Text for Trending TextField"
+    },
+    "generalCategory": "Category",
+    "@generalCategory": {
+        "description": "Text for Category TextField"
+    },
     "featureonboardingGetStarted": "Get Started",
     "@featureonboardingGetStarted": {
         "description": "Text for Onboarding Get Started Button"
