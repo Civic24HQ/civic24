@@ -5,10 +5,10 @@ import 'package:solar_icons/solar_icons.dart';
 import 'package:styles/styles.dart';
 import 'package:utils/utils.dart';
 
-class AppPost extends StatelessWidget {
-  const AppPost({required this.postData, required this.onTapComment, super.key});
+class AppReport extends StatelessWidget {
+  const AppReport({required this.reportData, required this.onTapComment, super.key});
 
-  final PostData postData;
+  final ReportData reportData;
   final VoidCallback onTapComment;
 
   @override
@@ -17,28 +17,31 @@ class AppPost extends StatelessWidget {
       padding: AppEdgeInsets.horizontalPadding12,
       child: Column(
         children: [
-          AppSpacing.medium,
+          AppSpacing.small,
           SizedBox(
             width: double.infinity,
             child: Center(
               child: ListTile(
                 contentPadding: EdgeInsets.zero,
                 horizontalTitleGap: AppDimensions.size12,
-                leading: ClipOval(
-                  child: SizedBox(
-                    width: AppDimensions.size40,
-                    height: AppDimensions.size40,
-
-                    child: AppCachedImage(imageUrl: postData.userImageUrl),
+                leading: SizedBox(
+                  width: AppDimensions.size40,
+                  height: AppDimensions.size40,
+                  child: ClipRRect(
+                    borderRadius: AppBorderRadius.radius12,
+                    child: AppCachedImage(imageUrl: reportData.userImageUrl),
                   ),
                 ),
-                title: Text(postData.fullName, style: context.headlineSmall?.copyWith(fontSize: AppDimensions.size16)),
+                title: Text(
+                  reportData.fullName,
+                  style: context.headlineSmall?.copyWith(fontSize: AppDimensions.size16),
+                ),
                 subtitle: Text(
-                  postData.location,
+                  reportData.location,
                   style: context.bodyLarge?.copyWith(color: context.neutralHigh, fontSize: AppDimensions.size14),
                 ),
                 trailing: Text(
-                  postData.createdAt.timeAgoInWords,
+                  reportData.createdAt.timeAgoInWords,
                   style: context.bodyLarge?.copyWith(color: context.neutralHigh, fontSize: AppDimensions.size14),
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
@@ -50,7 +53,7 @@ class AppPost extends StatelessWidget {
           ),
           AppSpacing.small,
           Text(
-            postData.content,
+            reportData.content,
             style: context.bodyMedium,
             maxLines: 10,
             overflow: TextOverflow.ellipsis,
@@ -63,7 +66,7 @@ class AppPost extends StatelessWidget {
             height: AppDimensions.size320,
             child: ClipRRect(
               borderRadius: BorderRadius.circular(AppDimensions.size8),
-              child: AppCachedImage(imageUrl: postData.media?.first),
+              child: AppCachedImage(imageUrl: reportData.media?.first),
             ),
           ),
           AppSpacing.normal,
@@ -78,7 +81,7 @@ class AppPost extends StatelessWidget {
                   children: [
                     Icon(SolarIconsOutline.like, size: AppDimensions.size20, color: context.onSurfaceVariant),
                     AppSpacing.small,
-                    Text(postData.likeCount.toString(), style: context.bodyMedium),
+                    Text(reportData.likeCount.toString(), style: context.bodyMedium),
                   ],
                 ),
                 Row(
@@ -86,7 +89,7 @@ class AppPost extends StatelessWidget {
                   children: [
                     Icon(SolarIconsOutline.dislike, size: AppDimensions.size20, color: context.onSurfaceVariant),
                     AppSpacing.small,
-                    Text(postData.dislikeCount.toString(), style: context.bodyMedium),
+                    Text(reportData.dislikeCount.toString(), style: context.bodyMedium),
                   ],
                 ),
                 Row(
@@ -94,10 +97,14 @@ class AppPost extends StatelessWidget {
                   children: [
                     InkWell(
                       onTap: onTapComment,
-                      child: Icon(SolarIconsOutline.chatRound, size: AppDimensions.size20, color: context.onSurfaceVariant),
+                      child: Icon(
+                        SolarIconsOutline.chatRound,
+                        size: AppDimensions.size20,
+                        color: context.onSurfaceVariant,
+                      ),
                     ),
                     AppSpacing.small,
-                    Text(postData.commentCount.toString(), style: context.bodyMedium),
+                    Text(reportData.commentCount.toString(), style: context.bodyMedium),
                   ],
                 ),
                 Row(
@@ -105,7 +112,7 @@ class AppPost extends StatelessWidget {
                   children: [
                     Icon(SolarIconsOutline.bookmark, size: AppDimensions.size20, color: context.onSurfaceVariant),
                     AppSpacing.small,
-                    Text(postData.bookmarkCount.toString(), style: context.bodyMedium),
+                    Text(reportData.bookmarkCount.toString(), style: context.bodyMedium),
                   ],
                 ),
               ],

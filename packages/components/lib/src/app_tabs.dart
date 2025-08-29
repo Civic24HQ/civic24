@@ -1,3 +1,4 @@
+import 'package:components/components.dart';
 import 'package:flutter/material.dart';
 import 'package:styles/styles.dart';
 import 'package:utils/utils.dart';
@@ -5,6 +6,7 @@ import 'package:utils/utils.dart';
 const double _kCounterWidth = 30;
 const double _kCounterHeight = 20;
 
+enum _TabBarStyle { underlined, buttoned }
 class AppTab {
   const AppTab({required this.label, this.view, this.count = 0});
 
@@ -14,11 +16,18 @@ class AppTab {
 }
 
 class AppTabs extends StatefulWidget {
-  const AppTabs({required this.tabs, this.initialIndex, this.onTabChanged, super.key});
+  const AppTabs.underlined({required this.tabs, this.initialIndex, this.onTabChanged, super.key})
+    : _tabBarStyle = _TabBarStyle.underlined;
+
+  const AppTabs.buttoned({required this.tabs, this.initialIndex, this.onTabChanged, super.key})
+    : _tabBarStyle = _TabBarStyle.buttoned;
 
   final int? initialIndex;
   final List<AppTab> tabs;
   final ValueChanged<int>? onTabChanged;
+
+  final _TabBarStyle _tabBarStyle;
+
 
   @override
   State<AppTabs> createState() => _AppTabsState();
@@ -52,6 +61,8 @@ class _AppTabsState extends State<AppTabs> with SingleTickerProviderStateMixin {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
+        switch (widget._tabBarStyle) {
+          _TabBarStyle.underlined => 
         TabBar(
           controller: _tabController,
           indicatorSize: TabBarIndicatorSize.tab,
@@ -98,6 +109,29 @@ class _AppTabsState extends State<AppTabs> with SingleTickerProviderStateMixin {
             );
           }).toList(),
         ),
+          _TabBarStyle.buttoned => TabBar(
+            controller: _tabController,
+            tabAlignment: TabAlignment.start,
+            padding: const EdgeInsets.symmetric(horizontal: AppDimensions.padding8),
+            labelPadding: const EdgeInsets.only(right: AppDimensions.padding16),
+            indicatorSize: TabBarIndicatorSize.tab,
+            isScrollable: true,
+            indicatorColor: Colors.transparent,
+            dividerHeight: 0,
+            tabs: widget.tabs.map((tab) {
+              final isSelected = _activeIndex == widget.tabs.indexOf(tab);
+              return SortChip(
+                value: tab.label,
+                groupValue: isSelected ? tab.label : null,
+                onChanged: (value) {
+                  if (value != null) {
+                    _tabController.animateTo(widget.tabs.indexOf(tab));
+                  }
+                },
+              );
+            }).toList(),
+          ),
+        },
         Expanded(
           child: Padding(
             padding: const EdgeInsets.only(top: AppDimensions.padding16),

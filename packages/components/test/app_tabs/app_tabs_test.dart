@@ -16,7 +16,7 @@ void main() {
         SizedBox(
           height: scenarioHeight,
           child: testableWidget(
-            const AppTabs(
+            const AppTabs.underlined(
               tabs: [
                 AppTab(
                   label: 'Reports',
@@ -36,7 +36,7 @@ void main() {
         SizedBox(
           height: scenarioHeight,
           child: testableWidget(
-            const AppTabs(
+            const AppTabs.underlined(
               tabs: [
                 AppTab(
                   label: 'Reports',
@@ -64,7 +64,7 @@ void main() {
         widget: SizedBox(
           height: scenarioHeight,
           child: testableWidget(
-            const AppTabs(
+            const AppTabs.underlined(
               tabs: [
                 AppTab(
                   label: 'Reports',
@@ -84,7 +84,7 @@ void main() {
         widget: SizedBox(
           height: scenarioHeight,
           child: testableWidget(
-            const AppTabs(
+            const AppTabs.underlined(
               tabs: [
                 AppTab(
                   label: 'Reports',
