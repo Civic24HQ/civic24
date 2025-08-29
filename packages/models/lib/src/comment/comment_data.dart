@@ -12,7 +12,7 @@ class CommentData with _$CommentData, SerializeJson {
   @JsonSerializable()
   const factory CommentData({
     /// Unique identifier for the comment.
-    required String id,
+    required String commentId,
 
     /// FirstName of the User who created the comment.
     required String firstName,
@@ -20,7 +20,7 @@ class CommentData with _$CommentData, SerializeJson {
     /// LastName of the User who created the comment.
     required String lastName,
 
-    /// The comment on the created post.
+    /// The comment on the created report.
     required String comment,
 
     /// Number of likes the comment has received.
@@ -48,7 +48,7 @@ class CommentData with _$CommentData, SerializeJson {
 
   /// Creates an unknown comment instance.
   factory CommentData.unknown() => CommentData(
-    id: '0',
+    commentId: '0',
     firstName: 'N/A',
     lastName: 'N/A',
     comment: 'No content available',
@@ -58,7 +58,7 @@ class CommentData with _$CommentData, SerializeJson {
   );
 
   factory CommentData.empty() => CommentData(
-    id: '',
+    commentId: '',
     firstName: '',
     lastName: '',
     comment: '',

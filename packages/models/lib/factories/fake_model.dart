@@ -7,19 +7,44 @@ final rand = Random();
 enum Gender { male, female }
 
 List<String> fakeContent = [
-  'A major issue has been reported in this area, affecting daily life and putting people at risk. Community support is needed to draw urgent attention. If this concerns you too, vote to support this report.',
-  'This report highlights an ongoing challenge that affects the quality of life here. With enough support, it can reach those who have the power to resolve it. Vote if you believe change is needed',
-  'This situation continues to disrupt residents, businesses, and commuters in the community. It requires prompt action from the relevant authorities.',
-  'What happens here affects the wider community safety, movement, and wellbeing are at stake. Voting for this report strengthens the case for urgent intervention.',
-  'This issue doesn’t just inconvenience a few; it impacts everyone around. Collective action starts with awareness. If this matters to you too, kindly add a comment and vote to support this report.',
+  'A recurring issue in this area has been reported, disrupting daily routines and creating risks for residents and commuters alike. This situation cannot be ignored any longer. Add your support to ensure it gets the urgent attention it deserves.',
+  'This challenge has lingered for months, gradually affecting families, workers, and local businesses. Without intervention, the community will continue to bear the cost. Voting for this report shows how critical it is for change to happen now.',
+  'Residents continue to face obstacles because of this unresolved problem, which impacts movement, safety, and peace of mind. By supporting this report, you help amplify the community’s call for prompt and lasting solutions.',
+  'What happens here ripples far beyond this street—safety, livelihoods, and community wellbeing are being put at stake. This report gives everyone a chance to stand together. Your vote will strengthen the case for immediate intervention.',
+  'This isn’t just a minor inconvenience; it has become a persistent issue that touches everyone in one way or another. Supporting this report highlights that it matters to the entire community, not just a few individuals.',
+  'For too long this matter has been overlooked, leaving residents frustrated and exposed to risks. We believe collective action can make a difference. Join in by voting so this issue gets the visibility it demands.',
+  'Everyday life from commuting to running a business is being disrupted by this ongoing situation. If more people lend their voice, it will be harder for those in power to ignore. Cast your vote today to push for urgent action.',
+  'This report draws attention to a challenge that undermines both safety and progress in the community. The more support it gathers, the stronger the push for authorities to prioritize it. Add your voice to this call for change.',
+  'Residents have shown patience, but this problem has persisted far too long. It not only slows growth but puts lives at risk. Supporting this report demonstrates that the community stands united in demanding immediate solutions.',
+  'We cannot keep treating this issue as background noise. It is a serious problem that affects present wellbeing and the future of the neighborhood. By voting, you help emphasize its urgency and push it higher on the agenda.',
+  'Businesses are losing customers, children are exposed to hazards, and families are inconvenienced daily because of this ongoing challenge. With enough support, this report can draw the attention of the people who can fix it.',
+  'This is more than a one off incident; it’s a recurring breakdown that threatens the community’s stability. Every additional vote proves that residents care deeply about resolving it. Together, we can make our concerns impossible to ignore.',
+  'Ignoring this issue will only allow it to worsen, costing more time, money, and safety in the long run. Supporting this report is the first step toward accountability and tangible solutions that benefit everyone.',
+  'This situation has turned into a visible sign of neglect, frustrating everyone who passes through this area. It’s time for action. Add your support and help bring this report to the forefront of community priorities.',
+  'Community wellbeing depends on addressing issues like this quickly and effectively. With enough collective backing, the problem can no longer be sidelined. Vote now to show that urgent action is not just requested but required.',
 ];
 
 List<String> fakeComment = [
-  'This has been a long-standing problem, thanks for bringing it up',
+  'This has been a long standing problem',
   'We really need the authorities to step in and fix this soon',
-  'I’ve been affected by this too, it’s getting worse every day.',
-  'Glad someone finally reported this—many people are tired of it.',
-  'This is something our community can’t keep ignoring.',
+  'I’ve been affected by this too 🥲',
+  'Glad someone finally reported this',
+  'This is something we can’t keep ignoring.',
+  'I see this issue every day on my way to work',
+  'Honestly, this needs urgent attention',
+  'Can’t believe nothing has been done yet',
+  'Thanks for bringing this up 🙏',
+  'It’s getting worse by the day',
+  'So many people are affected by this',
+  'We deserve better than this situation',
+  'It’s about time this was fixed',
+  'I hope this gets resolved quickly',
+  'This shouldn’t be happening in 2025',
+  'The community has been patient enough',
+  'Really frustrating to keep seeing this',
+  'This is putting everyone at risk',
+  'It’s costing people more than they realize',
+  'Something must change soon ⚠️',
 ];
 
 List<String> fakeMedia = [
@@ -28,6 +53,11 @@ List<String> fakeMedia = [
   'https://i.imghippo.com/files/gkG1737BQ.jpg',
   'https://i.imghippo.com/files/Yf7041g.jpg',
   'https://i.imghippo.com/files/hNi2540CE.jpg',
+  'https://i.imghippo.com/files/Xd4722FQ.jpg',
+  'https://i.imghippo.com/files/eIv6463Sc.jpeg',
+  'https://i.imghippo.com/files/ay1655RTE.jpg',
+  'https://i.imghippo.com/files/bAXP3405rp.jpg',
+  'https://i.imghippo.com/files/GJvD3698RM.jpg'
 ];
 
 final Map<String, List<String>> countryStates = {
@@ -248,6 +278,24 @@ String takeUniqueImageUrl() {
       ..shuffle();
   }
   return _availableImages.removeLast();
+}
+
+String takeUniqueContent() {
+  if (fakeContent.isEmpty) {
+    fakeContent
+      ..addAll(fakeComment)
+      ..shuffle();
+  }
+  return fakeContent.removeLast();
+}
+
+List<String> takeUniqueMedia() {
+  if (fakeMedia.isEmpty) {
+    fakeMedia
+      ..addAll(fakeMedia)
+      ..shuffle();
+  }
+  return [fakeMedia.removeLast()];
 }
 
 String pickLastName() => lastNames[rand.nextInt(lastNames.length)];

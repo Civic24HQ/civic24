@@ -41,7 +41,7 @@ class ComponentGridShowcase extends StatelessWidget {
         'App Tabs',
         SizedBox(
           height: AppDimensions.size72,
-          child: AppTabs(
+          child: AppTabs.underlined(
             tabs: const [
               AppTab(
                 label: 'Reports',
