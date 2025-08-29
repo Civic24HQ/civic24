@@ -17,7 +17,11 @@ class ReportsView extends StackedView<ReportsViewModel> {
         shape: RoundedRectangleBorder(borderRadius: AppBorderRadius.radius12),
         backgroundColor: context.primary,
         onPressed: viewModel.onAddReport,
-        child: Icon(Icons.add, color: context.onPrimary, size: AppDimensions.size28),
+        child: Icon(
+          Icons.add,
+          color: context.onPrimary,
+          size: AppDimensions.size28,
+        ),
       ),
       body: Container(
         padding: const EdgeInsets.only(left: 25, right: 25),

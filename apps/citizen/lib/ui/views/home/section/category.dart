@@ -26,7 +26,9 @@ class _CategoryListView extends ViewModelWidget<HomeViewModel> {
     final fakeReportCategoryList = viewModel.fakeReportCategoryList;
 
     if (fakeReportCategoryList.isEmpty) {
-      return const CustomScrollView(slivers: [SliverFillRemaining(hasScrollBody: false, child: SizedBox())]);
+      return const CustomScrollView(
+        slivers: [SliverFillRemaining(hasScrollBody: false, child: SizedBox())],
+      );
     }
 
     return CustomScrollView(
@@ -35,9 +37,14 @@ class _CategoryListView extends ViewModelWidget<HomeViewModel> {
       slivers: [
         SliverList(
           delegate: SliverChildBuilderDelegate((context, index) {
-            if (index >= fakeReportCategoryList.length) return const SizedBox.shrink();
+            if (index >= fakeReportCategoryList.length) {
+              return const SizedBox.shrink();
+            }
             final report = fakeReportCategoryList[index];
-            return AppReport(onTapComment: () => viewModel.viewComment(), reportData: report);
+            return AppReport(
+              onTapComment: () => viewModel.viewComment(),
+              reportData: report,
+            );
           }, childCount: fakeReportCategoryList.length),
         ),
       ],
