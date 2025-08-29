@@ -36,7 +36,7 @@ class AppFilterChip extends StatelessWidget {
         side: BorderSide(color: isSelected ? context.primary : Colors.transparent),
       ),
       label: Text(label),
-      labelStyle: context.bodySmall?.copyWith(color: context.onSurface),
+      labelStyle: context.bodyMedium?.copyWith(color: context.onSurface),
       backgroundColor: isSelected ? context.surface : context.tertiaryContainer,
       deleteButtonTooltipMessage: trailingIconTooltip,
       deleteIconBoxConstraints: const BoxConstraints(minWidth: AppDimensions.size8, minHeight: AppDimensions.size8),

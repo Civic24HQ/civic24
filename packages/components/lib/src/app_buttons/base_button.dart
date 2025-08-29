@@ -4,6 +4,7 @@ import 'package:styles/styles.dart';
 
 part 'primary_button.dart';
 part 'outline_button.dart';
+part 'secondary_button.dart';
 
 class BaseButton extends StatelessWidget {
   const BaseButton({
