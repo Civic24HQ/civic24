@@ -154,7 +154,27 @@ class S {
     return Intl.message(
       'Proceed',
       name: 'generalProceed',
-      desc: 'General Label for Primary Button',
+      desc: 'General Label for Button',
+      args: [],
+    );
+  }
+
+  /// `Submit`
+  String get generalSubmit {
+    return Intl.message(
+      'Submit',
+      name: 'generalSubmit',
+      desc: 'Submit Label for Button',
+      args: [],
+    );
+  }
+
+  /// `Previous`
+  String get generalPrevious {
+    return Intl.message(
+      'Previous',
+      name: 'generalPrevious',
+      desc: 'Previous Label for Button',
       args: [],
     );
   }
@@ -895,6 +915,56 @@ class S {
       'Report unapproved structures, noise pollution, land misuse, or zoning violations in your area.',
       name: 'featureCategoryTypeUrbanDescription',
       desc: 'Zoning Violations Description',
+      args: [],
+    );
+  }
+
+  /// `Select the category of the report`
+  String get featureAddReportCategory {
+    return Intl.message(
+      'Select the category of the report',
+      name: 'featureAddReportCategory',
+      desc: 'Category Description',
+      args: [],
+    );
+  }
+
+  /// `Share the details of the civic issue`
+  String get featureAddReportContent {
+    return Intl.message(
+      'Share the details of the civic issue',
+      name: 'featureAddReportContent',
+      desc: 'Content Description',
+      args: [],
+    );
+  }
+
+  /// `Share your thoughts`
+  String get featureAddReportContentHint {
+    return Intl.message(
+      'Share your thoughts',
+      name: 'featureAddReportContentHint',
+      desc: 'Content Hint Description',
+      args: [],
+    );
+  }
+
+  /// `Kindly upload a clear image of your report`
+  String get featureAddReportMedia {
+    return Intl.message(
+      'Kindly upload a clear image of your report',
+      name: 'featureAddReportMedia',
+      desc: 'Media Description',
+      args: [],
+    );
+  }
+
+  /// `Add a Report`
+  String get featureAddReport {
+    return Intl.message(
+      'Add a Report',
+      name: 'featureAddReport',
+      desc: 'Add a Report Description',
       args: [],
     );
   }

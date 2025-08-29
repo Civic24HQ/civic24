@@ -14,7 +14,6 @@ _$ReportDataImpl _$$ReportDataImplFromJson(Map<String, dynamic> json) =>
       country: json['country'] as String,
       state: json['state'] as String,
       content: json['content'] as String,
-      type: $enumDecode(_$CategoryTypeEnumMap, json['type']),
       likeCount: (json['likeCount'] as num).toInt(),
       dislikeCount: (json['dislikeCount'] as num).toInt(),
       commentCount: (json['commentCount'] as num).toInt(),
@@ -30,6 +29,11 @@ _$ReportDataImpl _$$ReportDataImplFromJson(Map<String, dynamic> json) =>
           const [],
       userId: json['userId'] as String?,
       userImageUrl: json['userImageUrl'] as String?,
+      categoryTypes:
+          (json['categoryTypes'] as List<dynamic>?)
+              ?.map((e) => $enumDecode(_$CategoryTypeEnumMap, e))
+              .toList() ??
+          const [],
       path: json['path'] as String?,
     );
 
@@ -41,7 +45,6 @@ Map<String, dynamic> _$$ReportDataImplToJson(_$ReportDataImpl instance) =>
       'country': instance.country,
       'state': instance.state,
       'content': instance.content,
-      'type': _$CategoryTypeEnumMap[instance.type]!,
       'likeCount': instance.likeCount,
       'dislikeCount': instance.dislikeCount,
       'commentCount': instance.commentCount,
@@ -51,6 +54,9 @@ Map<String, dynamic> _$$ReportDataImplToJson(_$ReportDataImpl instance) =>
       if (instance.media case final value?) 'media': value,
       if (instance.userId case final value?) 'userId': value,
       if (instance.userImageUrl case final value?) 'userImageUrl': value,
+      'categoryTypes': instance.categoryTypes
+          .map((e) => _$CategoryTypeEnumMap[e]!)
+          .toList(),
       if (instance.path case final value?) 'path': value,
     };
 
