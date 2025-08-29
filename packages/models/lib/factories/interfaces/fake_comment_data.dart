@@ -16,7 +16,7 @@ class FakeCommentData extends FakeModel<CommentData> {
     final updatedAt = faker.date.dateTimeBetween(createdAt, DateTime.now());
 
     return CommentData(
-      id: fakeUuid,
+      commentId: fakeUuid,
       firstName: firstName,
       lastName: lastName,
       comment: fakeComment[Random().nextInt(fakeComment.length)],
