@@ -136,6 +136,10 @@
     "@generalSearch": {
         "description": "Text for Search Label"
     },
+    "generalComment": "Comments",
+    "@generalComment": {
+        "description": "Text for Comment Label"
+    },
     "generalAddComment": "Add a comment",
     "@generalAddComment": {
         "description": "Text for AddComment TextField"
@@ -227,5 +231,113 @@
     "featureCompleteProfile": "Complete Profile",
     "@featureCompleteProfile": {
         "description": "Complete Profile Description"
+    },
+    "featureCategoryTypeRoad": "Road & Transport",
+    "@featureCategoryTypeRoad": {
+        "description": "Road & Transport Description"
+    },
+    "featureCategoryTypeLight": "Light & Electricity",
+    "@featureCategoryTypeLight": {
+        "description": "Light & Electricity Description"
+    },
+    "featureCategoryTypeWaste": "Waste",
+    "@featureCategoryTypeWaste": {
+        "description": "Environmental Hazards Description"
+    },
+    "featureCategoryTypeAbandoned": "Abandoned Projects",
+    "@featureCategoryTypeAbandoned": {
+        "description": "Abandoned Projects Description"
+    },
+    "featureCategoryTypeHealth": "Health & Sanitation",
+    "@featureCategoryTypeHealth": {
+        "description": "Health & Sanitation Description"
+    },
+    "featureCategoryTypeSecurity": "Security",
+    "@featureCategoryTypeSecurity": {
+        "description": "Security Description"
+    },
+    "featureCategoryTypeEducation": "Education",
+    "@featureCategoryTypeEducation": {
+        "description": "Education Description"
+    },
+    "featureCategoryTypeGovernance": "Governance",
+    "@featureCategoryTypeGovernance": {
+        "description": "Governance Description"
+    },
+    "featureCategoryTypeUrban": "Zoning Violations",
+    "@featureCategoryTypeUrban": {
+        "description": "Zoning Violations Description"
+    },
+    "featureCategoryTypeDetailedRoad": "Road & Transport Issues",
+    "@featureCategoryTypeDetailedRoad": {
+        "description": "Road & Transport Issues Description"
+    },
+    "featureCategoryTypeDetailedLight": "Light & Electricity Issues",
+    "@featureCategoryTypeDetailedLight": {
+        "description": "Light & Electricity Issues Description"
+    },
+    "featureCategoryTypeDetailedWaste": "Waste & Environmental Hazards",
+    "@featureCategoryTypeDetailedWaste": {
+        "description": "Environmental Hazards Description"
+    },
+    "featureCategoryTypeDetailedAbandoned": "Abandoned & Incomplete Projects",
+    "@featureCategoryTypeDetailedAbandoned": {
+        "description": "Abandoned & Incomplete Projects Description"
+    },
+    "featureCategoryTypeDetailedHealth": "Health & Sanitation",
+    "@featureCategoryTypeDetailedHealth": {
+        "description": "Health & Sanitation Description"
+    },
+    "featureCategoryTypeDetailedSecurity": "Security Issues",
+    "@featureCategoryTypeDetailedSecurity": {
+        "description": "Security Issues Description"
+    },
+    "featureCategoryTypeDetailedEducation": "Education & Public Facilities",
+    "@featureCategoryTypeDetailedEducation": {
+        "description": "Education & Public Facilities Description"
+    },
+    "featureCategoryTypeDetailedGovernance": "Governance",
+    "@featureCategoryTypeDetailedGovernance": {
+        "description": "Governance Description"
+    },
+    "featureCategoryTypeDetailedUrban": "Urban Planning & Zoning Violations",
+    "@featureCategoryTypeDetailedUrban": {
+        "description": "Urban Planning & Zoning Violations Description"
+    },
+    "featureCategoryTypeRoadDescription": "Report potholes, bad roads, broken pedestrian paths, faulty traffic lights, or reckless driving in your area.",
+    "@featureCategoryTypeRoadDescription": {
+        "description": "Road & Transport Description"
+    },
+    "featureCategoryTypeLightDescription": "Report broken streetlights, exposed wires, or power outages affecting public spaces and safety.",
+    "@featureCategoryTypeLightDescription": {
+        "description": "Light & Electricity Description"
+    },
+    "featureCategoryTypeWasteDescription": "Report uncollected garbage, blocked drains, illegal dumping, or other environmental concerns.",
+    "@featureCategoryTypeWasteDescription": {
+        "description": "Environmental Hazards Description"
+    },
+    "featureCategoryTypeAbandonedDescription": "Report incomplete or abandoned government/community projects left unattended in your locality. ",
+    "@featureCategoryTypeAbandonedDescription": {
+        "description": "Abandoned Projects Description"
+    },
+    "featureCategoryTypeHealthDescription": "Report filthy public toilets, poor sanitation at clinics, open sewage, or unsafe health conditions.",
+    "@featureCategoryTypeHealthDescription": {
+        "description": "Health & Sanitation Description"
+    },
+    "featureCategoryTypeSecurityDescription": "Report unsafe areas, broken security infrastructure, street harassment, or loitering zones.",
+    "@featureCategoryTypeSecurityDescription": {
+        "description": "Security Description"
+    },
+    "featureCategoryTypeEducationDescription": "Report rundown school buildings, locked community halls, or neglected libraries.",
+    "@featureCategoryTypeEducationDescription": {
+        "description": "Education Description"
+    },
+    "featureCategoryTypeGovernanceDescription": "Raise issues like government delays, poor service delivery, corrupt practices, or misuse of public funds.",
+    "@featureCategoryTypeGovernanceDescription": {
+        "description": "Governance Description"
+    },
+    "featureCategoryTypeUrbanDescription": "Report unapproved structures, noise pollution, land misuse, or zoning violations in your area.",
+    "@featureCategoryTypeUrbanDescription": {
+        "description": "Zoning Violations Description"
     }
 }
