@@ -25,6 +25,83 @@ class MessageLookup extends MessageLookupByLibrary {
     "featureAlreadyHaveAnAccount": MessageLookupByLibrary.simpleMessage(
       "Already have an account?",
     ),
+    "featureCategoryTypeAbandoned": MessageLookupByLibrary.simpleMessage(
+      "Abandoned Projects",
+    ),
+    "featureCategoryTypeAbandonedDescription": MessageLookupByLibrary.simpleMessage(
+      "Report incomplete or abandoned government/community projects left unattended in your locality. ",
+    ),
+    "featureCategoryTypeDetailedAbandoned":
+        MessageLookupByLibrary.simpleMessage("Abandoned & Incomplete Projects"),
+    "featureCategoryTypeDetailedEducation":
+        MessageLookupByLibrary.simpleMessage("Education & Public Facilities"),
+    "featureCategoryTypeDetailedGovernance":
+        MessageLookupByLibrary.simpleMessage("Governance"),
+    "featureCategoryTypeDetailedHealth": MessageLookupByLibrary.simpleMessage(
+      "Health & Sanitation",
+    ),
+    "featureCategoryTypeDetailedLight": MessageLookupByLibrary.simpleMessage(
+      "Light & Electricity Issues",
+    ),
+    "featureCategoryTypeDetailedRoad": MessageLookupByLibrary.simpleMessage(
+      "Road & Transport Issues",
+    ),
+    "featureCategoryTypeDetailedSecurity": MessageLookupByLibrary.simpleMessage(
+      "Security Issues",
+    ),
+    "featureCategoryTypeDetailedUrban": MessageLookupByLibrary.simpleMessage(
+      "Urban Planning & Zoning Violations",
+    ),
+    "featureCategoryTypeDetailedWaste": MessageLookupByLibrary.simpleMessage(
+      "Waste & Environmental Hazards",
+    ),
+    "featureCategoryTypeEducation": MessageLookupByLibrary.simpleMessage(
+      "Education",
+    ),
+    "featureCategoryTypeEducationDescription": MessageLookupByLibrary.simpleMessage(
+      "Report rundown school buildings, locked community halls, or neglected libraries.",
+    ),
+    "featureCategoryTypeGovernance": MessageLookupByLibrary.simpleMessage(
+      "Governance",
+    ),
+    "featureCategoryTypeGovernanceDescription":
+        MessageLookupByLibrary.simpleMessage(
+          "Raise issues like government delays, poor service delivery, corrupt practices, or misuse of public funds.",
+        ),
+    "featureCategoryTypeHealth": MessageLookupByLibrary.simpleMessage(
+      "Health & Sanitation",
+    ),
+    "featureCategoryTypeHealthDescription": MessageLookupByLibrary.simpleMessage(
+      "Report filthy public toilets, poor sanitation at clinics, open sewage, or unsafe health conditions.",
+    ),
+    "featureCategoryTypeLight": MessageLookupByLibrary.simpleMessage(
+      "Light & Electricity",
+    ),
+    "featureCategoryTypeLightDescription": MessageLookupByLibrary.simpleMessage(
+      "Report broken streetlights, exposed wires, or power outages affecting public spaces and safety.",
+    ),
+    "featureCategoryTypeRoad": MessageLookupByLibrary.simpleMessage(
+      "Road & Transport",
+    ),
+    "featureCategoryTypeRoadDescription": MessageLookupByLibrary.simpleMessage(
+      "Report potholes, bad roads, broken pedestrian paths, faulty traffic lights, or reckless driving in your area.",
+    ),
+    "featureCategoryTypeSecurity": MessageLookupByLibrary.simpleMessage(
+      "Security",
+    ),
+    "featureCategoryTypeSecurityDescription": MessageLookupByLibrary.simpleMessage(
+      "Report unsafe areas, broken security infrastructure, street harassment, or loitering zones.",
+    ),
+    "featureCategoryTypeUrban": MessageLookupByLibrary.simpleMessage(
+      "Zoning Violations",
+    ),
+    "featureCategoryTypeUrbanDescription": MessageLookupByLibrary.simpleMessage(
+      "Report unapproved structures, noise pollution, land misuse, or zoning violations in your area.",
+    ),
+    "featureCategoryTypeWaste": MessageLookupByLibrary.simpleMessage("Waste"),
+    "featureCategoryTypeWasteDescription": MessageLookupByLibrary.simpleMessage(
+      "Report uncollected garbage, blocked drains, illegal dumping, or other environmental concerns.",
+    ),
     "featureCompleteProfile": MessageLookupByLibrary.simpleMessage(
       "Complete Profile",
     ),
@@ -85,6 +162,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "generalClickToUpload": MessageLookupByLibrary.simpleMessage(
       "Click to Upload",
     ),
+    "generalComment": MessageLookupByLibrary.simpleMessage("Comments"),
     "generalConfirmPassword": MessageLookupByLibrary.simpleMessage(
       "Confirm Password",
     ),
