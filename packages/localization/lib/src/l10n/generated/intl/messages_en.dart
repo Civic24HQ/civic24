@@ -22,6 +22,19 @@ class MessageLookup extends MessageLookupByLibrary {
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
+    "featureAddReport": MessageLookupByLibrary.simpleMessage("Add a Report"),
+    "featureAddReportCategory": MessageLookupByLibrary.simpleMessage(
+      "Select the category of the report",
+    ),
+    "featureAddReportContent": MessageLookupByLibrary.simpleMessage(
+      "Share the details of the civic issue",
+    ),
+    "featureAddReportContentHint": MessageLookupByLibrary.simpleMessage(
+      "Share your thoughts",
+    ),
+    "featureAddReportMedia": MessageLookupByLibrary.simpleMessage(
+      "Kindly upload a clear image of your report",
+    ),
     "featureAlreadyHaveAnAccount": MessageLookupByLibrary.simpleMessage(
       "Already have an account?",
     ),
@@ -198,6 +211,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "generalLogin": MessageLookupByLibrary.simpleMessage("Login"),
     "generalNoResults": MessageLookupByLibrary.simpleMessage("No results"),
     "generalPassword": MessageLookupByLibrary.simpleMessage("Password"),
+    "generalPrevious": MessageLookupByLibrary.simpleMessage("Previous"),
     "generalProceed": MessageLookupByLibrary.simpleMessage("Proceed"),
     "generalRequired": MessageLookupByLibrary.simpleMessage("Required"),
     "generalSearch": MessageLookupByLibrary.simpleMessage("Search here"),
@@ -209,6 +223,7 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "generalSignUp": MessageLookupByLibrary.simpleMessage("SignUp"),
     "generalState": MessageLookupByLibrary.simpleMessage("State"),
+    "generalSubmit": MessageLookupByLibrary.simpleMessage("Submit"),
     "generalSupportedFormats": MessageLookupByLibrary.simpleMessage(
       "Supported: jpg, png, mp4 (max. 800x400px)",
     ),

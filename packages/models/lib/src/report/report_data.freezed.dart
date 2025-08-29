@@ -39,9 +39,6 @@ mixin _$ReportData {
   /// The content of the report.
   String get content => throw _privateConstructorUsedError;
 
-  /// Type of the report (Waste, Electricity, Road)
-  CategoryType get type => throw _privateConstructorUsedError;
-
   /// Number of likes the report has received.
   int get likeCount => throw _privateConstructorUsedError;
 
@@ -71,6 +68,10 @@ mixin _$ReportData {
   /// The image URL of the user who created the report.
   String? get userImageUrl => throw _privateConstructorUsedError;
 
+  /// The user's preferred category types.
+  /// Example: [CategoryType.waste, CategoryType.road].
+  List<CategoryType> get categoryTypes => throw _privateConstructorUsedError;
+
   /// The document reference path, only be
   /// parsed when converted from Firestore
   String? get path => throw _privateConstructorUsedError;
@@ -99,7 +100,6 @@ abstract class $ReportDataCopyWith<$Res> {
     String country,
     String state,
     String content,
-    CategoryType type,
     int likeCount,
     int dislikeCount,
     int commentCount,
@@ -109,6 +109,7 @@ abstract class $ReportDataCopyWith<$Res> {
     List<String>? media,
     String? userId,
     String? userImageUrl,
+    List<CategoryType> categoryTypes,
     String? path,
   });
 }
@@ -134,7 +135,6 @@ class _$ReportDataCopyWithImpl<$Res, $Val extends ReportData>
     Object? country = null,
     Object? state = null,
     Object? content = null,
-    Object? type = null,
     Object? likeCount = null,
     Object? dislikeCount = null,
     Object? commentCount = null,
@@ -144,6 +144,7 @@ class _$ReportDataCopyWithImpl<$Res, $Val extends ReportData>
     Object? media = freezed,
     Object? userId = freezed,
     Object? userImageUrl = freezed,
+    Object? categoryTypes = null,
     Object? path = freezed,
   }) {
     return _then(
@@ -172,10 +173,6 @@ class _$ReportDataCopyWithImpl<$Res, $Val extends ReportData>
                 ? _value.content
                 : content // ignore: cast_nullable_to_non_nullable
                       as String,
-            type: null == type
-                ? _value.type
-                : type // ignore: cast_nullable_to_non_nullable
-                      as CategoryType,
             likeCount: null == likeCount
                 ? _value.likeCount
                 : likeCount // ignore: cast_nullable_to_non_nullable
@@ -212,6 +209,10 @@ class _$ReportDataCopyWithImpl<$Res, $Val extends ReportData>
                 ? _value.userImageUrl
                 : userImageUrl // ignore: cast_nullable_to_non_nullable
                       as String?,
+            categoryTypes: null == categoryTypes
+                ? _value.categoryTypes
+                : categoryTypes // ignore: cast_nullable_to_non_nullable
+                      as List<CategoryType>,
             path: freezed == path
                 ? _value.path
                 : path // ignore: cast_nullable_to_non_nullable
@@ -238,7 +239,6 @@ abstract class _$$ReportDataImplCopyWith<$Res>
     String country,
     String state,
     String content,
-    CategoryType type,
     int likeCount,
     int dislikeCount,
     int commentCount,
@@ -248,6 +248,7 @@ abstract class _$$ReportDataImplCopyWith<$Res>
     List<String>? media,
     String? userId,
     String? userImageUrl,
+    List<CategoryType> categoryTypes,
     String? path,
   });
 }
@@ -272,7 +273,6 @@ class __$$ReportDataImplCopyWithImpl<$Res>
     Object? country = null,
     Object? state = null,
     Object? content = null,
-    Object? type = null,
     Object? likeCount = null,
     Object? dislikeCount = null,
     Object? commentCount = null,
@@ -282,6 +282,7 @@ class __$$ReportDataImplCopyWithImpl<$Res>
     Object? media = freezed,
     Object? userId = freezed,
     Object? userImageUrl = freezed,
+    Object? categoryTypes = null,
     Object? path = freezed,
   }) {
     return _then(
@@ -310,10 +311,6 @@ class __$$ReportDataImplCopyWithImpl<$Res>
             ? _value.content
             : content // ignore: cast_nullable_to_non_nullable
                   as String,
-        type: null == type
-            ? _value.type
-            : type // ignore: cast_nullable_to_non_nullable
-                  as CategoryType,
         likeCount: null == likeCount
             ? _value.likeCount
             : likeCount // ignore: cast_nullable_to_non_nullable
@@ -350,6 +347,10 @@ class __$$ReportDataImplCopyWithImpl<$Res>
             ? _value.userImageUrl
             : userImageUrl // ignore: cast_nullable_to_non_nullable
                   as String?,
+        categoryTypes: null == categoryTypes
+            ? _value._categoryTypes
+            : categoryTypes // ignore: cast_nullable_to_non_nullable
+                  as List<CategoryType>,
         path: freezed == path
             ? _value.path
             : path // ignore: cast_nullable_to_non_nullable
@@ -370,7 +371,6 @@ class _$ReportDataImpl extends _ReportData {
     required this.country,
     required this.state,
     required this.content,
-    required this.type,
     required this.likeCount,
     required this.dislikeCount,
     required this.commentCount,
@@ -380,8 +380,10 @@ class _$ReportDataImpl extends _ReportData {
     final List<String>? media = const [],
     this.userId,
     this.userImageUrl,
+    final List<CategoryType> categoryTypes = const [],
     this.path,
   }) : _media = media,
+       _categoryTypes = categoryTypes,
        super._();
 
   factory _$ReportDataImpl.fromJson(Map<String, dynamic> json) =>
@@ -410,10 +412,6 @@ class _$ReportDataImpl extends _ReportData {
   /// The content of the report.
   @override
   final String content;
-
-  /// Type of the report (Waste, Electricity, Road)
-  @override
-  final CategoryType type;
 
   /// Number of likes the report has received.
   @override
@@ -463,6 +461,20 @@ class _$ReportDataImpl extends _ReportData {
   @override
   final String? userImageUrl;
 
+  /// The user's preferred category types.
+  /// Example: [CategoryType.waste, CategoryType.road].
+  final List<CategoryType> _categoryTypes;
+
+  /// The user's preferred category types.
+  /// Example: [CategoryType.waste, CategoryType.road].
+  @override
+  @JsonKey()
+  List<CategoryType> get categoryTypes {
+    if (_categoryTypes is EqualUnmodifiableListView) return _categoryTypes;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_categoryTypes);
+  }
+
   /// The document reference path, only be
   /// parsed when converted from Firestore
   @override
@@ -470,7 +482,7 @@ class _$ReportDataImpl extends _ReportData {
 
   @override
   String toString() {
-    return 'ReportData(reportId: $reportId, firstName: $firstName, lastName: $lastName, country: $country, state: $state, content: $content, type: $type, likeCount: $likeCount, dislikeCount: $dislikeCount, commentCount: $commentCount, bookmarkCount: $bookmarkCount, createdAt: $createdAt, updatedAt: $updatedAt, media: $media, userId: $userId, userImageUrl: $userImageUrl, path: $path)';
+    return 'ReportData(reportId: $reportId, firstName: $firstName, lastName: $lastName, country: $country, state: $state, content: $content, likeCount: $likeCount, dislikeCount: $dislikeCount, commentCount: $commentCount, bookmarkCount: $bookmarkCount, createdAt: $createdAt, updatedAt: $updatedAt, media: $media, userId: $userId, userImageUrl: $userImageUrl, categoryTypes: $categoryTypes, path: $path)';
   }
 
   @override
@@ -487,7 +499,6 @@ class _$ReportDataImpl extends _ReportData {
             (identical(other.country, country) || other.country == country) &&
             (identical(other.state, state) || other.state == state) &&
             (identical(other.content, content) || other.content == content) &&
-            (identical(other.type, type) || other.type == type) &&
             (identical(other.likeCount, likeCount) ||
                 other.likeCount == likeCount) &&
             (identical(other.dislikeCount, dislikeCount) ||
@@ -504,6 +515,10 @@ class _$ReportDataImpl extends _ReportData {
             (identical(other.userId, userId) || other.userId == userId) &&
             (identical(other.userImageUrl, userImageUrl) ||
                 other.userImageUrl == userImageUrl) &&
+            const DeepCollectionEquality().equals(
+              other._categoryTypes,
+              _categoryTypes,
+            ) &&
             (identical(other.path, path) || other.path == path));
   }
 
@@ -517,7 +532,6 @@ class _$ReportDataImpl extends _ReportData {
     country,
     state,
     content,
-    type,
     likeCount,
     dislikeCount,
     commentCount,
@@ -527,6 +541,7 @@ class _$ReportDataImpl extends _ReportData {
     const DeepCollectionEquality().hash(_media),
     userId,
     userImageUrl,
+    const DeepCollectionEquality().hash(_categoryTypes),
     path,
   );
 
@@ -552,7 +567,6 @@ abstract class _ReportData extends ReportData {
     required final String country,
     required final String state,
     required final String content,
-    required final CategoryType type,
     required final int likeCount,
     required final int dislikeCount,
     required final int commentCount,
@@ -562,6 +576,7 @@ abstract class _ReportData extends ReportData {
     final List<String>? media,
     final String? userId,
     final String? userImageUrl,
+    final List<CategoryType> categoryTypes,
     final String? path,
   }) = _$ReportDataImpl;
   const _ReportData._() : super._();
@@ -592,10 +607,6 @@ abstract class _ReportData extends ReportData {
   /// The content of the report.
   @override
   String get content;
-
-  /// Type of the report (Waste, Electricity, Road)
-  @override
-  CategoryType get type;
 
   /// Number of likes the report has received.
   @override
@@ -634,6 +645,11 @@ abstract class _ReportData extends ReportData {
   /// The image URL of the user who created the report.
   @override
   String? get userImageUrl;
+
+  /// The user's preferred category types.
+  /// Example: [CategoryType.waste, CategoryType.road].
+  @override
+  List<CategoryType> get categoryTypes;
 
   /// The document reference path, only be
   /// parsed when converted from Firestore
