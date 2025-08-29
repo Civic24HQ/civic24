@@ -36,34 +36,40 @@ class CommentSheet extends StackedView<CommentSheetModel> {
               ),
             ),
             AppSpacing.normal,
+            Center(
+              child: Text(
+                l10n.generalComment,
+                style: context.headlineSmall?.copyWith(fontSize: AppDimensions.size16, fontWeight: FontWeight.w600),
+              ),
+            ),
+            AppSpacing.normal,
             Expanded(
               child: ListView.builder(
                 shrinkWrap: true,
                 itemCount: 10,
-                padding: AppEdgeInsets.padding12,
                 itemBuilder: (context, index) {
                   return ListTile(
                     contentPadding: EdgeInsets.zero,
                     horizontalTitleGap: AppDimensions.size12,
-                    leading: ClipOval(
-                      child: Container(
-                        width: AppDimensions.size40,
-                        height: AppDimensions.size40,
-                        color: context.neutralLow,
+                    leading: SizedBox(
+                      width: AppDimensions.size40,
+                      height: AppDimensions.size40,
+                      child: ClipRRect(
+                        borderRadius: AppBorderRadius.radius12,
                         child: AppCachedImage(imageUrl: viewModel.comments[index].userImageUrl),
                       ),
                     ),
                     title: Text(
                       viewModel.comments[index].fullName,
-                      style: context.headlineSmall?.copyWith(fontSize: AppDimensions.size16),
+                      style: context.bodyLarge?.copyWith(fontSize: AppDimensions.size14, fontWeight: FontWeight.w600),
                     ),
                     subtitle: Text(
                       viewModel.comments[index].comment,
-                      style: context.bodyLarge?.copyWith(color: context.neutralHigh, fontSize: AppDimensions.size14),
+                      style: context.bodyLarge?.copyWith(fontSize: AppDimensions.size14),
                     ),
                     trailing: Text(
                       viewModel.comments[index].createdAt.timeAgoInWords,
-                      style: context.bodyLarge?.copyWith(color: context.neutralHigh, fontSize: AppDimensions.size14),
+                      style: context.bodyLarge?.copyWith(color: context.neutralHigh, fontSize: AppDimensions.size12),
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                       softWrap: true,
