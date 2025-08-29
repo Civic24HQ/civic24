@@ -30,9 +30,6 @@ class ReportData with _$ReportData, SerializeJson {
     /// The content of the report.
     required String content,
 
-    /// Type of the report (Waste, Electricity, Road)
-    required CategoryType type,
-
     /// Number of likes the report has received.
     required int likeCount,
 
@@ -60,6 +57,10 @@ class ReportData with _$ReportData, SerializeJson {
     /// The image URL of the user who created the report.
     String? userImageUrl,
 
+    /// The user's preferred category types.
+    /// Example: [CategoryType.waste, CategoryType.road].
+    @Default([]) List<CategoryType> categoryTypes,
+
     /// The document reference path, only be
     /// parsed when converted from Firestore
     String? path,
@@ -76,7 +77,7 @@ class ReportData with _$ReportData, SerializeJson {
     country: 'Location unknown',
     state: 'Region unknown',
     content: 'No content available',
-    type: CategoryType.abandoned,
+    categoryTypes: [],
     likeCount: 0,
     dislikeCount: 0,
     commentCount: 0,
@@ -92,7 +93,7 @@ class ReportData with _$ReportData, SerializeJson {
     country: '',
     state: '',
     content: '',
-    type: CategoryType.abandoned,
+    categoryTypes: [],
     likeCount: 0,
     dislikeCount: 0,
     commentCount: 0,
@@ -112,32 +113,5 @@ class ReportData with _$ReportData, SerializeJson {
 
 extension ReportDataX on ReportData {
   /// Returns true if the report was created by a user.
-  bool get isUserReport => userId != null;
-
-  /// Returns true if the report is abandoned.
-  bool get isAbandonedReport => type == CategoryType.abandoned && userId != null;
-
-  /// Returns true if the report is a waste report.
-  bool get isWasteReport => type == CategoryType.waste && userId != null;
-
-  /// Returns true if the report is an electricity report.
-  bool get isElectricityReport => type == CategoryType.light && userId != null;
-
-  /// Returns true if the report is an education report.
-  bool get isEducationReport => type == CategoryType.education && userId != null;
-
-  /// Returns true if the report is a health report.
-  bool get isHealthReport => type == CategoryType.health && userId != null;
-
-  /// Returns true if the report is a governance report.
-  bool get isGovernanceReport => type == CategoryType.governance && userId != null;
-
-  /// Returns true if the report is a urban report.
-  bool get isUrbanReport => type == CategoryType.urban && userId != null;
-
-  /// Returns true if the report is a security report.
-  bool get isSecurityReport => type == CategoryType.security && userId != null;
-
-  /// Returns true if the report is a transportation report.
-  bool get isTransportationReport => type == CategoryType.road && userId != null;
+  bool get isUserReportValid => userId != null;
 }

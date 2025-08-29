@@ -28,10 +28,8 @@ class FakeReportData extends FakeModel<ReportData> {
       lastName: lastName,
       country: country,
       state: state,
-      // country: faker.address.country(),
-      // state: faker.address.state(),
       content: content,
-      type: CategoryType.values[Random().nextInt(CategoryType.values.length)],
+      categoryTypes: [CategoryType.values[Random().nextInt(CategoryType.values.length)]],
       likeCount: faker.randomGenerator.integer(100),
       dislikeCount: faker.randomGenerator.integer(100),
       commentCount: faker.randomGenerator.integer(100),
@@ -75,4 +73,4 @@ List<ReportData> sortByTrending(List<ReportData> list) => [...list]
   });
 
 List<ReportData> byCategory(CategoryType type, List<ReportData> list) =>
-    list.where((r) => r.type == type).toList()..sort((a, b) => b.createdAt.compareTo(a.createdAt));
+    list.where((r) => r.categoryTypes.contains(type)).toList()..sort((a, b) => b.createdAt.compareTo(a.createdAt));
