@@ -42,7 +42,15 @@
     },
     "generalProceed": "Proceed",
     "@generalProceed": {
-        "description": "General Label for Primary Button"
+        "description": "General Label for Button"
+    },
+    "generalSubmit": "Submit",
+    "@generalSubmit": {
+        "description": "Submit Label for Button"
+    },
+    "generalPrevious": "Previous",
+    "@generalPrevious": {
+        "description": "Previous Label for Button"
     },
     "generalLogin": "Login",
     "@generalLogin": {
@@ -339,5 +347,26 @@
     "featureCategoryTypeUrbanDescription": "Report unapproved structures, noise pollution, land misuse, or zoning violations in your area.",
     "@featureCategoryTypeUrbanDescription": {
         "description": "Zoning Violations Description"
+    },
+    "featureAddReportCategory": "Select the category of the report",
+    "@featureAddReportCategory": {
+        "description": "Category Description"
+    },
+    "featureAddReportContent": "Share the details of the civic issue",
+    "@featureAddReportContent": {
+        "description": "Content Description"
+    },
+    "featureAddReportContentHint": "Share your thoughts",
+    "@featureAddReportContentHint": {
+        "description": "Content Hint Description"
+    },
+    "featureAddReportMedia": "Kindly upload a clear image of your report",
+    "@featureAddReportMedia": {
+        "description": "Media Description"
+    },
+    "featureAddReport": "Add a Report",
+    "@featureAddReport": {
+        "description": "Add a Report Description"
     }
+    
 }
