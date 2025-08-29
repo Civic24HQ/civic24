@@ -389,6 +389,16 @@ class S {
     );
   }
 
+  /// `Comments`
+  String get generalComment {
+    return Intl.message(
+      'Comments',
+      name: 'generalComment',
+      desc: 'Text for Comment Label',
+      args: [],
+    );
+  }
+
   /// `Add a comment`
   String get generalAddComment {
     return Intl.message(
@@ -615,6 +625,276 @@ class S {
       'Complete Profile',
       name: 'featureCompleteProfile',
       desc: 'Complete Profile Description',
+      args: [],
+    );
+  }
+
+  /// `Road & Transport`
+  String get featureCategoryTypeRoad {
+    return Intl.message(
+      'Road & Transport',
+      name: 'featureCategoryTypeRoad',
+      desc: 'Road & Transport Description',
+      args: [],
+    );
+  }
+
+  /// `Light & Electricity`
+  String get featureCategoryTypeLight {
+    return Intl.message(
+      'Light & Electricity',
+      name: 'featureCategoryTypeLight',
+      desc: 'Light & Electricity Description',
+      args: [],
+    );
+  }
+
+  /// `Waste`
+  String get featureCategoryTypeWaste {
+    return Intl.message(
+      'Waste',
+      name: 'featureCategoryTypeWaste',
+      desc: 'Environmental Hazards Description',
+      args: [],
+    );
+  }
+
+  /// `Abandoned Projects`
+  String get featureCategoryTypeAbandoned {
+    return Intl.message(
+      'Abandoned Projects',
+      name: 'featureCategoryTypeAbandoned',
+      desc: 'Abandoned Projects Description',
+      args: [],
+    );
+  }
+
+  /// `Health & Sanitation`
+  String get featureCategoryTypeHealth {
+    return Intl.message(
+      'Health & Sanitation',
+      name: 'featureCategoryTypeHealth',
+      desc: 'Health & Sanitation Description',
+      args: [],
+    );
+  }
+
+  /// `Security`
+  String get featureCategoryTypeSecurity {
+    return Intl.message(
+      'Security',
+      name: 'featureCategoryTypeSecurity',
+      desc: 'Security Description',
+      args: [],
+    );
+  }
+
+  /// `Education`
+  String get featureCategoryTypeEducation {
+    return Intl.message(
+      'Education',
+      name: 'featureCategoryTypeEducation',
+      desc: 'Education Description',
+      args: [],
+    );
+  }
+
+  /// `Governance`
+  String get featureCategoryTypeGovernance {
+    return Intl.message(
+      'Governance',
+      name: 'featureCategoryTypeGovernance',
+      desc: 'Governance Description',
+      args: [],
+    );
+  }
+
+  /// `Zoning Violations`
+  String get featureCategoryTypeUrban {
+    return Intl.message(
+      'Zoning Violations',
+      name: 'featureCategoryTypeUrban',
+      desc: 'Zoning Violations Description',
+      args: [],
+    );
+  }
+
+  /// `Road & Transport Issues`
+  String get featureCategoryTypeDetailedRoad {
+    return Intl.message(
+      'Road & Transport Issues',
+      name: 'featureCategoryTypeDetailedRoad',
+      desc: 'Road & Transport Issues Description',
+      args: [],
+    );
+  }
+
+  /// `Light & Electricity Issues`
+  String get featureCategoryTypeDetailedLight {
+    return Intl.message(
+      'Light & Electricity Issues',
+      name: 'featureCategoryTypeDetailedLight',
+      desc: 'Light & Electricity Issues Description',
+      args: [],
+    );
+  }
+
+  /// `Waste & Environmental Hazards`
+  String get featureCategoryTypeDetailedWaste {
+    return Intl.message(
+      'Waste & Environmental Hazards',
+      name: 'featureCategoryTypeDetailedWaste',
+      desc: 'Environmental Hazards Description',
+      args: [],
+    );
+  }
+
+  /// `Abandoned & Incomplete Projects`
+  String get featureCategoryTypeDetailedAbandoned {
+    return Intl.message(
+      'Abandoned & Incomplete Projects',
+      name: 'featureCategoryTypeDetailedAbandoned',
+      desc: 'Abandoned & Incomplete Projects Description',
+      args: [],
+    );
+  }
+
+  /// `Health & Sanitation`
+  String get featureCategoryTypeDetailedHealth {
+    return Intl.message(
+      'Health & Sanitation',
+      name: 'featureCategoryTypeDetailedHealth',
+      desc: 'Health & Sanitation Description',
+      args: [],
+    );
+  }
+
+  /// `Security Issues`
+  String get featureCategoryTypeDetailedSecurity {
+    return Intl.message(
+      'Security Issues',
+      name: 'featureCategoryTypeDetailedSecurity',
+      desc: 'Security Issues Description',
+      args: [],
+    );
+  }
+
+  /// `Education & Public Facilities`
+  String get featureCategoryTypeDetailedEducation {
+    return Intl.message(
+      'Education & Public Facilities',
+      name: 'featureCategoryTypeDetailedEducation',
+      desc: 'Education & Public Facilities Description',
+      args: [],
+    );
+  }
+
+  /// `Governance`
+  String get featureCategoryTypeDetailedGovernance {
+    return Intl.message(
+      'Governance',
+      name: 'featureCategoryTypeDetailedGovernance',
+      desc: 'Governance Description',
+      args: [],
+    );
+  }
+
+  /// `Urban Planning & Zoning Violations`
+  String get featureCategoryTypeDetailedUrban {
+    return Intl.message(
+      'Urban Planning & Zoning Violations',
+      name: 'featureCategoryTypeDetailedUrban',
+      desc: 'Urban Planning & Zoning Violations Description',
+      args: [],
+    );
+  }
+
+  /// `Report potholes, bad roads, broken pedestrian paths, faulty traffic lights, or reckless driving in your area.`
+  String get featureCategoryTypeRoadDescription {
+    return Intl.message(
+      'Report potholes, bad roads, broken pedestrian paths, faulty traffic lights, or reckless driving in your area.',
+      name: 'featureCategoryTypeRoadDescription',
+      desc: 'Road & Transport Description',
+      args: [],
+    );
+  }
+
+  /// `Report broken streetlights, exposed wires, or power outages affecting public spaces and safety.`
+  String get featureCategoryTypeLightDescription {
+    return Intl.message(
+      'Report broken streetlights, exposed wires, or power outages affecting public spaces and safety.',
+      name: 'featureCategoryTypeLightDescription',
+      desc: 'Light & Electricity Description',
+      args: [],
+    );
+  }
+
+  /// `Report uncollected garbage, blocked drains, illegal dumping, or other environmental concerns.`
+  String get featureCategoryTypeWasteDescription {
+    return Intl.message(
+      'Report uncollected garbage, blocked drains, illegal dumping, or other environmental concerns.',
+      name: 'featureCategoryTypeWasteDescription',
+      desc: 'Environmental Hazards Description',
+      args: [],
+    );
+  }
+
+  /// `Report incomplete or abandoned government/community projects left unattended in your locality. `
+  String get featureCategoryTypeAbandonedDescription {
+    return Intl.message(
+      'Report incomplete or abandoned government/community projects left unattended in your locality. ',
+      name: 'featureCategoryTypeAbandonedDescription',
+      desc: 'Abandoned Projects Description',
+      args: [],
+    );
+  }
+
+  /// `Report filthy public toilets, poor sanitation at clinics, open sewage, or unsafe health conditions.`
+  String get featureCategoryTypeHealthDescription {
+    return Intl.message(
+      'Report filthy public toilets, poor sanitation at clinics, open sewage, or unsafe health conditions.',
+      name: 'featureCategoryTypeHealthDescription',
+      desc: 'Health & Sanitation Description',
+      args: [],
+    );
+  }
+
+  /// `Report unsafe areas, broken security infrastructure, street harassment, or loitering zones.`
+  String get featureCategoryTypeSecurityDescription {
+    return Intl.message(
+      'Report unsafe areas, broken security infrastructure, street harassment, or loitering zones.',
+      name: 'featureCategoryTypeSecurityDescription',
+      desc: 'Security Description',
+      args: [],
+    );
+  }
+
+  /// `Report rundown school buildings, locked community halls, or neglected libraries.`
+  String get featureCategoryTypeEducationDescription {
+    return Intl.message(
+      'Report rundown school buildings, locked community halls, or neglected libraries.',
+      name: 'featureCategoryTypeEducationDescription',
+      desc: 'Education Description',
+      args: [],
+    );
+  }
+
+  /// `Raise issues like government delays, poor service delivery, corrupt practices, or misuse of public funds.`
+  String get featureCategoryTypeGovernanceDescription {
+    return Intl.message(
+      'Raise issues like government delays, poor service delivery, corrupt practices, or misuse of public funds.',
+      name: 'featureCategoryTypeGovernanceDescription',
+      desc: 'Governance Description',
+      args: [],
+    );
+  }
+
+  /// `Report unapproved structures, noise pollution, land misuse, or zoning violations in your area.`
+  String get featureCategoryTypeUrbanDescription {
+    return Intl.message(
+      'Report unapproved structures, noise pollution, land misuse, or zoning violations in your area.',
+      name: 'featureCategoryTypeUrbanDescription',
+      desc: 'Zoning Violations Description',
       args: [],
     );
   }
