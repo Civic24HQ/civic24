@@ -22,7 +22,11 @@ class HomeView extends StackedView<HomeViewModel> {
         shape: RoundedRectangleBorder(borderRadius: AppBorderRadius.radius12),
         backgroundColor: context.primary,
         onPressed: viewModel.onAddReport,
-        child: Icon(Icons.add, color: context.onPrimary, size: AppDimensions.size28),
+        child: Icon(
+          Icons.add,
+          color: context.onPrimary,
+          size: AppDimensions.size28,
+        ),
       ),
       appBar: AppBar(
         toolbarHeight: AppDimensions.size64,
@@ -32,21 +36,16 @@ class HomeView extends StackedView<HomeViewModel> {
         scrolledUnderElevation: 0,
         automaticallyImplyLeading: false,
         shape: const Border(bottom: BorderSide(color: Colors.transparent)),
-        title: Assets.png.civic24SplashScreenIOS.image(width: AppDimensions.size72, height: AppDimensions.size48),
+        title: Assets.png.civic24SplashScreenIOS.image(
+          width: AppDimensions.size72,
+          height: AppDimensions.size48,
+        ),
       ),
       body: AppTabs.underlined(
         tabs: [
-          AppTab(
-            label: l10n.generalAllIssues,
-            view: const AllReports()),
-          AppTab(
-            label: l10n.generalTrending,
-            view: const TrendingReports(),
-          ),
-          AppTab(
-            label: l10n.generalCategory,
-            view: const CategoryReports(),
-          ),
+          AppTab(label: l10n.generalAllIssues, view: const AllReports()),
+          AppTab(label: l10n.generalTrending, view: const TrendingReports()),
+          AppTab(label: l10n.generalCategory, view: const CategoryReports()),
         ],
       ),
     );

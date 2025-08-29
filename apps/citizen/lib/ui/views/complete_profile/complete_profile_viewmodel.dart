@@ -31,8 +31,9 @@ class CompleteProfileViewModel extends FormViewModel {
     try {
       setBusy(true);
       final countries = await csc.getAllCountries();
-      countryOptions = countries.map((c) => CountryOption(c.name, c.isoCode)).toList()
-        ..sort((a, b) => a.name.compareTo(b.name));
+      countryOptions =
+          countries.map((c) => CountryOption(c.name, c.isoCode)).toList()
+            ..sort((a, b) => a.name.compareTo(b.name));
     } catch (e) {
       // TODO(Civic24): Implement Alert Service Dialog
       countryOptions = [];

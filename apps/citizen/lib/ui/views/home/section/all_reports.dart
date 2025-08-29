@@ -13,7 +13,10 @@ class AllReports extends ViewModelWidget<HomeViewModel> {
       slivers: [
         SliverList(
           delegate: SliverChildBuilderDelegate((context, index) {
-            return AppReport(onTapComment: () => viewModel.viewComment(), reportData: viewModel.allReportList[index]);
+            return AppReport(
+              onTapComment: () => viewModel.viewComment(),
+              reportData: viewModel.allReportList[index],
+            );
           }, childCount: viewModel.allReportList.length),
         ),
       ],
