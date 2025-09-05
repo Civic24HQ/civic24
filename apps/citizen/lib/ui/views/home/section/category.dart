@@ -42,6 +42,9 @@ class _CategoryListView extends ViewModelWidget<HomeViewModel> {
             }
             final report = fakeReportCategoryList[index];
             return AppReport(
+              onTapLike: () => viewModel.likeReport(report),
+              onTapDislike: () => viewModel.dislikeReport(report),
+              onTapBookmark: () => viewModel.bookmarkReport(report),
               onTapComment: () => viewModel.viewComment(),
               reportData: report,
             );
