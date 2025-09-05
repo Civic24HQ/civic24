@@ -9,6 +9,7 @@ part of 'comment_data.dart';
 _$CommentDataImpl _$$CommentDataImplFromJson(Map<String, dynamic> json) =>
     _$CommentDataImpl(
       commentId: json['commentId'] as String,
+      reportId: json['reportId'] as String,
       firstName: json['firstName'] as String,
       lastName: json['lastName'] as String,
       comment: json['comment'] as String,
@@ -27,6 +28,7 @@ _$CommentDataImpl _$$CommentDataImplFromJson(Map<String, dynamic> json) =>
 Map<String, dynamic> _$$CommentDataImplToJson(_$CommentDataImpl instance) =>
     <String, dynamic>{
       'commentId': instance.commentId,
+      'reportId': instance.reportId,
       'firstName': instance.firstName,
       'lastName': instance.lastName,
       'comment': instance.comment,

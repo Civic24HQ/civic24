@@ -14,6 +14,9 @@ class CommentData with _$CommentData, SerializeJson {
     /// Unique identifier for the comment.
     required String commentId,
 
+    /// Unique identifier for the report where the comment was created.
+    required String reportId,
+
     /// FirstName of the User who created the comment.
     required String firstName,
 
@@ -49,6 +52,7 @@ class CommentData with _$CommentData, SerializeJson {
   /// Creates an unknown comment instance.
   factory CommentData.unknown() => CommentData(
     commentId: '0',
+    reportId: '0',
     firstName: 'N/A',
     lastName: 'N/A',
     comment: 'No content available',
@@ -59,6 +63,7 @@ class CommentData with _$CommentData, SerializeJson {
 
   factory CommentData.empty() => CommentData(
     commentId: '',
+    reportId: '',
     firstName: '',
     lastName: '',
     comment: '',
