@@ -24,6 +24,9 @@ mixin _$CommentData {
   /// Unique identifier for the comment.
   String get commentId => throw _privateConstructorUsedError;
 
+  /// Unique identifier for the report where the comment was created.
+  String get reportId => throw _privateConstructorUsedError;
+
   /// FirstName of the User who created the comment.
   String get firstName => throw _privateConstructorUsedError;
 
@@ -73,6 +76,7 @@ abstract class $CommentDataCopyWith<$Res> {
   @useResult
   $Res call({
     String commentId,
+    String reportId,
     String firstName,
     String lastName,
     String comment,
@@ -101,6 +105,7 @@ class _$CommentDataCopyWithImpl<$Res, $Val extends CommentData>
   @override
   $Res call({
     Object? commentId = null,
+    Object? reportId = null,
     Object? firstName = null,
     Object? lastName = null,
     Object? comment = null,
@@ -116,6 +121,10 @@ class _$CommentDataCopyWithImpl<$Res, $Val extends CommentData>
             commentId: null == commentId
                 ? _value.commentId
                 : commentId // ignore: cast_nullable_to_non_nullable
+                      as String,
+            reportId: null == reportId
+                ? _value.reportId
+                : reportId // ignore: cast_nullable_to_non_nullable
                       as String,
             firstName: null == firstName
                 ? _value.firstName
@@ -170,6 +179,7 @@ abstract class _$$CommentDataImplCopyWith<$Res>
   @useResult
   $Res call({
     String commentId,
+    String reportId,
     String firstName,
     String lastName,
     String comment,
@@ -197,6 +207,7 @@ class __$$CommentDataImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? commentId = null,
+    Object? reportId = null,
     Object? firstName = null,
     Object? lastName = null,
     Object? comment = null,
@@ -212,6 +223,10 @@ class __$$CommentDataImplCopyWithImpl<$Res>
         commentId: null == commentId
             ? _value.commentId
             : commentId // ignore: cast_nullable_to_non_nullable
+                  as String,
+        reportId: null == reportId
+            ? _value.reportId
+            : reportId // ignore: cast_nullable_to_non_nullable
                   as String,
         firstName: null == firstName
             ? _value.firstName
@@ -260,6 +275,7 @@ class __$$CommentDataImplCopyWithImpl<$Res>
 class _$CommentDataImpl extends _CommentData {
   const _$CommentDataImpl({
     required this.commentId,
+    required this.reportId,
     required this.firstName,
     required this.lastName,
     required this.comment,
@@ -277,6 +293,10 @@ class _$CommentDataImpl extends _CommentData {
   /// Unique identifier for the comment.
   @override
   final String commentId;
+
+  /// Unique identifier for the report where the comment was created.
+  @override
+  final String reportId;
 
   /// FirstName of the User who created the comment.
   @override
@@ -319,7 +339,7 @@ class _$CommentDataImpl extends _CommentData {
 
   @override
   String toString() {
-    return 'CommentData(commentId: $commentId, firstName: $firstName, lastName: $lastName, comment: $comment, likeCount: $likeCount, createdAt: $createdAt, updatedAt: $updatedAt, userId: $userId, userImageUrl: $userImageUrl, path: $path)';
+    return 'CommentData(commentId: $commentId, reportId: $reportId, firstName: $firstName, lastName: $lastName, comment: $comment, likeCount: $likeCount, createdAt: $createdAt, updatedAt: $updatedAt, userId: $userId, userImageUrl: $userImageUrl, path: $path)';
   }
 
   @override
@@ -329,6 +349,8 @@ class _$CommentDataImpl extends _CommentData {
             other is _$CommentDataImpl &&
             (identical(other.commentId, commentId) ||
                 other.commentId == commentId) &&
+            (identical(other.reportId, reportId) ||
+                other.reportId == reportId) &&
             (identical(other.firstName, firstName) ||
                 other.firstName == firstName) &&
             (identical(other.lastName, lastName) ||
@@ -351,6 +373,7 @@ class _$CommentDataImpl extends _CommentData {
   int get hashCode => Object.hash(
     runtimeType,
     commentId,
+    reportId,
     firstName,
     lastName,
     comment,
@@ -379,6 +402,7 @@ class _$CommentDataImpl extends _CommentData {
 abstract class _CommentData extends CommentData {
   const factory _CommentData({
     required final String commentId,
+    required final String reportId,
     required final String firstName,
     required final String lastName,
     required final String comment,
@@ -397,6 +421,10 @@ abstract class _CommentData extends CommentData {
   /// Unique identifier for the comment.
   @override
   String get commentId;
+
+  /// Unique identifier for the report where the comment was created.
+  @override
+  String get reportId;
 
   /// FirstName of the User who created the comment.
   @override
