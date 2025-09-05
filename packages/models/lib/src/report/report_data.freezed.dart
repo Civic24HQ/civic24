@@ -24,10 +24,10 @@ mixin _$ReportData {
   /// Unique identifier for the report.
   String get reportId => throw _privateConstructorUsedError;
 
-  /// FirstName of the User who created the report.
+  /// FirstName of the user who created the report.
   String get firstName => throw _privateConstructorUsedError;
 
-  /// LastName of the User who created the report.
+  /// LastName of the user who created the report.
   String get lastName => throw _privateConstructorUsedError;
 
   /// Country where the report was created.
@@ -39,16 +39,16 @@ mixin _$ReportData {
   /// The content of the report.
   String get content => throw _privateConstructorUsedError;
 
-  /// Number of likes the report has received.
+  /// Number of likes the report has received (aggregate).
   int get likeCount => throw _privateConstructorUsedError;
 
-  /// Number of dislikes on the report.
+  /// Number of dislikes on the report (aggregate).
   int get dislikeCount => throw _privateConstructorUsedError;
 
-  /// Number of comments on the report.
+  /// Number of comments on the report (aggregate).
   int get commentCount => throw _privateConstructorUsedError;
 
-  /// Number of bookmarks for the report.
+  /// Number of bookmarks for the report (aggregate).
   int get bookmarkCount => throw _privateConstructorUsedError;
 
   /// The date when the report was created.
@@ -68,12 +68,12 @@ mixin _$ReportData {
   /// The image URL of the user who created the report.
   String? get userImageUrl => throw _privateConstructorUsedError;
 
-  /// The user's preferred category types.
+  /// The user’s preferred category types.
   /// Example: [CategoryType.waste, CategoryType.road].
   List<CategoryType> get categoryTypes => throw _privateConstructorUsedError;
 
-  /// The document reference path, only be
-  /// parsed when converted from Firestore
+  /// The document reference path, only parsed
+  /// when converted from Firestore.
   String? get path => throw _privateConstructorUsedError;
 
   /// Serializes this ReportData to a JSON map.
@@ -393,11 +393,11 @@ class _$ReportDataImpl extends _ReportData {
   @override
   final String reportId;
 
-  /// FirstName of the User who created the report.
+  /// FirstName of the user who created the report.
   @override
   final String firstName;
 
-  /// LastName of the User who created the report.
+  /// LastName of the user who created the report.
   @override
   final String lastName;
 
@@ -413,19 +413,19 @@ class _$ReportDataImpl extends _ReportData {
   @override
   final String content;
 
-  /// Number of likes the report has received.
+  /// Number of likes the report has received (aggregate).
   @override
   final int likeCount;
 
-  /// Number of dislikes on the report.
+  /// Number of dislikes on the report (aggregate).
   @override
   final int dislikeCount;
 
-  /// Number of comments on the report.
+  /// Number of comments on the report (aggregate).
   @override
   final int commentCount;
 
-  /// Number of bookmarks for the report.
+  /// Number of bookmarks for the report (aggregate).
   @override
   final int bookmarkCount;
 
@@ -461,11 +461,11 @@ class _$ReportDataImpl extends _ReportData {
   @override
   final String? userImageUrl;
 
-  /// The user's preferred category types.
+  /// The user’s preferred category types.
   /// Example: [CategoryType.waste, CategoryType.road].
   final List<CategoryType> _categoryTypes;
 
-  /// The user's preferred category types.
+  /// The user’s preferred category types.
   /// Example: [CategoryType.waste, CategoryType.road].
   @override
   @JsonKey()
@@ -475,8 +475,8 @@ class _$ReportDataImpl extends _ReportData {
     return EqualUnmodifiableListView(_categoryTypes);
   }
 
-  /// The document reference path, only be
-  /// parsed when converted from Firestore
+  /// The document reference path, only parsed
+  /// when converted from Firestore.
   @override
   final String? path;
 
@@ -588,11 +588,11 @@ abstract class _ReportData extends ReportData {
   @override
   String get reportId;
 
-  /// FirstName of the User who created the report.
+  /// FirstName of the user who created the report.
   @override
   String get firstName;
 
-  /// LastName of the User who created the report.
+  /// LastName of the user who created the report.
   @override
   String get lastName;
 
@@ -608,19 +608,19 @@ abstract class _ReportData extends ReportData {
   @override
   String get content;
 
-  /// Number of likes the report has received.
+  /// Number of likes the report has received (aggregate).
   @override
   int get likeCount;
 
-  /// Number of dislikes on the report.
+  /// Number of dislikes on the report (aggregate).
   @override
   int get dislikeCount;
 
-  /// Number of comments on the report.
+  /// Number of comments on the report (aggregate).
   @override
   int get commentCount;
 
-  /// Number of bookmarks for the report.
+  /// Number of bookmarks for the report (aggregate).
   @override
   int get bookmarkCount;
 
@@ -646,13 +646,13 @@ abstract class _ReportData extends ReportData {
   @override
   String? get userImageUrl;
 
-  /// The user's preferred category types.
+  /// The user’s preferred category types.
   /// Example: [CategoryType.waste, CategoryType.road].
   @override
   List<CategoryType> get categoryTypes;
 
-  /// The document reference path, only be
-  /// parsed when converted from Firestore
+  /// The document reference path, only parsed
+  /// when converted from Firestore.
   @override
   String? get path;
 

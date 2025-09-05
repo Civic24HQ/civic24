@@ -968,6 +968,66 @@ class S {
       args: [],
     );
   }
+
+  /// `Notifications`
+  String get featureNotifications {
+    return Intl.message(
+      'Notifications',
+      name: 'featureNotifications',
+      desc: 'Notifications Description',
+      args: [],
+    );
+  }
+
+  /// `Mark all as read`
+  String get featureNotificationInstruction {
+    return Intl.message(
+      'Mark all as read',
+      name: 'featureNotificationInstruction',
+      desc: 'NotificationInstruction Description',
+      args: [],
+    );
+  }
+
+  /// `You do not have any notifications`
+  String get featureNotificationEmpty {
+    return Intl.message(
+      'You do not have any notifications',
+      name: 'featureNotificationEmpty',
+      desc: 'NotificationEmpty Description',
+      args: [],
+    );
+  }
+
+  /// `Reports`
+  String get featureReports {
+    return Intl.message(
+      'Reports',
+      name: 'featureReports',
+      desc: 'Reports Description',
+      args: [],
+    );
+  }
+
+  /// `My Reports`
+  String get featureMyReports {
+    return Intl.message(
+      'My Reports',
+      name: 'featureMyReports',
+      desc: 'NotificationEmpty Description',
+      args: [],
+    );
+  }
+
+  /// `Bookmarked Reports`
+  String get featureBookmarkedReports {
+    return Intl.message(
+      'Bookmarked Reports',
+      name: 'featureBookmarkedReports',
+      desc: 'NotificationEmpty Description',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

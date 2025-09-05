@@ -367,6 +367,29 @@
     "featureAddReport": "Add a Report",
     "@featureAddReport": {
         "description": "Add a Report Description"
-    }
-    
+    },
+    "featureNotifications": "Notifications",
+    "@featureNotifications": {
+        "description": "Notifications Description"
+    },
+    "featureNotificationInstruction": "Mark all as read",
+    "@featureNotificationInstruction": {
+        "description": "NotificationInstruction Description"
+    },
+    "featureNotificationEmpty": "You do not have any notifications",
+    "@featureNotificationEmpty": {
+        "description": "NotificationEmpty Description"
+    },
+    "featureReports": "Reports",
+    "@featureReports": {
+        "description": "Reports Description"
+    },
+    "featureMyReports": "My Reports",
+    "@featureMyReports": {
+        "description": "NotificationEmpty Description"
+    },
+    "featureBookmarkedReports": "Bookmarked Reports",
+    "@featureBookmarkedReports": {
+        "description": "NotificationEmpty Description"
+    }   
 }

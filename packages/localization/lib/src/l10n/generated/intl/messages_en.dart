@@ -38,6 +38,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "featureAlreadyHaveAnAccount": MessageLookupByLibrary.simpleMessage(
       "Already have an account?",
     ),
+    "featureBookmarkedReports": MessageLookupByLibrary.simpleMessage(
+      "Bookmarked Reports",
+    ),
     "featureCategoryTypeAbandoned": MessageLookupByLibrary.simpleMessage(
       "Abandoned Projects",
     ),
@@ -136,6 +139,16 @@ class MessageLookup extends MessageLookupByLibrary {
     "featureLoginWelcomeHint": MessageLookupByLibrary.simpleMessage(
       "Log in to your account",
     ),
+    "featureMyReports": MessageLookupByLibrary.simpleMessage("My Reports"),
+    "featureNotificationEmpty": MessageLookupByLibrary.simpleMessage(
+      "You do not have any notifications",
+    ),
+    "featureNotificationInstruction": MessageLookupByLibrary.simpleMessage(
+      "Mark all as read",
+    ),
+    "featureNotifications": MessageLookupByLibrary.simpleMessage(
+      "Notifications",
+    ),
     "featureOnboardingConnectVoice": MessageLookupByLibrary.simpleMessage(
       "Connect with Other Voices",
     ),
@@ -154,6 +167,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "featureOnboardingVoiceReportDesc": MessageLookupByLibrary.simpleMessage(
       "Civic24 allows you to speak up about pressing problems in your community and make your voice heard",
     ),
+    "featureReports": MessageLookupByLibrary.simpleMessage("Reports"),
     "featureSignUpCreateAccount": MessageLookupByLibrary.simpleMessage(
       "Create Account",
     ),
