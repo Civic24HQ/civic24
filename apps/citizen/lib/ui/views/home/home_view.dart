@@ -19,7 +19,7 @@ class HomeView extends StackedView<HomeViewModel> {
     return Scaffold(
       backgroundColor: context.surface,
       floatingActionButton: FloatingActionButton(
-        shape: RoundedRectangleBorder(borderRadius: AppBorderRadius.radius12),
+        shape: const CircleBorder(),
         backgroundColor: context.primary,
         onPressed: viewModel.onAddReport,
         child: Icon(
