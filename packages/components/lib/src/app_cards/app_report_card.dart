@@ -1,18 +1,38 @@
 import 'package:components/components.dart';
 import 'package:flutter/material.dart';
 import 'package:models/models.dart';
-import 'package:solar_icons/solar_icons.dart';
 import 'package:styles/styles.dart';
 import 'package:utils/utils.dart';
 
 class AppReport extends StatelessWidget {
-  const AppReport({required this.reportData, required this.onTapComment, super.key});
+  const AppReport({
+    required this.reportData,
+    required this.onTapComment,
+    required this.onTapLike,
+    required this.onTapDislike,
+    required this.onTapBookmark,
+    super.key,
+  });
 
-  final ReportData reportData;
+  final ReportWithUserState reportData;
   final VoidCallback onTapComment;
+  final VoidCallback? onTapLike;
+  final VoidCallback? onTapDislike;
+  final VoidCallback? onTapBookmark;
 
   @override
   Widget build(BuildContext context) {
+    final rawLiked = reportData.hasLiked;
+    final rawDisliked = reportData.hasDisliked;
+
+    // Normalize to exclusives (UI guard)
+    final exclusiveLiked = rawLiked && !rawDisliked;
+    final exclusiveDisliked = rawDisliked && !rawLiked;
+
+    // Only allow like if not currently disliked, and vice versa
+    final canLike = !exclusiveDisliked;
+    final canDislike = !exclusiveLiked;
+
     return Padding(
       padding: AppEdgeInsets.horizontalPadding12,
       child: Column(
@@ -29,19 +49,19 @@ class AppReport extends StatelessWidget {
                   height: AppDimensions.size40,
                   child: ClipRRect(
                     borderRadius: AppBorderRadius.radius12,
-                    child: AppCachedImage(imageUrl: reportData.userImageUrl),
+                    child: AppCachedImage(imageUrl: reportData.report.userImageUrl),
                   ),
                 ),
                 title: Text(
-                  reportData.fullName,
+                  reportData.report.fullName,
                   style: context.headlineSmall?.copyWith(fontSize: AppDimensions.size16),
                 ),
                 subtitle: Text(
-                  reportData.location,
+                  reportData.report.location,
                   style: context.bodyLarge?.copyWith(color: context.neutralHigh, fontSize: AppDimensions.size14),
                 ),
                 trailing: Text(
-                  reportData.createdAt.timeAgoInWords,
+                  reportData.report.createdAt.timeAgoInWords,
                   style: context.bodyLarge?.copyWith(color: context.neutralHigh, fontSize: AppDimensions.size14),
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
@@ -53,7 +73,7 @@ class AppReport extends StatelessWidget {
           ),
           AppSpacing.small,
           Text(
-            reportData.content,
+            reportData.report.content,
             style: context.bodyMedium,
             maxLines: 10,
             overflow: TextOverflow.ellipsis,
@@ -66,7 +86,7 @@ class AppReport extends StatelessWidget {
             height: AppDimensions.size320,
             child: ClipRRect(
               borderRadius: BorderRadius.circular(AppDimensions.size8),
-              child: AppCachedImage(imageUrl: reportData.media?.first),
+              child: AppCachedImage(imageUrl: reportData.report.media?.first),
             ),
           ),
           AppSpacing.normal,
@@ -76,44 +96,34 @@ class AppReport extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Icon(SolarIconsOutline.like, size: AppDimensions.size20, color: context.onSurfaceVariant),
-                    AppSpacing.small,
-                    Text(reportData.likeCount.toString(), style: context.bodyMedium),
-                  ],
+                Opacity(
+                  opacity: canLike ? 1 : 0.5,
+                  child: SocialActionButton.thumbsUp(
+                    isActive: exclusiveLiked,
+                    count: reportData.report.likeCount,
+                    activeColor: context.success,
+                    inactiveColor: context.onSurfaceVariant,
+                    onTap: canLike ? onTapLike : null,
+                  ),
                 ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Icon(SolarIconsOutline.dislike, size: AppDimensions.size20, color: context.onSurfaceVariant),
-                    AppSpacing.small,
-                    Text(reportData.dislikeCount.toString(), style: context.bodyMedium),
-                  ],
+                Opacity(
+                  opacity: canDislike ? 1 : 0.5,
+                  child: SocialActionButton.thumbsDown(
+                    isActive: exclusiveDisliked,
+                    count: reportData.report.dislikeCount,
+                    activeColor: context.error,
+                    inactiveColor: context.onSurfaceVariant,
+                    onTap: canDislike ? onTapDislike : null,
+                  ),
                 ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    InkWell(
-                      onTap: onTapComment,
-                      child: Icon(
-                        SolarIconsOutline.chatRound,
-                        size: AppDimensions.size20,
-                        color: context.onSurfaceVariant,
-                      ),
-                    ),
-                    AppSpacing.small,
-                    Text(reportData.commentCount.toString(), style: context.bodyMedium),
-                  ],
+                SocialActionButton.comment(onTap: onTapComment, count: reportData.report.commentCount,
                 ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Icon(SolarIconsOutline.bookmark, size: AppDimensions.size20, color: context.onSurfaceVariant),
-                    AppSpacing.small,
-                    Text(reportData.bookmarkCount.toString(), style: context.bodyMedium),
-                  ],
+                SocialActionButton.bookmark(
+                  isActive: reportData.hasBookmarked,
+                  count: reportData.report.bookmarkCount,
+                  activeColor: context.warning,
+                  inactiveColor: context.onSurfaceVariant,
+                  onTap: onTapBookmark,
                 ),
               ],
             ),
