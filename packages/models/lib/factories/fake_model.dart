@@ -60,6 +60,32 @@ List<String> fakeMedia = [
   'https://i.imghippo.com/files/GJvD3698RM.jpg'
 ];
 
+List<String> fakeNotificationTitle = [
+  '🎉 Report Submitted',
+  '🔔 What Do You Think?',
+  '📍 Spot Something? Say Something',
+  '🔔 What Do You Think?',
+  '🎉 Report Submitted',
+  '📍 Spot Something? Say Something',
+  '🎉 Report Submitted',
+  '🔔 What Do You Think?',
+  '📍 Spot Something? Say Something',
+  '🔔 What Do You Think?',
+];
+
+List<String> fakeNotificationDesc = [
+  'You’ve just made your fist civic impact! Your report is now live and visible to the community',
+  'New reports need your voice! Give a thumbs up or down to support or highlight pressing issues',
+  'Haven’t reported anything lately? Help your community by flagging issues you notice around you',
+  'New reports need your voice! Give a thumbs up or down to support or highlight pressing issues',
+  'You’ve just made your fist civic impact! Your report is now live and visible to the community',
+  'Haven’t reported anything lately? Help your community by flagging issues you notice around you',
+  'You’ve just made your fist civic impact! Your report is now live and visible to the community',
+  'New reports need your voice! Give a thumbs up or down to support or highlight pressing issues',
+  'Haven’t reported anything lately? Help your community by flagging issues you notice around you',
+  'New reports need your voice! Give a thumbs up or down to support or highlight pressing issues',
+];
+
 final Map<String, List<String>> countryStates = {
   'United States': [
     'Alabama',
@@ -296,6 +322,24 @@ List<String> takeUniqueMedia() {
       ..shuffle();
   }
   return [fakeMedia.removeLast()];
+}
+
+String takeUniqueNotificationTitle() {
+  if (fakeNotificationTitle.isEmpty) {
+    fakeNotificationTitle
+      ..addAll(fakeNotificationTitle)
+      ..shuffle();
+  }
+  return fakeNotificationTitle.removeLast();
+}
+
+String takeUniqueNotificationDesc() {
+  if (fakeNotificationDesc.isEmpty) {
+    fakeNotificationDesc
+      ..addAll(fakeNotificationDesc)
+      ..shuffle();
+  }
+  return fakeNotificationDesc.removeLast();
 }
 
 String pickLastName() => lastNames[rand.nextInt(lastNames.length)];

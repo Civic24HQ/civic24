@@ -15,10 +15,10 @@ class ReportData with _$ReportData, SerializeJson {
     /// Unique identifier for the report.
     required String reportId,
 
-    /// FirstName of the User who created the report.
+    /// FirstName of the user who created the report.
     required String firstName,
 
-    /// LastName of the User who created the report.
+    /// LastName of the user who created the report.
     required String lastName,
 
     /// Country where the report was created.
@@ -30,16 +30,16 @@ class ReportData with _$ReportData, SerializeJson {
     /// The content of the report.
     required String content,
 
-    /// Number of likes the report has received.
+    /// Number of likes the report has received (aggregate).
     required int likeCount,
 
-    /// Number of dislikes on the report.
+    /// Number of dislikes on the report (aggregate).
     required int dislikeCount,
 
-    /// Number of comments on the report.
+    /// Number of comments on the report (aggregate).
     required int commentCount,
 
-    /// Number of bookmarks for the report.
+    /// Number of bookmarks for the report (aggregate).
     required int bookmarkCount,
 
     /// The date when the report was created.
@@ -57,12 +57,12 @@ class ReportData with _$ReportData, SerializeJson {
     /// The image URL of the user who created the report.
     String? userImageUrl,
 
-    /// The user's preferred category types.
+    /// The user’s preferred category types.
     /// Example: [CategoryType.waste, CategoryType.road].
     @Default([]) List<CategoryType> categoryTypes,
 
-    /// The document reference path, only be
-    /// parsed when converted from Firestore
+    /// The document reference path, only parsed
+    /// when converted from Firestore.
     String? path,
   }) = _ReportData;
   const ReportData._();
@@ -109,6 +109,26 @@ class ReportData with _$ReportData, SerializeJson {
   String get fullName => '$firstName $lastName';
 
   String get location => '$state, $country';
+}
+
+/// Wraps a [ReportData] with the current user’s interaction state.
+class ReportWithUserState {
+  ReportWithUserState({
+    required this.report,
+    required this.hasLiked,
+    required this.hasDisliked,
+    required this.hasBookmarked,
+  });
+  final ReportData report;
+
+  /// Whether the current user has liked this report.
+  final bool hasLiked;
+
+  /// Whether the current user has disliked this report.
+  final bool hasDisliked;
+
+  /// Whether the current user has bookmarked this report.
+  final bool hasBookmarked;
 }
 
 extension ReportDataX on ReportData {

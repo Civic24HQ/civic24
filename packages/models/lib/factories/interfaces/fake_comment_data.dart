@@ -17,6 +17,7 @@ class FakeCommentData extends FakeModel<CommentData> {
 
     return CommentData(
       commentId: fakeUuid,
+      reportId: fakeUuid,
       firstName: firstName,
       lastName: lastName,
       comment: fakeComment[Random().nextInt(fakeComment.length)],
