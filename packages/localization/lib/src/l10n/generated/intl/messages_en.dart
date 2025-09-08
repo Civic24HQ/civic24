@@ -38,9 +38,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "featureAlreadyHaveAnAccount": MessageLookupByLibrary.simpleMessage(
       "Already have an account?",
     ),
-    "featureBookmarkedReports": MessageLookupByLibrary.simpleMessage(
-      "Bookmarked Reports",
-    ),
+    "featureBookmarkedReports": MessageLookupByLibrary.simpleMessage("Saved"),
     "featureCategoryTypeAbandoned": MessageLookupByLibrary.simpleMessage(
       "Abandoned Projects",
     ),
@@ -139,7 +137,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "featureLoginWelcomeHint": MessageLookupByLibrary.simpleMessage(
       "Log in to your account",
     ),
-    "featureMyReports": MessageLookupByLibrary.simpleMessage("My Reports"),
+    "featureMyReports": MessageLookupByLibrary.simpleMessage("Submitted"),
     "featureNotificationEmpty": MessageLookupByLibrary.simpleMessage(
       "You do not have any notifications",
     ),

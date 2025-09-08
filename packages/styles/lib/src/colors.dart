@@ -38,9 +38,9 @@ class AppColors {
     700: Color(0xFF155C33),
   });
 
-  static const warningAccent = MaterialAccentColor(0xFFFFD700, {
+  static const warningAccent = MaterialAccentColor(0xFFFFC129, {
     100: Color(0xFFFFF5C2),
-    200: Color(0xFFFFD700),
+    200: Color(0xFFFFC129),
     400: Color(0xFF917B00),
     700: Color(0xFF736100),
   });

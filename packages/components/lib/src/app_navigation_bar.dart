@@ -51,6 +51,7 @@ class AppNavigationBar extends StatelessWidget {
         selectedIndex: selectedIndex,
         onDestinationSelected: onDestinationSelected,
         destinations: destinations,
+        labelBehavior: NavigationDestinationLabelBehavior.alwaysHide,
       ),
     );
   }

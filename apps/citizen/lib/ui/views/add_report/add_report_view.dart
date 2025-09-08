@@ -32,7 +32,7 @@ class AddReportView extends StackedView<AddReportViewModel> with $AddReportView 
           appBar: AppBar(
             shape: Border(bottom: BorderSide(color: context.neutralLowest)),
             centerTitle: true,
-            title: Text(l10n.featureAddReport, style: context.headlineMedium),
+            title: Text(l10n.featureAddReport),
           ),
           body: SafeArea(
             child: Padding(
