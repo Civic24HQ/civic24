@@ -28,7 +28,7 @@ class AppNotificationTile extends StatelessWidget {
           decoration: BoxDecoration(
             color: context.surface,
             borderRadius: AppBorderRadius.radius4,
-            border: Border.all(color: context.neutralLow, width: 0.5),
+            border: Border.all(color: context.neutralLowest),
           ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -36,6 +36,7 @@ class AppNotificationTile extends StatelessWidget {
               Text(
                 title,
                 style: context.titleMedium?.copyWith(
+                  fontSize: AppDimensions.size14,
                   color: hasBeenSeen ? context.onSurfaceVariant : context.onPrimaryContainer,
                 ),
               ),

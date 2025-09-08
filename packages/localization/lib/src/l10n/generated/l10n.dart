@@ -984,7 +984,7 @@ class S {
     return Intl.message(
       'Mark all as read',
       name: 'featureNotificationInstruction',
-      desc: 'NotificationInstruction Description',
+      desc: 'Notification Instruction Description',
       args: [],
     );
   }
@@ -994,7 +994,7 @@ class S {
     return Intl.message(
       'You do not have any notifications',
       name: 'featureNotificationEmpty',
-      desc: 'NotificationEmpty Description',
+      desc: 'Notification Empty Description',
       args: [],
     );
   }
@@ -1009,22 +1009,22 @@ class S {
     );
   }
 
-  /// `My Reports`
+  /// `Submitted`
   String get featureMyReports {
     return Intl.message(
-      'My Reports',
+      'Submitted',
       name: 'featureMyReports',
-      desc: 'NotificationEmpty Description',
+      desc: 'Submitted Description',
       args: [],
     );
   }
 
-  /// `Bookmarked Reports`
+  /// `Saved`
   String get featureBookmarkedReports {
     return Intl.message(
-      'Bookmarked Reports',
+      'Saved',
       name: 'featureBookmarkedReports',
-      desc: 'NotificationEmpty Description',
+      desc: 'Saved Description',
       args: [],
     );
   }

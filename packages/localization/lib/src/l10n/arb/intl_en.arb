@@ -374,22 +374,22 @@
     },
     "featureNotificationInstruction": "Mark all as read",
     "@featureNotificationInstruction": {
-        "description": "NotificationInstruction Description"
+        "description": "Notification Instruction Description"
     },
     "featureNotificationEmpty": "You do not have any notifications",
     "@featureNotificationEmpty": {
-        "description": "NotificationEmpty Description"
+        "description": "Notification Empty Description"
     },
     "featureReports": "Reports",
     "@featureReports": {
         "description": "Reports Description"
     },
-    "featureMyReports": "My Reports",
+    "featureMyReports": "Submitted",
     "@featureMyReports": {
-        "description": "NotificationEmpty Description"
+        "description": "Submitted Description"
     },
-    "featureBookmarkedReports": "Bookmarked Reports",
+    "featureBookmarkedReports": "Saved",
     "@featureBookmarkedReports": {
-        "description": "NotificationEmpty Description"
-    }   
+        "description": "Saved Description"
+    }
 }
