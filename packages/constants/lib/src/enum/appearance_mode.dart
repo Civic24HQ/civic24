@@ -1,18 +1,20 @@
+import 'package:localization/localization.dart';
+
 enum AppearanceMode {
   system,
   light,
   dark;
 
   String get title => switch (this) {
-    AppearanceMode.system => 'System Settings',
-    AppearanceMode.light => 'Light Mode',
-    AppearanceMode.dark => 'Dark Mode',
+    AppearanceMode.system => l10n.featureSettingsAppearanceSystem,
+    AppearanceMode.light => l10n.featureSettingsAppearanceLight,
+    AppearanceMode.dark => l10n.featureSettingsAppearanceDark,
   };
 
   String get description => switch (this) {
-    AppearanceMode.system => 'System Settings',
-    AppearanceMode.light => 'Light Mode',
-    AppearanceMode.dark => 'Dark Mode',
+    AppearanceMode.system => l10n.featureSettingsAppearanceSystemDesc,
+    AppearanceMode.light => l10n.featureSettingsAppearanceLightDesc,
+    AppearanceMode.dark => l10n.featureSettingsAppearanceDarkDesc,
   };
 
   int get themeIndex => switch (this) {
