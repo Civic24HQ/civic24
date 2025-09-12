@@ -47,6 +47,8 @@ extension ThemeContextX on BuildContext {
 
   Color get primaryFixed => Theme.of(this).colorScheme.primaryFixed;
 
+  Color get inversePrimary => Theme.of(this).colorScheme.inversePrimary;
+
   Color get secondary => Theme.of(this).colorScheme.secondary;
 
   Color get secondaryContainer => Theme.of(this).colorScheme.secondaryContainer;
