@@ -14,9 +14,12 @@ class MyReports extends ViewModelWidget<ReportsViewModel> {
         SliverList(
           delegate: SliverChildBuilderDelegate((context, index) {
             return AppReport(
-              onTapLike: () => viewModel.likeReport(viewModel.myReportList[index]),
-              onTapDislike: () => viewModel.dislikeReport(viewModel.myReportList[index]),
-              onTapBookmark: () => viewModel.bookmarkReport(viewModel.myReportList[index]),
+              onTapLike: () =>
+                  viewModel.likeReport(viewModel.myReportList[index]),
+              onTapDislike: () =>
+                  viewModel.dislikeReport(viewModel.myReportList[index]),
+              onTapBookmark: () =>
+                  viewModel.bookmarkReport(viewModel.myReportList[index]),
               onTapComment: () => viewModel.viewComment(),
               reportData: viewModel.myReportList[index],
             );

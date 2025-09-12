@@ -44,7 +44,7 @@ class HomeViewModel extends BaseViewModel {
     await _navigationService.navigateToAddReportView();
   }
 
-void likeReport(ReportWithUserState reportData) {
+  void likeReport(ReportWithUserState reportData) {
     var likes = reportData.report.likeCount;
     var dislikes = reportData.report.dislikeCount;
     var liked = reportData.hasLiked;
