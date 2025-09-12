@@ -20,7 +20,8 @@ class AddReportViewModel extends FormViewModel {
   ReportData _reportData = ReportData.empty();
   ReportData get reportData => _reportData;
 
-  bool isCategoryTypeSelected(CategoryType categoryType) => _reportData.categoryTypes.contains(categoryType);
+  bool isCategoryTypeSelected(CategoryType categoryType) =>
+      _reportData.categoryTypes.contains(categoryType);
 
   List<CategoryType> get categoryTypes => _reportData.categoryTypes;
 
@@ -49,7 +50,10 @@ class AddReportViewModel extends FormViewModel {
     rebuildUi();
   }
 
-  void toggleCategoryType(CategoryType categoryType, {bool isSelected = false}) {
+  void toggleCategoryType(
+    CategoryType categoryType, {
+    bool isSelected = false,
+  }) {
     final categoryTypes = List<CategoryType>.from(_reportData.categoryTypes);
     if (isSelected) {
       categoryTypes.add(categoryType);

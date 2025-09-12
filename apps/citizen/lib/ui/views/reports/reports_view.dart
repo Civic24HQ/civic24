@@ -23,20 +23,20 @@ class ReportsView extends StackedView<ReportsViewModel> {
         child: Icon(Icons.add, color: context.onPrimary, size: AppDimensions.size28),
       ),
       appBar: AppBar(
-        toolbarHeight: AppDimensions.size64,
         centerTitle: true,
         elevation: 0,
         backgroundColor: context.surface,
         scrolledUnderElevation: 0,
         automaticallyImplyLeading: false,
-        shape: const Border(bottom: BorderSide(color: Colors.transparent)),
         title: Assets.png.civic24SplashScreenIOS.image(width: AppDimensions.size72, height: AppDimensions.size48),
+        shape: const Border(bottom: BorderSide(color: Colors.transparent)),
       ),
       body: AppTabs.underlined(
         tabs: [
           AppTab(label: l10n.featureMyReports, view: const MyReports()),
           AppTab(label: l10n.featureBookmarkedReports, view: const BookmarkedReports()),
         ],
+        padding: const EdgeInsets.only(top: AppDimensions.padding8),
       ),
     );
   }

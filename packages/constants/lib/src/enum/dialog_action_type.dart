@@ -1,0 +1,1 @@
+enum DialogActionType { main, secondary }

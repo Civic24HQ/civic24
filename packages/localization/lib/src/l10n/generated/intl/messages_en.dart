@@ -20,6 +20,10 @@ typedef String MessageIfAbsent(String messageStr, List<dynamic> args);
 class MessageLookup extends MessageLookupByLibrary {
   String get localeName => 'en';
 
+  static String m0(action) => "Tap to ${action}";
+
+  static String m1(version) => "(v${version})";
+
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
     "featureAddReport": MessageLookupByLibrary.simpleMessage("Add a Report"),
@@ -39,7 +43,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "Already have an account?",
     ),
     "featureBookmarkedReports": MessageLookupByLibrary.simpleMessage(
-      "Bookmarked Reports",
+      "Bookmarked",
     ),
     "featureCategoryTypeAbandoned": MessageLookupByLibrary.simpleMessage(
       "Abandoned Projects",
@@ -167,7 +171,48 @@ class MessageLookup extends MessageLookupByLibrary {
     "featureOnboardingVoiceReportDesc": MessageLookupByLibrary.simpleMessage(
       "Civic24 allows you to speak up about pressing problems in your community and make your voice heard",
     ),
+    "featureProfileAccountEmail": MessageLookupByLibrary.simpleMessage(
+      "Your account email can’t be changed.",
+    ),
     "featureReports": MessageLookupByLibrary.simpleMessage("Reports"),
+    "featureSettingsAbout": MessageLookupByLibrary.simpleMessage("About"),
+    "featureSettingsAppearance": MessageLookupByLibrary.simpleMessage(
+      "Appearance",
+    ),
+    "featureSettingsAppearanceDark": MessageLookupByLibrary.simpleMessage(
+      "Dark Mode",
+    ),
+    "featureSettingsAppearanceDarkDesc": MessageLookupByLibrary.simpleMessage(
+      "Keep the app in dark mode",
+    ),
+    "featureSettingsAppearanceLight": MessageLookupByLibrary.simpleMessage(
+      "Light Mode",
+    ),
+    "featureSettingsAppearanceLightDesc": MessageLookupByLibrary.simpleMessage(
+      "Keep the app in light mode",
+    ),
+    "featureSettingsAppearanceSystem": MessageLookupByLibrary.simpleMessage(
+      "System Settings",
+    ),
+    "featureSettingsAppearanceSystemDesc": MessageLookupByLibrary.simpleMessage(
+      "Automatically adjust to your device appearance settings",
+    ),
+    "featureSettingsEditProfile": MessageLookupByLibrary.simpleMessage(
+      "Edit Profile",
+    ),
+    "featureSettingsLanguage": MessageLookupByLibrary.simpleMessage("Language"),
+    "featureSettingsLanguageDefault": MessageLookupByLibrary.simpleMessage(
+      "Default Language",
+    ),
+    "featureSettingsLoggingOut": MessageLookupByLibrary.simpleMessage(
+      "Logging out?",
+    ),
+    "featureSettingsLoggingOutHint": MessageLookupByLibrary.simpleMessage(
+      "Are you sure you want to log out from your account on this device?",
+    ),
+    "featureSettingsProfile": MessageLookupByLibrary.simpleMessage("Profile"),
+    "featureSettingsTooltip": m0,
+    "featureSettingsVersion": m1,
     "featureSignUpCreateAccount": MessageLookupByLibrary.simpleMessage(
       "Create Account",
     ),
@@ -185,10 +230,12 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "generalAddComment": MessageLookupByLibrary.simpleMessage("Add a comment"),
     "generalAllIssues": MessageLookupByLibrary.simpleMessage("All Issues"),
+    "generalCancel": MessageLookupByLibrary.simpleMessage("Cancel"),
     "generalCategory": MessageLookupByLibrary.simpleMessage("Category"),
     "generalClickToUpload": MessageLookupByLibrary.simpleMessage(
       "Click to Upload",
     ),
+    "generalClose": MessageLookupByLibrary.simpleMessage("Close"),
     "generalComment": MessageLookupByLibrary.simpleMessage("Comments"),
     "generalConfirmPassword": MessageLookupByLibrary.simpleMessage(
       "Confirm Password",
@@ -201,6 +248,10 @@ class MessageLookup extends MessageLookupByLibrary {
       "Continue with Google",
     ),
     "generalCountry": MessageLookupByLibrary.simpleMessage("Country"),
+    "generalDeleteAccountButton": MessageLookupByLibrary.simpleMessage(
+      "Delete Account",
+    ),
+    "generalEdit": MessageLookupByLibrary.simpleMessage("Edit"),
     "generalEmail": MessageLookupByLibrary.simpleMessage("Email Address"),
     "generalEmailHint": MessageLookupByLibrary.simpleMessage(
       "Enter your email",
@@ -223,11 +274,13 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "generalLastname": MessageLookupByLibrary.simpleMessage("Last name"),
     "generalLogin": MessageLookupByLibrary.simpleMessage("Login"),
+    "generalLogout": MessageLookupByLibrary.simpleMessage("Logout"),
     "generalNoResults": MessageLookupByLibrary.simpleMessage("No results"),
     "generalPassword": MessageLookupByLibrary.simpleMessage("Password"),
     "generalPrevious": MessageLookupByLibrary.simpleMessage("Previous"),
     "generalProceed": MessageLookupByLibrary.simpleMessage("Proceed"),
     "generalRequired": MessageLookupByLibrary.simpleMessage("Required"),
+    "generalSave": MessageLookupByLibrary.simpleMessage("Save"),
     "generalSearch": MessageLookupByLibrary.simpleMessage("Search here"),
     "generalSelectCountry": MessageLookupByLibrary.simpleMessage(
       "Select a country",

@@ -3,6 +3,7 @@ import 'dart:ui';
 import 'package:citizen/app/app.router.dart';
 import 'package:citizen/app_builder.dart';
 import 'package:citizen/ui/bottom_sheets/comment/comment_sheet.dart';
+import 'package:citizen/ui/dialogs/logout/logout_dialog.dart';
 import 'package:citizen/ui/shared/src/success/success_view.dart';
 import 'package:citizen/ui/views/add_report/add_report_view.dart';
 import 'package:citizen/ui/views/auth/forgot_password/forgot_password_view.dart';
@@ -14,6 +15,9 @@ import 'package:citizen/ui/views/main/main_view.dart';
 import 'package:citizen/ui/views/notification/notification_view.dart';
 import 'package:citizen/ui/views/onboarding/onboarding_view.dart';
 import 'package:citizen/ui/views/reports/reports_view.dart';
+import 'package:citizen/ui/views/settings/appearance_settings/appearance_settings_view.dart';
+import 'package:citizen/ui/views/settings/language_settings/language_settings_view.dart';
+import 'package:citizen/ui/views/settings/profile/profile_view.dart';
 import 'package:citizen/ui/views/settings/settings_view.dart';
 import 'package:citizen/ui/views/startup/startup_view.dart';
 import 'package:flutter/material.dart';
@@ -38,6 +42,9 @@ import 'package:styles/styles.dart';
     AdaptiveRoute(page: NotificationView),
     AdaptiveRoute(page: SettingsView),
     AdaptiveRoute(page: AddReportView),
+    AdaptiveRoute(page: ProfileView),
+    AdaptiveRoute(page: AppearanceSettingsView),
+    AdaptiveRoute(page: LanguageSettingsView),
     // @stacked-route
   ],
   bottomsheets: [
@@ -50,9 +57,10 @@ import 'package:styles/styles.dart';
     LazySingleton(classType: DialogService),
     // @stacked-service
   ],
-  // dialogs: [
-  //   // @stacked-dialog
-  // ],
+  dialogs: [
+    StackedDialog(classType: LogoutDialog),
+    // @stacked-dialog
+  ],
 )
 class App extends StatelessWidget {
   const App({super.key});

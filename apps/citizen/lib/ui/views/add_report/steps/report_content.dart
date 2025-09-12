@@ -1,7 +1,12 @@
 part of '../add_report_view.dart';
 
 class ReportContent extends ViewModelWidget<AddReportViewModel> {
-  const ReportContent({required this.contentController, required this.contentFocusNode, this.errorText, super.key});
+  const ReportContent({
+    required this.contentController,
+    required this.contentFocusNode,
+    this.errorText,
+    super.key,
+  });
 
   final TextEditingController contentController;
   final FocusNode contentFocusNode;
