@@ -40,6 +40,22 @@
     "@generalContinueWithApple": {
         "description": "Text for the Apple sign-in button"
     },
+    "generalSave": "Save",
+    "@generalSave": {
+        "description": "Text for Save button"
+    },
+    "generalEdit": "Edit",
+    "@generalEdit": {
+        "description": "Text for Edit button"
+    },
+    "generalCancel": "Cancel",
+    "@generalCancel": {
+        "description": "Text for Cancel button"
+    },
+    "generalDeleteAccountButton": "Delete Account",
+    "@generalDeleteAccountButton": {
+        "description": "Text for Delete Account button"
+    },
     "generalProceed": "Proceed",
     "@generalProceed": {
         "description": "General Label for Button"
@@ -51,6 +67,10 @@
     "generalPrevious": "Previous",
     "@generalPrevious": {
         "description": "Previous Label for Button"
+    },
+    "generalClose": "Close",
+    "@generalClose": {
+        "description": "Text for the close button"
     },
     "generalLogin": "Login",
     "@generalLogin": {
@@ -163,6 +183,10 @@
     "generalCategory": "Category",
     "@generalCategory": {
         "description": "Text for Category TextField"
+    },
+    "generalLogout": "Logout",
+    "@generalLogout": {
+        "description": "Text for Logout Label"
     },
     "featureonboardingGetStarted": "Get Started",
     "@featureonboardingGetStarted": {
@@ -384,12 +408,86 @@
     "@featureReports": {
         "description": "Reports Description"
     },
-    "featureMyReports": "Submitted",
+    "featureMyReports": "My Reports",
     "@featureMyReports": {
-        "description": "Submitted Description"
+        "description": "My Reports Description"
     },
-    "featureBookmarkedReports": "Saved",
+    "featureBookmarkedReports": "Bookmarked",
     "@featureBookmarkedReports": {
-        "description": "Saved Description"
+        "description": "Bookmarked Description"
+    },
+    "featureSettingsTooltip": "Tap to {action}",
+    "@featureSettingsTooltip": {
+        "description": "Settings Tooltip Description",
+        "placeholders": {
+            "action": {}
+        }
+    },
+    "featureSettingsVersion": "(v{version})",
+    "@featureSettingsVersion": {
+        "description": "Settings Version Description",
+        "placeholders": {
+            "version": {}
+        }
+    },
+    "featureSettingsProfile": "Profile",
+    "@featureSettingsProfile": {
+        "description": "Profile Description"
+    },
+    "featureSettingsEditProfile": "Edit Profile",
+    "@featureSettingsEditProfile": {
+        "description": "Edit Profile Description"
+    },
+    "featureProfileAccountEmail": "Your account email can’t be changed.",
+    "@featureProfileAccountEmail": {
+        "description": "Profile Account Email Description"
+    },
+    "featureSettingsLanguage": "Language",
+    "@featureSettingsLanguage": {
+        "description": "Language Description"
+    },
+    "featureSettingsLanguageDefault": "Default Language",
+    "@featureSettingsLanguageDefault": {
+        "description": "Default Language Description"
+    },
+    "featureSettingsAppearance": "Appearance",
+    "@featureSettingsAppearance": {
+        "description": "Appearance Description"
+    },
+    "featureSettingsAppearanceSystem": "System Settings",
+    "@featureSettingsAppearanceSystem": {
+        "description": "System Settings Description"
+    },
+    "featureSettingsAppearanceLight": "Light Mode",
+    "@featureSettingsAppearanceLight": {
+        "description": "Light Mode Description"
+    },
+    "featureSettingsAppearanceDark": "Dark Mode",
+    "@featureSettingsAppearanceDark": {
+        "description": "Dark Mode Description"
+    },
+    "featureSettingsAppearanceSystemDesc": "Automatically adjust to your device appearance settings",
+    "@featureSettingsAppearanceSystemDesc": {
+        "description": "System Settings Description"
+    },
+    "featureSettingsAppearanceLightDesc": "Keep the app in light mode",
+    "@featureSettingsAppearanceLightDesc": {
+        "description": "Light Mode Description"
+    },
+    "featureSettingsAppearanceDarkDesc": "Keep the app in dark mode",
+    "@featureSettingsAppearanceDarkDesc": {
+        "description": "Dark Mode Description"
+    },
+    "featureSettingsAbout": "About",
+    "@featureSettingsAbout": {
+        "description": "About Description"
+    },
+    "featureSettingsLoggingOut": "Logging out?",
+    "@featureSettingsLoggingOut": {
+        "description": "Logging out Description"
+    },
+    "featureSettingsLoggingOutHint": "Are you sure you want to log out from your account on this device?",
+    "@featureSettingsLoggingOutHint": {
+        "description": "Logging out Hint Description"
     }
 }

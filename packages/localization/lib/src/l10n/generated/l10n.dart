@@ -149,6 +149,46 @@ class S {
     );
   }
 
+  /// `Save`
+  String get generalSave {
+    return Intl.message(
+      'Save',
+      name: 'generalSave',
+      desc: 'Text for Save button',
+      args: [],
+    );
+  }
+
+  /// `Edit`
+  String get generalEdit {
+    return Intl.message(
+      'Edit',
+      name: 'generalEdit',
+      desc: 'Text for Edit button',
+      args: [],
+    );
+  }
+
+  /// `Cancel`
+  String get generalCancel {
+    return Intl.message(
+      'Cancel',
+      name: 'generalCancel',
+      desc: 'Text for Cancel button',
+      args: [],
+    );
+  }
+
+  /// `Delete Account`
+  String get generalDeleteAccountButton {
+    return Intl.message(
+      'Delete Account',
+      name: 'generalDeleteAccountButton',
+      desc: 'Text for Delete Account button',
+      args: [],
+    );
+  }
+
   /// `Proceed`
   String get generalProceed {
     return Intl.message(
@@ -175,6 +215,16 @@ class S {
       'Previous',
       name: 'generalPrevious',
       desc: 'Previous Label for Button',
+      args: [],
+    );
+  }
+
+  /// `Close`
+  String get generalClose {
+    return Intl.message(
+      'Close',
+      name: 'generalClose',
+      desc: 'Text for the close button',
       args: [],
     );
   }
@@ -455,6 +505,16 @@ class S {
       'Category',
       name: 'generalCategory',
       desc: 'Text for Category TextField',
+      args: [],
+    );
+  }
+
+  /// `Logout`
+  String get generalLogout {
+    return Intl.message(
+      'Logout',
+      name: 'generalLogout',
+      desc: 'Text for Logout Label',
       args: [],
     );
   }
@@ -1009,22 +1069,192 @@ class S {
     );
   }
 
-  /// `Submitted`
+  /// `My Reports`
   String get featureMyReports {
     return Intl.message(
-      'Submitted',
+      'My Reports',
       name: 'featureMyReports',
-      desc: 'Submitted Description',
+      desc: 'My Reports Description',
       args: [],
     );
   }
 
-  /// `Saved`
+  /// `Bookmarked`
   String get featureBookmarkedReports {
     return Intl.message(
-      'Saved',
+      'Bookmarked',
       name: 'featureBookmarkedReports',
-      desc: 'Saved Description',
+      desc: 'Bookmarked Description',
+      args: [],
+    );
+  }
+
+  /// `Tap to {action}`
+  String featureSettingsTooltip(Object action) {
+    return Intl.message(
+      'Tap to $action',
+      name: 'featureSettingsTooltip',
+      desc: 'Settings Tooltip Description',
+      args: [action],
+    );
+  }
+
+  /// `(v{version})`
+  String featureSettingsVersion(Object version) {
+    return Intl.message(
+      '(v$version)',
+      name: 'featureSettingsVersion',
+      desc: 'Settings Version Description',
+      args: [version],
+    );
+  }
+
+  /// `Profile`
+  String get featureSettingsProfile {
+    return Intl.message(
+      'Profile',
+      name: 'featureSettingsProfile',
+      desc: 'Profile Description',
+      args: [],
+    );
+  }
+
+  /// `Edit Profile`
+  String get featureSettingsEditProfile {
+    return Intl.message(
+      'Edit Profile',
+      name: 'featureSettingsEditProfile',
+      desc: 'Edit Profile Description',
+      args: [],
+    );
+  }
+
+  /// `Your account email can’t be changed.`
+  String get featureProfileAccountEmail {
+    return Intl.message(
+      'Your account email can’t be changed.',
+      name: 'featureProfileAccountEmail',
+      desc: 'Profile Account Email Description',
+      args: [],
+    );
+  }
+
+  /// `Language`
+  String get featureSettingsLanguage {
+    return Intl.message(
+      'Language',
+      name: 'featureSettingsLanguage',
+      desc: 'Language Description',
+      args: [],
+    );
+  }
+
+  /// `Default Language`
+  String get featureSettingsLanguageDefault {
+    return Intl.message(
+      'Default Language',
+      name: 'featureSettingsLanguageDefault',
+      desc: 'Default Language Description',
+      args: [],
+    );
+  }
+
+  /// `Appearance`
+  String get featureSettingsAppearance {
+    return Intl.message(
+      'Appearance',
+      name: 'featureSettingsAppearance',
+      desc: 'Appearance Description',
+      args: [],
+    );
+  }
+
+  /// `System Settings`
+  String get featureSettingsAppearanceSystem {
+    return Intl.message(
+      'System Settings',
+      name: 'featureSettingsAppearanceSystem',
+      desc: 'System Settings Description',
+      args: [],
+    );
+  }
+
+  /// `Light Mode`
+  String get featureSettingsAppearanceLight {
+    return Intl.message(
+      'Light Mode',
+      name: 'featureSettingsAppearanceLight',
+      desc: 'Light Mode Description',
+      args: [],
+    );
+  }
+
+  /// `Dark Mode`
+  String get featureSettingsAppearanceDark {
+    return Intl.message(
+      'Dark Mode',
+      name: 'featureSettingsAppearanceDark',
+      desc: 'Dark Mode Description',
+      args: [],
+    );
+  }
+
+  /// `Automatically adjust to your device appearance settings`
+  String get featureSettingsAppearanceSystemDesc {
+    return Intl.message(
+      'Automatically adjust to your device appearance settings',
+      name: 'featureSettingsAppearanceSystemDesc',
+      desc: 'System Settings Description',
+      args: [],
+    );
+  }
+
+  /// `Keep the app in light mode`
+  String get featureSettingsAppearanceLightDesc {
+    return Intl.message(
+      'Keep the app in light mode',
+      name: 'featureSettingsAppearanceLightDesc',
+      desc: 'Light Mode Description',
+      args: [],
+    );
+  }
+
+  /// `Keep the app in dark mode`
+  String get featureSettingsAppearanceDarkDesc {
+    return Intl.message(
+      'Keep the app in dark mode',
+      name: 'featureSettingsAppearanceDarkDesc',
+      desc: 'Dark Mode Description',
+      args: [],
+    );
+  }
+
+  /// `About`
+  String get featureSettingsAbout {
+    return Intl.message(
+      'About',
+      name: 'featureSettingsAbout',
+      desc: 'About Description',
+      args: [],
+    );
+  }
+
+  /// `Logging out?`
+  String get featureSettingsLoggingOut {
+    return Intl.message(
+      'Logging out?',
+      name: 'featureSettingsLoggingOut',
+      desc: 'Logging out Description',
+      args: [],
+    );
+  }
+
+  /// `Are you sure you want to log out from your account on this device?`
+  String get featureSettingsLoggingOutHint {
+    return Intl.message(
+      'Are you sure you want to log out from your account on this device?',
+      name: 'featureSettingsLoggingOutHint',
+      desc: 'Logging out Hint Description',
       args: [],
     );
   }
