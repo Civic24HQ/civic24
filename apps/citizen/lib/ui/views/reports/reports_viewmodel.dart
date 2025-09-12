@@ -22,9 +22,7 @@ class ReportsViewModel extends BaseViewModel {
     if (uploadResponse != null && uploadResponse.confirmed) {}
   }
 
-  Future<void> onAddReport() async {
-    await _navigationService.navigateToAddReportView();
-  }
+  Future<void> onAddReport() => _navigationService.navigateToAddReportView();
 
   void likeReport(ReportWithUserState reportData) {
     var likes = reportData.report.likeCount;

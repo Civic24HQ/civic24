@@ -61,7 +61,7 @@ class SettingsListTile extends StatelessWidget {
                           padding: const EdgeInsets.only(top: AppDimensions.size2),
                           child: Text(
                             subtitle!,
-                            style: context.labelMedium?.copyWith(color: context.labelMedium?.color),
+                            style: context.labelMedium?.copyWith(color: context.neutralHigh),
                           ),
                         ),
                       ],

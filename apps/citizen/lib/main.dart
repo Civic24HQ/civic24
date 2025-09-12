@@ -1,5 +1,6 @@
 import 'package:citizen/app/app.bottomsheets.dart';
 import 'package:citizen/app/app.dart';
+import 'package:citizen/app/app.dialogs.dart';
 import 'package:citizen/app/app.locator.dart';
 import 'package:citizen/app/app.router.dart';
 import 'package:flutter/material.dart';
@@ -18,5 +19,6 @@ Future<void> _preLocatorSetup() async {
 
 Future<void> _postLocatorSetup() async {
   setupBottomSheetUi();
+  setupDialogUi();
   runApp(const App());
 }

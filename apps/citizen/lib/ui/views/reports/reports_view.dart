@@ -1,3 +1,4 @@
+import 'package:citizen/ui/shared/src/assets.gen.dart';
 import 'package:citizen/ui/views/reports/reports_viewmodel.dart';
 import 'package:components/components.dart';
 import 'package:flutter/material.dart';
@@ -27,7 +28,7 @@ class ReportsView extends StackedView<ReportsViewModel> {
         backgroundColor: context.surface,
         scrolledUnderElevation: 0,
         automaticallyImplyLeading: false,
-        title: Text(l10n.featureReports),
+        title: Assets.png.civic24SplashScreenIOS.image(width: AppDimensions.size72, height: AppDimensions.size48),
         shape: const Border(bottom: BorderSide(color: Colors.transparent)),
       ),
       body: AppTabs.underlined(
