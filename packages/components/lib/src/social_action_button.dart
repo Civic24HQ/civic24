@@ -7,7 +7,8 @@ import 'package:styles/styles.dart';
 /// supports different variants through the named constructors.
 class SocialActionButton extends StatelessWidget {
   const SocialActionButton._({
-    required this.icon,
+    required this.iconActive,
+    required this.iconInActive,
     required this.onTap,
     this.isActive = false,
     this.count,
@@ -35,7 +36,8 @@ class SocialActionButton extends StatelessWidget {
   }) {
     return SocialActionButton._(
       key: key,
-      icon: SolarIconsOutline.like,
+      iconInActive: SolarIconsOutline.like,
+      iconActive: SolarIconsOutline.like,
       isActive: isActive,
       onTap: onTap,
       count: count,
@@ -63,7 +65,8 @@ class SocialActionButton extends StatelessWidget {
   }) {
     return SocialActionButton._(
       key: key,
-      icon: SolarIconsOutline.dislike,
+      iconInActive: SolarIconsOutline.dislike,
+      iconActive: SolarIconsOutline.dislike,
       isActive: isActive,
       onTap: onTap,
       count: count,
@@ -89,7 +92,8 @@ class SocialActionButton extends StatelessWidget {
   }) {
     return SocialActionButton._(
       key: key,
-      icon: SolarIconsOutline.chatRound,
+      iconInActive: SolarIconsOutline.chatRound,
+      iconActive: SolarIconsBold.chatRound,
       onTap: onTap,
       count: count,
       scaleStrength: scaleStrength,
@@ -116,7 +120,8 @@ class SocialActionButton extends StatelessWidget {
   }) {
     return SocialActionButton._(
       key: key,
-      icon: SolarIconsOutline.bookmark,
+      iconInActive: SolarIconsOutline.bookmark,
+      iconActive: SolarIconsOutline.bookmark,
       isActive: isActive,
       onTap: onTap,
       count: count,
@@ -130,7 +135,8 @@ class SocialActionButton extends StatelessWidget {
   }
 
   /// Base config
-  final IconData icon;
+  final IconData iconActive;
+  final IconData iconInActive;
   final VoidCallback? onTap;
   final bool isActive;
   final int? count;
@@ -152,7 +158,11 @@ class SocialActionButton extends StatelessWidget {
     final content = Row(
       mainAxisSize: MainAxisSize.min,
       children: [
-        Icon(icon, size: resolvedSize, color: isActive ? resolvedActive : resolvedInactive),
+        Icon(
+          isActive ? iconActive : iconInActive,
+          size: resolvedSize,
+          color: isActive ? resolvedActive : resolvedInactive,
+        ),
         if (count != null) SizedBox(width: gap),
         if (count != null)
           Text(

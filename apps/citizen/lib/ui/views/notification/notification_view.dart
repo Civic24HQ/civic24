@@ -17,14 +17,19 @@ class NotificationView extends StackedView<NotificationViewModel> {
     Widget? child,
   ) {
     return Scaffold(
+      backgroundColor: context.surface,
       appBar: AppBar(
+        centerTitle: true,
+        elevation: 0,
+        backgroundColor: context.surface,
+        scrolledUnderElevation: 0,
         automaticallyImplyLeading: false,
         title: Text(l10n.featureNotifications),
-        scrolledUnderElevation: 0,
-        shape: const Border(bottom: BorderSide(color: Colors.transparent)),
+        shape: Border(bottom: BorderSide(color: context.neutralLowest)),
       ),
       body: Column(
         children: [
+          AppSpacing.small,
           if (viewModel.hasUnreadNotifications)
             Align(
               alignment: Alignment.centerRight,
@@ -65,7 +70,7 @@ class NotificationView extends StackedView<NotificationViewModel> {
           else
             Expanded(
               child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: AppDimensions.size8, vertical: AppDimensions.size16),
+                padding: AppEdgeInsets.padding8,
                 child: ListView.separated(
                   itemCount: viewModel.notificationList.length,
                   itemBuilder: (context, index) {

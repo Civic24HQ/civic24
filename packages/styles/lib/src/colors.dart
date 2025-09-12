@@ -7,11 +7,13 @@ class AppColors {
     50: Color(0xFFFFFAFB),
     100: Color(0xFFF6B3B3),
     200: Color(0xFFEA4D4D),
+    300: Color(0xFFFCE6E6),
     400: Color(0xFFE10000),
     500: Color(0xFF9E0000),
     600: Color(0xFF710000),
     700: Color(0xFF430000),
     800: Color(0xFF300202),
+    900: Color(0xFF260202),
   });
 
   static const secondary = MaterialColor(0xFF27292A, {
@@ -38,9 +40,9 @@ class AppColors {
     700: Color(0xFF155C33),
   });
 
-  static const warningAccent = MaterialAccentColor(0xFFFFD700, {
+  static const warningAccent = MaterialAccentColor(0xFFFFC129, {
     100: Color(0xFFFFF5C2),
-    200: Color(0xFFFFD700),
+    200: Color(0xFFFFC129),
     400: Color(0xFF917B00),
     700: Color(0xFF736100),
   });
