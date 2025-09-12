@@ -47,11 +47,16 @@ class AppNavigationBar extends StatelessWidget {
           return context.bodySmall?.copyWith(color: context.neutralHighest);
         }),
       ),
-      child: NavigationBar(
-        selectedIndex: selectedIndex,
-        onDestinationSelected: onDestinationSelected,
-        destinations: destinations,
-        labelBehavior: NavigationDestinationLabelBehavior.alwaysHide,
+      child: Container(
+        decoration: BoxDecoration(
+          border: Border(top: BorderSide(color: context.neutralLowest, width: 0.7)),
+        ),
+        child: NavigationBar(
+          selectedIndex: selectedIndex,
+          onDestinationSelected: onDestinationSelected,
+          destinations: destinations,
+          labelBehavior: NavigationDestinationLabelBehavior.alwaysHide,
+        ),
       ),
     );
   }
