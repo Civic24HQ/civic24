@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>906124586309-89pnhr9ut6fj0f8b1edti9bpj0980nor.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.906124586309-89pnhr9ut6fj0f8b1edti9bpj0980nor</string>
+	<key>API_KEY</key>
+	<string>AIzaSyBRKMI8KCExA9reyLc7OxLDLoB1ehjvlIg</string>
+	<key>GCM_SENDER_ID</key>
+	<string>906124586309</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>co.civic24.citizen.stg</string>
+	<key>PROJECT_ID</key>
+	<string>civic24-sdg11</string>
+	<key>STORAGE_BUCKET</key>
+	<string>civic24-sdg11.firebasestorage.app</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:906124586309:ios:cdbd6b2c4188f57b89622c</string>
+</dict>
+</plist>

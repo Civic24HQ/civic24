@@ -1,0 +1,1 @@
+`dev/assets` contains files that are not bundled with the app. Instead, these files can be used to generate/copy files in platform folders e.g. launcher icons.

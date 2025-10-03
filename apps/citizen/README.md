@@ -14,8 +14,128 @@ Citizen App for Civic24
 
 This is the main user-facing app that enables individuals to report civic issues, view updates, and participate in public conversations.
 
+This project contains 3 flavors:
+
+- development
+- staging
+- production
+
+To run the desired flavor either use the launch configuration in VSCode/Android Studio or use the following commands:
+
+```sh
+# Development
+$ flutter run --flavor development --target lib/main_development.dart
+
+# Staging
+$ flutter run --flavor staging --target lib/main_staging.dart
+
+# Production
+$ flutter run --flavor production --target lib/main_production.dart
+```
 
 _\*Citizen works on iOS, MacOS, Android, Web, and Windows._
+
+---
+
+## Setup Environmental Variables
+
+This app reads configuration at **build time** via `--dart-define` (or `--dart-define-from-file`). If any required value is missing, the build will fail with an assertion that points back to this section.
+
+### Option A — Use a JSON file (recommended)
+
+```bash
+# Development
+flutter run   --target lib/main.dart   --dart-define-from-file=apps/citizen/secrets/development.json
+
+# Staging
+flutter run   --target lib/main.dart   --dart-define-from-file=apps/citizen/secrets/staging.json
+
+# Production
+flutter run   --target lib/main.dart   --dart-define-from-file=apps/citizen/secrets/production.json
+```
+
+### Option B — Pass individual defines
+
+```bash
+flutter run   --target lib/main.dart   --dart-define=ENVIRONMENT=Development   --dart-define=BASE_URL=https://api.dev.example.com   --dart-define=PROJECT_ID=civic24-dev   --dart-define=AUTH_DOMAIN=civic24-dev.firebaseapp.com   --dart-define=MESSAGING_SENDER_ID=1234567890   --dart-define=STORAGE_BUCKET=civic24-dev.appspot.com   --dart-define=LOGGING_IDENTIFIER=c24-dev   --dart-define=LOGGING_CLIENT_EMAIL=logger@project.iam.gserviceaccount.com   --dart-define=ANDROID_API_KEY=...   --dart-define=ANDROID_APP_ID=...   --dart-define=IOS_API_KEY=...   --dart-define=IOS_APP_ID=...   --dart-define=IOS_CLIENT_ID=...   --dart-define=IOS_BUNDLE_ID=com.example.civic24.dev   --dart-define=MACOS_API_KEY=...   --dart-define=MACOS_APP_ID=...   --dart-define=MACOS_BUNDLE_ID=com.example.civic24.mac.dev
+```
+
+---
+
+## Environments
+
+Use these **exact** values for `ENVIRONMENT` (they map to your code’s `kEnv*` constants):
+
+- `Development`
+- `Staging`
+- `Production`
+
+> If `ENVIRONMENT` is omitted, the default is **Development**.
+
+---
+
+## JSON Template
+
+Create the following files inside `/apps/citizen/secrets/`:
+
+- `development.json`
+- `staging.json`
+- `production.json`
+
+**Template:**
+
+```json
+{
+  "ENVIRONMENT": "Development",
+
+  "PROJECT_ID": "civic24-dev",
+  "AUTH_DOMAIN": "civic24-dev.firebaseapp.com",
+  "BASE_URL": "https://api.dev.example.com",
+
+  "MESSAGING_SENDER_ID": "1234567890",
+  "STORAGE_BUCKET": "civic24-dev.appspot.com",
+
+  "LOGGING_IDENTIFIER": "c24-dev",
+  "LOGGING_CLIENT_EMAIL": "logger@dev.example.iam.gserviceaccount.com",
+
+  "ANDROID_API_KEY": "AAA...",
+  "ANDROID_APP_ID": "1:1234567890:android:abc123",
+
+  "IOS_API_KEY": "BBB...",
+  "IOS_APP_ID": "1:1234567890:ios:def456",
+  "IOS_CLIENT_ID": "com.example.dev.client",
+  "IOS_BUNDLE_ID": "com.example.civic24.dev",
+
+  "MACOS_API_KEY": "CCC...",
+  "MACOS_APP_ID": "com.example.civic24.mac.dev",
+  "MACOS_BUNDLE_ID": "com.example.civic24.mac.dev",
+}
+```
+
+---
+
+## Build Commands
+
+```bash
+# Android APK (prod)
+flutter build apk --flavor prod   --target lib/main.dart   --dart-define-from-file=apps/citizen/secrets/production.json
+
+# iOS IPA (prod)
+flutter build ipa --flavor prod   --export-options-plist ios/ExportOptions.plist   --dart-define-from-file=apps/citizen/secrets/production.json
+```
+
+---
+
+## Troubleshooting
+
+- **Assertion: “Environment must be set …”**  
+  Ensure your JSON contains `ENVIRONMENT` and you passed the right file from `apps/citizen/secrets/`.
+
+- **Empty BASE_URL or other keys**  
+  Key names in JSON must **exactly** match `String.fromEnvironment('KEY_NAME')`.
+
+- **Asserts not triggering**  
+  Asserts run in **debug/profile** only. Don’t rely on them in release; keep your env files complete.
 
 ---
 
