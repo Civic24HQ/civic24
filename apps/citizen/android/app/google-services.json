@@ -1,0 +1,118 @@
+{
+  "project_info": {
+    "project_number": "906124586309",
+    "project_id": "civic24-sdg11",
+    "storage_bucket": "civic24-sdg11.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:906124586309:android:ed6729a97a7bd5fb89622c",
+        "android_client_info": {
+          "package_name": "co.civic24.citizen"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "906124586309-vu6bltnnhgau3e5ucg0nes450jv0ig8b.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDsn8LRvkaaMWTrV1V7cazFrPiWxpeO1S4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "906124586309-vu6bltnnhgau3e5ucg0nes450jv0ig8b.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "906124586309-4pi1mk5terd03k5tri6gt21sqtnuqf1g.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "co.civic24.citizen"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:906124586309:android:86fa765f1c8e9fc989622c",
+        "android_client_info": {
+          "package_name": "co.civic24.citizen.dev"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "906124586309-vu6bltnnhgau3e5ucg0nes450jv0ig8b.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDsn8LRvkaaMWTrV1V7cazFrPiWxpeO1S4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "906124586309-vu6bltnnhgau3e5ucg0nes450jv0ig8b.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "906124586309-4pi1mk5terd03k5tri6gt21sqtnuqf1g.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "co.civic24.citizen"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:906124586309:android:a889a6b909f62f0589622c",
+        "android_client_info": {
+          "package_name": "co.civic24.citizen.stg"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "906124586309-vu6bltnnhgau3e5ucg0nes450jv0ig8b.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDsn8LRvkaaMWTrV1V7cazFrPiWxpeO1S4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "906124586309-vu6bltnnhgau3e5ucg0nes450jv0ig8b.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "906124586309-4pi1mk5terd03k5tri6gt21sqtnuqf1g.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "co.civic24.citizen"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
