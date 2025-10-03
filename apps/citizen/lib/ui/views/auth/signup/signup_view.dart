@@ -48,7 +48,7 @@ class SignupView extends StackedView<SignupViewModel> with $SignupView {
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                Assets.png.iosDark.image(
+                                Assets.png.adaptiveIcon.image(
                                   width: AppDimensions.size56,
                                   height: AppDimensions.size56,
                                 ),

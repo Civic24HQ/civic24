@@ -2,10 +2,40 @@
     "version": "0.1.0",
     "configurations": [
         {
-            "name": "Launch Citizen",
+        "name": "Launch Citizen(DEV)",
+        "request": "launch",
+        "type": "dart",
+        "program": "apps/citizen/lib/main.dart",
+        "args": [
+            "--flavor",
+            "development",
+            "--dart-define-from-file",
+            "secrets/development.json"
+        ]
+    },
+    {
+        "name": "Launch Citizen(STG)",
+        "request": "launch",
+        "type": "dart",
+        "program": "apps/citizen/lib/main.dart",
+        "args": [
+            "--flavor",
+            "staging",
+            "--dart-define-from-file",
+            "secrets/staging.json"
+        ]
+    },
+    {
+        "name": "Launch Citizen(PROD)",
             "request": "launch",
             "type": "dart",
             "program": "apps/citizen/lib/main.dart",
+            "args": [
+                "--flavor",
+                "production",
+                "--dart-define-from-file",
+                "secrets/production.json"
+            ]
         },
         {
             "name": "Launch Admin",
@@ -18,7 +48,15 @@
             "request": "launch",
             "type": "dart",
             "program": "packages/components/test",
+                "codeLens": {
+                    "for": [
+                        "run-test",
+                        "run-test-file"
+                    ]
+                },
             "args": [
+                "--dart-define-from-file",
+                "secrets/development.json",
                 "--update-goldens",
                 "--tags",
                 "golden"
