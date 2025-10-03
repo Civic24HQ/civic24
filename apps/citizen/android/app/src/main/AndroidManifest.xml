@@ -38,7 +38,7 @@
         </intent>
     </queries>
     <application
-android:label="Civic24"
+android:label="${appName}"
         android:name="${applicationName}"
 android:icon="@mipmap/ic_launcher" android:enableOnBackInvokedCallback="true" android:usesCleartextTraffic="true">
         <activity

@@ -68,7 +68,7 @@ class StartupView extends StackedView<StartupViewModel> {
             child: AnimatedScale(
               duration: const Duration(milliseconds: 5000),
               scale: viewModel.isAnimate ? 1.0 : 0.0,
-              child: Assets.png.iosDark.image(
+              child: Assets.png.adaptiveIcon.image(
                 width: AppDimensions.size150,
                 height: AppDimensions.size150,
               ),
