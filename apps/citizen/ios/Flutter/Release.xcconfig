@@ -1,2 +1,24 @@
 #include? "Pods/Target Support Files/Pods-Runner/Pods-Runner.release.xcconfig"
+#include "Pods/Target Support Files/Pods-Runner/Pods-Runner.release-production.xcconfig"
+#include "Pods/Target Support Files/Pods-Runner/Pods-Runner.release-staging.xcconfig"
+#include "Pods/Target Support Files/Pods-Runner/Pods-Runner.release-development.xcconfig"
+#include "Pods/Target Support Files/Pods-Runner/Pods-Runner.profile-production.xcconfig"
+#include "Pods/Target Support Files/Pods-Runner/Pods-Runner.profile-staging.xcconfig"
+#include "Pods/Target Support Files/Pods-Runner/Pods-Runner.profile-development.xcconfig"
+
 #include "Generated.xcconfig"
+
+// ---------------------------------------------
+// RELEASE CONFIGURATION (PRODUCTION)
+// ---------------------------------------------
+// These values will be substituted into Info.plist
+// during Xcode’s build-setting substitution step.
+//
+// Safe to commit in a private repo.
+// Replace with your actual client IDs.
+
+GOOGLE_CLIENT_ID = 906124586309-4pi1mk5terd03k5tri6gt21sqtnuqf1g.apps.googleusercontent.com
+GOOGLE_REVERSED_CLIENT_ID = com.googleusercontent.apps.906124586309-4pi1mk5terd03k5tri6gt21sqtnuqf1g
+
+// Bundle ID for production builds
+PRODUCT_BUNDLE_IDENTIFIER = co.civic24.citizen

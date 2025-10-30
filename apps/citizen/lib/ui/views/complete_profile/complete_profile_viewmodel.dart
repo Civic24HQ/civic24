@@ -3,11 +3,16 @@ import 'package:citizen/app/app.router.dart';
 import 'package:citizen/ui/views/complete_profile/complete_profile_view.form.dart';
 import 'package:country_state_city/country_state_city.dart' as csc;
 import 'package:models/models.dart';
+import 'package:services/services.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
+import 'package:utils/utils.dart';
 
 class CompleteProfileViewModel extends FormViewModel {
+  final _log = getLogger('CompleteProfileViewModel');
   final _navigationService = locator<RouterService>();
+  final _userService = locator<UserService>();
+  final _alertService = locator<AlertService>();
 
   String? countryValue;
   String? stateValue;
@@ -35,7 +40,7 @@ class CompleteProfileViewModel extends FormViewModel {
           countries.map((c) => CountryOption(c.name, c.isoCode)).toList()
             ..sort((a, b) => a.name.compareTo(b.name));
     } catch (e) {
-      // TODO(Civic24): Implement Alert Service Dialog
+      // TODO(Civic24): Implement Alert Service Dialog to display a message that countries could not be loaded
       countryOptions = [];
     } finally {
       setBusy(false);
@@ -107,8 +112,49 @@ class CompleteProfileViewModel extends FormViewModel {
     // TODO(Civic24): Implement Geolocator/Geocoding to auto-select country and state
   }
 
-  void onSave() {
-    if (!isFormValid) return;
-    _navigationService.clearStackAndShow(MainViewRoute());
+  Future<void> onSaveData() async {
+    try {
+      if (!isFormValid) return;
+
+      if (_userService.user != null) {
+        // If the user is already set up, update the user data
+        // and complete the onboarding process.
+        await _userService.updateUser(
+          _userService.user!.copyWith(
+            account: _userService.user!.account.copyWith(
+              firstName: firstNameValue!,
+              lastName: lastNameValue!,
+              country: countryValue!,
+              state: stateValue!,
+              city: '',
+              hasCompletedOnboarding: true,
+            ),
+          ),
+        );
+        await _navigationService.clearStackAndShow(MainViewRoute());
+        return;
+      }
+      // If the user is not set up, create a new user document
+      // in Firestore and complete the onboarding process.
+      await runBusyFuture(
+        _userService.createUser(
+          firstName: firstNameValue!,
+          lastName: lastNameValue!,
+          country: countryValue!,
+          state: stateValue!,
+          city: '',
+          appSource: '',
+        ),
+        throwException: true,
+      );
+      await _navigationService.clearStackAndShow(MainViewRoute());
+    } catch (e, s) {
+      _log.e('Error saving user data', error: e, stackTrace: s);
+      _alertService.showErrorAlert(
+        title: 'Submission Error',
+        message: 'An error occurred while saving your data. Please try again.',
+      );
+    }
   }
+
 }

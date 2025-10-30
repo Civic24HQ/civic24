@@ -67,27 +67,50 @@ class App extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return AppBuilder(
-      builder: (displayPreferences) {
-        return MaterialApp.router(
-          title: l10n.title,
-          theme: AppTheme.lightThemeData,
-          darkTheme: AppTheme.darkThemeData,
-          themeMode: displayPreferences.themeMode,
-          scrollBehavior: const MaterialScrollBehavior().copyWith(
-            dragDevices: {
-              PointerDeviceKind.mouse,
-              PointerDeviceKind.touch,
-              PointerDeviceKind.stylus,
-              PointerDeviceKind.unknown,
-            },
-          ),
-          localizationsDelegates: appLocalizationsDelegates,
-          locale: displayPreferences.locale,
-          supportedLocales: appSupportedLocales,
-          localeResolutionCallback: localeListResolutionCallback,
-          routerDelegate: stackedRouter.delegate(),
-          routeInformationParser: stackedRouter.defaultRouteParser(),
+    return CustomTextScaleClamper(
+      child: AppBuilder(
+        builder: (displayPreferences) {
+          return MaterialApp.router(
+            title: l10n.title,
+            theme: AppTheme.lightThemeData,
+            darkTheme: AppTheme.darkThemeData,
+            themeMode: displayPreferences.themeMode,
+            scrollBehavior: const MaterialScrollBehavior().copyWith(
+              dragDevices: {
+                PointerDeviceKind.mouse,
+                PointerDeviceKind.touch,
+                PointerDeviceKind.stylus,
+                PointerDeviceKind.unknown,
+              },
+            ),
+            localizationsDelegates: appLocalizationsDelegates,
+            locale: displayPreferences.locale,
+            supportedLocales: appSupportedLocales,
+            localeResolutionCallback: localeListResolutionCallback,
+            routerDelegate: stackedRouter.delegate(),
+            routeInformationParser: stackedRouter.defaultRouteParser(),
+          );
+        },
+      ),
+    );
+  }
+}
+
+
+class CustomTextScaleClamper extends StatelessWidget {
+  const CustomTextScaleClamper({required this.child, super.key});
+  final Widget child;
+
+  @override
+  Widget build(BuildContext context) {
+    return Builder(
+      builder: (context) {
+        final mediaQueryData = MediaQuery.of(context);
+        final constrainedTextScaleFactor = mediaQueryData.textScaler.clamp(minScaleFactor: 1, maxScaleFactor: 1.3);
+
+        return MediaQuery(
+          data: mediaQueryData.copyWith(textScaler: constrainedTextScaleFactor),
+          child: child,
         );
       },
     );

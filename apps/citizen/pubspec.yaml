@@ -67,7 +67,7 @@ dev_dependencies:
     
   # Utility Packages
   build_runner: ^2.5.4
-  stacked_generator: ^1.6.1
+  stacked_generator: ^2.0.0-pre.1
   mockito: ^5.4.4
   golden_toolkit: ^0.15.0
   flutter_gen_runner: ^5.10.0

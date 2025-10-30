@@ -76,22 +76,24 @@ class FakeReportData extends FakeModel<ReportWithUserState> {
 }
 
 // All fake reports sorted by creation date in a descending order
-List<ReportWithUserState> fakeReportDataList = FakeReportData().generateFakeList(length: 10)
-  ..sort((a, b) => b.report.createdAt.compareTo(a.report.createdAt));
+List<ReportWithUserState> fakeReportDataList = [];
+// FakeReportData().generateFakeList(length: 10)
+//   ..sort((a, b) => b.report.createdAt.compareTo(a.report.createdAt));
 
 // Trending list considers user's likes, comments and bookmarks
-final List<ReportWithUserState> fakeReportDataTrendingList = fakeReportDataList
-  ..sort((a, b) {
-    // Calculate a weighted score for trending based on the total likes, comments, bookmarks and whether the current user has interacted
-    int score(ReportWithUserState r) =>
-        r.report.likeCount +
-        r.report.commentCount +
-        r.report.bookmarkCount +
-        (r.hasLiked ? 5 : 0) +
-        (r.hasBookmarked ? 3 : 0);
+final List<ReportWithUserState> fakeReportDataTrendingList = [];
+// fakeReportDataList
+//   ..sort((a, b) {
+//     // Calculate a weighted score for trending based on the total likes, comments, bookmarks and whether the current user has interacted
+//     int score(ReportWithUserState r) =>
+//         r.report.likeCount +
+//         r.report.commentCount +
+//         r.report.bookmarkCount +
+//         (r.hasLiked ? 5 : 0) +
+//         (r.hasBookmarked ? 3 : 0);
 
-    return score(b).compareTo(score(a));
-  });
+//     return score(b).compareTo(score(a));
+//   });
 
 // Sort by trending reports
 List<ReportWithUserState> sortByTrending(List<ReportWithUserState> list) => list

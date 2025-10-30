@@ -1,4 +1,4 @@
-name: civic24_test
+name: civic24
 publish_to: none
 version: 1.0.0+1
 
@@ -8,3 +8,29 @@ environment:
 
 dev_dependencies:
   melos: 6.3.3
+  stacked_generator: ^2.0.0-pre.1
+
+
+
+# name: civic24
+# publish_to: none
+# version: 1.0.0+1
+
+# environment:
+#   sdk: ">=3.8.1 <4.0.0"
+#   flutter: "3.29.2"
+
+# workspace: 
+#   - packages/assets
+#   - packages/components
+#   - packages/constants
+#   - packages/localization
+#   - packages/models
+#   - packages/rules
+#   - packages/services
+#   - packages/utils
+#   - packages/styles
+
+# dev_dependencies:
+#   melos: 7.3.0
+
