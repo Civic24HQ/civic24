@@ -1,4 +1,5 @@
 name: assets
+# resolution: workspace
 description: "Assets Resources for Civic24"
 version: 0.1.0+1
 publish_to: none

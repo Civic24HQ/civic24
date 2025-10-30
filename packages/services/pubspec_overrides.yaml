@@ -1,4 +1,4 @@
-# melos_managed_dependency_overrides: constants,localization,models,rules,utils
+# melos_managed_dependency_overrides: constants,localization,models,rules,utils,logger
 dependency_overrides:
   constants:
     path: ../constants
@@ -10,3 +10,4 @@ dependency_overrides:
     path: ../rules
   utils:
     path: ../utils
+  logger: ^2.5.0

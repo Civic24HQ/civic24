@@ -10,8 +10,6 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-
-  # General Dependencies
   
   # Package Dependencies
   constants:
@@ -23,6 +21,32 @@ dependencies:
   localization:
     path: ../localization
 
+    # State Management
+  stacked: ^3.5.0
+  stacked_services: ^1.6.0
+
+  # General Dependencies
+  permission_handler: ^11.4.0
+  rxdart: ^0.28.0
+  intl: ^0.20.2
+  crypto: ^3.0.6
+  logger: ^2.5.0
+  hive_ce: ^2.10.1
+  path_provider: ^2.1.5
+
+  # Google/Firebase Dependencies
+  firebase_auth: ^5.5.2
+  firebase_analytics: ^11.4.5
+  firebase_messaging: ^15.2.5
+  cloud_firestore: ^5.6.6
+  firebase_crashlytics: ^4.3.5
+  google_sign_in: ^7.1.1
+  sign_in_with_apple: ^7.0.1
+
+dependency_overrides:
+  # This is a temporary fix pending the release of the next version of the stacked_generator package
+  logger: ^2.5.0
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -33,7 +57,7 @@ dev_dependencies:
 
   # Utility
   build_runner: ^2.5.4
-  stacked_generator: ^1.6.1
+  stacked_generator: ^2.0.0-pre.1
   mockito: ^5.4.4
 
 

@@ -14,6 +14,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "906124586309-9vfot6c6q6t8mlpmsgo2agq92k4s76t7.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "co.civic24.citizen",
+            "certificate_hash": "76f983c2d3a0abac96a5a76d2142fe53f5ae87ab"
+          }
+        },
+        {
           "client_id": "906124586309-vu6bltnnhgau3e5ucg0nes450jv0ig8b.apps.googleusercontent.com",
           "client_type": 3
         }
@@ -50,6 +58,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "906124586309-tpdcsfcgng7hels1mr4oi7v6h0vc1no4.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "co.civic24.citizen.dev",
+            "certificate_hash": "76f983c2d3a0abac96a5a76d2142fe53f5ae87ab"
+          }
+        },
+        {
           "client_id": "906124586309-vu6bltnnhgau3e5ucg0nes450jv0ig8b.apps.googleusercontent.com",
           "client_type": 3
         }
@@ -85,6 +101,14 @@
         }
       },
       "oauth_client": [
+        {
+          "client_id": "906124586309-kghige893b57h41it2m6h5209oosamnk.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "co.civic24.citizen.stg",
+            "certificate_hash": "76f983c2d3a0abac96a5a76d2142fe53f5ae87ab"
+          }
+        },
         {
           "client_id": "906124586309-vu6bltnnhgau3e5ucg0nes450jv0ig8b.apps.googleusercontent.com",
           "client_type": 3

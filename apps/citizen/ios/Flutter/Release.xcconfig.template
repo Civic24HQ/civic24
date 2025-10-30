@@ -1,0 +1,6 @@
+// PRODUCTION CONFIG TEMPLATE
+// Copy this file to ios/Flutter/Release.xcconfig and fill in real values.
+
+GOOGLE_CLIENT_ID = YOUR_PROD_CLIENT_ID_HERE
+GOOGLE_REVERSED_CLIENT_ID = YOUR_PROD_REVERSED_CLIENT_ID_HERE
+PRODUCT_BUNDLE_IDENTIFIER = com.yourcompany.app
