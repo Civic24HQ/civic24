@@ -34,5 +34,6 @@
     "**/node_modules": false,
     "**/bower_components": true,
     "**/*.code-search": true
-  }
+  },
+  "cmake.sourceDirectory": "/Users/macbookpro/Documents/Untitled/civic24/apps/admin/linux"
 }
