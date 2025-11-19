@@ -59,7 +59,7 @@ class SettingsView extends StackedView<SettingsViewModel> {
               titleStyle: context.bodyLarge?.copyWith(
                 color: context.colorScheme.error,
               ),
-              onTap: viewModel.showLogoutConfirmationDialog,
+              onTap: viewModel.logout,
             ),
             AppSpacing.xxLarge,
           ],

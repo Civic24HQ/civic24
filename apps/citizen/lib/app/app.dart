@@ -3,7 +3,9 @@ import 'dart:ui';
 import 'package:citizen/app/app.router.dart';
 import 'package:citizen/app_builder.dart';
 import 'package:citizen/ui/bottom_sheets/comment/comment_sheet.dart';
+import 'package:citizen/ui/dialogs/loading/loading_dialog.dart';
 import 'package:citizen/ui/dialogs/logout/logout_dialog.dart';
+import 'package:citizen/ui/dialogs/send_password_reset_email/send_password_reset_email_dialog.dart';
 import 'package:citizen/ui/shared/src/success/success_view.dart';
 import 'package:citizen/ui/views/add_report/add_report_view.dart';
 import 'package:citizen/ui/views/auth/forgot_password/forgot_password_view.dart';
@@ -59,6 +61,8 @@ import 'package:styles/styles.dart';
   ],
   dialogs: [
     StackedDialog(classType: LogoutDialog),
+    StackedDialog(classType: LoadingDialog),
+    StackedDialog(classType: SendPasswordResetEmailDialog),
     // @stacked-dialog
   ],
 )
@@ -67,27 +71,52 @@ class App extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return AppBuilder(
-      builder: (displayPreferences) {
-        return MaterialApp.router(
-          title: l10n.title,
-          theme: AppTheme.lightThemeData,
-          darkTheme: AppTheme.darkThemeData,
-          themeMode: displayPreferences.themeMode,
-          scrollBehavior: const MaterialScrollBehavior().copyWith(
-            dragDevices: {
-              PointerDeviceKind.mouse,
-              PointerDeviceKind.touch,
-              PointerDeviceKind.stylus,
-              PointerDeviceKind.unknown,
-            },
-          ),
-          localizationsDelegates: appLocalizationsDelegates,
-          locale: displayPreferences.locale,
-          supportedLocales: appSupportedLocales,
-          localeResolutionCallback: localeListResolutionCallback,
-          routerDelegate: stackedRouter.delegate(),
-          routeInformationParser: stackedRouter.defaultRouteParser(),
+    return CustomTextScaleClamper(
+      child: AppBuilder(
+        builder: (displayPreferences) {
+          return MaterialApp.router(
+            title: l10n.title,
+            theme: AppTheme.lightThemeData,
+            darkTheme: AppTheme.darkThemeData,
+            themeMode: displayPreferences.themeMode,
+            scrollBehavior: const MaterialScrollBehavior().copyWith(
+              dragDevices: {
+                PointerDeviceKind.mouse,
+                PointerDeviceKind.touch,
+                PointerDeviceKind.stylus,
+                PointerDeviceKind.unknown,
+              },
+            ),
+            localizationsDelegates: appLocalizationsDelegates,
+            locale: displayPreferences.locale,
+            supportedLocales: appSupportedLocales,
+            localeResolutionCallback: localeListResolutionCallback,
+            routerDelegate: stackedRouter.delegate(),
+            routeInformationParser: stackedRouter.defaultRouteParser(),
+          );
+        },
+      ),
+    );
+  }
+}
+
+class CustomTextScaleClamper extends StatelessWidget {
+  const CustomTextScaleClamper({required this.child, super.key});
+  final Widget child;
+
+  @override
+  Widget build(BuildContext context) {
+    return Builder(
+      builder: (context) {
+        final mediaQueryData = MediaQuery.of(context);
+        final constrainedTextScaleFactor = mediaQueryData.textScaler.clamp(
+          minScaleFactor: 1,
+          maxScaleFactor: 1.3,
+        );
+
+        return MediaQuery(
+          data: mediaQueryData.copyWith(textScaler: constrainedTextScaleFactor),
+          child: child,
         );
       },
     );

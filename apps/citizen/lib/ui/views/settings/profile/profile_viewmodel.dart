@@ -1,9 +1,20 @@
+import 'package:citizen/app/app.locator.dart';
 import 'package:citizen/ui/views/settings/profile/profile_view.form.dart';
 import 'package:country_state_city/country_state_city.dart' as csc;
+import 'package:flutter/services.dart';
 import 'package:models/models.dart';
+import 'package:services/services.dart';
 import 'package:stacked/stacked.dart';
 
 class ProfileViewModel extends FormViewModel {
+  final _userService = locator<UserService>();
+  final _alertService = locator<AlertService>();
+
+  @override
+  List<ListenableServiceMixin> get listenableServices => [_userService];
+
+  UserModel get currentUser => _userService.user!;
+
   bool _isEditing = false;
   bool get isEditing => _isEditing;
 
@@ -30,15 +41,23 @@ class ProfileViewModel extends FormViewModel {
   Future<void> init() async {
     await _loadCountries();
 
-    firstNameValue = 'Caleb';
-    lastNameValue = 'Johnson';
-    countryValue = countryOptions.firstWhere((c) => c.name == 'Nigeria').name;
-    final iso2 = countryOptions.firstWhere((c) => c.name == 'Nigeria').iso2;
-    final states = await csc.getStatesOfCountry(iso2);
-    stateOptions = states.map((s) => StateOption(s.name, s.isoCode)).toList()
-      ..sort((a, b) => a.name.compareTo(b.name));
-    stateValue = stateOptions.firstWhere((s) => s.name == 'Lagos').name;
-    rebuildUi();
+    firstNameValue = currentUser.firstName;
+    lastNameValue = currentUser.lastName;
+    if (currentUser.country.isNotEmpty && currentUser.state.isNotEmpty) {
+      countryValue = countryOptions
+          .firstWhere((c) => c.name == currentUser.country)
+          .name;
+      final iso2 = countryOptions
+          .firstWhere((c) => c.name == currentUser.country)
+          .iso2;
+      final states = await csc.getStatesOfCountry(iso2);
+      stateOptions = states.map((s) => StateOption(s.name, s.isoCode)).toList()
+        ..sort((a, b) => a.name.compareTo(b.name));
+      stateValue = stateOptions
+          .firstWhere((s) => s.name == currentUser.state)
+          .name;
+      rebuildUi();
+    }
   }
 
   Future<void> _loadCountries() async {
@@ -49,7 +68,7 @@ class ProfileViewModel extends FormViewModel {
           countries.map((c) => CountryOption(c.name, c.isoCode)).toList()
             ..sort((a, b) => a.name.compareTo(b.name));
     } catch (e) {
-      // TODO(Civic24): Implement Alert Service Dialog
+      // TODO(Civic24): Implement Alert Service Dialog to display a message that countries could not be loaded
       countryOptions = [];
     } finally {
       setBusy(false);
@@ -120,6 +139,7 @@ class ProfileViewModel extends FormViewModel {
   void onCancel() {
     _isEditing = false;
     rebuildUi();
+    init();
   }
 
   void deleteAccount() {}
@@ -127,6 +147,34 @@ class ProfileViewModel extends FormViewModel {
   Future<void> onSave() async {
     if (!isFormValid) {
       return;
+    }
+    try {
+      await runBusyFuture(
+        _userService.updateUser(
+          currentUser.copyWith(
+            account: currentUser.account.copyWith(
+              firstName: firstNameValue!,
+              lastName: lastNameValue!,
+              country: countryValue!,
+              state: stateValue!,
+            ),
+          ),
+        ),
+        throwException: true,
+      );
+      _alertService.showSuccessAlert(
+        title: 'Profile Updated',
+        message: 'Your profile details has been updated successfully.',
+      );
+      await HapticFeedback.lightImpact();
+      _isEditing = false;
+      rebuildUi();
+    } catch (e) {
+      _alertService.showErrorAlert(
+        title: 'Profile Update Failed',
+        message:
+            'An error occurred while updating your profile details. Please try again.',
+      );
     }
   }
 }

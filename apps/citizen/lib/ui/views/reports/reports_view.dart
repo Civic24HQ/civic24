@@ -13,14 +13,22 @@ class ReportsView extends StackedView<ReportsViewModel> {
   const ReportsView({super.key});
 
   @override
-  Widget builder(BuildContext context, ReportsViewModel viewModel, Widget? child) {
+  Widget builder(
+    BuildContext context,
+    ReportsViewModel viewModel,
+    Widget? child,
+  ) {
     return Scaffold(
       backgroundColor: context.surface,
       floatingActionButton: FloatingActionButton(
         shape: const CircleBorder(),
         backgroundColor: context.primary,
         onPressed: viewModel.onAddReport,
-        child: Icon(Icons.add, color: context.onPrimary, size: AppDimensions.size28),
+        child: Icon(
+          Icons.add,
+          color: context.onPrimary,
+          size: AppDimensions.size28,
+        ),
       ),
       appBar: AppBar(
         centerTitle: true,
@@ -28,13 +36,19 @@ class ReportsView extends StackedView<ReportsViewModel> {
         backgroundColor: context.surface,
         scrolledUnderElevation: 0,
         automaticallyImplyLeading: false,
-        title: Assets.png.civic24SplashScreenIOS.image(width: AppDimensions.size72, height: AppDimensions.size48),
+        title: Assets.png.civic24SplashScreenIOS.image(
+          width: AppDimensions.size72,
+          height: AppDimensions.size48,
+        ),
         shape: const Border(bottom: BorderSide(color: Colors.transparent)),
       ),
       body: AppTabs.underlined(
         tabs: [
           AppTab(label: l10n.featureMyReports, view: const MyReports()),
-          AppTab(label: l10n.featureBookmarkedReports, view: const BookmarkedReports()),
+          AppTab(
+            label: l10n.featureBookmarkedReports,
+            view: const BookmarkedReports(),
+          ),
         ],
         padding: const EdgeInsets.only(top: AppDimensions.padding8),
       ),

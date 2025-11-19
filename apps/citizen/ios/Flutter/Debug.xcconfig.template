@@ -1,0 +1,6 @@
+// DEVELOPMENT CONFIG TEMPLATE
+// Copy this file to ios/Flutter/Development.xcconfig and fill in real values.
+
+GOOGLE_CLIENT_ID = YOUR_DEV_CLIENT_ID_HERE
+GOOGLE_REVERSED_CLIENT_ID = YOUR_DEV_REVERSED_CLIENT_ID_HERE
+PRODUCT_BUNDLE_IDENTIFIER = com.yourcompany.app.dev

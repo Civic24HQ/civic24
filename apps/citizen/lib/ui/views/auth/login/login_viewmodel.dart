@@ -19,6 +19,15 @@ class LoginViewModel extends AuthViewModel {
       await HapticFeedback.heavyImpact();
       return;
     }
+    setAuthBusy(AuthMethod.email);
+    final success = await authenticationService.signInWithEmailAndPassword(
+      email: emailValue!,
+      password: passwordValue!,
+    );
+    if (success) {
+      await userService.waitUntilUserIsReady();
+    }
+    setAuthNotBusy(AuthMethod.email);
   }
 
   void navigateToForgetPassword() =>

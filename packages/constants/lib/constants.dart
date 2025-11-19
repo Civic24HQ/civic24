@@ -7,3 +7,4 @@ export 'src/enum/category_type.dart';
 export 'src/enum/dialog_action_type.dart';
 export 'src/enum/language_type.dart';
 export 'src/environment_constants.dart';
+export 'src/firestore_collection.dart';

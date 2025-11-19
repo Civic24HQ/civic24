@@ -6,7 +6,7 @@ import 'package:utils/utils.dart';
 
 class AppReport extends StatelessWidget {
   const AppReport({
-    required this.reportData,
+    required this.report,
     required this.onTapComment,
     required this.onTapLike,
     required this.onTapDislike,
@@ -14,7 +14,7 @@ class AppReport extends StatelessWidget {
     super.key,
   });
 
-  final ReportWithUserState reportData;
+  final Report report;
   final VoidCallback onTapComment;
   final VoidCallback? onTapLike;
   final VoidCallback? onTapDislike;
@@ -22,8 +22,8 @@ class AppReport extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final rawLiked = reportData.hasLiked;
-    final rawDisliked = reportData.hasDisliked;
+    final rawLiked = report.hasLiked;
+    final rawDisliked = report.hasDisliked;
 
     // Normalize to exclusives (UI guard)
     final exclusiveLiked = rawLiked && !rawDisliked;
@@ -49,19 +49,19 @@ class AppReport extends StatelessWidget {
                   height: AppDimensions.size40,
                   child: ClipRRect(
                     borderRadius: AppBorderRadius.radius12,
-                    child: AppCachedImage(imageUrl: reportData.report.userImageUrl),
+                    child: AppCachedImage(imageUrl: report.reportData.userImageUrl),
                   ),
                 ),
                 title: Text(
-                  reportData.report.fullName,
+                  report.reportData.fullName,
                   style: context.headlineSmall?.copyWith(fontSize: AppDimensions.size16),
                 ),
                 subtitle: Text(
-                  reportData.report.location,
+                  report.reportData.location,
                   style: context.bodyLarge?.copyWith(color: context.neutralHigh, fontSize: AppDimensions.size14),
                 ),
                 trailing: Text(
-                  reportData.report.createdAt.timeAgoInWords,
+                  report.reportData.createdAt.timeAgoInWords,
                   style: context.bodyLarge?.copyWith(color: context.neutralHigh, fontSize: AppDimensions.size14),
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
@@ -73,7 +73,7 @@ class AppReport extends StatelessWidget {
           ),
           AppSpacing.small,
           Text(
-            reportData.report.content,
+            report.reportData.content,
             style: context.bodyMedium,
             maxLines: 10,
             overflow: TextOverflow.ellipsis,
@@ -86,7 +86,7 @@ class AppReport extends StatelessWidget {
             height: AppDimensions.size320,
             child: ClipRRect(
               borderRadius: BorderRadius.circular(AppDimensions.size8),
-              child: AppCachedImage(imageUrl: reportData.report.media?.first),
+              child: AppCachedImage(imageUrl: report.reportData.media?.first),
             ),
           ),
           AppSpacing.normal,
@@ -100,7 +100,7 @@ class AppReport extends StatelessWidget {
                   opacity: canLike ? 1 : 0.5,
                   child: SocialActionButton.thumbsUp(
                     isActive: exclusiveLiked,
-                    count: reportData.report.likeCount,
+                    count: report.reportData.likeCount,
                     activeColor: context.success,
                     inactiveColor: context.onSurfaceVariant,
                     onTap: canLike ? onTapLike : null,
@@ -110,17 +110,17 @@ class AppReport extends StatelessWidget {
                   opacity: canDislike ? 1 : 0.5,
                   child: SocialActionButton.thumbsDown(
                     isActive: exclusiveDisliked,
-                    count: reportData.report.dislikeCount,
+                    count: report.reportData.dislikeCount,
                     activeColor: context.error,
                     inactiveColor: context.onSurfaceVariant,
                     onTap: canDislike ? onTapDislike : null,
                   ),
                 ),
-                SocialActionButton.comment(onTap: onTapComment, count: reportData.report.commentCount,
+                SocialActionButton.comment(onTap: onTapComment, count: report.reportData.commentCount,
                 ),
                 SocialActionButton.bookmark(
-                  isActive: reportData.hasBookmarked,
-                  count: reportData.report.bookmarkCount,
+                  isActive: report.hasBookmarked,
+                  count: report.reportData.bookmarkCount,
                   activeColor: context.warning,
                   inactiveColor: context.onSurfaceVariant,
                   onTap: onTapBookmark,
