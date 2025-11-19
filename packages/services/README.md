@@ -1,39 +1,81 @@
-<!--
-This README describes the package. If you publish this package to pub.dev,
-this README's contents appear on the landing page for your package.
+# Creating a new service
 
-For information about how to write a good package README, see the guide for
-[writing package pages](https://dart.dev/tools/pub/writing-package-pages).
+This document describes how to create a new service in the `packages/services` directory. This is done manually because we need to export lib/src/test/test_helpers.dart needs to be exported, so we can easily access the mock services in the apps and other packages. If you have a better idea, please the team know.
 
-For general information about developing packages, see the Dart guide for
-[creating packages](https://dart.dev/guides/libraries/create-packages)
-and the Flutter guide for
-[developing packages and plugins](https://flutter.dev/to/develop-packages).
--->
+## 1. Choose the type of service
 
-TODO: Put a short description of the package here that helps potential users
-know whether this package might be useful for them.
+We have two types of services: `core` and `feature`. The `core` services are the ones that are essential for the application to work, such as `auth` and `user`. The `feature` services are the ones that are not essential, such as `notification` and `report`.
 
-## Features
+## 2. Create the service file
 
-TODO: List what your package can do. Maybe include images, gifs, or videos.
+Create a new file in the `packages/services` directory with the name of the service. For example, if you are creating a new service called `report`, create a file called `feature/report_service.dart`.
 
-## Getting started
+## 3. Register the service
 
-TODO: List prerequisites and provide or point to information on how to
-start using the package.
+Add the service to the `lib/src/app/app.dart` file. Register the service based on the type of service you are creating. Read more about the service registration in [GetIt Service Locator](https://pub.dev/documentation/get_it/latest/get_it/GetIt-class.html)
 
-## Usage
-
-TODO: Include short and useful examples for package users. Add longer examples
-to `/example` folder.
+For example, if you are creating a new service called `report`, add the following line to the `dependencies` list:
 
 ```dart
-const like = 'sample';
+  dependencies: [
+    LazySingleton(classType: ReportService),
+    ],
 ```
 
-## Additional information
+## 4. Mock the service
 
-TODO: Tell users more about the package: where to find more information, how to
-contribute to the package, how to file issues, what response they can expect
-from the package authors, and more.
+Add a mock service in the `lib/src/test/helpers/test_helpers.dart` file.
+
+Add the following code to the `customMocks` list:
+
+```dart
+  MockSpec<ReportService>(as: #MockReportService),
+```
+
+Add the following method to the `registerServices` method:
+
+```dart
+MockReportService getAndRegisterReportService() {
+  _removeRegistrationIfExists<ReportService>();
+  final service = MockReportService();
+  serviceLocator.registerSingleton<ReportService>(service);
+  return service;
+}
+```
+
+Add the following code to the `registerServices` method:
+
+```dart
+void registerServices() {
+  getAndRegisterReportService();
+}
+```
+
+## 5. Add service tests
+
+Create a new file in the `test/src/services` directory with the name of the service. For example, if you are creating a new service called `report`, create a file called `report_service_test.dart`.
+
+Add the following code to the file:
+
+```dart
+import 'package:flutter_test/flutter_test.dart';
+import 'package:services/src/app/app.locator.dart';
+import 'package:services/src/test/helpers/test_helpers.dart';
+
+void main() {
+  group('ReportServiceTest -', () {
+    setUp(registerServices);
+    tearDown(serviceLocator.reset);
+  });
+}
+```
+
+## 6. Finalize the service
+
+- Run `melos services:build` to generate the service files.
+
+- Finally, implement the service logic based on the requirements.
+
+- Add the service relevant tests.
+
+- Export the service in the `lib/services.dart` file.

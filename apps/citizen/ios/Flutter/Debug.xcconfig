@@ -1,2 +1,22 @@
 #include? "Pods/Target Support Files/Pods-Runner/Pods-Runner.debug.xcconfig"
 #include "Generated.xcconfig"
+
+// Ensure CocoaPods settings are included first
+#include "Pods/Target Support Files/Pods-Runner/Pods-Runner.debug-development.xcconfig"
+#include "Pods/Target Support Files/Pods-Runner/Pods-Runner.debug-production.xcconfig"
+#include "Pods/Target Support Files/Pods-Runner/Pods-Runner.debug-staging.xcconfig"
+
+// ---------------------------------------------
+// DEVELOPMENT CONFIGURATION
+// ---------------------------------------------
+// These values will be substituted into Info.plist
+// during Xcode’s build-setting substitution step.
+//
+// Safe to commit in a private repo.
+// Replace with your actual client IDs.
+
+GOOGLE_CLIENT_ID = 906124586309-pjeffc4tpluqv0qllsjdkk6frbef6aoi.apps.googleusercontent.com
+GOOGLE_REVERSED_CLIENT_ID = com.googleusercontent.apps.906124586309-pjeffc4tpluqv0qllsjdkk6frbef6aoi
+
+// Bundle ID for development builds
+PRODUCT_BUNDLE_IDENTIFIER = co.civic24.citizen.dev

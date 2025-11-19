@@ -175,7 +175,8 @@ class CompleteProfileView extends StackedView<CompleteProfileViewModel>
                 AppSpacing.large,
                 PrimaryButton(
                   title: l10n.generalProceed,
-                  onTap: viewModel.onSave,
+                  onTap: viewModel.onSaveData,
+                  isBusy: viewModel.isBusy,
                   disabled: viewModel.isProceedButtonDisabled,
                 ),
                 AppSpacing.large,

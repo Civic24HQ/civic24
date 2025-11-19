@@ -70,7 +70,11 @@ class _AppSearchableDropdownTextFieldState<T> extends State<AppSearchableDropdow
     super.didUpdateWidget(oldWidget);
     if (oldWidget.items != widget.items) {
       _filtered = _applyFilter(_searchCtrl.text);
-      _overlaySetState?.call(() {});
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        if (mounted) {
+          _overlaySetState?.call(() {});
+        }
+      });
     }
   }
 

@@ -115,6 +115,12 @@ class EnvironmentConstants {
   )
   static const String macosBundleId = String.fromEnvironment('MACOS_BUNDLE_ID');
 
+  @EnvironmentAssertion(
+    webClientId.length != 0,
+    'Web Client ID must be set - Follow `/app/README.md#Setup-Environmental-Variables` to setup environment values',
+  )
+  static const String webClientId = String.fromEnvironment('WEB_CLIENT_ID');
+
   static bool get isDev => currentEnvironment == Environment.development;
   static bool get isStaging => currentEnvironment == Environment.staging;
   static bool get isProduction => currentEnvironment == Environment.production;

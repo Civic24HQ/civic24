@@ -21,7 +21,7 @@ class AllReports extends ViewModelWidget<HomeViewModel> {
               onTapBookmark: () =>
                   viewModel.bookmarkReport(viewModel.allReportList[index]),
               onTapComment: () => viewModel.viewComment(),
-              reportData: viewModel.allReportList[index],
+              report: viewModel.allReportList[index],
             );
           }, childCount: viewModel.allReportList.length),
         ),

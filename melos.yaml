@@ -343,6 +343,9 @@ scripts:
   services:test:
     run: melos exec --fail-fast --scope="services" --dir-exists="test" -- "flutter test --no-pub"
 
+  services:create:
+    run: melos exec --fail-fast --scope="services" --dir-exists="lib" -- "stacked create service"
+
   # ─────────────────────────────
   # 📦 Styles Package-Specific Commands
   # ─────────────────────────────

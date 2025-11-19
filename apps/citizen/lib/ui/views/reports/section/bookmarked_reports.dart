@@ -23,7 +23,7 @@ class BookmarkedReports extends ViewModelWidget<ReportsViewModel> {
                 viewModel.bookmarkedReportList[index],
               ),
               onTapComment: () => viewModel.viewComment(),
-              reportData: viewModel.bookmarkedReportList[index],
+              report: viewModel.bookmarkedReportList[index],
             );
           }, childCount: viewModel.bookmarkedReportList.length),
         ),

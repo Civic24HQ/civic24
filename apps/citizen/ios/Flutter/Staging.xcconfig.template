@@ -1,0 +1,6 @@
+// STAGING CONFIG TEMPLATE
+// Copy this file to ios/Flutter/Staging.xcconfig and fill in real values.
+
+GOOGLE_CLIENT_ID = YOUR_STAGING_CLIENT_ID_HERE
+GOOGLE_REVERSED_CLIENT_ID = YOUR_STAGING_REVERSED_CLIENT_ID_HERE
+PRODUCT_BUNDLE_IDENTIFIER = com.yourcompany.app.staging
