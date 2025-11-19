@@ -289,6 +289,36 @@ class S {
     );
   }
 
+  /// `Reset password`
+  String get generalResetPassword {
+    return Intl.message(
+      'Reset password',
+      name: 'generalResetPassword',
+      desc: 'Text for the reset password',
+      args: [],
+    );
+  }
+
+  /// `A password reset email has been sent to {emailValue}. Please check your inbox and follow the instructions to reset your password.`
+  String generalResetPasswordDesc(Object emailValue) {
+    return Intl.message(
+      'A password reset email has been sent to $emailValue. Please check your inbox and follow the instructions to reset your password.',
+      name: 'generalResetPasswordDesc',
+      desc: 'Reset Password Description',
+      args: [emailValue],
+    );
+  }
+
+  /// `Open email app`
+  String get generalResetPasswordButtonText {
+    return Intl.message(
+      'Open email app',
+      name: 'generalResetPasswordButtonText',
+      desc: 'Text for the reset password button',
+      args: [],
+    );
+  }
+
   /// `Enter your email`
   String get generalEmailHint {
     return Intl.message(
@@ -1235,6 +1265,16 @@ class S {
       'About',
       name: 'featureSettingsAbout',
       desc: 'About Description',
+      args: [],
+    );
+  }
+
+  /// `Loading`
+  String get featureSettingsLoading {
+    return Intl.message(
+      'Loading',
+      name: 'featureSettingsLoading',
+      desc: 'Loading Description',
       args: [],
     );
   }
