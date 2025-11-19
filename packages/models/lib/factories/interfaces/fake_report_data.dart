@@ -4,11 +4,11 @@ import 'package:constants/constants.dart';
 import 'package:models/factories/fake_model.dart';
 import 'package:models/models.dart';
 
-class FakeReportData extends FakeModel<ReportWithUserState> {
+class FakeReportData extends FakeModel<Report> {
   final Random rand = Random();
 
   @override
-  ReportWithUserState generateFake() {
+  Report generateFake() {
     final country = countryStates.keys.elementAt(rand.nextInt(countryStates.length));
     final states = countryStates[country]!;
     final state = states[rand.nextInt(states.length)];
@@ -61,8 +61,8 @@ class FakeReportData extends FakeModel<ReportWithUserState> {
     // Randomly decide if this user liked, disliked or bookmarked the report.
     bool weightedBool([double trueProbability = 0.3]) => rand.nextDouble() < trueProbability;
 
-    return ReportWithUserState(
-      report: reportData,
+    return Report(
+      reportData: reportData,
       hasLiked: weightedBool(0.5),
       hasDisliked: weightedBool(0.6),
       hasBookmarked: weightedBool(),
@@ -70,18 +70,18 @@ class FakeReportData extends FakeModel<ReportWithUserState> {
   }
 
   @override
-  List<ReportWithUserState> generateFakeList({required int length}) {
+  List<Report> generateFakeList({required int length}) {
     return List.generate(length, (index) => generateFake());
   }
 }
 
 // All fake reports sorted by creation date in a descending order
-List<ReportWithUserState> fakeReportDataList = [];
+List<Report> fakeReportDataList = [];
 // FakeReportData().generateFakeList(length: 10)
 //   ..sort((a, b) => b.report.createdAt.compareTo(a.report.createdAt));
 
 // Trending list considers user's likes, comments and bookmarks
-final List<ReportWithUserState> fakeReportDataTrendingList = [];
+final List<Report> fakeReportDataTrendingList = [];
 // fakeReportDataList
 //   ..sort((a, b) {
 //     // Calculate a weighted score for trending based on the total likes, comments, bookmarks and whether the current user has interacted
@@ -96,12 +96,12 @@ final List<ReportWithUserState> fakeReportDataTrendingList = [];
 //   });
 
 // Sort by trending reports
-List<ReportWithUserState> sortByTrending(List<ReportWithUserState> list) => list
+List<Report> sortByTrending(List<Report> list) => list
   ..sort((a, b) {
-    int score(ReportWithUserState r) =>
-        r.report.likeCount +
-        r.report.commentCount +
-        r.report.bookmarkCount +
+    int score(Report r) =>
+        r.reportData.likeCount +
+        r.reportData.commentCount +
+        r.reportData.bookmarkCount +
         (r.hasLiked ? 5 : 0) +
         (r.hasBookmarked ? 3 : 0);
 
@@ -109,13 +109,13 @@ List<ReportWithUserState> sortByTrending(List<ReportWithUserState> list) => list
   });
 
 // Filter reports by category sorted by creation date in a descending order
-List<ReportWithUserState> byCategory(CategoryType type, List<ReportWithUserState> list) =>
-    list.where((r) => r.report.categoryTypes.contains(type)).toList()
-      ..sort((a, b) => b.report.createdAt.compareTo(a.report.createdAt));
+List<Report> byCategory(CategoryType type, List<Report> list) =>
+    list.where((r) => r.reportData.categoryTypes.contains(type)).toList()
+      ..sort((a, b) => b.reportData.createdAt.compareTo(a.reportData.createdAt));
 
 // Filter reports by bookmark sorted by creation date in a descending order
-List<ReportWithUserState> fakeReportDataBookmarkList = fakeReportDataList.where((r) => r.hasBookmarked).toList()
-  ..sort((a, b) => b.report.createdAt.compareTo(a.report.createdAt));
+List<Report> fakeReportDataBookmarkList = fakeReportDataList.where((r) => r.hasBookmarked).toList()
+  ..sort((a, b) => b.reportData.createdAt.compareTo(a.reportData.createdAt));
 
 // Filter reports by a user sorted by creation date in a descending order
-List<ReportWithUserState> fakeReportDataUserList = fakeReportDataList.take(1).toList();
+List<Report> fakeReportDataUserList = fakeReportDataList.take(1).toList();

@@ -663,3 +663,302 @@ abstract class _ReportData extends ReportData {
   _$$ReportDataImplCopyWith<_$ReportDataImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
+
+Report _$ReportFromJson(Map<String, dynamic> json) {
+  return _Report.fromJson(json);
+}
+
+/// @nodoc
+mixin _$Report {
+  /// The report data model associated with this report.
+  ReportData get reportData => throw _privateConstructorUsedError;
+
+  /// The variable the checks if the current user has liked the report.
+  bool get hasLiked => throw _privateConstructorUsedError;
+
+  /// The variable that checks if the current user has disliked the report.
+  bool get hasDisliked => throw _privateConstructorUsedError;
+
+  /// The variable that checks if the current user has bookmarked the report.
+  bool get hasBookmarked => throw _privateConstructorUsedError;
+
+  /// The document reference path, only parsed
+  /// when converted from Firestore.
+  String? get path => throw _privateConstructorUsedError;
+
+  /// Serializes this Report to a JSON map.
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+
+  /// Create a copy of Report
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  $ReportCopyWith<Report> get copyWith => throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $ReportCopyWith<$Res> {
+  factory $ReportCopyWith(Report value, $Res Function(Report) then) =
+      _$ReportCopyWithImpl<$Res, Report>;
+  @useResult
+  $Res call({
+    ReportData reportData,
+    bool hasLiked,
+    bool hasDisliked,
+    bool hasBookmarked,
+    String? path,
+  });
+
+  $ReportDataCopyWith<$Res> get reportData;
+}
+
+/// @nodoc
+class _$ReportCopyWithImpl<$Res, $Val extends Report>
+    implements $ReportCopyWith<$Res> {
+  _$ReportCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  /// Create a copy of Report
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? reportData = null,
+    Object? hasLiked = null,
+    Object? hasDisliked = null,
+    Object? hasBookmarked = null,
+    Object? path = freezed,
+  }) {
+    return _then(
+      _value.copyWith(
+            reportData: null == reportData
+                ? _value.reportData
+                : reportData // ignore: cast_nullable_to_non_nullable
+                      as ReportData,
+            hasLiked: null == hasLiked
+                ? _value.hasLiked
+                : hasLiked // ignore: cast_nullable_to_non_nullable
+                      as bool,
+            hasDisliked: null == hasDisliked
+                ? _value.hasDisliked
+                : hasDisliked // ignore: cast_nullable_to_non_nullable
+                      as bool,
+            hasBookmarked: null == hasBookmarked
+                ? _value.hasBookmarked
+                : hasBookmarked // ignore: cast_nullable_to_non_nullable
+                      as bool,
+            path: freezed == path
+                ? _value.path
+                : path // ignore: cast_nullable_to_non_nullable
+                      as String?,
+          )
+          as $Val,
+    );
+  }
+
+  /// Create a copy of Report
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $ReportDataCopyWith<$Res> get reportData {
+    return $ReportDataCopyWith<$Res>(_value.reportData, (value) {
+      return _then(_value.copyWith(reportData: value) as $Val);
+    });
+  }
+}
+
+/// @nodoc
+abstract class _$$ReportImplCopyWith<$Res> implements $ReportCopyWith<$Res> {
+  factory _$$ReportImplCopyWith(
+    _$ReportImpl value,
+    $Res Function(_$ReportImpl) then,
+  ) = __$$ReportImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({
+    ReportData reportData,
+    bool hasLiked,
+    bool hasDisliked,
+    bool hasBookmarked,
+    String? path,
+  });
+
+  @override
+  $ReportDataCopyWith<$Res> get reportData;
+}
+
+/// @nodoc
+class __$$ReportImplCopyWithImpl<$Res>
+    extends _$ReportCopyWithImpl<$Res, _$ReportImpl>
+    implements _$$ReportImplCopyWith<$Res> {
+  __$$ReportImplCopyWithImpl(
+    _$ReportImpl _value,
+    $Res Function(_$ReportImpl) _then,
+  ) : super(_value, _then);
+
+  /// Create a copy of Report
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? reportData = null,
+    Object? hasLiked = null,
+    Object? hasDisliked = null,
+    Object? hasBookmarked = null,
+    Object? path = freezed,
+  }) {
+    return _then(
+      _$ReportImpl(
+        reportData: null == reportData
+            ? _value.reportData
+            : reportData // ignore: cast_nullable_to_non_nullable
+                  as ReportData,
+        hasLiked: null == hasLiked
+            ? _value.hasLiked
+            : hasLiked // ignore: cast_nullable_to_non_nullable
+                  as bool,
+        hasDisliked: null == hasDisliked
+            ? _value.hasDisliked
+            : hasDisliked // ignore: cast_nullable_to_non_nullable
+                  as bool,
+        hasBookmarked: null == hasBookmarked
+            ? _value.hasBookmarked
+            : hasBookmarked // ignore: cast_nullable_to_non_nullable
+                  as bool,
+        path: freezed == path
+            ? _value.path
+            : path // ignore: cast_nullable_to_non_nullable
+                  as String?,
+      ),
+    );
+  }
+}
+
+/// @nodoc
+
+@JsonSerializable()
+class _$ReportImpl extends _Report {
+  const _$ReportImpl({
+    required this.reportData,
+    this.hasLiked = false,
+    this.hasDisliked = false,
+    this.hasBookmarked = false,
+    this.path,
+  }) : super._();
+
+  factory _$ReportImpl.fromJson(Map<String, dynamic> json) =>
+      _$$ReportImplFromJson(json);
+
+  /// The report data model associated with this report.
+  @override
+  final ReportData reportData;
+
+  /// The variable the checks if the current user has liked the report.
+  @override
+  @JsonKey()
+  final bool hasLiked;
+
+  /// The variable that checks if the current user has disliked the report.
+  @override
+  @JsonKey()
+  final bool hasDisliked;
+
+  /// The variable that checks if the current user has bookmarked the report.
+  @override
+  @JsonKey()
+  final bool hasBookmarked;
+
+  /// The document reference path, only parsed
+  /// when converted from Firestore.
+  @override
+  final String? path;
+
+  @override
+  String toString() {
+    return 'Report(reportData: $reportData, hasLiked: $hasLiked, hasDisliked: $hasDisliked, hasBookmarked: $hasBookmarked, path: $path)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$ReportImpl &&
+            (identical(other.reportData, reportData) ||
+                other.reportData == reportData) &&
+            (identical(other.hasLiked, hasLiked) ||
+                other.hasLiked == hasLiked) &&
+            (identical(other.hasDisliked, hasDisliked) ||
+                other.hasDisliked == hasDisliked) &&
+            (identical(other.hasBookmarked, hasBookmarked) ||
+                other.hasBookmarked == hasBookmarked) &&
+            (identical(other.path, path) || other.path == path));
+  }
+
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  int get hashCode => Object.hash(
+    runtimeType,
+    reportData,
+    hasLiked,
+    hasDisliked,
+    hasBookmarked,
+    path,
+  );
+
+  /// Create a copy of Report
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$ReportImplCopyWith<_$ReportImpl> get copyWith =>
+      __$$ReportImplCopyWithImpl<_$ReportImpl>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$ReportImplToJson(this);
+  }
+}
+
+abstract class _Report extends Report {
+  const factory _Report({
+    required final ReportData reportData,
+    final bool hasLiked,
+    final bool hasDisliked,
+    final bool hasBookmarked,
+    final String? path,
+  }) = _$ReportImpl;
+  const _Report._() : super._();
+
+  factory _Report.fromJson(Map<String, dynamic> json) = _$ReportImpl.fromJson;
+
+  /// The report data model associated with this report.
+  @override
+  ReportData get reportData;
+
+  /// The variable the checks if the current user has liked the report.
+  @override
+  bool get hasLiked;
+
+  /// The variable that checks if the current user has disliked the report.
+  @override
+  bool get hasDisliked;
+
+  /// The variable that checks if the current user has bookmarked the report.
+  @override
+  bool get hasBookmarked;
+
+  /// The document reference path, only parsed
+  /// when converted from Firestore.
+  @override
+  String? get path;
+
+  /// Create a copy of Report
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$ReportImplCopyWith<_$ReportImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}

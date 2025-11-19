@@ -71,3 +71,20 @@ const _$CategoryTypeEnumMap = {
   CategoryType.governance: 'governance',
   CategoryType.urban: 'urban',
 };
+
+_$ReportImpl _$$ReportImplFromJson(Map<String, dynamic> json) => _$ReportImpl(
+  reportData: ReportData.fromJson(json['reportData'] as Map<String, dynamic>),
+  hasLiked: json['hasLiked'] as bool? ?? false,
+  hasDisliked: json['hasDisliked'] as bool? ?? false,
+  hasBookmarked: json['hasBookmarked'] as bool? ?? false,
+  path: json['path'] as String?,
+);
+
+Map<String, dynamic> _$$ReportImplToJson(_$ReportImpl instance) =>
+    <String, dynamic>{
+      'reportData': instance.reportData.toJson(),
+      'hasLiked': instance.hasLiked,
+      'hasDisliked': instance.hasDisliked,
+      'hasBookmarked': instance.hasBookmarked,
+      if (instance.path case final value?) 'path': value,
+    };
