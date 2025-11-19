@@ -9,8 +9,8 @@ class ReportsViewModel extends BaseViewModel {
   final _bottomSheetService = locator<BottomSheetService>();
   final _navigationService = locator<RouterService>();
 
-  List<ReportWithUserState> get bookmarkedReportList => fakeReportDataBookmarkList;
-  List<ReportWithUserState> get myReportList => fakeReportDataUserList;
+  List<Report> get bookmarkedReportList => fakeReportDataBookmarkList;
+  List<Report> get myReportList => fakeReportDataUserList;
 
   Future<void> viewComment() async {
     final uploadResponse = await _bottomSheetService.showCustomSheet(
@@ -24,12 +24,11 @@ class ReportsViewModel extends BaseViewModel {
 
   Future<void> onAddReport() => _navigationService.navigateToAddReportView();
 
-  void likeReport(ReportWithUserState reportData) {
-    var likes = reportData.report.likeCount;
-    var dislikes = reportData.report.dislikeCount;
-    var liked = reportData.hasLiked;
-    var disliked = reportData.hasDisliked;
-
+  void likeReport(Report report) {
+    var likes = report.reportData.likeCount;
+    var dislikes = report.reportData.dislikeCount;
+    var liked = report.hasLiked;
+    var disliked = report.hasDisliked;
     if (liked) {
       likes = (likes - 1).clamp(0, 1 << 31);
       liked = false;
@@ -42,24 +41,23 @@ class ReportsViewModel extends BaseViewModel {
       }
     }
 
-    final index = fakeReportDataList.indexWhere((e) => e.report == reportData.report);
+    final index = fakeReportDataList.indexWhere((e) => e.reportData == report.reportData);
     if (index < 0) return;
 
-    fakeReportDataList[index] = ReportWithUserState(
-      report: reportData.report.copyWith(likeCount: likes, dislikeCount: dislikes),
+    fakeReportDataList[index] = Report(
+      reportData: report.reportData.copyWith(likeCount: likes, dislikeCount: dislikes),
       hasLiked: liked,
       hasDisliked: disliked,
-      hasBookmarked: reportData.hasBookmarked,
+      hasBookmarked: report.hasBookmarked,
     );
     rebuildUi();
   }
 
-  void dislikeReport(ReportWithUserState reportData) {
-    var likes = reportData.report.likeCount;
-    var dislikes = reportData.report.dislikeCount;
-    var liked = reportData.hasLiked;
-    var disliked = reportData.hasDisliked;
-
+  void dislikeReport(Report report) {
+    var likes = report.reportData.likeCount;
+    var dislikes = report.reportData.dislikeCount;
+    var liked = report.hasLiked;
+    var disliked = report.hasDisliked;
     if (disliked) {
       dislikes = (dislikes - 1).clamp(0, 1 << 31);
       disliked = false;
@@ -72,21 +70,21 @@ class ReportsViewModel extends BaseViewModel {
       }
     }
 
-    final index = fakeReportDataList.indexWhere((e) => e.report == reportData.report);
+    final index = fakeReportDataList.indexWhere((e) => e.reportData == report.reportData);
     if (index < 0) return;
 
-    fakeReportDataList[index] = ReportWithUserState(
-      report: reportData.report.copyWith(likeCount: likes, dislikeCount: dislikes),
+    fakeReportDataList[index] = Report(
+      reportData: report.reportData.copyWith(likeCount: likes, dislikeCount: dislikes),
       hasLiked: liked,
       hasDisliked: disliked,
-      hasBookmarked: reportData.hasBookmarked,
+      hasBookmarked: report.hasBookmarked,
     );
     rebuildUi();
   }
 
-  void bookmarkReport(ReportWithUserState reportData) {
-    var bookmarks = reportData.report.bookmarkCount;
-    var bookmarked = reportData.hasBookmarked;
+  void bookmarkReport(Report report) {
+    var bookmarks = report.reportData.bookmarkCount;
+    var bookmarked = report.hasBookmarked;
 
     if (bookmarked) {
       bookmarks = (bookmarks - 1).clamp(0, 1 << 31);
@@ -96,13 +94,13 @@ class ReportsViewModel extends BaseViewModel {
       bookmarked = true;
     }
 
-    final index = fakeReportDataList.indexWhere((e) => e.report == reportData.report);
+    final index = fakeReportDataList.indexWhere((e) => e.reportData == report.reportData);
     if (index < 0) return;
 
-    fakeReportDataList[index] = ReportWithUserState(
-      report: reportData.report.copyWith(bookmarkCount: bookmarks),
-      hasLiked: reportData.hasLiked,
-      hasDisliked: reportData.hasDisliked,
+    fakeReportDataList[index] = Report(
+      reportData: report.reportData.copyWith(bookmarkCount: bookmarks),
+      hasLiked: report.hasLiked,
+      hasDisliked: report.hasDisliked,
       hasBookmarked: bookmarked,
     );
     rebuildUi();

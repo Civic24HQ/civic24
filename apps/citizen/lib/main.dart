@@ -18,7 +18,7 @@ Future<void> main() async {
 Future<void> _preLocatorSetup() async {
   WidgetsFlutterBinding.ensureInitialized();
   await connectToFirebase();
-  await s
+  await setupLocalStorage();
   await preloadFirstLocale();
 }
 

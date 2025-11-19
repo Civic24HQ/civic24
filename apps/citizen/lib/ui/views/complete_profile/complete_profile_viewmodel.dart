@@ -156,5 +156,4 @@ class CompleteProfileViewModel extends FormViewModel {
       );
     }
   }
-
 }

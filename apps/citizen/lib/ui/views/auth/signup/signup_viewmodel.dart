@@ -38,5 +38,4 @@ class SignupViewModel extends AuthViewModel {
   }
 
   void navigateToLogin() => _navigationService.replaceWithLoginView();
-
 }
