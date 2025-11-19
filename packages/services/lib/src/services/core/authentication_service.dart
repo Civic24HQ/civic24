@@ -60,6 +60,7 @@ class AuthenticationService {
   final _googleSignIn = GoogleSignIn.instance;
   final _alertService = serviceLocator<AlertService>();
   final _firebaseAuth = FirebaseAuth.instance;
+  final _settingsStorageService = serviceLocator<SettingsStorageService>();
 
   final Random _randomSecure = Random.secure();
 
@@ -178,22 +179,26 @@ class AuthenticationService {
 
   /// Work around for user iOS/MacOS persistence issue i.e.
   /// A user is still logged in from previous session even after a reinstall.
+  ///
+  /// https://github.com/firebase/flutterfire/pull/4671
   Future<void> clearFirebaseUserOnFreshInstall() async {
-    _log.i('Clear Firebase User On Fresh Install');
-    // TODO(Civic24): Implement a LocalStorage Service
-    // To track if the app has been launched before and clear the user if not.
-    // final hasLaunchedBefore = await _localStorageService.getBool('hasLaunchedBefore') ?? false;
-    // if (!hasLaunchedBefore) {
-    //   _log.w('First launch detected, signing out any existing user');
-    //   await _firebaseAuth.signOut();
-    //   await _localStorageService.setBool('hasLaunchedBefore', true);
-    // }
-    await _firebaseAuth.signOut();
-    _log.d('post signOut currentUser: ${FirebaseAuth.instance.currentUser}');
-    // Immediately update local state as a fallback:
-    _authenticatedSubject.add(AuthState.unauthenticated);
-    for (final observer in _observers) {
-      observer.onUnauthenticated();
+    if (kIsWeb || isAndroid) return;
+
+    final freshInstall = _settingsStorageService.freshInstall;
+    _log.d('Is this a fresh install? $freshInstall');
+
+    if (freshInstall) {
+      _log.i('Signing out the user from the previous session');
+      await signOut();
+      // Immediately update local state as a fallback:
+      _authenticatedSubject.add(AuthState.unauthenticated);
+      for (final observer in _observers) {
+        observer.onUnauthenticated();
+      }
+
+      _settingsStorageService.setFreshInstall();
+    } else {
+      _log.d('This is not a fresh install');
     }
   }
 
@@ -379,6 +384,23 @@ class AuthenticationService {
   /// if they are authenticated with Google.
   Future<void> signOut() async {
     _log.d('Signing out user');
+    try {
+      // Try to check if user is currently signed In
+      final isUserSignedIn = await _googleSignIn.attemptLightweightAuthentication();
+
+      if (isUserSignedIn is Future<GoogleSignInAccount?>) {
+        _log.d('Signing out Google user');
+        await _googleSignIn.disconnect();
+        await _googleSignIn.signOut();
+      }
+    } catch (e) {
+      _log.e('Error signing out: $e');
+    } finally {
+      await _firebaseAuth.signOut();
+      _log.d('User signed out from Firebase');
+      clearLocalStorage();
+      _log.d('Local storage cleared');
+    }
   }
 
   /// Sends a password reset email.

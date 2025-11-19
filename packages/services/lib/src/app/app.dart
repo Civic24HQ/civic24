@@ -7,9 +7,12 @@ import 'package:stacked/stacked_annotations.dart';
     // @stacked-route
   ],
   dependencies: [
-    LazySingleton(classType: AlertService),
     LazySingleton(classType: UserService),
     LazySingleton(classType: AuthenticationService),
+    LazySingleton(classType: AlertService),
+    LazySingleton(classType: ReportService),
+    LazySingleton(classType: SettingsStorageService),
+    LazySingleton(classType: UrlLauncherService),
     // @stacked-service
   ],
   locatorName: 'serviceLocator',

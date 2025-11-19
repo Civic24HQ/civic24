@@ -1,0 +1,11 @@
+{
+  "line_length": 80,
+  "locator_name": "serviceLocator",
+  "prefer_web": false,
+  "register_mocks_function": "registerServices",
+  "services_path": "src/services",
+  "stacked_app_file_path": "src/app/app.dart",
+  "test_helpers_file_path": "lib/src/test/helpers/test_helpers.dart",
+  "test_services_path": "services",
+  "v1": false
+}
