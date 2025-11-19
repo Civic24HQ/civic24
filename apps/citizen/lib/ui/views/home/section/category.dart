@@ -46,7 +46,7 @@ class _CategoryListView extends ViewModelWidget<HomeViewModel> {
               onTapDislike: () => viewModel.dislikeReport(report),
               onTapBookmark: () => viewModel.bookmarkReport(report),
               onTapComment: () => viewModel.viewComment(),
-              reportData: report,
+              report: report,
             );
           }, childCount: fakeReportCategoryList.length),
         ),

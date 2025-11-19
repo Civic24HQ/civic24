@@ -21,7 +21,7 @@ class TrendingReports extends ViewModelWidget<HomeViewModel> {
               onTapBookmark: () =>
                   viewModel.bookmarkReport(viewModel.trendingReportList[index]),
               onTapComment: () => viewModel.viewComment(),
-              reportData: viewModel.trendingReportList[index],
+              report: viewModel.trendingReportList[index],
             );
           }, childCount: viewModel.trendingReportList.length),
         ),

@@ -21,7 +21,11 @@ class ProfileView extends StackedView<ProfileViewModel> with $ProfileView {
   const ProfileView({super.key});
 
   @override
-  Widget builder(BuildContext context, ProfileViewModel viewModel, Widget? child) {
+  Widget builder(
+    BuildContext context,
+    ProfileViewModel viewModel,
+    Widget? child,
+  ) {
     return PopScope(
       canPop: false,
       onPopInvokedWithResult: (bool didPop, Object? result) async {
@@ -76,7 +80,10 @@ class ProfileView extends StackedView<ProfileViewModel> with $ProfileView {
                           textInputAction: TextInputAction.next,
                           textCapitalization: TextCapitalization.sentences,
                           enabled: viewModel.isEditing,
-                          inputFormatters: [alphabetsWithSpaceFormatter, maxLengthFormatter(40)],
+                          inputFormatters: [
+                            alphabetsWithSpaceFormatter,
+                            maxLengthFormatter(40),
+                          ],
                           autofillHints: const [AutofillHints.familyName],
                         ),
                         AppSpacing.normal,
@@ -88,13 +95,18 @@ class ProfileView extends StackedView<ProfileViewModel> with $ProfileView {
                           textInputAction: TextInputAction.next,
                           textCapitalization: TextCapitalization.sentences,
                           enabled: viewModel.isEditing,
-                          inputFormatters: [alphabetsWithSpaceFormatter, maxLengthFormatter(40)],
+                          inputFormatters: [
+                            alphabetsWithSpaceFormatter,
+                            maxLengthFormatter(40),
+                          ],
                           autofillHints: const [AutofillHints.givenName],
                         ),
                         AppSpacing.normal,
                         AppSearchableDropdownTextField<CountryOption>(
                           label: l10n.generalCountry,
-                          hintText: viewModel.currentUser.country.isEmpty ? l10n.generalSelectCountry : '',
+                          hintText: viewModel.currentUser.country.isEmpty
+                              ? l10n.generalSelectCountry
+                              : '',
                           value: viewModel.countryOptions
                               .where((c) => c.name == viewModel.countryValue)
                               .cast<CountryOption?>()
@@ -107,19 +119,28 @@ class ProfileView extends StackedView<ProfileViewModel> with $ProfileView {
                             width: AppDimensions.size24,
                           ),
                           isEnabled: viewModel.isEditing,
-                          onChanged: (selected) => viewModel.onCountryChanged(selected?.name),
+                          onChanged: (selected) =>
+                              viewModel.onCountryChanged(selected?.name),
                         ),
                         AppSpacing.normal,
                         AppSearchableDropdownTextField<StateOption>(
                           label: l10n.generalState,
-                          hintText: viewModel.currentUser.state.isEmpty ? l10n.generalSelectState : '',
-                          value: viewModel.stateOptions.any((s) => s.name == viewModel.stateValue)
-                              ? viewModel.stateOptions.firstWhere((s) => s.name == viewModel.stateValue)
+                          hintText: viewModel.currentUser.state.isEmpty
+                              ? l10n.generalSelectState
+                              : '',
+                          value:
+                              viewModel.stateOptions.any(
+                                (s) => s.name == viewModel.stateValue,
+                              )
+                              ? viewModel.stateOptions.firstWhere(
+                                  (s) => s.name == viewModel.stateValue,
+                                )
                               : null,
                           isEnabled: viewModel.isEditing,
                           items: viewModel.stateOptions,
                           itemLabel: (s) => s.name,
-                          onChanged: (selected) => viewModel.onStateChanged(selected?.name),
+                          onChanged: (selected) =>
+                              viewModel.onStateChanged(selected?.name),
                         ),
                         AppSpacing.normal,
                         AppTextField(
@@ -131,7 +152,9 @@ class ProfileView extends StackedView<ProfileViewModel> with $ProfileView {
                         ),
                         Text(
                           l10n.featureProfileAccountEmail,
-                          style: context.bodySmall?.copyWith(color: context.neutralHighest),
+                          style: context.bodySmall?.copyWith(
+                            color: context.neutralHighest,
+                          ),
                         ),
                         AppSpacing.small,
                         const Spacer(),

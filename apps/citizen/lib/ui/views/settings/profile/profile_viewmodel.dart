@@ -44,12 +44,18 @@ class ProfileViewModel extends FormViewModel {
     firstNameValue = currentUser.firstName;
     lastNameValue = currentUser.lastName;
     if (currentUser.country.isNotEmpty && currentUser.state.isNotEmpty) {
-      countryValue = countryOptions.firstWhere((c) => c.name == currentUser.country).name;
-      final iso2 = countryOptions.firstWhere((c) => c.name == currentUser.country).iso2;
+      countryValue = countryOptions
+          .firstWhere((c) => c.name == currentUser.country)
+          .name;
+      final iso2 = countryOptions
+          .firstWhere((c) => c.name == currentUser.country)
+          .iso2;
       final states = await csc.getStatesOfCountry(iso2);
       stateOptions = states.map((s) => StateOption(s.name, s.isoCode)).toList()
         ..sort((a, b) => a.name.compareTo(b.name));
-      stateValue = stateOptions.firstWhere((s) => s.name == currentUser.state).name;
+      stateValue = stateOptions
+          .firstWhere((s) => s.name == currentUser.state)
+          .name;
       rebuildUi();
     }
   }
@@ -58,8 +64,9 @@ class ProfileViewModel extends FormViewModel {
     try {
       setBusy(true);
       final countries = await csc.getAllCountries();
-      countryOptions = countries.map((c) => CountryOption(c.name, c.isoCode)).toList()
-        ..sort((a, b) => a.name.compareTo(b.name));
+      countryOptions =
+          countries.map((c) => CountryOption(c.name, c.isoCode)).toList()
+            ..sort((a, b) => a.name.compareTo(b.name));
     } catch (e) {
       // TODO(Civic24): Implement Alert Service Dialog to display a message that countries could not be loaded
       countryOptions = [];
@@ -165,7 +172,8 @@ class ProfileViewModel extends FormViewModel {
     } catch (e) {
       _alertService.showErrorAlert(
         title: 'Profile Update Failed',
-        message: 'An error occurred while updating your profile details. Please try again.',
+        message:
+            'An error occurred while updating your profile details. Please try again.',
       );
     }
   }
