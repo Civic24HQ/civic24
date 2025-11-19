@@ -111,24 +111,34 @@ class ReportData with _$ReportData, SerializeJson {
   String get location => '$state, $country';
 }
 
+
 /// Wraps a [ReportData] with the current user’s interaction state.
-class ReportWithUserState {
-  ReportWithUserState({
-    required this.report,
-    required this.hasLiked,
-    required this.hasDisliked,
-    required this.hasBookmarked,
-  });
-  final ReportData report;
+@freezed
+class Report with _$Report, SerializeJson {
+  @JsonSerializable()
+  const factory Report({
+    /// The report data model associated with this report.
+    required ReportData reportData,
 
-  /// Whether the current user has liked this report.
-  final bool hasLiked;
+    /// The variable the checks if the current user has liked the report.
+    @Default(false) bool hasLiked,
 
-  /// Whether the current user has disliked this report.
-  final bool hasDisliked;
+    /// The variable that checks if the current user has disliked the report.
+    @Default(false) bool hasDisliked,
 
-  /// Whether the current user has bookmarked this report.
-  final bool hasBookmarked;
+    /// The variable that checks if the current user has bookmarked the report.
+    @Default(false) bool hasBookmarked,
+
+    /// The document reference path, only parsed
+    /// when converted from Firestore.
+    String? path,
+  }) = _Report;
+  const Report._();
+
+  factory Report.fromJson(Map<String, dynamic> json) => _$ReportFromJson(json);
+
+  /// Creates an empty report instance.
+  factory Report.empty() => Report(reportData: ReportData.empty());
 }
 
 extension ReportDataX on ReportData {
