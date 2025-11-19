@@ -24,6 +24,9 @@ class MessageLookup extends MessageLookupByLibrary {
 
   static String m1(version) => "(v${version})";
 
+  static String m2(emailValue) =>
+      "A password reset email has been sent to ${emailValue}. Please check your inbox and follow the instructions to reset your password.";
+
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
     "featureAddReport": MessageLookupByLibrary.simpleMessage("Add a Report"),
@@ -204,6 +207,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "featureSettingsLanguageDefault": MessageLookupByLibrary.simpleMessage(
       "Default Language",
     ),
+    "featureSettingsLoading": MessageLookupByLibrary.simpleMessage("Loading"),
     "featureSettingsLoggingOut": MessageLookupByLibrary.simpleMessage(
       "Logging out?",
     ),
@@ -280,6 +284,13 @@ class MessageLookup extends MessageLookupByLibrary {
     "generalPrevious": MessageLookupByLibrary.simpleMessage("Previous"),
     "generalProceed": MessageLookupByLibrary.simpleMessage("Proceed"),
     "generalRequired": MessageLookupByLibrary.simpleMessage("Required"),
+    "generalResetPassword": MessageLookupByLibrary.simpleMessage(
+      "Reset password",
+    ),
+    "generalResetPasswordButtonText": MessageLookupByLibrary.simpleMessage(
+      "Open email app",
+    ),
+    "generalResetPasswordDesc": m2,
     "generalSave": MessageLookupByLibrary.simpleMessage("Save"),
     "generalSearch": MessageLookupByLibrary.simpleMessage("Search here"),
     "generalSelectCountry": MessageLookupByLibrary.simpleMessage(

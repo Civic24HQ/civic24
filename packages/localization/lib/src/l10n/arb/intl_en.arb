@@ -96,6 +96,21 @@
     "@generalForgotPassword": {
         "description": "Text for the forgot password link"
     },
+    "generalResetPassword": "Reset password",
+    "@generalResetPassword": {
+        "description": "Text for the reset password"
+    },
+    "generalResetPasswordDesc": "A password reset email has been sent to {emailValue}. Please check your inbox and follow the instructions to reset your password.",
+    "@generalResetPasswordDesc": {
+        "description": "Reset Password Description",
+        "placeholders": {
+            "emailValue": {}
+        }
+    },
+    "generalResetPasswordButtonText": "Open email app",
+    "@generalResetPasswordButtonText": {
+        "description": "Text for the reset password button"
+    },
     "generalEmailHint": "Enter your email",
     "@generalEmailHint": {
         "description": "Hint text for the email input field"
@@ -481,6 +496,10 @@
     "featureSettingsAbout": "About",
     "@featureSettingsAbout": {
         "description": "About Description"
+    },
+    "featureSettingsLoading": "Loading",
+    "@featureSettingsLoading": {
+        "description": "Loading Description"
     },
     "featureSettingsLoggingOut": "Logging out?",
     "@featureSettingsLoggingOut": {
