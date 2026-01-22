@@ -149,6 +149,26 @@ class S {
     );
   }
 
+  /// `Upload File`
+  String get generalUploadFile {
+    return Intl.message(
+      'Upload File',
+      name: 'generalUploadFile',
+      desc: 'Upload File Label for Button',
+      args: [],
+    );
+  }
+
+  /// `Take a picture`
+  String get generalTakePicture {
+    return Intl.message(
+      'Take a picture',
+      name: 'generalTakePicture',
+      desc: 'Take picture Label for Button',
+      args: [],
+    );
+  }
+
   /// `Save`
   String get generalSave {
     return Intl.message(

@@ -3,6 +3,7 @@ import 'package:citizen/app/app.locator.dart';
 import 'package:citizen/app/app.router.dart';
 import 'package:citizen/ui/views/auth/auth_viewmodel.dart';
 import 'package:citizen/ui/views/auth/forgot_password/forgot_password_view.form.dart';
+import 'package:constants/constants.dart';
 import 'package:services/services.dart';
 import 'package:stacked_services/stacked_services.dart';
 import 'package:utils/utils.dart';
@@ -18,6 +19,7 @@ class ForgotPasswordViewModel extends AuthViewModel {
     if (!isFormValid) {
       return;
     }
+    analyticsService.logButtonClick(kAnalyticButtonResetPassword);
     try {
       _log.i('$emailValue');
       await runBusyFuture(authenticationService.sendPasswordResetEmail(emailValue!), throwException: true);

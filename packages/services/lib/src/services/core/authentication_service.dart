@@ -8,7 +8,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:localization/localization.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:services/services.dart';
 import 'package:sign_in_with_apple/sign_in_with_apple.dart';
@@ -61,6 +60,8 @@ class AuthenticationService {
   final _alertService = serviceLocator<AlertService>();
   final _firebaseAuth = FirebaseAuth.instance;
   final _settingsStorageService = serviceLocator<SettingsStorageService>();
+  final _analyticsService = serviceLocator<AnalyticsService>();
+  final _crashlyticsService = serviceLocator<CrashlyticsService>();
 
   final Random _randomSecure = Random.secure();
 
@@ -234,8 +235,10 @@ class AuthenticationService {
     try {
       _log.d('Creating user account');
       final result = await _firebaseAuth.createUserWithEmailAndPassword(email: email, password: password);
+      _analyticsService.logSignUp(currentUserAuthProvider);
+      _crashlyticsService.setupUserProfile(userId: result.user?.uid, email: result.user?.email);
       _log.i('User Details: ${result.user}');
-      _alertService.showSuccessAlert(title: l10n.featureSignUpSuccess, message: l10n.featureSignUpSuccessHint);
+      // _alertService.showSuccessAlert(title: l10n.featureSignUpSuccess, message: l10n.featureSignUpSuccessHint);
       return result.user != null;
     } catch (e) {
       _log.e('Sign up failed: $e');
@@ -251,6 +254,8 @@ class AuthenticationService {
     try {
       _log.d('Signing in with email and password');
       final result = await _firebaseAuth.signInWithEmailAndPassword(email: email, password: password);
+      _analyticsService.logLogin(currentUserAuthProvider);
+      _crashlyticsService.setupUserProfile(userId: result.user?.uid, email: result.user?.email);
       _log.i('User Details: ${result.user}');
       return result.user != null;
     } catch (e) {
@@ -316,13 +321,14 @@ class AuthenticationService {
 
       final signUp = userCredential.additionalUserInfo?.isNewUser ?? false;
       if (signUp) {
-        _alertService.showSuccessAlert(title: l10n.featureSignUpSuccess, message: l10n.featureSignUpSuccessHint);
+        _log.d('User signed up with Google');
+        _analyticsService.logSignUp(currentUserAuthProvider);
       } else {
-        // _alertService.showSuccessAlert(title: l10n.featureLoginSuccess, message: l10n.featureLoginSuccessHint);
+        _log.d('User logged in with Google');
+        _analyticsService.logLogin(currentUserAuthProvider);
       }
-      // TODO(Civic24): Implement AnalyticsService to log sign in and sign up events
 
-      // TODO(Civic24): Implement CrashlyticsService to set user profile for crash reporting
+      _crashlyticsService.setupUserProfile(userId: userCredential.user?.uid, email: userCredential.user?.email);
 
       return userCredential.user != null;
     } on GoogleSignInException catch (e) {
@@ -393,6 +399,13 @@ class AuthenticationService {
         await _googleSignIn.disconnect();
         await _googleSignIn.signOut();
       }
+
+      await Future.wait([
+        _analyticsService.setUserId(null),
+        _analyticsService.setUserProperty(name: 'guest'),
+        _crashlyticsService.setUserIdToCrashlytics(''),
+        _crashlyticsService.setUserEmailToCrashlytics(''),
+      ]);
     } catch (e) {
       _log.e('Error signing out: $e');
     } finally {

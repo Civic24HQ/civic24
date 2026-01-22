@@ -61,53 +61,58 @@ class AppAvatar extends StatelessWidget {
           : null),
     );
 
-    return InkWell(
-      onTap: onTap,
-      child: Hero(
-        tag: '${url ?? initials ?? 'avatar'}-$uniqueKey',
-        child: Stack(
-          clipBehavior: Clip.none,
-          alignment: Alignment.bottomRight,
-          children: [
-            if (borderColor != null)
-              Container(
-                decoration: BoxDecoration(color: borderColor, shape: BoxShape.circle),
-                padding: const EdgeInsets.all(1),
-                child: avatar,
-              )
-            else
-              avatar,
-            if (badgeColor != null)
-              SizedBox(
-                height: size * _kBadgeSize,
-                width: size * _kBadgeSize,
-                child: DecoratedBox(
-                  decoration: BoxDecoration(
-                    color: badgeColor,
-                    shape: BoxShape.circle,
-                    border: Border.fromBorderSide(BorderSide(color: context.surface, width: size * _kBorderWidth)),
-                  ),
-                ),
+    // Build the core avatar and badge content
+    Widget content = Stack(
+      clipBehavior: Clip.none,
+      alignment: Alignment.bottomRight,
+      children: [
+        if (borderColor != null)
+          Container(
+            decoration: BoxDecoration(color: borderColor, shape: BoxShape.circle),
+            padding: const EdgeInsets.all(1),
+            child: avatar,
+          )
+        else
+          avatar,
+        if (badgeColor != null)
+          SizedBox(
+            height: size * _kBadgeSize,
+            width: size * _kBadgeSize,
+            child: DecoratedBox(
+              decoration: BoxDecoration(
+                color: badgeColor,
+                shape: BoxShape.circle,
+                border: Border.fromBorderSide(BorderSide(color: context.surface, width: size * _kBorderWidth)),
               ),
-            if (badgeIcon != null)
-              SizedBox(
-                height: size * _kBadgeSize,
-                width: size * _kBadgeSize,
-                child: DecoratedBox(
-                  decoration: BoxDecoration(
-                    color: context.primaryContainer,
-                    shape: BoxShape.circle,
-                    border: Border.fromBorderSide(BorderSide(color: context.surface, width: size * _kBorderWidth)),
-                  ),
-                  child: InkWell(
-                    onTap: onTapIcon,
-                    child: Icon(badgeIcon, color: context.onPrimaryContainer),
-                  ),
-                ),
+            ),
+          ),
+        if (badgeIcon != null)
+          SizedBox(
+            height: size * _kBadgeSize,
+            width: size * _kBadgeSize,
+            child: DecoratedBox(
+              decoration: BoxDecoration(
+                color: context.primaryContainer,
+                shape: BoxShape.circle,
+                border: Border.fromBorderSide(BorderSide(color: context.surface, width: size * _kBorderWidth)),
               ),
-          ],
-        ),
-      ),
+              child: InkWell(
+                onTap: onTapIcon,
+                child: Icon(badgeIcon, color: context.onPrimaryContainer),
+              ),
+            ),
+          ),
+      ],
+    );
+
+    // Only wrap with Hero if we have a non-null uniqueKey
+    if (uniqueKey != null) {
+      final heroTag = '${url ?? initials ?? 'avatar'}-$uniqueKey';
+
+      content = Hero(tag: heroTag, child: content);
+    }
+
+    return InkWell(onTap: onTap, child: content,
     );
   }
 }

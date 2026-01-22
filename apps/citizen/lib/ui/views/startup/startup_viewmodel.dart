@@ -12,6 +12,7 @@ class StartupViewModel extends BaseViewModel {
   final _navigationService = locator<RouterService>();
   final _authenticationService = locator<AuthenticationService>();
   final _userService = locator<UserService>();
+  final _analyticsService = locator<AnalyticsService>();
 
   bool isAnimate = false;
   double turns = 0;
@@ -88,6 +89,7 @@ class StartupViewModel extends BaseViewModel {
   Future<void> runStartupLogic() async {
     _log.i('Running startup logic');
     await _authenticationService.clearFirebaseUserOnFreshInstall();
+    _analyticsService.logAppOpen();
     await onViewLoading();
     prepareUserSession();
   }
