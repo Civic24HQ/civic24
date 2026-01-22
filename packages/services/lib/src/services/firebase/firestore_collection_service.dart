@@ -52,6 +52,7 @@ abstract class FirestoreCollectionService<T extends SerializeJson> extends Fires
         toFirestore: (object, _) => object.toJson(),
       );
 
+
   /// Generates a new document ID for the Firestore collection.
   ///
   /// This method ensures that new documents have unique IDs before being added

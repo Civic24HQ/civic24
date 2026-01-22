@@ -1,4 +1,5 @@
 import 'package:components/components.dart';
+import 'package:components/src/app_cards/app_report_media_preview.dart';
 import 'package:flutter/material.dart';
 import 'package:models/models.dart';
 import 'package:styles/styles.dart';
@@ -33,6 +34,8 @@ class AppReport extends StatelessWidget {
     final canLike = !exclusiveDisliked;
     final canDislike = !exclusiveLiked;
 
+    final media = report.reportData.media ?? [];
+
     return Padding(
       padding: AppEdgeInsets.horizontalPadding12,
       child: Column(
@@ -44,12 +47,21 @@ class AppReport extends StatelessWidget {
               child: ListTile(
                 contentPadding: EdgeInsets.zero,
                 horizontalTitleGap: AppDimensions.size12,
+                // TODO(Civic24): Implement User Image Display
+                // leading: SizedBox(
+                //   width: AppDimensions.size40,
+                //   height: AppDimensions.size40,
+                //   child: ClipRRect(
+                //     borderRadius: AppBorderRadius.radius12,
+                //     child: AppCachedImage(imageUrl: report.reportData.userImageUrl),
+                //   ),
+                // ),
                 leading: SizedBox(
                   width: AppDimensions.size40,
                   height: AppDimensions.size40,
                   child: ClipRRect(
                     borderRadius: AppBorderRadius.radius12,
-                    child: AppCachedImage(imageUrl: report.reportData.userImageUrl),
+                    child: AppAvatar(initials: report.reportData.initials, radius: AppDimensions.size40),
                   ),
                 ),
                 title: Text(
@@ -81,15 +93,28 @@ class AppReport extends StatelessWidget {
             textAlign: TextAlign.start,
           ),
           AppSpacing.normal,
-          SizedBox(
-            width: double.infinity,
-            height: AppDimensions.size320,
-            child: ClipRRect(
+
+          if (media.isNotEmpty) ...[
+            AppReportMediaPreview(
+              media: media,
+              height: AppDimensions.size320,
               borderRadius: BorderRadius.circular(AppDimensions.size8),
-              child: AppCachedImage(imageUrl: report.reportData.media?.first),
+              heroTagPrefix: 'report_${report.reportData.reportId}',
             ),
-          ),
-          AppSpacing.normal,
+            AppSpacing.normal,
+          ],
+          // if ((report.reportData.media?.length ?? 0) > 0) ...[
+          //   SizedBox(
+          //     width: double.infinity,
+          //     height: AppDimensions.size320,
+          //     child: ClipRRect(
+          //       borderRadius: BorderRadius.circular(AppDimensions.size8),
+          //       child: AppCachedImage(imageUrl: report.reportData.media?.first),
+          //     ),
+          //   ),
+          //   AppSpacing.normal,
+          // ] else
+          //   const SizedBox.shrink(),
           Container(
             width: double.infinity,
             color: context.surface,
@@ -116,8 +141,7 @@ class AppReport extends StatelessWidget {
                     onTap: canDislike ? onTapDislike : null,
                   ),
                 ),
-                SocialActionButton.comment(onTap: onTapComment, count: report.reportData.commentCount,
-                ),
+                SocialActionButton.comment(onTap: onTapComment, count: report.reportData.commentCount),
                 SocialActionButton.bookmark(
                   isActive: report.hasBookmarked,
                   count: report.reportData.bookmarkCount,

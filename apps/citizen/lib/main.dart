@@ -7,6 +7,7 @@ import 'package:citizen/bootstrap.dart';
 import 'package:flutter/material.dart';
 import 'package:localization/localization.dart';
 import 'package:services/services.dart';
+import 'package:utils/utils.dart';
 
 Future<void> main() async {
   await _preLocatorSetup();
@@ -19,6 +20,9 @@ Future<void> _preLocatorSetup() async {
   WidgetsFlutterBinding.ensureInitialized();
   await connectToFirebase();
   await setupLocalStorage();
+  await PushNotificationService.initBackgroundMessage();
+  setupLogOutputs([CrashlyticsOutput()]);
+  await CrashlyticsService().setupFlutterErrorLogging();
   await preloadFirstLocale();
 }
 

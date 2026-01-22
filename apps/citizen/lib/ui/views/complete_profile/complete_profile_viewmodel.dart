@@ -13,6 +13,7 @@ class CompleteProfileViewModel extends FormViewModel {
   final _navigationService = locator<RouterService>();
   final _userService = locator<UserService>();
   final _alertService = locator<AlertService>();
+  final _analyticsService = locator<AnalyticsService>();
 
   String? countryValue;
   String? stateValue;
@@ -147,6 +148,7 @@ class CompleteProfileViewModel extends FormViewModel {
         ),
         throwException: true,
       );
+      _analyticsService.logOnboardingComplete();
       await _navigationService.clearStackAndShow(MainViewRoute());
     } catch (e, s) {
       _log.e('Error saving user data', error: e, stackTrace: s);

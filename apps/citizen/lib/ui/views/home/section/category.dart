@@ -23,7 +23,7 @@ class _CategoryListView extends ViewModelWidget<HomeViewModel> {
 
   @override
   Widget build(BuildContext context, HomeViewModel viewModel) {
-    final fakeReportCategoryList = viewModel.fakeReportCategoryList;
+    final fakeReportCategoryList = viewModel.reportCategoryList;
 
     if (fakeReportCategoryList.isEmpty) {
       return const CustomScrollView(
