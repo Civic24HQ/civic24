@@ -3,27 +3,53 @@ import 'package:citizen/app/app.locator.dart';
 import 'package:citizen/app/app.router.dart';
 import 'package:constants/constants.dart';
 import 'package:models/models.dart';
+import 'package:services/services.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 
-class HomeViewModel extends BaseViewModel {
+class HomeViewModel extends ReactiveViewModel {
   final _bottomSheetService = locator<BottomSheetService>();
   final _navigationService = locator<RouterService>();
+  final _userService = locator<UserService>();
+  final _reportService = locator<ReportService>();
 
-  List<Report> get allReportList => fakeReportDataList;
-  List<Report> get trendingReportList => fakeReportDataTrendingList;
+  @override
+  List<ListenableServiceMixin> get listenableServices => [
+    _userService,
+    _reportService,
+  ];
+
+  String get user => _userService.user!.id;
+  List<Report> get reportList => _reportService.reportList;
+
+  List<Report> get allReportList => reportList;
+  List<Report> get trendingReportList => reportList.toList()
+    ..sort((a, b) {
+      final byLikes = b.reportData.likeCount.compareTo(a.reportData.likeCount);
+      if (byLikes != 0) return byLikes;
+      return b.reportData.updatedAt.compareTo(a.reportData.updatedAt);
+    });
 
   CategoryType selectedCategory = CategoryType.values[0];
-  List<Report> get fakeReportCategoryList =>
-      fakeReportDataList.where((r) => r.reportData.categoryTypes.contains(selectedCategory)).toList()
-        ..sort((a, b) => b.reportData.createdAt.compareTo(a.reportData.createdAt));
+  List<Report> get reportCategoryList =>
+      reportList
+          .where((r) => r.reportData.categoryTypes.contains(selectedCategory))
+          .toList()
+        ..sort(
+          (a, b) => b.reportData.createdAt.compareTo(a.reportData.createdAt),
+        );
 
-  List<Report> get fakeReportTrendingInCategory =>
-      fakeReportDataList.where((r) => r.reportData.categoryTypes.contains(selectedCategory)).toList()..sort((a, b) {
-        final byLikes = b.reportData.likeCount.compareTo(a.reportData.likeCount);
-        if (byLikes != 0) return byLikes;
-        return b.reportData.updatedAt.compareTo(a.reportData.updatedAt);
-      });
+  List<Report> get reportTrendingInCategory =>
+      reportList
+          .where((r) => r.reportData.categoryTypes.contains(selectedCategory))
+          .toList()
+        ..sort((a, b) {
+          final byLikes = b.reportData.likeCount.compareTo(
+            a.reportData.likeCount,
+          );
+          if (byLikes != 0) return byLikes;
+          return b.reportData.updatedAt.compareTo(a.reportData.updatedAt);
+        });
 
   void onCategoryChanged(CategoryType category) {
     selectedCategory = category;
@@ -61,11 +87,16 @@ class HomeViewModel extends BaseViewModel {
       }
     }
 
-    final index = fakeReportDataList.indexWhere((e) => e.reportData == report.reportData);
+    final index = fakeReportDataList.indexWhere(
+      (e) => e.reportData == report.reportData,
+    );
     if (index < 0) return;
 
     fakeReportDataList[index] = Report(
-      reportData: report.reportData.copyWith(likeCount: likes, dislikeCount: dislikes),
+      reportData: report.reportData.copyWith(
+        likeCount: likes,
+        dislikeCount: dislikes,
+      ),
       hasLiked: liked,
       hasDisliked: disliked,
       hasBookmarked: report.hasBookmarked,
@@ -90,11 +121,16 @@ class HomeViewModel extends BaseViewModel {
       }
     }
 
-    final index = fakeReportDataList.indexWhere((e) => e.reportData == report.reportData);
+    final index = fakeReportDataList.indexWhere(
+      (e) => e.reportData == report.reportData,
+    );
     if (index < 0) return;
 
     fakeReportDataList[index] = Report(
-      reportData: report.reportData.copyWith(likeCount: likes, dislikeCount: dislikes),
+      reportData: report.reportData.copyWith(
+        likeCount: likes,
+        dislikeCount: dislikes,
+      ),
       hasLiked: liked,
       hasDisliked: disliked,
       hasBookmarked: report.hasBookmarked,
@@ -114,7 +150,9 @@ class HomeViewModel extends BaseViewModel {
       bookmarked = true;
     }
 
-    final index = fakeReportDataList.indexWhere((e) => e.reportData == report.reportData);
+    final index = fakeReportDataList.indexWhere(
+      (e) => e.reportData == report.reportData,
+    );
     if (index < 0) return;
 
     fakeReportDataList[index] = Report(

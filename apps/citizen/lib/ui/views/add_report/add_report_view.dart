@@ -48,7 +48,7 @@ class AddReportView extends StackedView<AddReportViewModel>
                   Padding(
                     padding: AppEdgeInsets.horizontalPadding4,
                     child: Align(
-                      alignment: Alignment.centerLeft,
+                      alignment: .centerLeft,
                       child: Text(
                         'Step ${viewModel.currentStep} of ${viewModel.totalSteps}',
                         style: context.titleMedium,

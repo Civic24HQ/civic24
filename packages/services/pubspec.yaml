@@ -4,8 +4,8 @@ version: 0.1.0+1
 publish_to: none
 
 environment:
-  sdk: ">=3.8.1 <4.0.0"
-  flutter: "3.32.6"
+  sdk: ">=3.10.7 <4.0.0"
+  flutter: "3.38.7"
 
 dependencies:
   flutter:
@@ -35,13 +35,23 @@ dependencies:
   path_provider: ^2.1.5
   android_intent_plus: ^6.0.0
   url_launcher: ^6.3.2
+  image_picker: ^1.2.1
+  image_cropper: ^11.0.0  
+  flutter_image_compress: ^2.4.0   
+  exif: ^3.3.0
+  app_settings: ^6.1.1
+  flutter_local_notifications: ^19.0.0
+  http: ^1.6.0
+  http_parser: ^4.1.2
+  mime: ^2.0.0
 
   # Google/Firebase Dependencies
-  firebase_auth: ^5.5.2
-  firebase_analytics: ^11.4.5
-  firebase_messaging: ^15.2.5
-  cloud_firestore: ^5.6.6
-  firebase_crashlytics: ^4.3.5
+  firebase_auth: ^6.1.4
+  firebase_messaging: ^16.1.1
+  firebase_analytics: ^12.1.1
+  firebase_crashlytics: ^5.0.7
+  firebase_storage: ^13.0.6
+  cloud_firestore: ^6.1.2
   google_sign_in: ^7.1.1
   sign_in_with_apple: ^7.0.1
 
@@ -57,9 +67,9 @@ dev_dependencies:
   rules:
     path: ../rules
 
-  # Utility
-  build_runner: ^2.5.4
-  stacked_generator: ^2.0.0-pre.1
+  # Utility Packages
+  build_runner: ^2.7.1
+  stacked_generator: ^2.0.0
   mockito: ^5.4.4
 
 

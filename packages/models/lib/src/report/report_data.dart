@@ -111,7 +111,6 @@ class ReportData with _$ReportData, SerializeJson {
   String get location => '$state, $country';
 }
 
-
 /// Wraps a [ReportData] with the current user’s interaction state.
 @freezed
 class Report with _$Report, SerializeJson {
@@ -144,4 +143,7 @@ class Report with _$Report, SerializeJson {
 extension ReportDataX on ReportData {
   /// Returns true if the report was created by a user.
   bool get isUserReportValid => userId != null;
+
+  /// Returns the user's initials
+  String get initials => '${firstName[0]}${lastName[0]}';
 }

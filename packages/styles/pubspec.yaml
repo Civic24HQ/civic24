@@ -4,8 +4,8 @@ version: 0.1.0+1
 publish_to: none
 
 environment:
-  sdk: ">=3.8.1 <4.0.0"
-  flutter: "3.32.6"
+  sdk: ">=3.10.7 <4.0.0"
+  flutter: "3.38.7"
 
 dependencies:
   flutter:
@@ -13,7 +13,7 @@ dependencies:
 
   # General Dependencies
   gap: ^3.0.1
-  flex_color_scheme: ^8.2.0
+  flex_color_scheme: ^8.4.0
 
   # Package Dependencies
   assets:

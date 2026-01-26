@@ -4,20 +4,20 @@ version: 0.1.0+1
 publish_to: none
 
 environment:
-  sdk: ">=3.8.1 <4.0.0"
-  flutter: "3.32.6"
+  sdk: ">=3.10.7 <4.0.0"
+  flutter: "3.38.7"
 
 dependencies:
   flutter:
     sdk: flutter
     
   # General Dependencies
-  freezed_annotation: ^2.4.4
+  freezed_annotation: ^3.1.0
   json_annotation: ^4.9.0
   uuid: ^4.5.0
   faker: ^2.2.0
   solar_icons: ^0.0.5
-  cloud_firestore: ^5.6.11
+  cloud_firestore: ^6.1.2
   meta: ^1.15.0
 
   # Package Dependencies
@@ -37,9 +37,9 @@ dev_dependencies:
     path: ../rules
 
   # Utility Packages
-  freezed: ^2.5.7
+  freezed: ^3.1.0
   json_serializable: ^6.9.5
-  build_runner: ^2.5.4
+  build_runner: ^2.10.5
 
 flutter:
   uses-material-design: true

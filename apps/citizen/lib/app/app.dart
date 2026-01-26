@@ -6,6 +6,7 @@ import 'package:citizen/ui/bottom_sheets/comment/comment_sheet.dart';
 import 'package:citizen/ui/dialogs/loading/loading_dialog.dart';
 import 'package:citizen/ui/dialogs/logout/logout_dialog.dart';
 import 'package:citizen/ui/dialogs/send_password_reset_email/send_password_reset_email_dialog.dart';
+import 'package:citizen/ui/dialogs/upload_media/upload_media_dialog.dart';
 import 'package:citizen/ui/shared/src/success/success_view.dart';
 import 'package:citizen/ui/views/add_report/add_report_view.dart';
 import 'package:citizen/ui/views/auth/forgot_password/forgot_password_view.dart';
@@ -63,6 +64,7 @@ import 'package:styles/styles.dart';
     StackedDialog(classType: LogoutDialog),
     StackedDialog(classType: LoadingDialog),
     StackedDialog(classType: SendPasswordResetEmailDialog),
+    StackedDialog(classType: UploadMediaDialog),
     // @stacked-dialog
   ],
 )

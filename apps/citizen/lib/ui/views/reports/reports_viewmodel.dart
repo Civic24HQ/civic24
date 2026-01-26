@@ -2,15 +2,33 @@ import 'package:citizen/app/app.bottomsheets.dart';
 import 'package:citizen/app/app.locator.dart';
 import 'package:citizen/app/app.router.dart';
 import 'package:models/models.dart';
+import 'package:services/services.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 
-class ReportsViewModel extends BaseViewModel {
+class ReportsViewModel extends ReactiveViewModel {
   final _bottomSheetService = locator<BottomSheetService>();
   final _navigationService = locator<RouterService>();
+  final _userService = locator<UserService>();
+  final _reportService = locator<ReportService>();
 
-  List<Report> get bookmarkedReportList => fakeReportDataBookmarkList;
-  List<Report> get myReportList => fakeReportDataUserList;
+  @override
+  List<ListenableServiceMixin> get listenableServices => [
+    _userService,
+    _reportService,
+  ];
+
+  String get user => _userService.user!.id;
+  List<Report> get reportList => _reportService.reportList;
+
+  List<Report> get myReportList =>
+      reportList.where((r) => r.reportData.userId == user).toList()..sort(
+        (a, b) => b.reportData.createdAt.compareTo(a.reportData.createdAt),
+      );
+  List<Report> get bookmarkedReportList =>
+      reportList.where((r) => r.hasBookmarked).toList()..sort(
+        (a, b) => b.reportData.createdAt.compareTo(a.reportData.createdAt),
+      );
 
   Future<void> viewComment() async {
     final uploadResponse = await _bottomSheetService.showCustomSheet(
@@ -41,11 +59,16 @@ class ReportsViewModel extends BaseViewModel {
       }
     }
 
-    final index = fakeReportDataList.indexWhere((e) => e.reportData == report.reportData);
+    final index = fakeReportDataList.indexWhere(
+      (e) => e.reportData == report.reportData,
+    );
     if (index < 0) return;
 
     fakeReportDataList[index] = Report(
-      reportData: report.reportData.copyWith(likeCount: likes, dislikeCount: dislikes),
+      reportData: report.reportData.copyWith(
+        likeCount: likes,
+        dislikeCount: dislikes,
+      ),
       hasLiked: liked,
       hasDisliked: disliked,
       hasBookmarked: report.hasBookmarked,
@@ -70,11 +93,16 @@ class ReportsViewModel extends BaseViewModel {
       }
     }
 
-    final index = fakeReportDataList.indexWhere((e) => e.reportData == report.reportData);
+    final index = fakeReportDataList.indexWhere(
+      (e) => e.reportData == report.reportData,
+    );
     if (index < 0) return;
 
     fakeReportDataList[index] = Report(
-      reportData: report.reportData.copyWith(likeCount: likes, dislikeCount: dislikes),
+      reportData: report.reportData.copyWith(
+        likeCount: likes,
+        dislikeCount: dislikes,
+      ),
       hasLiked: liked,
       hasDisliked: disliked,
       hasBookmarked: report.hasBookmarked,
@@ -94,7 +122,9 @@ class ReportsViewModel extends BaseViewModel {
       bookmarked = true;
     }
 
-    final index = fakeReportDataList.indexWhere((e) => e.reportData == report.reportData);
+    final index = fakeReportDataList.indexWhere(
+      (e) => e.reportData == report.reportData,
+    );
     if (index < 0) return;
 
     fakeReportDataList[index] = Report(
