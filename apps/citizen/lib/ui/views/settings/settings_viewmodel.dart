@@ -17,6 +17,7 @@ class SettingsViewModel extends ReactiveViewModel {
   final _dialogService = locator<DialogService>();
   final _authService = locator<AuthenticationService>();
   final _userService = locator<UserService>();
+  final _analyticsService = locator<AnalyticsService>();
 
   @override
   List<ListenableServiceMixin> get listenableServices => [_userService];
@@ -52,6 +53,10 @@ class SettingsViewModel extends ReactiveViewModel {
       }
       return false;
     }
+
+    _analyticsService
+      ..logButtonClick(kAnalyticButtonAuthLogout)
+      ..logScreenView(screenClass: kAnalyticOverlayClass, screenName: kAnalyticDialogLogoutConfirmation);
 
     final shouldLogout = await showLogoutConfirmationDialog();
     if (!shouldLogout) return;

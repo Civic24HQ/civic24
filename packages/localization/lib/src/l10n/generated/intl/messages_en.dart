@@ -305,7 +305,11 @@ class MessageLookup extends MessageLookupByLibrary {
     "generalSupportedFormats": MessageLookupByLibrary.simpleMessage(
       "Supported: jpg, png, mp4 (max. 800x400px)",
     ),
+    "generalTakePicture": MessageLookupByLibrary.simpleMessage(
+      "Take a picture",
+    ),
     "generalTrending": MessageLookupByLibrary.simpleMessage("Trending"),
+    "generalUploadFile": MessageLookupByLibrary.simpleMessage("Upload File"),
     "generalUseAccurateLocation": MessageLookupByLibrary.simpleMessage(
       "Use accurate location",
     ),

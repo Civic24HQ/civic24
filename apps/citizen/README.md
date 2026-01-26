@@ -109,6 +109,9 @@ Create the following files inside `/apps/citizen/secrets/`:
   "MACOS_API_KEY": "CCC...",
   "MACOS_APP_ID": "com.example.civic24.mac.dev",
   "MACOS_BUNDLE_ID": "com.example.civic24.mac.dev",
+
+  "CLOUDINARY_CLOUD_NAME": "DDD...",
+  "CLOUDINARY_UPLOAD_PRESET": "EEE..."
 }
 ```
 

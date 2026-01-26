@@ -4,7 +4,9 @@ import 'package:citizen/ui/views/notification/notification_view.dart';
 import 'package:citizen/ui/views/reports/reports_view.dart';
 import 'package:citizen/ui/views/settings/settings_view.dart';
 import 'package:components/components.dart';
+import 'package:constants/constants.dart';
 import 'package:flutter/material.dart';
+import 'package:services/services.dart';
 import 'package:stacked/stacked.dart';
 
 class MainView extends StatefulWidget {
@@ -17,6 +19,7 @@ class MainView extends StatefulWidget {
 
 class _MainViewState extends State<MainView> {
   final _pageController = PageController();
+  final _analyticsService = serviceLocator<AnalyticsService>();
   int _selectedIndex = 0;
 
   void updateIndex(int index) {
@@ -25,6 +28,9 @@ class _MainViewState extends State<MainView> {
       _selectedIndex = index;
     });
     _pageController.jumpToPage(index);
+    
+    final screenName = citizenDestinations[index].label;
+    _analyticsService.logScreenView(screenClass: kAnalyticViewClass, screenName: '${screenName}View');
   }
 
   @override

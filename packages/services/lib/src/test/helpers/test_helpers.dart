@@ -15,6 +15,13 @@ import 'package:services/src/test/helpers/test_helpers.mocks.dart';
     MockSpec<SettingsStorageService>(onMissingStub: OnMissingStub.returnDefault),
     MockSpec<UrlLauncherService>(onMissingStub: OnMissingStub.returnDefault),
     MockSpec<ReportService>(onMissingStub: OnMissingStub.returnDefault),
+    MockSpec<MediaService>(onMissingStub: OnMissingStub.returnDefault),
+    MockSpec<PermissionService>(onMissingStub: OnMissingStub.returnDefault),
+    MockSpec<AnalyticsService>(onMissingStub: OnMissingStub.returnDefault),
+    MockSpec<PushNotificationService>(onMissingStub: OnMissingStub.returnDefault),
+    MockSpec<LocalNotificationService>(onMissingStub: OnMissingStub.returnDefault),
+    MockSpec<CrashlyticsService>(onMissingStub: OnMissingStub.returnDefault),
+    MockSpec<CloudinaryStorageService>(onMissingStub: OnMissingStub.returnDefault),
 
     // @stacked-mock-spec
   ],
@@ -26,6 +33,13 @@ void registerServices() {
   getAndRegisterSettingsStorageService();
   getAndRegisterUrlLauncherService();
   getAndRegisterReportService();
+  getAndRegisterMediaService();
+  getAndRegisterPermissionService();
+  getAndRegisterAnalyticsService();
+  getAndRegisterPushNotificationService();
+  getAndRegisterLocalNotificationService();
+  getAndRegisterCrashlyticsService();
+  getAndRegisterCloudinaryStorageService();
   // @stacked-mock-register
 }
 
@@ -70,6 +84,55 @@ MockReportService getAndRegisterReportService() {
   _removeRegistrationIfExists<ReportService>();
   final service = MockReportService();
   serviceLocator.registerSingleton<ReportService>(service);
+  return service;
+}
+
+MockMediaService getAndRegisterMediaService() {
+  _removeRegistrationIfExists<MediaService>();
+  final service = MockMediaService();
+  serviceLocator.registerSingleton<MediaService>(service);
+  return service;
+}
+
+MockPermissionService getAndRegisterPermissionService() {
+  _removeRegistrationIfExists<PermissionService>();
+  final service = MockPermissionService();
+  serviceLocator.registerSingleton<PermissionService>(service);
+  return service;
+}
+
+MockAnalyticsService getAndRegisterAnalyticsService() {
+  _removeRegistrationIfExists<AnalyticsService>();
+  final service = MockAnalyticsService();
+  serviceLocator.registerSingleton<AnalyticsService>(service);
+  return service;
+}
+
+MockPushNotificationService getAndRegisterPushNotificationService() {
+  _removeRegistrationIfExists<PushNotificationService>();
+  final service = MockPushNotificationService();
+  serviceLocator.registerSingleton<PushNotificationService>(service);
+  return service;
+}
+
+MockLocalNotificationService getAndRegisterLocalNotificationService() {
+  _removeRegistrationIfExists<LocalNotificationService>();
+  final service = MockLocalNotificationService();
+  serviceLocator.registerSingleton<LocalNotificationService>(service);
+  return service;
+}
+
+MockCrashlyticsService getAndRegisterCrashlyticsService() {
+  _removeRegistrationIfExists<CrashlyticsService>();
+  final service = MockCrashlyticsService();
+  serviceLocator.registerSingleton<CrashlyticsService>(service);
+  return service;
+}
+
+MockCloudinaryStorageService getAndRegisterCloudinaryStorageService() {
+  _removeRegistrationIfExists<CloudinaryStorageService>();
+  final service = MockCloudinaryStorageService();
+  serviceLocator.registerSingleton<CloudinaryStorageService>(service);
   return service;
 }
 

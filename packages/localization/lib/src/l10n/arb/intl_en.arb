@@ -40,6 +40,14 @@
     "@generalContinueWithApple": {
         "description": "Text for the Apple sign-in button"
     },
+    "generalUploadFile": "Upload File",
+    "@generalUploadFile": {
+        "description": "Upload File Label for Button"
+    },
+    "generalTakePicture": "Take a picture",
+    "@generalTakePicture": {
+        "description": "Take picture Label for Button"
+    },
     "generalSave": "Save",
     "@generalSave": {
         "description": "Text for Save button"

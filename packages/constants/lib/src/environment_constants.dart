@@ -121,6 +121,18 @@ class EnvironmentConstants {
   )
   static const String webClientId = String.fromEnvironment('WEB_CLIENT_ID');
 
+  @EnvironmentAssertion(
+    cloudinaryCloudName.length != 0,
+    'Cloudinary Cloud Name must be set - Follow `/app/README.md#Setup-Environmental-Variables` to setup environment values',
+  )
+  static const String cloudinaryCloudName = String.fromEnvironment('CLOUDINARY_CLOUD_NAME');
+
+  @EnvironmentAssertion(
+    cloudinaryUploadPreset.length != 0,
+    'Cloudinary Upload Preset must be set - Follow `/app/README.md#Setup-Environmental-Variables` to setup environment values',
+  )
+  static const String cloudinaryUploadPreset = String.fromEnvironment('CLOUDINARY_UPLOAD_PRESET');
+
   static bool get isDev => currentEnvironment == Environment.development;
   static bool get isStaging => currentEnvironment == Environment.staging;
   static bool get isProduction => currentEnvironment == Environment.production;

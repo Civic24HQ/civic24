@@ -2,6 +2,7 @@ import 'package:citizen/app/app.locator.dart';
 import 'package:citizen/app/app.router.dart';
 import 'package:citizen/ui/views/auth/auth_viewmodel.dart';
 import 'package:citizen/ui/views/auth/login/login_view.form.dart';
+import 'package:constants/constants.dart';
 import 'package:flutter/services.dart';
 import 'package:stacked_services/stacked_services.dart';
 
@@ -19,6 +20,7 @@ class LoginViewModel extends AuthViewModel {
       await HapticFeedback.heavyImpact();
       return;
     }
+    analyticsService.logButtonClick(kAnalyticButtonAuthLogin);
     setAuthBusy(AuthMethod.email);
     final success = await authenticationService.signInWithEmailAndPassword(
       email: emailValue!,
