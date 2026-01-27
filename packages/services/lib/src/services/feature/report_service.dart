@@ -49,10 +49,10 @@ class ReportService extends FirestoreCollectionService<Report> with ListenableSe
     // final now = DateTime.now();
     // final oneMonthAgo = DateTime(now.year, now.month - 1, now.day);
 
-    final query = collectionReference;
+    final query = collectionReference
     // .where('reportData.createdAt', isGreaterThanOrEqualTo: oneMonthAgo)
     // .where('reportData.createdAt', isLessThanOrEqualTo: now)
-    // .orderBy('reportData.createdAt', descending: true);
+        .orderBy('reportData.createdAt', descending: true);
 
     final reportList = await getDocumentsWithQuery(query: query);
     if (reportList.isEmpty) {
@@ -103,7 +103,7 @@ class ReportService extends FirestoreCollectionService<Report> with ListenableSe
 
       // Add the report to the local state
       // _reportList.value.add(newReport);
-      _reportList.value = [..._reportList.value, newReport];
+      _reportList.value = [newReport, ..._reportList.value];
       notifyListeners();
 
       await create(documentId: newReportData.reportId, payload: newReport);
@@ -146,10 +146,10 @@ class ReportService extends FirestoreCollectionService<Report> with ListenableSe
       log.d('Fetching reports for all users');
       // final now = DateTime.now();
       // final oneMonthAgo = DateTime(now.year, now.month - 1, now.day);
-      final query = collectionReference;
+      final query = collectionReference
       // .where('createdAt', isGreaterThanOrEqualTo: oneMonthAgo)
       // .where('createdAt', isLessThanOrEqualTo: now)
-      // .orderBy('createdAt', descending: true);
+          .orderBy('createdAt', descending: true);
 
       final reports = await getDocumentsWithQuery(query: query);
 
