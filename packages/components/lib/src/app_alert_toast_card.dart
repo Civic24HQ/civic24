@@ -58,8 +58,6 @@ class AppAlertToastCard extends StatelessWidget {
 
     return SafeArea(
       child: Container(
-        // Most alerts that can be dismiss are not static and needs their
-        // margin controlled.
         margin: alert.canDismiss
             ? const EdgeInsets.symmetric(horizontal: AppDimensions.padding12).copyWith(top: AppDimensions.size64)
             : null,
@@ -71,22 +69,31 @@ class AppAlertToastCard extends StatelessWidget {
           borderRadius: AppBorderRadius.radius12,
         ),
         child: Material(
+          color: Colors.transparent,
           child: IntrinsicHeight(
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Container(
-                  width: AppDimensions.size20,
-                  height: AppDimensions.size20,
-                  decoration: BoxDecoration(color: iconBackgroundColor, borderRadius: AppBorderRadius.radius4),
-                  child: Icon(iconData, color: iconColor, size: AppDimensions.size12),
-                ),
                 AppSpacing.standard,
                 Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(alert.title, maxLines: 1, overflow: TextOverflow.ellipsis, style: context.titleMedium),
+                      Row(
+                        children: [
+                          Container(
+                            width: AppDimensions.size20,
+                            height: AppDimensions.size20,
+                            decoration: BoxDecoration(
+                              color: iconBackgroundColor,
+                              borderRadius: AppBorderRadius.radius4,
+                            ),
+                            child: Icon(iconData, color: iconColor, size: AppDimensions.size16),
+                          ),
+                          AppSpacing.medium,
+                          Text(alert.title, maxLines: 1, overflow: TextOverflow.ellipsis, style: context.titleMedium),
+                        ],
+                      ),
                       AppSpacing.small,
                       Text.rich(
                         TextSpan(
