@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:math';
 
+import 'package:android_intent_plus/android_intent.dart';
 import 'package:constants/constants.dart';
 import 'package:crypto/crypto.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -203,6 +204,27 @@ class AuthenticationService {
     }
   }
 
+  /// Opens the add account settings on Android devices to allows users to add new accounts to their device.
+  Future<void> openAddAccountSettings() async {
+    if (!isAndroid) return;
+
+    try {
+      const intent = AndroidIntent(action: 'android.settings.ADD_ACCOUNT_SETTINGS');
+      await intent.launch();
+    } catch (e) {
+      _log.w('Failed to open add account settings: $e');
+    }
+  }
+
+  /// Checks if the Google Sign-In error is due to no credentials found.
+  bool _isNoCredentialError(dynamic e) {
+    final message = e.toString().toLowerCase();
+    return message.contains('no credential') ||
+        message.contains('no credentials') ||
+        message.contains('no credentials found') ||
+        message.contains('no credential found');
+  }
+
   /// Adds an observer to track authentication changes.
   void addObserver(AuthObserver observer) {
     _log.d('Adding AuthObserver(${shortHash(observer)})');
@@ -276,10 +298,6 @@ class AuthenticationService {
     try {
       _log.i('Authenticating with Google');
 
-      // _googleSignIn.authenticationEvents.listen((event) {
-      //   _log.i('Google auth event: $event');
-      // });
-
       // Authenticate with Google to handle both sign-in and silent sign-in
       final restored = await _googleSignIn.attemptLightweightAuthentication();
 
@@ -332,16 +350,29 @@ class AuthenticationService {
 
       return userCredential.user != null;
     } on GoogleSignInException catch (e) {
+      if (isAndroid && _isNoCredentialError(e)) {
+        _log.w('No Google credentials found on device. Opening add account settings.');
+        await openAddAccountSettings();
+        return false;
+      }
+
       _alertService.showErrorAlert(title: 'Google Sign In Failed', message: googleSignInExceptionToMessage(e));
       _log
         ..i(googleSignInExceptionToMessage(e))
         ..i('Google Sign In error: code: ${e.code.name} description:${e.description} details:${e.details}', error: e);
       rethrow;
     } catch (e) {
+      if (isAndroid && _isNoCredentialError(e)) {
+        _log.w('No Google credentials found on device. Opening add account settings.');
+        await openAddAccountSettings();
+        return false;
+      }
+
       _log.e('Google Auth Failed: $e');
       _alertService.showErrorAlert(title: 'Google Sign In Failed', message: exceptionToMessage(e));
       rethrow;
     }
+
   }
 
   /// Checks if Sign in with Apple is available on the current platform.

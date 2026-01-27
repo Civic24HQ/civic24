@@ -209,11 +209,15 @@ class _ReportGalleryViewerState extends State<ReportGalleryViewer> {
                     child: InteractiveViewer(
                       minScale: 1,
                       maxScale: 4,
-                      child: SizedBox.expand(
+                      child: SizedBox(
+                        width: double.infinity,
                         child: FittedBox(
-                          child: SizedBox(
-                            width: MediaQuery.sizeOf(context).width,
-                            height: MediaQuery.sizeOf(context).height,
+                          fit: BoxFit.fitWidth,
+                          child: ConstrainedBox(
+                            constraints: BoxConstraints(
+                              maxWidth: MediaQuery.sizeOf(context).width,
+                              maxHeight: MediaQuery.sizeOf(context).height,
+                            ),
                             child: AppCachedImage(imageUrl: url),
                           ),
                         ),
@@ -224,26 +228,78 @@ class _ReportGalleryViewerState extends State<ReportGalleryViewer> {
               },
             ),
 
+            // Premium top overlay (gradient + controls)
             Positioned(
-              top: 8,
-              left: 8,
-              right: 8,
-              child: Row(
-                children: [
-                  IconButton(
-                    onPressed: () => Navigator.of(context).pop(),
-                    icon: const Icon(Icons.close, color: Colors.white),
+              top: 0,
+              left: 0,
+              right: 0,
+              child: Container(
+                padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    begin: Alignment.topCenter,
+                    end: Alignment.bottomCenter,
+                    colors: [Colors.black.withValues(alpha: 0.65), Colors.transparent],
                   ),
-                  const Spacer(),
-                  Text(
-                    '${_currentIndex + 1}/${widget.media.length}',
-                    style: const TextStyle(color: Colors.white, fontWeight: FontWeight.w600),
-                  ),
-                ],
+                ),
+                child: Row(
+                  children: [
+                    _CircularOverlayIconButton(icon: Icons.close, onTap: () => Navigator.of(context).pop()),
+                    const Spacer(),
+                    _GalleryCounterPill(currentIndex: _currentIndex + 1, total: widget.media.length),
+                  ],
+                ),
               ),
             ),
           ],
         ),
+      ),
+    );
+  }
+}
+
+class _CircularOverlayIconButton extends StatelessWidget {
+  const _CircularOverlayIconButton({required this.icon, required this.onTap});
+
+  final IconData icon;
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    return Material(
+      color: Colors.white.withValues(alpha: 0.14),
+      shape: const CircleBorder(),
+      child: InkWell(
+        customBorder: const CircleBorder(),
+        onTap: onTap,
+        child: const SizedBox(
+          width: 44,
+          height: 44,
+          child: Center(child: Icon(Icons.close, color: Colors.white, size: 22)),
+        ),
+      ),
+    );
+  }
+}
+
+class _GalleryCounterPill extends StatelessWidget {
+  const _GalleryCounterPill({required this.currentIndex, required this.total});
+
+  final int currentIndex;
+  final int total;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+      decoration: BoxDecoration(
+        color: Colors.white.withValues(alpha: 0.14),
+        borderRadius: BorderRadius.circular(999),
+        border: Border.all(color: Colors.white.withValues(alpha: 0.16)),
+      ),
+      child: Text(
+        '$currentIndex / $total',
+        style: const TextStyle(color: Colors.white, fontWeight: FontWeight.w600, fontSize: 13),
       ),
     );
   }
