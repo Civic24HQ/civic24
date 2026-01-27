@@ -178,34 +178,32 @@ class AddReportViewModel extends FormViewModel {
     setBusy(true);
 
     _analyticsService.logButtonClick(kAnalyticsButtonAddReport);
-
-    await uploadImageToCloudinary();
-
     if (imageUrlList.isNotEmpty) {
-      _log.d('Image URLs: $imageUrlList');
-
-      final newReportData = ReportData(
-        userId: _userService.user!.id,
-        categoryTypes: _reportData.categoryTypes,
-        content: contentValue!,
-        firstName: _userService.user!.firstName,
-        lastName: _userService.user!.lastName,
-        country: _userService.user!.country,
-        state: _userService.user!.state,
-        reportId: '',
-        likeCount: 0,
-        dislikeCount: 0,
-        commentCount: 0,
-        bookmarkCount: 0,
-        createdAt: DateTime.now(),
-        updatedAt: DateTime.now(),
-        media: imageUrlList,
-      );
-      final newReport = Report(reportData: newReportData);
-      await runBusyFuture(_reportService.addReport(newReport));
-
-      setBusy(false);
-      await reportSuccessful();
+      await uploadImageToCloudinary();
     }
+    _log.d('Image URLs: $imageUrlList');
+
+    final newReportData = ReportData(
+      userId: _userService.user!.id,
+      categoryTypes: _reportData.categoryTypes,
+      content: contentValue!,
+      firstName: _userService.user!.firstName,
+      lastName: _userService.user!.lastName,
+      country: _userService.user!.country,
+      state: _userService.user!.state,
+      reportId: '',
+      likeCount: 0,
+      dislikeCount: 0,
+      commentCount: 0,
+      bookmarkCount: 0,
+      createdAt: DateTime.now(),
+      updatedAt: DateTime.now(),
+      media: imageUrlList,
+    );
+    final newReport = Report(reportData: newReportData);
+    await runBusyFuture(_reportService.addReport(newReport));
+
+    setBusy(false);
+    await reportSuccessful();
   }
 }
