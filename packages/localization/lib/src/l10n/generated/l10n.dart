@@ -1219,6 +1219,16 @@ class S {
     );
   }
 
+  /// `Sign In & Security`
+  String get featureSettingsSignInSecurity {
+    return Intl.message(
+      'Sign In & Security',
+      name: 'featureSettingsSignInSecurity',
+      desc: 'Sign In & Security Description',
+      args: [],
+    );
+  }
+
   /// `System Settings`
   String get featureSettingsAppearanceSystem {
     return Intl.message(
@@ -1275,6 +1285,116 @@ class S {
       'Keep the app in dark mode',
       name: 'featureSettingsAppearanceDarkDesc',
       desc: 'Dark Mode Description',
+      args: [],
+    );
+  }
+
+  /// `Google`
+  String get featureSettingsSecurityGoogle {
+    return Intl.message(
+      'Google',
+      name: 'featureSettingsSecurityGoogle',
+      desc: 'Google Sign-In Description',
+      args: [],
+    );
+  }
+
+  /// `Link your Google account for secure sign-in`
+  String get featureSettingsSecurityGoogleUnlinkDesc {
+    return Intl.message(
+      'Link your Google account for secure sign-in',
+      name: 'featureSettingsSecurityGoogleUnlinkDesc',
+      desc: 'Google Sign-In Unlinked Description',
+      args: [],
+    );
+  }
+
+  /// `Your Google account is available for sign-in`
+  String get featureSettingsSecurityGoogleLinkedDesc {
+    return Intl.message(
+      'Your Google account is available for sign-in',
+      name: 'featureSettingsSecurityGoogleLinkedDesc',
+      desc: 'Google Sign-In Linked Description',
+      args: [],
+    );
+  }
+
+  /// `Apple`
+  String get featureSettingsSecurityApple {
+    return Intl.message(
+      'Apple',
+      name: 'featureSettingsSecurityApple',
+      desc: 'Apple Sign-In Description',
+      args: [],
+    );
+  }
+
+  /// `Link your Apple ID for secure sign-in`
+  String get featureSettingsSecurityAppleUnlinkDesc {
+    return Intl.message(
+      'Link your Apple ID for secure sign-in',
+      name: 'featureSettingsSecurityAppleUnlinkDesc',
+      desc: 'Apple Sign-In Unlinked Description',
+      args: [],
+    );
+  }
+
+  /// `Your Apple ID is available for sign-in`
+  String get featureSettingsSecurityAppleLinkedDesc {
+    return Intl.message(
+      'Your Apple ID is available for sign-in',
+      name: 'featureSettingsSecurityAppleLinkedDesc',
+      desc: 'Apple ID Linked Description',
+      args: [],
+    );
+  }
+
+  /// `Set Password`
+  String get featureSettingsSecuritySetPassword {
+    return Intl.message(
+      'Set Password',
+      name: 'featureSettingsSecuritySetPassword',
+      desc: 'Set Password Description',
+      args: [],
+    );
+  }
+
+  /// `Enable email and password sign-in`
+  String get featureSettingsSecuritySetPasswordDesc {
+    return Intl.message(
+      'Enable email and password sign-in',
+      name: 'featureSettingsSecuritySetPasswordDesc',
+      desc: 'Set Password Description',
+      args: [],
+    );
+  }
+
+  /// `Enter the email associated with your account`
+  String get featureSettingsSecuritySetPasswordLabel {
+    return Intl.message(
+      'Enter the email associated with your account',
+      name: 'featureSettingsSecuritySetPasswordLabel',
+      desc: 'Set Password Label Description',
+      args: [],
+    );
+  }
+
+  /// `Change Password`
+  String get featureSettingsSecurityResetPassword {
+    return Intl.message(
+      'Change Password',
+      name: 'featureSettingsSecurityResetPassword',
+      desc: 'Reset Password Description',
+      args: [],
+    );
+  }
+
+  /// `Update your existing password`
+  String get featureSettingsSecurityResetPasswordDesc {
+    return Intl.message(
+      'Update your existing password',
+      name: 'featureSettingsSecurityResetPasswordDesc',
+      desc: 'Reset Password Description',
       args: [],
     );
   }
