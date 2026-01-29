@@ -1,0 +1,10 @@
+# melos_managed_dependency_overrides: constants,localization,rules,utils
+dependency_overrides:
+  constants:
+    path: ../constants
+  localization:
+    path: ../localization
+  rules:
+    path: ../rules
+  utils:
+    path: ../utils

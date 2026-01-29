@@ -1,3 +1,4 @@
+// dart format width=80
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
 // **************************************************************************
@@ -21,8 +22,8 @@ final Map<String, TextEditingController> _ProfileViewTextEditingControllers =
 final Map<String, FocusNode> _ProfileViewFocusNodes = {};
 
 final Map<String, String? Function(String?)?> _ProfileViewTextValidations = {
-  FirstNameValueKey: validateFirstName,
-  LastNameValueKey: validateLastName,
+  FirstNameValueKey: Validator.validateFirstName,
+  LastNameValueKey: Validator.validateLastName,
 };
 
 mixin $ProfileView {
@@ -42,8 +43,9 @@ mixin $ProfileView {
       return _ProfileViewTextEditingControllers[key]!;
     }
 
-    _ProfileViewTextEditingControllers[key] =
-        TextEditingController(text: initialValue);
+    _ProfileViewTextEditingControllers[key] = TextEditingController(
+      text: initialValue,
+    );
     return _ProfileViewTextEditingControllers[key]!;
   }
 
@@ -80,11 +82,10 @@ mixin $ProfileView {
   /// Updates the formData on the FormViewModel
   void _updateFormData(FormStateHelper model, {bool forceValidate = false}) {
     model.setData(
-      model.formValueMap
-        ..addAll({
-          FirstNameValueKey: firstNameController.text,
-          LastNameValueKey: lastNameController.text,
-        }),
+      model.formValueMap..addAll({
+        FirstNameValueKey: firstNameController.text,
+        LastNameValueKey: lastNameController.text,
+      }),
     );
 
     if (_autoTextFieldValidation || forceValidate) {
@@ -114,10 +115,9 @@ mixin $ProfileView {
 }
 
 extension ValueProperties on FormStateHelper {
-  bool get hasAnyValidationMessage => this
-      .fieldsValidationMessages
-      .values
-      .any((validation) => validation != null);
+  bool get hasAnyValidationMessage => this.fieldsValidationMessages.values.any(
+    (validation) => validation != null,
+  );
 
   bool get isFormValid {
     if (!_autoTextFieldValidation) this.validateForm();
@@ -129,9 +129,7 @@ extension ValueProperties on FormStateHelper {
   String? get lastNameValue => this.formValueMap[LastNameValueKey] as String?;
 
   set firstNameValue(String? value) {
-    this.setData(
-      this.formValueMap..addAll({FirstNameValueKey: value}),
-    );
+    this.setData(this.formValueMap..addAll({FirstNameValueKey: value}));
 
     if (_ProfileViewTextEditingControllers.containsKey(FirstNameValueKey)) {
       _ProfileViewTextEditingControllers[FirstNameValueKey]?.text = value ?? '';
@@ -139,9 +137,7 @@ extension ValueProperties on FormStateHelper {
   }
 
   set lastNameValue(String? value) {
-    this.setData(
-      this.formValueMap..addAll({LastNameValueKey: value}),
-    );
+    this.setData(this.formValueMap..addAll({LastNameValueKey: value}));
 
     if (_ProfileViewTextEditingControllers.containsKey(LastNameValueKey)) {
       _ProfileViewTextEditingControllers[LastNameValueKey]?.text = value ?? '';
@@ -167,9 +163,9 @@ extension ValueProperties on FormStateHelper {
 }
 
 extension Methods on FormStateHelper {
-  setFirstNameValidationMessage(String? validationMessage) =>
+  void setFirstNameValidationMessage(String? validationMessage) =>
       this.fieldsValidationMessages[FirstNameValueKey] = validationMessage;
-  setLastNameValidationMessage(String? validationMessage) =>
+  void setLastNameValidationMessage(String? validationMessage) =>
       this.fieldsValidationMessages[LastNameValueKey] = validationMessage;
 
   /// Clears text input fields on the Form

@@ -13,8 +13,8 @@ import 'package:utils/utils.dart';
 @FormView(
   autoTextFieldValidation: false,
   fields: [
-    FormTextField(name: 'firstName', validator: validateFirstName),
-    FormTextField(name: 'lastName', validator: validateLastName),
+    FormTextField(name: 'firstName', validator: Validator.validateFirstName),
+    FormTextField(name: 'lastName', validator: Validator.validateLastName),
   ],
 )
 class ProfileView extends StackedView<ProfileViewModel> with $ProfileView {

@@ -56,7 +56,10 @@ class SettingsViewModel extends ReactiveViewModel {
 
     _analyticsService
       ..logButtonClick(kAnalyticButtonAuthLogout)
-      ..logScreenView(screenClass: kAnalyticOverlayClass, screenName: kAnalyticDialogLogoutConfirmation);
+      ..logScreenView(
+        screenClass: kAnalyticOverlayClass,
+        screenName: kAnalyticDialogLogoutConfirmation,
+      );
 
     final shouldLogout = await showLogoutConfirmationDialog();
     if (!shouldLogout) return;

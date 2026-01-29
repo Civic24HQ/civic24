@@ -16,7 +16,7 @@ part 'steps/report_media.dart';
 
 @FormView(
   autoTextFieldValidation: false,
-  fields: [FormTextField(name: 'content', validator: validateEmpty)],
+  fields: [FormTextField(name: 'content', validator: Validator.validateEmpty)],
 )
 class AddReportView extends StackedView<AddReportViewModel>
     with $AddReportView {
@@ -48,7 +48,7 @@ class AddReportView extends StackedView<AddReportViewModel>
                   Padding(
                     padding: AppEdgeInsets.horizontalPadding4,
                     child: Align(
-                      alignment: .centerLeft,
+                      alignment: Alignment.centerLeft,
                       child: Text(
                         'Step ${viewModel.currentStep} of ${viewModel.totalSteps}',
                         style: context.titleMedium,

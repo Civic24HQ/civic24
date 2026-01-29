@@ -74,7 +74,7 @@ class StartupViewModel extends BaseViewModel {
       _log.d(
         'New user does not have a document yet in Firestore: Navigating to CompleteProfileView',
       );
-      _navigationService.clearStackAndShow(const CompleteProfileViewRoute());
+      _navigationService.clearStackAndShow(CompleteProfileViewRoute());
     }
   }
 
