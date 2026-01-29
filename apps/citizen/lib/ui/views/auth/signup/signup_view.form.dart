@@ -1,3 +1,4 @@
+// dart format width=80
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
 // **************************************************************************
@@ -20,8 +21,8 @@ final Map<String, TextEditingController> _SignupViewTextEditingControllers = {};
 final Map<String, FocusNode> _SignupViewFocusNodes = {};
 
 final Map<String, String? Function(String?)?> _SignupViewTextValidations = {
-  EmailValueKey: validateEmail,
-  PasswordValueKey: validatePassword,
+  EmailValueKey: Validator.validateEmail,
+  PasswordValueKey: Validator.validatePassword,
 };
 
 mixin $SignupView {
@@ -41,8 +42,9 @@ mixin $SignupView {
       return _SignupViewTextEditingControllers[key]!;
     }
 
-    _SignupViewTextEditingControllers[key] =
-        TextEditingController(text: initialValue);
+    _SignupViewTextEditingControllers[key] = TextEditingController(
+      text: initialValue,
+    );
     return _SignupViewTextEditingControllers[key]!;
   }
 
@@ -79,11 +81,10 @@ mixin $SignupView {
   /// Updates the formData on the FormViewModel
   void _updateFormData(FormStateHelper model, {bool forceValidate = false}) {
     model.setData(
-      model.formValueMap
-        ..addAll({
-          EmailValueKey: emailController.text,
-          PasswordValueKey: passwordController.text,
-        }),
+      model.formValueMap..addAll({
+        EmailValueKey: emailController.text,
+        PasswordValueKey: passwordController.text,
+      }),
     );
 
     if (_autoTextFieldValidation || forceValidate) {
@@ -113,10 +114,9 @@ mixin $SignupView {
 }
 
 extension ValueProperties on FormStateHelper {
-  bool get hasAnyValidationMessage => this
-      .fieldsValidationMessages
-      .values
-      .any((validation) => validation != null);
+  bool get hasAnyValidationMessage => this.fieldsValidationMessages.values.any(
+    (validation) => validation != null,
+  );
 
   bool get isFormValid {
     if (!_autoTextFieldValidation) this.validateForm();
@@ -128,9 +128,7 @@ extension ValueProperties on FormStateHelper {
   String? get passwordValue => this.formValueMap[PasswordValueKey] as String?;
 
   set emailValue(String? value) {
-    this.setData(
-      this.formValueMap..addAll({EmailValueKey: value}),
-    );
+    this.setData(this.formValueMap..addAll({EmailValueKey: value}));
 
     if (_SignupViewTextEditingControllers.containsKey(EmailValueKey)) {
       _SignupViewTextEditingControllers[EmailValueKey]?.text = value ?? '';
@@ -138,9 +136,7 @@ extension ValueProperties on FormStateHelper {
   }
 
   set passwordValue(String? value) {
-    this.setData(
-      this.formValueMap..addAll({PasswordValueKey: value}),
-    );
+    this.setData(this.formValueMap..addAll({PasswordValueKey: value}));
 
     if (_SignupViewTextEditingControllers.containsKey(PasswordValueKey)) {
       _SignupViewTextEditingControllers[PasswordValueKey]?.text = value ?? '';
@@ -166,9 +162,9 @@ extension ValueProperties on FormStateHelper {
 }
 
 extension Methods on FormStateHelper {
-  setEmailValidationMessage(String? validationMessage) =>
+  void setEmailValidationMessage(String? validationMessage) =>
       this.fieldsValidationMessages[EmailValueKey] = validationMessage;
-  setPasswordValidationMessage(String? validationMessage) =>
+  void setPasswordValidationMessage(String? validationMessage) =>
       this.fieldsValidationMessages[PasswordValueKey] = validationMessage;
 
   /// Clears text input fields on the Form

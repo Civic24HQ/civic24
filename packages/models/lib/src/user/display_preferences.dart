@@ -9,7 +9,7 @@ part 'display_preferences.g.dart';
 /// A model representing user-specific display preferences
 /// that include language selection and theme mode
 @freezed
-class DisplayPreferences with _$DisplayPreferences {
+abstract class DisplayPreferences with _$DisplayPreferences {
   @JsonSerializable()
   const factory DisplayPreferences({
     /// The user's preferred language.

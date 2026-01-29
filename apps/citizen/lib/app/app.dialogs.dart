@@ -1,3 +1,4 @@
+// dart format width=80
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
 // **************************************************************************
@@ -12,12 +13,7 @@ import '../ui/dialogs/logout/logout_dialog.dart';
 import '../ui/dialogs/send_password_reset_email/send_password_reset_email_dialog.dart';
 import '../ui/dialogs/upload_media/upload_media_dialog.dart';
 
-enum DialogType {
-  logout,
-  loading,
-  sendPasswordResetEmail,
-  uploadMedia,
-}
+enum DialogType { logout, loading, sendPasswordResetEmail, uploadMedia }
 
 void setupDialogUi() {
   final dialogService = locator<DialogService>();

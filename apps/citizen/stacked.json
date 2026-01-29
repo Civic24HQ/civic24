@@ -12,6 +12,6 @@
     "test_views_path": "viewmodels",
     "test_widgets_path": "widget_models",
     "v1": false,
-    "views_path": "ui/views",
+    "views_path": "ui/views/settings",
     "widgets_path": "ui/widgets/common"
 }

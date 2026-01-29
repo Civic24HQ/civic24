@@ -31,7 +31,6 @@ class AppBuilder extends StatelessWidget with AlertMixin {
 }
 
 class AppBuilderViewModel extends ReactiveViewModel {
-
   AppBuilderViewModel({AlertMixin? alertListener}) {
     _alertListener = alertListener ?? _defaultAlertListener;
     registerListener(_alertListener);

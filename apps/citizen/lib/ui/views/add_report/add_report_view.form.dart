@@ -1,3 +1,4 @@
+// dart format width=80
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
 // **************************************************************************
@@ -20,7 +21,7 @@ final Map<String, TextEditingController> _AddReportViewTextEditingControllers =
 final Map<String, FocusNode> _AddReportViewFocusNodes = {};
 
 final Map<String, String? Function(String?)?> _AddReportViewTextValidations = {
-  ContentValueKey: validateEmpty,
+  ContentValueKey: Validator.validateEmpty,
 };
 
 mixin $AddReportView {
@@ -37,8 +38,9 @@ mixin $AddReportView {
       return _AddReportViewTextEditingControllers[key]!;
     }
 
-    _AddReportViewTextEditingControllers[key] =
-        TextEditingController(text: initialValue);
+    _AddReportViewTextEditingControllers[key] = TextEditingController(
+      text: initialValue,
+    );
     return _AddReportViewTextEditingControllers[key]!;
   }
 
@@ -73,10 +75,7 @@ mixin $AddReportView {
   /// Updates the formData on the FormViewModel
   void _updateFormData(FormStateHelper model, {bool forceValidate = false}) {
     model.setData(
-      model.formValueMap
-        ..addAll({
-          ContentValueKey: contentController.text,
-        }),
+      model.formValueMap..addAll({ContentValueKey: contentController.text}),
     );
 
     if (_autoTextFieldValidation || forceValidate) {
@@ -106,10 +105,9 @@ mixin $AddReportView {
 }
 
 extension ValueProperties on FormStateHelper {
-  bool get hasAnyValidationMessage => this
-      .fieldsValidationMessages
-      .values
-      .any((validation) => validation != null);
+  bool get hasAnyValidationMessage => this.fieldsValidationMessages.values.any(
+    (validation) => validation != null,
+  );
 
   bool get isFormValid {
     if (!_autoTextFieldValidation) this.validateForm();
@@ -120,9 +118,7 @@ extension ValueProperties on FormStateHelper {
   String? get contentValue => this.formValueMap[ContentValueKey] as String?;
 
   set contentValue(String? value) {
-    this.setData(
-      this.formValueMap..addAll({ContentValueKey: value}),
-    );
+    this.setData(this.formValueMap..addAll({ContentValueKey: value}));
 
     if (_AddReportViewTextEditingControllers.containsKey(ContentValueKey)) {
       _AddReportViewTextEditingControllers[ContentValueKey]?.text = value ?? '';
@@ -141,7 +137,7 @@ extension ValueProperties on FormStateHelper {
 }
 
 extension Methods on FormStateHelper {
-  setContentValidationMessage(String? validationMessage) =>
+  void setContentValidationMessage(String? validationMessage) =>
       this.fieldsValidationMessages[ContentValueKey] = validationMessage;
 
   /// Clears text input fields on the Form
@@ -170,7 +166,6 @@ String? getValidationMessage(String key) {
 }
 
 /// Updates the fieldsValidationMessages on the FormViewModel
-void updateValidationData(FormStateHelper model) =>
-    model.setValidationMessages({
-      ContentValueKey: getValidationMessage(ContentValueKey),
-    });
+void updateValidationData(FormStateHelper model) => model.setValidationMessages(
+  {ContentValueKey: getValidationMessage(ContentValueKey)},
+);

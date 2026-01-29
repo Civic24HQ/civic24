@@ -22,6 +22,7 @@ import 'package:citizen/ui/views/settings/appearance_settings/appearance_setting
 import 'package:citizen/ui/views/settings/language_settings/language_settings_view.dart';
 import 'package:citizen/ui/views/settings/profile/profile_view.dart';
 import 'package:citizen/ui/views/settings/settings_view.dart';
+import 'package:citizen/ui/views/settings/signin_security/signin_security_view.dart';
 import 'package:citizen/ui/views/startup/startup_view.dart';
 import 'package:flutter/material.dart';
 import 'package:localization/localization.dart';
@@ -48,6 +49,7 @@ import 'package:styles/styles.dart';
     AdaptiveRoute(page: ProfileView),
     AdaptiveRoute(page: AppearanceSettingsView),
     AdaptiveRoute(page: LanguageSettingsView),
+    AdaptiveRoute(page: SigninSecurityView),
     // @stacked-route
   ],
   bottomsheets: [
