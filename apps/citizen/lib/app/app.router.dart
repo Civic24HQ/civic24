@@ -206,13 +206,14 @@ class StackedRouterWeb extends _i19.RootStackRouter {
         opaque: true,
       );
     },
-    SigninSecurityViewRoute.name: (routeData) {
-      final args = routeData.argsAs<SigninSecurityViewArgs>(
-        orElse: () => const SigninSecurityViewArgs(),
+    SignInSecurityViewRoute.name: (routeData) {
+      final args = routeData.argsAs<SignInSecurityViewArgs>(
+        orElse: () => const SignInSecurityViewArgs(),
       );
-      return _i19.MaterialPageX<dynamic>(
+      return _i19.AdaptivePage<dynamic>(
         routeData: routeData,
-        child: _i17.SigninSecurityView(key: args.key),
+        child: _i17.SignInSecurityView(key: args.key),
+        opaque: true,
       );
     },
   };
@@ -248,8 +249,8 @@ class StackedRouterWeb extends _i19.RootStackRouter {
       path: '/language-settings-view',
     ),
     _i19.RouteConfig(
-      SigninSecurityViewRoute.name,
-      path: '/signin-security-view',
+      SignInSecurityViewRoute.name,
+      path: '/sign-in-security-view',
     ),
   ];
 }
@@ -681,27 +682,27 @@ class LanguageSettingsViewArgs {
 }
 
 /// generated route for
-/// [_i17.SigninSecurityView]
-class SigninSecurityViewRoute
-    extends _i19.PageRouteInfo<SigninSecurityViewArgs> {
-  SigninSecurityViewRoute({_i20.Key? key})
+/// [_i17.SignInSecurityView]
+class SignInSecurityViewRoute
+    extends _i19.PageRouteInfo<SignInSecurityViewArgs> {
+  SignInSecurityViewRoute({_i20.Key? key})
     : super(
-        SigninSecurityViewRoute.name,
-        path: '/signin-security-view',
-        args: SigninSecurityViewArgs(key: key),
+        SignInSecurityViewRoute.name,
+        path: '/sign-in-security-view',
+        args: SignInSecurityViewArgs(key: key),
       );
 
-  static const String name = 'SigninSecurityView';
+  static const String name = 'SignInSecurityView';
 }
 
-class SigninSecurityViewArgs {
-  const SigninSecurityViewArgs({this.key});
+class SignInSecurityViewArgs {
+  const SignInSecurityViewArgs({this.key});
 
   final _i20.Key? key;
 
   @override
   String toString() {
-    return 'SigninSecurityViewArgs{key: $key}';
+    return 'SignInSecurityViewArgs{key: $key}';
   }
 }
 
@@ -855,11 +856,11 @@ extension RouterStateExtension on _i18.RouterService {
     );
   }
 
-  Future<dynamic> navigateToSigninSecurityView({
+  Future<dynamic> navigateToSignInSecurityView({
     _i20.Key? key,
     void Function(_i19.NavigationFailure)? onFailure,
   }) async {
-    return navigateTo(SigninSecurityViewRoute(key: key), onFailure: onFailure);
+    return navigateTo(SignInSecurityViewRoute(key: key), onFailure: onFailure);
   }
 
   Future<dynamic> replaceWithHomeView({
@@ -1014,10 +1015,10 @@ extension RouterStateExtension on _i18.RouterService {
     );
   }
 
-  Future<dynamic> replaceWithSigninSecurityView({
+  Future<dynamic> replaceWithSignInSecurityView({
     _i20.Key? key,
     void Function(_i19.NavigationFailure)? onFailure,
   }) async {
-    return replaceWith(SigninSecurityViewRoute(key: key), onFailure: onFailure);
+    return replaceWith(SignInSecurityViewRoute(key: key), onFailure: onFailure);
   }
 }

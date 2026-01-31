@@ -25,6 +25,7 @@ export 'src/expanding_dots_indicator.dart';
 export 'src/file_upload.dart';
 export 'src/media_source_dialog.dart';
 export 'src/page_progress_bar.dart';
+export 'src/settings/security_list_tile.dart';
 export 'src/settings/settings_list_tile.dart';
 export 'src/social_action_button.dart';
 export 'src/sort_chip.dart';

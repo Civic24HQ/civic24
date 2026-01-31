@@ -1219,10 +1219,10 @@ class S {
     );
   }
 
-  /// `Sign In & Security`
+  /// `Sign-in & Security`
   String get featureSettingsSignInSecurity {
     return Intl.message(
-      'Sign In & Security',
+      'Sign-in & Security',
       name: 'featureSettingsSignInSecurity',
       desc: 'Sign In & Security Description',
       args: [],

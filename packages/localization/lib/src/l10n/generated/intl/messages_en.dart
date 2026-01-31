@@ -253,7 +253,7 @@ class MessageLookup extends MessageLookupByLibrary {
           "Enter the email associated with your account",
         ),
     "featureSettingsSignInSecurity": MessageLookupByLibrary.simpleMessage(
-      "Sign In & Security",
+      "Sign-in & Security",
     ),
     "featureSettingsTooltip": m0,
     "featureSettingsVersion": m1,
