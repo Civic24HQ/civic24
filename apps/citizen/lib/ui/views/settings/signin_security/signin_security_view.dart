@@ -1,27 +1,52 @@
+import 'package:citizen/ui/views/settings/signin_security/signin_security_viewmodel.dart';
+import 'package:components/components.dart';
 import 'package:flutter/material.dart';
+import 'package:localization/localization.dart';
 import 'package:stacked/stacked.dart';
+import 'package:styles/styles.dart';
 
-import 'signin_security_viewmodel.dart';
-
-class SigninSecurityView extends StackedView<SigninSecurityViewModel> {
-  const SigninSecurityView({Key? key}) : super(key: key);
+class SignInSecurityView extends StackedView<SignInSecurityViewModel> {
+  const SignInSecurityView({super.key});
 
   @override
   Widget builder(
     BuildContext context,
-    SigninSecurityViewModel viewModel,
+    SignInSecurityViewModel viewModel,
     Widget? child,
   ) {
     return Scaffold(
-      backgroundColor: Theme.of(context).colorScheme.background,
-      body: Container(
-        padding: const EdgeInsets.only(left: 25.0, right: 25.0),
-        child: const Center(child: Text("SigninSecurityView")),
+      appBar: AppBar(
+        title: Text(l10n.featureSettingsSignInSecurity),
+        shape: Border(bottom: BorderSide(color: context.neutralLowest)),
+      ),
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            AppSpacing.normal,
+            SecurityListTile(
+              alert: SecurityAlertType.google,
+              title: l10n.featureSettingsSecurityGoogle,
+              subtitle: l10n.featureSettingsSecurityGoogleUnlinkDesc,
+              onTap: viewModel.navigateToGoogleAuth,
+            ),
+            SecurityListTile(
+              alert: SecurityAlertType.apple,
+              title: l10n.featureSettingsSecurityApple,
+              subtitle: l10n.featureSettingsSecurityAppleUnlinkDesc,
+              onTap: viewModel.navigateToAppleAuth,
+              isEnabled: true,
+            ),
+            SecurityListTile(
+              title: l10n.featureSettingsSecuritySetPassword,
+              subtitle: l10n.featureSettingsSecuritySetPasswordDesc,
+              onTap: viewModel.navigateToSetPassword,
+            ),
+          ],
+        ),
       ),
     );
   }
 
   @override
-  SigninSecurityViewModel viewModelBuilder(BuildContext context) =>
-      SigninSecurityViewModel();
+  SignInSecurityViewModel viewModelBuilder(BuildContext context) => SignInSecurityViewModel();
 }

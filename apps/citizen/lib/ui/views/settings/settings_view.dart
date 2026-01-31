@@ -47,6 +47,11 @@ class SettingsView extends StackedView<SettingsViewModel> {
               onTap: viewModel.navigateToAppearanceSettings,
             ),
             SettingsListTile(
+              iconData: SolarIconsOutline.link,
+              title: l10n.featureSettingsSignInSecurity,
+              onTap: viewModel.navigateToSignInSecuritySettings,
+            ),
+            SettingsListTile(
               iconData: SolarIconsOutline.infoCircle,
               title: l10n.featureSettingsAbout,
               subtitle: l10n.featureSettingsVersion(viewModel.appVersion),

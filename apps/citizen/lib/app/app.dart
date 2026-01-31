@@ -49,7 +49,7 @@ import 'package:styles/styles.dart';
     AdaptiveRoute(page: ProfileView),
     AdaptiveRoute(page: AppearanceSettingsView),
     AdaptiveRoute(page: LanguageSettingsView),
-    AdaptiveRoute(page: SigninSecurityView),
+    AdaptiveRoute(page: SignInSecurityView),
     // @stacked-route
   ],
   bottomsheets: [

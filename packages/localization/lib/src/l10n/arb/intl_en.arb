@@ -477,7 +477,7 @@
     "@featureSettingsAppearance": {
         "description": "Appearance Description"
     },
-    "featureSettingsSignInSecurity": "Sign In & Security",
+    "featureSettingsSignInSecurity": "Sign-in & Security",
     "@featureSettingsSignInSecurity": {
         "description": "Sign In & Security Description"
     },
