@@ -26,20 +26,28 @@ class SignInSecurityView extends StackedView<SignInSecurityViewModel> {
             SecurityListTile(
               alert: SecurityAlertType.google,
               title: l10n.featureSettingsSecurityGoogle,
-              subtitle: l10n.featureSettingsSecurityGoogleUnlinkDesc,
+              subtitle: viewModel.isGoogleAuthLinked()
+                  ? l10n.featureSettingsSecurityGoogleLinkedDesc
+                  : l10n.featureSettingsSecurityGoogleUnlinkDesc,
               onTap: viewModel.navigateToGoogleAuth,
+              isEnabled: viewModel.isGoogleAuthLinked(),
             ),
+            // TODO(Civic24): Implement Apple Sign-In functionality
+            // SecurityListTile(
+            //   alert: SecurityAlertType.apple,
+            //   title: l10n.featureSettingsSecurityApple,
+            //   subtitle: l10n.featureSettingsSecurityAppleUnlinkDesc,
+            //   onTap: viewModel.navigateToAppleAuth,
+            //   isEnabled: viewModel.isAppleAuthLinked(),
+            // ),
             SecurityListTile(
-              alert: SecurityAlertType.apple,
-              title: l10n.featureSettingsSecurityApple,
-              subtitle: l10n.featureSettingsSecurityAppleUnlinkDesc,
-              onTap: viewModel.navigateToAppleAuth,
-              isEnabled: true,
-            ),
-            SecurityListTile(
-              title: l10n.featureSettingsSecuritySetPassword,
-              subtitle: l10n.featureSettingsSecuritySetPasswordDesc,
-              onTap: viewModel.navigateToSetPassword,
+              title: viewModel.isPasswordSet()
+                  ? l10n.featureSettingsSecurityResetPassword
+                  : l10n.featureSettingsSecuritySetPassword,
+              subtitle: viewModel.isPasswordSet()
+                  ? l10n.featureSettingsSecurityResetPasswordDesc
+                  : l10n.featureSettingsSecuritySetPasswordDesc,
+              onTap: viewModel.navigateToUpdatePassword,
             ),
           ],
         ),
