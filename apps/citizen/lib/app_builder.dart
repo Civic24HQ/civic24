@@ -13,7 +13,7 @@ class AppBuilder extends StatelessWidget with AlertMixin {
   @override
   Widget build(BuildContext context) {
     return ViewModelBuilder.reactive(
-      viewModelBuilder: AppBuilderViewModel.new,
+      viewModelBuilder: () => AppBuilderViewModel(alertListener: this),
       builder: (context, model, child) {
         return OverlaySupport.global(child: builder(model.displayPreferences));
       },
@@ -31,8 +31,15 @@ class AppBuilder extends StatelessWidget with AlertMixin {
 }
 
 class AppBuilderViewModel extends ReactiveViewModel {
+  AppBuilderViewModel({AlertMixin? alertListener}) {
+    _alertListener = alertListener ?? _defaultAlertListener;
+    registerListener(_alertListener);
+  }
   final userService = locator<UserService>();
   final alertService = locator<AlertService>();
+  late final AlertMixin _alertListener;
+
+  static const _defaultAlertListener = _NoOpAlertListener();
 
   @override
   List<ListenableServiceMixin> get listenableServices => [
@@ -44,4 +51,13 @@ class AppBuilderViewModel extends ReactiveViewModel {
 
   void registerListener(AlertMixin listener) =>
       alertService.addAlertListener(listener);
+}
+
+class _NoOpAlertListener with AlertMixin {
+  const _NoOpAlertListener();
+
+  @override
+  void onAlert(AlertModel notification) {}
+  @override
+  void onToast(String message) {}
 }

@@ -6,16 +6,14 @@ part of 'display_preferences.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$DisplayPreferencesImpl _$$DisplayPreferencesImplFromJson(
-  Map<String, dynamic> json,
-) => _$DisplayPreferencesImpl(
-  language: json['language'] as String? ?? 'en',
-  themeModeIndex: (json['themeModeIndex'] as num?)?.toInt() ?? 0,
-);
+_DisplayPreferences _$DisplayPreferencesFromJson(Map<String, dynamic> json) =>
+    _DisplayPreferences(
+      language: json['language'] as String? ?? 'en',
+      themeModeIndex: (json['themeModeIndex'] as num?)?.toInt() ?? 0,
+    );
 
-Map<String, dynamic> _$$DisplayPreferencesImplToJson(
-  _$DisplayPreferencesImpl instance,
-) => <String, dynamic>{
-  'language': instance.language,
-  'themeModeIndex': instance.themeModeIndex,
-};
+Map<String, dynamic> _$DisplayPreferencesToJson(_DisplayPreferences instance) =>
+    <String, dynamic>{
+      'language': instance.language,
+      'themeModeIndex': instance.themeModeIndex,
+    };

@@ -22,7 +22,10 @@ class AddReportViewModel extends FormViewModel {
   final _cloudinaryStorageService = locator<CloudinaryStorageService>();
 
   @override
-  List<ListenableServiceMixin> get listenableServices => [_userService, _reportService];
+  List<ListenableServiceMixin> get listenableServices => [
+    _userService,
+    _reportService,
+  ];
 
   String get user => _userService.user!.id;
   List<Report> get reportList => _reportService.reportList;
@@ -39,7 +42,8 @@ class AddReportViewModel extends FormViewModel {
   ReportData _reportData = ReportData.empty();
   ReportData get reportData => _reportData;
 
-  bool isCategoryTypeSelected(CategoryType categoryType) => _reportData.categoryTypes.contains(categoryType);
+  bool isCategoryTypeSelected(CategoryType categoryType) =>
+      _reportData.categoryTypes.contains(categoryType);
 
   List<CategoryType> get categoryTypes => _reportData.categoryTypes;
 
@@ -76,7 +80,10 @@ class AddReportViewModel extends FormViewModel {
     rebuildUi();
   }
 
-  void toggleCategoryType(CategoryType categoryType, {bool isSelected = false}) {
+  void toggleCategoryType(
+    CategoryType categoryType, {
+    bool isSelected = false,
+  }) {
     final categoryTypes = List<CategoryType>.from(_reportData.categoryTypes);
     if (isSelected) {
       categoryTypes.add(categoryType);
@@ -113,7 +120,10 @@ class AddReportViewModel extends FormViewModel {
   }
 
   Future<void> pickImageWithSourceDialog() async {
-    final response = await _dialogService.showCustomDialog(variant: DialogType.uploadMedia, barrierDismissible: true);
+    final response = await _dialogService.showCustomDialog(
+      variant: DialogType.uploadMedia,
+      barrierDismissible: true,
+    );
 
     if (response == null || response.data == null) {
       _log.d('No asset source selected');
@@ -150,7 +160,10 @@ class AddReportViewModel extends FormViewModel {
 
   Future<void> uploadImageToCloudinary() async {
     for (final file in _mediaFiles) {
-      final uploadedUrl = await _cloudinaryStorageService.uploadFile(file: file!.imageFile, folder: 'reports');
+      final uploadedUrl = await _cloudinaryStorageService.uploadFile(
+        file: file!.imageFile,
+        folder: 'reports',
+      );
       _log.d('Uploaded Image URL: $uploadedUrl');
       if (uploadedUrl != null) {
         imageUrlList.add(uploadedUrl);
@@ -165,7 +178,10 @@ class AddReportViewModel extends FormViewModel {
   }
 
   Future<void> reportSuccessful() async {
-    _alertService.showSuccessAlert(title: 'Report Submitted', message: 'Your report has been successfully submitted.');
+    _alertService.showSuccessAlert(
+      title: 'Report Submitted',
+      message: 'Your report has been successfully submitted.',
+    );
     await _routerService.clearStackAndShow(MainViewRoute());
   }
 
@@ -178,34 +194,32 @@ class AddReportViewModel extends FormViewModel {
     setBusy(true);
 
     _analyticsService.logButtonClick(kAnalyticsButtonAddReport);
-
-    await uploadImageToCloudinary();
-
     if (imageUrlList.isNotEmpty) {
-      _log.d('Image URLs: $imageUrlList');
-
-      final newReportData = ReportData(
-        userId: _userService.user!.id,
-        categoryTypes: _reportData.categoryTypes,
-        content: contentValue!,
-        firstName: _userService.user!.firstName,
-        lastName: _userService.user!.lastName,
-        country: _userService.user!.country,
-        state: _userService.user!.state,
-        reportId: '',
-        likeCount: 0,
-        dislikeCount: 0,
-        commentCount: 0,
-        bookmarkCount: 0,
-        createdAt: DateTime.now(),
-        updatedAt: DateTime.now(),
-        media: imageUrlList,
-      );
-      final newReport = Report(reportData: newReportData);
-      await runBusyFuture(_reportService.addReport(newReport));
-
-      setBusy(false);
-      await reportSuccessful();
+      await uploadImageToCloudinary();
     }
+    _log.d('Image URLs: $imageUrlList');
+
+    final newReportData = ReportData(
+      userId: _userService.user!.id,
+      categoryTypes: _reportData.categoryTypes,
+      content: contentValue!,
+      firstName: _userService.user!.firstName,
+      lastName: _userService.user!.lastName,
+      country: _userService.user!.country,
+      state: _userService.user!.state,
+      reportId: '',
+      likeCount: 0,
+      dislikeCount: 0,
+      commentCount: 0,
+      bookmarkCount: 0,
+      createdAt: DateTime.now(),
+      updatedAt: DateTime.now(),
+      media: imageUrlList,
+    );
+    final newReport = Report(reportData: newReportData);
+    await runBusyFuture(_reportService.addReport(newReport));
+
+    setBusy(false);
+    await reportSuccessful();
   }
 }

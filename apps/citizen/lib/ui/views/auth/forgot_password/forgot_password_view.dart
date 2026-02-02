@@ -11,7 +11,7 @@ import 'package:utils/utils.dart';
 
 @FormView(
   autoTextFieldValidation: false,
-  fields: [FormTextField(name: 'email', validator: validateEmail)],
+  fields: [FormTextField(name: 'email', validator: Validator.validateEmail)],
 )
 class ForgotPasswordView extends StackedView<ForgotPasswordViewModel>
     with $ForgotPasswordView {

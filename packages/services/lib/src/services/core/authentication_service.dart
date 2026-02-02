@@ -69,6 +69,15 @@ class AuthenticationService {
   /// Returns the current authenticated user.
   User? get firebaseUser => _firebaseAuth.currentUser;
 
+  List<String> get linkedProviders {
+    final data = _firebaseAuth.currentUser?.providerData ?? [];
+    return data.map((p) => p.providerId).toList();
+  }
+
+  bool get hasGoogleProvider => linkedProviders.contains('google.com');
+  bool get hasAppleProvider => linkedProviders.contains('apple.com');
+  bool get hasPasswordProvider => linkedProviders.contains('password');
+
   /// Returns the user's display name.
   ///
   /// If the user is not authenticated, this will return `null`.
@@ -372,7 +381,65 @@ class AuthenticationService {
       _alertService.showErrorAlert(title: 'Google Sign In Failed', message: exceptionToMessage(e));
       rethrow;
     }
+  }
 
+  /// Links Google authentication to the current user.
+  /// Returns `true` if the linking was successful.
+  Future<bool> linkGoogleToCurrentUser() async {
+    final user = FirebaseAuth.instance.currentUser;
+    if (user == null) return false;
+
+    try {
+      final googleUser = await _googleSignIn.authenticate(
+        scopeHint: _scopes, // Specify required scopes
+      );
+
+      _log.d('googleUser $googleUser');
+
+      // Get authorization for Firebase scopes if needed
+      final authClient = _googleSignIn.authorizationClient;
+
+      // Try to get existing authorization
+      var authorization = await authClient.authorizationForScopes(_scopes);
+
+      if (authorization == null) {
+        // Request authorization if not already granted
+        _log.d('Requesting additional authorization for scopes: $_scopes');
+        authorization = await authClient.authorizeScopes(_scopes);
+      }
+
+      // Update Authentication Token Access
+      final googleAuth = googleUser.authentication;
+      final credential = GoogleAuthProvider.credential(
+        idToken: googleAuth.idToken,
+        accessToken: authorization.accessToken,
+      );
+
+      await user.linkWithCredential(credential);
+      return true;
+    } on FirebaseAuthException catch (e) {
+      // Google account is already linked to another Firebase user
+      if (e.code == 'credential-already-in-use') {
+        _alertService.showErrorAlert(
+          title: 'Google Account Already Linked',
+          message: 'This Google account is already linked to another profile. Try signing in with Google instead.',
+        );
+        return false;
+      }
+
+      // Account exists with different credential
+      if (e.code == 'account-exists-with-different-credential') {
+        _alertService.showErrorAlert(
+          title: 'Account Exists with Different Credential',
+          message: 'An account already exists with the same email address but different sign-in credentials.',
+        );
+        return false;
+      }
+
+      return false;
+    } catch (_) {
+      return false;
+    }
   }
 
   /// Checks if Sign in with Apple is available on the current platform.

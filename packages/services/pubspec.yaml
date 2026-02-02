@@ -39,7 +39,7 @@ dependencies:
   image_cropper: ^11.0.0  
   flutter_image_compress: ^2.4.0   
   exif: ^3.3.0
-  app_settings: ^6.1.1
+  app_settings: ^7.0.0
   flutter_local_notifications: ^19.0.0
   http: ^1.6.0
   http_parser: ^4.1.2

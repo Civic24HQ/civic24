@@ -9,7 +9,7 @@ part 'report_data.g.dart';
 
 /// Represents a users report with various attributes.
 @freezed
-class ReportData with _$ReportData, SerializeJson {
+abstract class ReportData with _$ReportData, SerializeJson {
   @JsonSerializable()
   const factory ReportData({
     /// Unique identifier for the report.
@@ -113,7 +113,7 @@ class ReportData with _$ReportData, SerializeJson {
 
 /// Wraps a [ReportData] with the current user’s interaction state.
 @freezed
-class Report with _$Report, SerializeJson {
+abstract class Report with _$Report, SerializeJson {
   @JsonSerializable()
   const factory Report({
     /// The report data model associated with this report.

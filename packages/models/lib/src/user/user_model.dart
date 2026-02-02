@@ -17,7 +17,7 @@ enum UserType {
 }
 
 @freezed
-class UserModel with _$UserModel, SerializeJson {
+abstract class UserModel with _$UserModel, SerializeJson {
   @JsonSerializable()
   const factory UserModel({
     /// The user's unique id.

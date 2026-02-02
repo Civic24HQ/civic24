@@ -477,6 +477,10 @@
     "@featureSettingsAppearance": {
         "description": "Appearance Description"
     },
+    "featureSettingsSignInSecurity": "Sign-in & Security",
+    "@featureSettingsSignInSecurity": {
+        "description": "Sign In & Security Description"
+    },
     "featureSettingsAppearanceSystem": "System Settings",
     "@featureSettingsAppearanceSystem": {
         "description": "System Settings Description"
@@ -500,6 +504,50 @@
     "featureSettingsAppearanceDarkDesc": "Keep the app in dark mode",
     "@featureSettingsAppearanceDarkDesc": {
         "description": "Dark Mode Description"
+    },
+    "featureSettingsSecurityGoogle": "Google",
+    "@featureSettingsSecurityGoogle": {
+        "description": "Google Sign-In Description"
+    },
+    "featureSettingsSecurityGoogleUnlinkDesc": "Link your Google account for secure sign-in",
+    "@featureSettingsSecurityGoogleUnlinkDesc": {
+        "description": "Google Sign-In Unlinked Description"
+    },
+    "featureSettingsSecurityGoogleLinkedDesc": "Your Google account is available for sign-in",
+    "@featureSettingsSecurityGoogleLinkedDesc": {
+        "description": "Google Sign-In Linked Description"
+    },
+    "featureSettingsSecurityApple": "Apple",
+    "@featureSettingsSecurityApple": {
+        "description": "Apple Sign-In Description"
+    },
+    "featureSettingsSecurityAppleUnlinkDesc": "Link your Apple ID for secure sign-in",
+    "@featureSettingsSecurityAppleUnlinkDesc": {
+        "description": "Apple Sign-In Unlinked Description"
+    },
+    "featureSettingsSecurityAppleLinkedDesc": "Your Apple ID is available for sign-in",
+    "@featureSettingsSecurityAppleLinkedDesc": {
+        "description": "Apple ID Linked Description"
+    },
+    "featureSettingsSecuritySetPassword": "Set Password",
+    "@featureSettingsSecuritySetPassword": {
+        "description": "Set Password Description"
+    },
+    "featureSettingsSecuritySetPasswordDesc": "Enable email and password sign-in",
+    "@featureSettingsSecuritySetPasswordDesc": {
+        "description": "Set Password Description"
+    },
+    "featureSettingsSecuritySetPasswordLabel": "Enter the email associated with your account",
+    "@featureSettingsSecuritySetPasswordLabel": {
+        "description": "Set Password Label Description"
+    },
+    "featureSettingsSecurityResetPassword": "Change Password",
+    "@featureSettingsSecurityResetPassword": {
+        "description": "Reset Password Description"
+    },
+    "featureSettingsSecurityResetPasswordDesc": "Update your existing password",
+    "@featureSettingsSecurityResetPasswordDesc": {
+        "description": "Reset Password Description"
     },
     "featureSettingsAbout": "About",
     "@featureSettingsAbout": {
