@@ -28,9 +28,12 @@ class _MainViewState extends State<MainView> {
       _selectedIndex = index;
     });
     _pageController.jumpToPage(index);
-    
+
     final screenName = citizenDestinations[index].label;
-    _analyticsService.logScreenView(screenClass: kAnalyticViewClass, screenName: '${screenName}View');
+    _analyticsService.logScreenView(
+      screenClass: kAnalyticViewClass,
+      screenName: '${screenName}View',
+    );
   }
 
   @override

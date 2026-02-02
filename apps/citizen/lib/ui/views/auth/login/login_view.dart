@@ -14,8 +14,8 @@ import 'package:utils/utils.dart';
 @FormView(
   autoTextFieldValidation: false,
   fields: [
-    FormTextField(name: 'email', validator: validateEmail),
-    FormTextField(name: 'password', validator: validatePassword),
+    FormTextField(name: 'email', validator: Validator.validateEmail),
+    FormTextField(name: 'password', validator: Validator.validatePassword),
   ],
 )
 class LoginView extends StackedView<LoginViewModel> with $LoginView {

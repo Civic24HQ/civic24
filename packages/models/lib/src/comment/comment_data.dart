@@ -8,7 +8,7 @@ part 'comment_data.g.dart';
 
 /// Represents a users comment with various attributes.
 @freezed
-class CommentData with _$CommentData, SerializeJson {
+abstract class CommentData with _$CommentData, SerializeJson {
   @JsonSerializable()
   const factory CommentData({
     /// Unique identifier for the comment.

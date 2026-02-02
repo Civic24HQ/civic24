@@ -1,7 +1,7 @@
 part of '../user_model.dart';
 
 @freezed
-class UserAccount with _$UserAccount {
+abstract class UserAccount with _$UserAccount {
   @JsonSerializable()
   const factory UserAccount({
     /// The user's first name.
@@ -88,7 +88,7 @@ class UserAccount with _$UserAccount {
 }
 
 @freezed
-class UserDeviceModel with _$UserDeviceModel {
+abstract class UserDeviceModel with _$UserDeviceModel {
   @JsonSerializable()
   const factory UserDeviceModel({
     /// The device model of the user.
@@ -107,7 +107,7 @@ class UserDeviceModel with _$UserDeviceModel {
 }
 
 @freezed
-class TimeZone with _$TimeZone {
+abstract class TimeZone with _$TimeZone {
   @JsonSerializable()
   const factory TimeZone({
     /// The name of the time zone. Example: "Europe/Berlin"

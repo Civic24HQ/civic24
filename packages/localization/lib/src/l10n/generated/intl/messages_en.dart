@@ -215,6 +215,46 @@ class MessageLookup extends MessageLookupByLibrary {
       "Are you sure you want to log out from your account on this device?",
     ),
     "featureSettingsProfile": MessageLookupByLibrary.simpleMessage("Profile"),
+    "featureSettingsSecurityApple": MessageLookupByLibrary.simpleMessage(
+      "Apple",
+    ),
+    "featureSettingsSecurityAppleLinkedDesc":
+        MessageLookupByLibrary.simpleMessage(
+          "Your Apple ID is available for sign-in",
+        ),
+    "featureSettingsSecurityAppleUnlinkDesc":
+        MessageLookupByLibrary.simpleMessage(
+          "Link your Apple ID for secure sign-in",
+        ),
+    "featureSettingsSecurityGoogle": MessageLookupByLibrary.simpleMessage(
+      "Google",
+    ),
+    "featureSettingsSecurityGoogleLinkedDesc":
+        MessageLookupByLibrary.simpleMessage(
+          "Your Google account is available for sign-in",
+        ),
+    "featureSettingsSecurityGoogleUnlinkDesc":
+        MessageLookupByLibrary.simpleMessage(
+          "Link your Google account for secure sign-in",
+        ),
+    "featureSettingsSecurityResetPassword":
+        MessageLookupByLibrary.simpleMessage("Change Password"),
+    "featureSettingsSecurityResetPasswordDesc":
+        MessageLookupByLibrary.simpleMessage("Update your existing password"),
+    "featureSettingsSecuritySetPassword": MessageLookupByLibrary.simpleMessage(
+      "Set Password",
+    ),
+    "featureSettingsSecuritySetPasswordDesc":
+        MessageLookupByLibrary.simpleMessage(
+          "Enable email and password sign-in",
+        ),
+    "featureSettingsSecuritySetPasswordLabel":
+        MessageLookupByLibrary.simpleMessage(
+          "Enter the email associated with your account",
+        ),
+    "featureSettingsSignInSecurity": MessageLookupByLibrary.simpleMessage(
+      "Sign-in & Security",
+    ),
     "featureSettingsTooltip": m0,
     "featureSettingsVersion": m1,
     "featureSignUpCreateAccount": MessageLookupByLibrary.simpleMessage(

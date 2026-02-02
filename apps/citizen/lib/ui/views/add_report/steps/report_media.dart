@@ -18,7 +18,8 @@ class ReportMedia extends ViewModelWidget<AddReportViewModel> {
             crossAxisSpacing: AppDimensions.size16,
             mainAxisSpacing: AppDimensions.size16,
           ),
-          itemCount: viewModel.mediaFiles.length + 1, // +1 for the "Add Media" button
+          itemCount:
+              viewModel.mediaFiles.length + 1, // +1 for the "Add Media" button
           itemBuilder: (BuildContext context, int index) {
             if (index == 0) {
               return Container(
@@ -28,7 +29,10 @@ class ReportMedia extends ViewModelWidget<AddReportViewModel> {
                 ),
                 child: IconButton(
                   onPressed: () => viewModel.pickImageWithSourceDialog(),
-                  icon: const Icon(SolarIconsOutline.cameraAdd, size: AppDimensions.size24),
+                  icon: const Icon(
+                    SolarIconsOutline.cameraAdd,
+                    size: AppDimensions.size24,
+                  ),
                 ),
               );
             }
@@ -53,7 +57,10 @@ class ReportMedia extends ViewModelWidget<AddReportViewModel> {
                   right: -6,
                   child: Container(
                     width: AppDimensions.size28,
-                    decoration: BoxDecoration(color: context.neutralLowest, shape: BoxShape.circle),
+                    decoration: BoxDecoration(
+                      color: context.neutralLowest,
+                      shape: BoxShape.circle,
+                    ),
                     child: IconButton(
                       padding: EdgeInsets.zero,
                       constraints: const BoxConstraints(),
@@ -64,7 +71,7 @@ class ReportMedia extends ViewModelWidget<AddReportViewModel> {
                   ),
                 ),
               ],
-            );        
+            );
           },
         ),
         AppSpacing.large,

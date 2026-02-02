@@ -22,7 +22,10 @@ class ForgotPasswordViewModel extends AuthViewModel {
     analyticsService.logButtonClick(kAnalyticButtonResetPassword);
     try {
       _log.i('$emailValue');
-      await runBusyFuture(authenticationService.sendPasswordResetEmail(emailValue!), throwException: true);
+      await runBusyFuture(
+        authenticationService.sendPasswordResetEmail(emailValue!),
+        throwException: true,
+      );
 
       final response = await _dialogService.showCustomDialog(
         variant: DialogType.sendPasswordResetEmail,

@@ -1,3 +1,4 @@
+// dart format width=80
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
 // **************************************************************************
@@ -28,11 +29,13 @@ Future<void> setupServiceLocator({
   String? environment,
   EnvironmentFilter? environmentFilter,
 }) async {
-// Register environments
+  // Register environments
   serviceLocator.registerEnvironment(
-      environment: environment, environmentFilter: environmentFilter);
+    environment: environment,
+    environmentFilter: environmentFilter,
+  );
 
-// Register dependencies
+  // Register dependencies
   serviceLocator.registerLazySingleton(() => UserService());
   serviceLocator.registerLazySingleton(() => AuthenticationService());
   serviceLocator.registerLazySingleton(() => AlertService());

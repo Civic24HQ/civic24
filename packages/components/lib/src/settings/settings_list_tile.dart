@@ -28,7 +28,7 @@ class SettingsListTile extends StatelessWidget {
   final VoidCallback? onTap;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context) { 
     return Semantics(
       container: true,
       child: Tooltip(

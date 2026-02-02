@@ -39,6 +39,10 @@ class SettingsViewModel extends ReactiveViewModel {
     await _navigationService.navigateToAppearanceSettingsView();
   }
 
+  Future<void> navigateToSignInSecuritySettings() async {
+    await _navigationService.navigateToSignInSecurityView();
+  }
+
   void navigateToAboutSettings() {}
 
   Future<void> logout() async {
@@ -56,7 +60,10 @@ class SettingsViewModel extends ReactiveViewModel {
 
     _analyticsService
       ..logButtonClick(kAnalyticButtonAuthLogout)
-      ..logScreenView(screenClass: kAnalyticOverlayClass, screenName: kAnalyticDialogLogoutConfirmation);
+      ..logScreenView(
+        screenClass: kAnalyticOverlayClass,
+        screenName: kAnalyticDialogLogoutConfirmation,
+      );
 
     final shouldLogout = await showLogoutConfirmationDialog();
     if (!shouldLogout) return;

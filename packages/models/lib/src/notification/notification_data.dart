@@ -8,7 +8,7 @@ part 'notification_data.g.dart';
 
 /// Represents a users notification with various attributes.
 @freezed
-class NotificationData with _$NotificationData, SerializeJson {
+abstract class NotificationData with _$NotificationData, SerializeJson {
   @JsonSerializable()
   const factory NotificationData({
     /// Unique identifier for the notification.

@@ -1,3 +1,4 @@
+// dart format width=80
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
 // **************************************************************************
@@ -15,14 +16,12 @@ const bool _autoTextFieldValidation = false;
 const String EmailValueKey = 'email';
 
 final Map<String, TextEditingController>
-    _ForgotPasswordViewTextEditingControllers = {};
+_ForgotPasswordViewTextEditingControllers = {};
 
 final Map<String, FocusNode> _ForgotPasswordViewFocusNodes = {};
 
 final Map<String, String? Function(String?)?>
-    _ForgotPasswordViewTextValidations = {
-  EmailValueKey: validateEmail,
-};
+_ForgotPasswordViewTextValidations = {EmailValueKey: Validator.validateEmail};
 
 mixin $ForgotPasswordView {
   TextEditingController get emailController =>
@@ -38,8 +37,9 @@ mixin $ForgotPasswordView {
       return _ForgotPasswordViewTextEditingControllers[key]!;
     }
 
-    _ForgotPasswordViewTextEditingControllers[key] =
-        TextEditingController(text: initialValue);
+    _ForgotPasswordViewTextEditingControllers[key] = TextEditingController(
+      text: initialValue,
+    );
     return _ForgotPasswordViewTextEditingControllers[key]!;
   }
 
@@ -74,10 +74,7 @@ mixin $ForgotPasswordView {
   /// Updates the formData on the FormViewModel
   void _updateFormData(FormStateHelper model, {bool forceValidate = false}) {
     model.setData(
-      model.formValueMap
-        ..addAll({
-          EmailValueKey: emailController.text,
-        }),
+      model.formValueMap..addAll({EmailValueKey: emailController.text}),
     );
 
     if (_autoTextFieldValidation || forceValidate) {
@@ -107,10 +104,9 @@ mixin $ForgotPasswordView {
 }
 
 extension ValueProperties on FormStateHelper {
-  bool get hasAnyValidationMessage => this
-      .fieldsValidationMessages
-      .values
-      .any((validation) => validation != null);
+  bool get hasAnyValidationMessage => this.fieldsValidationMessages.values.any(
+    (validation) => validation != null,
+  );
 
   bool get isFormValid {
     if (!_autoTextFieldValidation) this.validateForm();
@@ -121,9 +117,7 @@ extension ValueProperties on FormStateHelper {
   String? get emailValue => this.formValueMap[EmailValueKey] as String?;
 
   set emailValue(String? value) {
-    this.setData(
-      this.formValueMap..addAll({EmailValueKey: value}),
-    );
+    this.setData(this.formValueMap..addAll({EmailValueKey: value}));
 
     if (_ForgotPasswordViewTextEditingControllers.containsKey(EmailValueKey)) {
       _ForgotPasswordViewTextEditingControllers[EmailValueKey]?.text =
@@ -143,7 +137,7 @@ extension ValueProperties on FormStateHelper {
 }
 
 extension Methods on FormStateHelper {
-  setEmailValidationMessage(String? validationMessage) =>
+  void setEmailValidationMessage(String? validationMessage) =>
       this.fieldsValidationMessages[EmailValueKey] = validationMessage;
 
   /// Clears text input fields on the Form
@@ -172,7 +166,6 @@ String? getValidationMessage(String key) {
 }
 
 /// Updates the fieldsValidationMessages on the FormViewModel
-void updateValidationData(FormStateHelper model) =>
-    model.setValidationMessages({
-      EmailValueKey: getValidationMessage(EmailValueKey),
-    });
+void updateValidationData(FormStateHelper model) => model.setValidationMessages(
+  {EmailValueKey: getValidationMessage(EmailValueKey)},
+);
