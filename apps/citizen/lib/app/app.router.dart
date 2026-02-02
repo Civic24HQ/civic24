@@ -6,9 +6,9 @@
 // **************************************************************************
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:flutter/material.dart' as _i20;
-import 'package:stacked/stacked.dart' as _i19;
-import 'package:stacked_services/stacked_services.dart' as _i18;
+import 'package:flutter/material.dart' as _i21;
+import 'package:stacked/stacked.dart' as _i20;
+import 'package:stacked_services/stacked_services.dart' as _i19;
 
 import '../ui/shared/src/success/success_view.dart' as _i6;
 import '../ui/views/add_report/add_report_view.dart' as _i13;
@@ -28,23 +28,24 @@ import '../ui/views/settings/language_settings/language_settings_view.dart'
 import '../ui/views/settings/profile/profile_view.dart' as _i14;
 import '../ui/views/settings/settings_view.dart' as _i12;
 import '../ui/views/settings/signin_security/signin_security_view.dart' as _i17;
+import '../ui/views/settings/update_password/update_password_view.dart' as _i18;
 import '../ui/views/startup/startup_view.dart' as _i2;
 
 final stackedRouter = StackedRouterWeb(
-  navigatorKey: _i18.StackedService.navigatorKey,
+  navigatorKey: _i19.StackedService.navigatorKey,
 );
 
-class StackedRouterWeb extends _i19.RootStackRouter {
-  StackedRouterWeb({_i20.GlobalKey<_i20.NavigatorState>? navigatorKey})
+class StackedRouterWeb extends _i20.RootStackRouter {
+  StackedRouterWeb({_i21.GlobalKey<_i21.NavigatorState>? navigatorKey})
     : super(navigatorKey);
 
   @override
-  final Map<String, _i19.PageFactory> pagesMap = {
+  final Map<String, _i20.PageFactory> pagesMap = {
     HomeViewRoute.name: (routeData) {
       final args = routeData.argsAs<HomeViewArgs>(
         orElse: () => const HomeViewArgs(),
       );
-      return _i19.AdaptivePage<dynamic>(
+      return _i20.AdaptivePage<dynamic>(
         routeData: routeData,
         child: _i1.HomeView(key: args.key),
         opaque: true,
@@ -54,7 +55,7 @@ class StackedRouterWeb extends _i19.RootStackRouter {
       final args = routeData.argsAs<StartupViewArgs>(
         orElse: () => const StartupViewArgs(),
       );
-      return _i19.AdaptivePage<dynamic>(
+      return _i20.AdaptivePage<dynamic>(
         routeData: routeData,
         child: _i2.StartupView(key: args.key),
         opaque: true,
@@ -64,7 +65,7 @@ class StackedRouterWeb extends _i19.RootStackRouter {
       final args = routeData.argsAs<OnboardingViewArgs>(
         orElse: () => const OnboardingViewArgs(),
       );
-      return _i19.AdaptivePage<dynamic>(
+      return _i20.AdaptivePage<dynamic>(
         routeData: routeData,
         child: _i3.OnboardingView(
           key: args.key,
@@ -77,7 +78,7 @@ class StackedRouterWeb extends _i19.RootStackRouter {
       final args = routeData.argsAs<LoginViewArgs>(
         orElse: () => const LoginViewArgs(),
       );
-      return _i19.AdaptivePage<dynamic>(
+      return _i20.AdaptivePage<dynamic>(
         routeData: routeData,
         child: _i4.LoginView(key: args.key),
         opaque: true,
@@ -87,7 +88,7 @@ class StackedRouterWeb extends _i19.RootStackRouter {
       final args = routeData.argsAs<SignupViewArgs>(
         orElse: () => const SignupViewArgs(),
       );
-      return _i19.AdaptivePage<dynamic>(
+      return _i20.AdaptivePage<dynamic>(
         routeData: routeData,
         child: _i5.SignupView(key: args.key),
         opaque: true,
@@ -95,7 +96,7 @@ class StackedRouterWeb extends _i19.RootStackRouter {
     },
     SuccessViewRoute.name: (routeData) {
       final args = routeData.argsAs<SuccessViewArgs>();
-      return _i19.AdaptivePage<dynamic>(
+      return _i20.AdaptivePage<dynamic>(
         routeData: routeData,
         child: _i6.SuccessView(
           onProceed: args.onProceed,
@@ -110,7 +111,7 @@ class StackedRouterWeb extends _i19.RootStackRouter {
     },
     ForgotPasswordViewRoute.name: (routeData) {
       final args = routeData.argsAs<ForgotPasswordViewArgs>();
-      return _i19.AdaptivePage<dynamic>(
+      return _i20.AdaptivePage<dynamic>(
         routeData: routeData,
         child: _i7.ForgotPasswordView(args.email, key: args.key),
         opaque: true,
@@ -120,7 +121,7 @@ class StackedRouterWeb extends _i19.RootStackRouter {
       final args = routeData.argsAs<CompleteProfileViewArgs>(
         orElse: () => const CompleteProfileViewArgs(),
       );
-      return _i19.AdaptivePage<dynamic>(
+      return _i20.AdaptivePage<dynamic>(
         routeData: routeData,
         child: _i8.CompleteProfileView(key: args.key),
         opaque: true,
@@ -130,7 +131,7 @@ class StackedRouterWeb extends _i19.RootStackRouter {
       final args = routeData.argsAs<MainViewArgs>(
         orElse: () => const MainViewArgs(),
       );
-      return _i19.AdaptivePage<dynamic>(
+      return _i20.AdaptivePage<dynamic>(
         routeData: routeData,
         child: _i9.MainView(key: args.key, initialIndex: args.initialIndex),
         opaque: true,
@@ -140,7 +141,7 @@ class StackedRouterWeb extends _i19.RootStackRouter {
       final args = routeData.argsAs<ReportsViewArgs>(
         orElse: () => const ReportsViewArgs(),
       );
-      return _i19.AdaptivePage<dynamic>(
+      return _i20.AdaptivePage<dynamic>(
         routeData: routeData,
         child: _i10.ReportsView(key: args.key),
         opaque: true,
@@ -150,7 +151,7 @@ class StackedRouterWeb extends _i19.RootStackRouter {
       final args = routeData.argsAs<NotificationViewArgs>(
         orElse: () => const NotificationViewArgs(),
       );
-      return _i19.AdaptivePage<dynamic>(
+      return _i20.AdaptivePage<dynamic>(
         routeData: routeData,
         child: _i11.NotificationView(key: args.key),
         opaque: true,
@@ -160,7 +161,7 @@ class StackedRouterWeb extends _i19.RootStackRouter {
       final args = routeData.argsAs<SettingsViewArgs>(
         orElse: () => const SettingsViewArgs(),
       );
-      return _i19.AdaptivePage<dynamic>(
+      return _i20.AdaptivePage<dynamic>(
         routeData: routeData,
         child: _i12.SettingsView(key: args.key),
         opaque: true,
@@ -170,7 +171,7 @@ class StackedRouterWeb extends _i19.RootStackRouter {
       final args = routeData.argsAs<AddReportViewArgs>(
         orElse: () => const AddReportViewArgs(),
       );
-      return _i19.AdaptivePage<dynamic>(
+      return _i20.AdaptivePage<dynamic>(
         routeData: routeData,
         child: _i13.AddReportView(currentStep: args.currentStep, key: args.key),
         opaque: true,
@@ -180,7 +181,7 @@ class StackedRouterWeb extends _i19.RootStackRouter {
       final args = routeData.argsAs<ProfileViewArgs>(
         orElse: () => const ProfileViewArgs(),
       );
-      return _i19.AdaptivePage<dynamic>(
+      return _i20.AdaptivePage<dynamic>(
         routeData: routeData,
         child: _i14.ProfileView(key: args.key),
         opaque: true,
@@ -190,7 +191,7 @@ class StackedRouterWeb extends _i19.RootStackRouter {
       final args = routeData.argsAs<AppearanceSettingsViewArgs>(
         orElse: () => const AppearanceSettingsViewArgs(),
       );
-      return _i19.AdaptivePage<dynamic>(
+      return _i20.AdaptivePage<dynamic>(
         routeData: routeData,
         child: _i15.AppearanceSettingsView(key: args.key),
         opaque: true,
@@ -200,7 +201,7 @@ class StackedRouterWeb extends _i19.RootStackRouter {
       final args = routeData.argsAs<LanguageSettingsViewArgs>(
         orElse: () => const LanguageSettingsViewArgs(),
       );
-      return _i19.AdaptivePage<dynamic>(
+      return _i20.AdaptivePage<dynamic>(
         routeData: routeData,
         child: _i16.LanguageSettingsView(key: args.key),
         opaque: true,
@@ -210,55 +211,67 @@ class StackedRouterWeb extends _i19.RootStackRouter {
       final args = routeData.argsAs<SignInSecurityViewArgs>(
         orElse: () => const SignInSecurityViewArgs(),
       );
-      return _i19.AdaptivePage<dynamic>(
+      return _i20.AdaptivePage<dynamic>(
         routeData: routeData,
         child: _i17.SignInSecurityView(key: args.key),
+        opaque: true,
+      );
+    },
+    UpdatePasswordViewRoute.name: (routeData) {
+      final args = routeData.argsAs<UpdatePasswordViewArgs>();
+      return _i20.AdaptivePage<dynamic>(
+        routeData: routeData,
+        child: _i18.UpdatePasswordView(args.isPasswordSet, key: args.key),
         opaque: true,
       );
     },
   };
 
   @override
-  List<_i19.RouteConfig> get routes => [
-    _i19.RouteConfig(HomeViewRoute.name, path: '/home-view'),
-    _i19.RouteConfig(StartupViewRoute.name, path: '/'),
-    _i19.RouteConfig(OnboardingViewRoute.name, path: '/onboarding-view'),
-    _i19.RouteConfig(LoginViewRoute.name, path: '/login-view'),
-    _i19.RouteConfig(SignupViewRoute.name, path: '/signup-view'),
-    _i19.RouteConfig(SuccessViewRoute.name, path: '/success-view'),
-    _i19.RouteConfig(
+  List<_i20.RouteConfig> get routes => [
+    _i20.RouteConfig(HomeViewRoute.name, path: '/home-view'),
+    _i20.RouteConfig(StartupViewRoute.name, path: '/'),
+    _i20.RouteConfig(OnboardingViewRoute.name, path: '/onboarding-view'),
+    _i20.RouteConfig(LoginViewRoute.name, path: '/login-view'),
+    _i20.RouteConfig(SignupViewRoute.name, path: '/signup-view'),
+    _i20.RouteConfig(SuccessViewRoute.name, path: '/success-view'),
+    _i20.RouteConfig(
       ForgotPasswordViewRoute.name,
       path: '/forgot-password-view',
     ),
-    _i19.RouteConfig(
+    _i20.RouteConfig(
       CompleteProfileViewRoute.name,
       path: '/complete-profile-view',
     ),
-    _i19.RouteConfig(MainViewRoute.name, path: '/main-view'),
-    _i19.RouteConfig(ReportsViewRoute.name, path: '/reports-view'),
-    _i19.RouteConfig(NotificationViewRoute.name, path: '/notification-view'),
-    _i19.RouteConfig(SettingsViewRoute.name, path: '/settings-view'),
-    _i19.RouteConfig(AddReportViewRoute.name, path: '/add-report-view'),
-    _i19.RouteConfig(ProfileViewRoute.name, path: '/profile-view'),
-    _i19.RouteConfig(
+    _i20.RouteConfig(MainViewRoute.name, path: '/main-view'),
+    _i20.RouteConfig(ReportsViewRoute.name, path: '/reports-view'),
+    _i20.RouteConfig(NotificationViewRoute.name, path: '/notification-view'),
+    _i20.RouteConfig(SettingsViewRoute.name, path: '/settings-view'),
+    _i20.RouteConfig(AddReportViewRoute.name, path: '/add-report-view'),
+    _i20.RouteConfig(ProfileViewRoute.name, path: '/profile-view'),
+    _i20.RouteConfig(
       AppearanceSettingsViewRoute.name,
       path: '/appearance-settings-view',
     ),
-    _i19.RouteConfig(
+    _i20.RouteConfig(
       LanguageSettingsViewRoute.name,
       path: '/language-settings-view',
     ),
-    _i19.RouteConfig(
+    _i20.RouteConfig(
       SignInSecurityViewRoute.name,
       path: '/sign-in-security-view',
+    ),
+    _i20.RouteConfig(
+      UpdatePasswordViewRoute.name,
+      path: '/update-password-view',
     ),
   ];
 }
 
 /// generated route for
 /// [_i1.HomeView]
-class HomeViewRoute extends _i19.PageRouteInfo<HomeViewArgs> {
-  HomeViewRoute({_i20.Key? key})
+class HomeViewRoute extends _i20.PageRouteInfo<HomeViewArgs> {
+  HomeViewRoute({_i21.Key? key})
     : super(
         HomeViewRoute.name,
         path: '/home-view',
@@ -271,7 +284,7 @@ class HomeViewRoute extends _i19.PageRouteInfo<HomeViewArgs> {
 class HomeViewArgs {
   const HomeViewArgs({this.key});
 
-  final _i20.Key? key;
+  final _i21.Key? key;
 
   @override
   String toString() {
@@ -281,8 +294,8 @@ class HomeViewArgs {
 
 /// generated route for
 /// [_i2.StartupView]
-class StartupViewRoute extends _i19.PageRouteInfo<StartupViewArgs> {
-  StartupViewRoute({_i20.Key? key})
+class StartupViewRoute extends _i20.PageRouteInfo<StartupViewArgs> {
+  StartupViewRoute({_i21.Key? key})
     : super(
         StartupViewRoute.name,
         path: '/',
@@ -295,7 +308,7 @@ class StartupViewRoute extends _i19.PageRouteInfo<StartupViewArgs> {
 class StartupViewArgs {
   const StartupViewArgs({this.key});
 
-  final _i20.Key? key;
+  final _i21.Key? key;
 
   @override
   String toString() {
@@ -305,8 +318,8 @@ class StartupViewArgs {
 
 /// generated route for
 /// [_i3.OnboardingView]
-class OnboardingViewRoute extends _i19.PageRouteInfo<OnboardingViewArgs> {
-  OnboardingViewRoute({_i20.Key? key, bool stopAnimation = false})
+class OnboardingViewRoute extends _i20.PageRouteInfo<OnboardingViewArgs> {
+  OnboardingViewRoute({_i21.Key? key, bool stopAnimation = false})
     : super(
         OnboardingViewRoute.name,
         path: '/onboarding-view',
@@ -319,7 +332,7 @@ class OnboardingViewRoute extends _i19.PageRouteInfo<OnboardingViewArgs> {
 class OnboardingViewArgs {
   const OnboardingViewArgs({this.key, this.stopAnimation = false});
 
-  final _i20.Key? key;
+  final _i21.Key? key;
 
   final bool stopAnimation;
 
@@ -331,8 +344,8 @@ class OnboardingViewArgs {
 
 /// generated route for
 /// [_i4.LoginView]
-class LoginViewRoute extends _i19.PageRouteInfo<LoginViewArgs> {
-  LoginViewRoute({_i20.Key? key})
+class LoginViewRoute extends _i20.PageRouteInfo<LoginViewArgs> {
+  LoginViewRoute({_i21.Key? key})
     : super(
         LoginViewRoute.name,
         path: '/login-view',
@@ -345,7 +358,7 @@ class LoginViewRoute extends _i19.PageRouteInfo<LoginViewArgs> {
 class LoginViewArgs {
   const LoginViewArgs({this.key});
 
-  final _i20.Key? key;
+  final _i21.Key? key;
 
   @override
   String toString() {
@@ -355,8 +368,8 @@ class LoginViewArgs {
 
 /// generated route for
 /// [_i5.SignupView]
-class SignupViewRoute extends _i19.PageRouteInfo<SignupViewArgs> {
-  SignupViewRoute({_i20.Key? key})
+class SignupViewRoute extends _i20.PageRouteInfo<SignupViewArgs> {
+  SignupViewRoute({_i21.Key? key})
     : super(
         SignupViewRoute.name,
         path: '/signup-view',
@@ -369,7 +382,7 @@ class SignupViewRoute extends _i19.PageRouteInfo<SignupViewArgs> {
 class SignupViewArgs {
   const SignupViewArgs({this.key});
 
-  final _i20.Key? key;
+  final _i21.Key? key;
 
   @override
   String toString() {
@@ -379,14 +392,14 @@ class SignupViewArgs {
 
 /// generated route for
 /// [_i6.SuccessView]
-class SuccessViewRoute extends _i19.PageRouteInfo<SuccessViewArgs> {
+class SuccessViewRoute extends _i20.PageRouteInfo<SuccessViewArgs> {
   SuccessViewRoute({
     required void Function() onProceed,
     required String iconPath,
     required String title,
     required String body,
     required String buttonLabel,
-    _i20.Key? key,
+    _i21.Key? key,
   }) : super(
          SuccessViewRoute.name,
          path: '/success-view',
@@ -423,7 +436,7 @@ class SuccessViewArgs {
 
   final String buttonLabel;
 
-  final _i20.Key? key;
+  final _i21.Key? key;
 
   @override
   String toString() {
@@ -434,8 +447,8 @@ class SuccessViewArgs {
 /// generated route for
 /// [_i7.ForgotPasswordView]
 class ForgotPasswordViewRoute
-    extends _i19.PageRouteInfo<ForgotPasswordViewArgs> {
-  ForgotPasswordViewRoute({required String email, _i20.Key? key})
+    extends _i20.PageRouteInfo<ForgotPasswordViewArgs> {
+  ForgotPasswordViewRoute({required String email, _i21.Key? key})
     : super(
         ForgotPasswordViewRoute.name,
         path: '/forgot-password-view',
@@ -450,7 +463,7 @@ class ForgotPasswordViewArgs {
 
   final String email;
 
-  final _i20.Key? key;
+  final _i21.Key? key;
 
   @override
   String toString() {
@@ -461,8 +474,8 @@ class ForgotPasswordViewArgs {
 /// generated route for
 /// [_i8.CompleteProfileView]
 class CompleteProfileViewRoute
-    extends _i19.PageRouteInfo<CompleteProfileViewArgs> {
-  CompleteProfileViewRoute({_i20.Key? key})
+    extends _i20.PageRouteInfo<CompleteProfileViewArgs> {
+  CompleteProfileViewRoute({_i21.Key? key})
     : super(
         CompleteProfileViewRoute.name,
         path: '/complete-profile-view',
@@ -475,7 +488,7 @@ class CompleteProfileViewRoute
 class CompleteProfileViewArgs {
   const CompleteProfileViewArgs({this.key});
 
-  final _i20.Key? key;
+  final _i21.Key? key;
 
   @override
   String toString() {
@@ -485,8 +498,8 @@ class CompleteProfileViewArgs {
 
 /// generated route for
 /// [_i9.MainView]
-class MainViewRoute extends _i19.PageRouteInfo<MainViewArgs> {
-  MainViewRoute({_i20.Key? key, int initialIndex = 0})
+class MainViewRoute extends _i20.PageRouteInfo<MainViewArgs> {
+  MainViewRoute({_i21.Key? key, int initialIndex = 0})
     : super(
         MainViewRoute.name,
         path: '/main-view',
@@ -499,7 +512,7 @@ class MainViewRoute extends _i19.PageRouteInfo<MainViewArgs> {
 class MainViewArgs {
   const MainViewArgs({this.key, this.initialIndex = 0});
 
-  final _i20.Key? key;
+  final _i21.Key? key;
 
   final int initialIndex;
 
@@ -511,8 +524,8 @@ class MainViewArgs {
 
 /// generated route for
 /// [_i10.ReportsView]
-class ReportsViewRoute extends _i19.PageRouteInfo<ReportsViewArgs> {
-  ReportsViewRoute({_i20.Key? key})
+class ReportsViewRoute extends _i20.PageRouteInfo<ReportsViewArgs> {
+  ReportsViewRoute({_i21.Key? key})
     : super(
         ReportsViewRoute.name,
         path: '/reports-view',
@@ -525,7 +538,7 @@ class ReportsViewRoute extends _i19.PageRouteInfo<ReportsViewArgs> {
 class ReportsViewArgs {
   const ReportsViewArgs({this.key});
 
-  final _i20.Key? key;
+  final _i21.Key? key;
 
   @override
   String toString() {
@@ -535,8 +548,8 @@ class ReportsViewArgs {
 
 /// generated route for
 /// [_i11.NotificationView]
-class NotificationViewRoute extends _i19.PageRouteInfo<NotificationViewArgs> {
-  NotificationViewRoute({_i20.Key? key})
+class NotificationViewRoute extends _i20.PageRouteInfo<NotificationViewArgs> {
+  NotificationViewRoute({_i21.Key? key})
     : super(
         NotificationViewRoute.name,
         path: '/notification-view',
@@ -549,7 +562,7 @@ class NotificationViewRoute extends _i19.PageRouteInfo<NotificationViewArgs> {
 class NotificationViewArgs {
   const NotificationViewArgs({this.key});
 
-  final _i20.Key? key;
+  final _i21.Key? key;
 
   @override
   String toString() {
@@ -559,8 +572,8 @@ class NotificationViewArgs {
 
 /// generated route for
 /// [_i12.SettingsView]
-class SettingsViewRoute extends _i19.PageRouteInfo<SettingsViewArgs> {
-  SettingsViewRoute({_i20.Key? key})
+class SettingsViewRoute extends _i20.PageRouteInfo<SettingsViewArgs> {
+  SettingsViewRoute({_i21.Key? key})
     : super(
         SettingsViewRoute.name,
         path: '/settings-view',
@@ -573,7 +586,7 @@ class SettingsViewRoute extends _i19.PageRouteInfo<SettingsViewArgs> {
 class SettingsViewArgs {
   const SettingsViewArgs({this.key});
 
-  final _i20.Key? key;
+  final _i21.Key? key;
 
   @override
   String toString() {
@@ -583,8 +596,8 @@ class SettingsViewArgs {
 
 /// generated route for
 /// [_i13.AddReportView]
-class AddReportViewRoute extends _i19.PageRouteInfo<AddReportViewArgs> {
-  AddReportViewRoute({int currentStep = 1, _i20.Key? key})
+class AddReportViewRoute extends _i20.PageRouteInfo<AddReportViewArgs> {
+  AddReportViewRoute({int currentStep = 1, _i21.Key? key})
     : super(
         AddReportViewRoute.name,
         path: '/add-report-view',
@@ -599,7 +612,7 @@ class AddReportViewArgs {
 
   final int currentStep;
 
-  final _i20.Key? key;
+  final _i21.Key? key;
 
   @override
   String toString() {
@@ -609,8 +622,8 @@ class AddReportViewArgs {
 
 /// generated route for
 /// [_i14.ProfileView]
-class ProfileViewRoute extends _i19.PageRouteInfo<ProfileViewArgs> {
-  ProfileViewRoute({_i20.Key? key})
+class ProfileViewRoute extends _i20.PageRouteInfo<ProfileViewArgs> {
+  ProfileViewRoute({_i21.Key? key})
     : super(
         ProfileViewRoute.name,
         path: '/profile-view',
@@ -623,7 +636,7 @@ class ProfileViewRoute extends _i19.PageRouteInfo<ProfileViewArgs> {
 class ProfileViewArgs {
   const ProfileViewArgs({this.key});
 
-  final _i20.Key? key;
+  final _i21.Key? key;
 
   @override
   String toString() {
@@ -634,8 +647,8 @@ class ProfileViewArgs {
 /// generated route for
 /// [_i15.AppearanceSettingsView]
 class AppearanceSettingsViewRoute
-    extends _i19.PageRouteInfo<AppearanceSettingsViewArgs> {
-  AppearanceSettingsViewRoute({_i20.Key? key})
+    extends _i20.PageRouteInfo<AppearanceSettingsViewArgs> {
+  AppearanceSettingsViewRoute({_i21.Key? key})
     : super(
         AppearanceSettingsViewRoute.name,
         path: '/appearance-settings-view',
@@ -648,7 +661,7 @@ class AppearanceSettingsViewRoute
 class AppearanceSettingsViewArgs {
   const AppearanceSettingsViewArgs({this.key});
 
-  final _i20.Key? key;
+  final _i21.Key? key;
 
   @override
   String toString() {
@@ -659,8 +672,8 @@ class AppearanceSettingsViewArgs {
 /// generated route for
 /// [_i16.LanguageSettingsView]
 class LanguageSettingsViewRoute
-    extends _i19.PageRouteInfo<LanguageSettingsViewArgs> {
-  LanguageSettingsViewRoute({_i20.Key? key})
+    extends _i20.PageRouteInfo<LanguageSettingsViewArgs> {
+  LanguageSettingsViewRoute({_i21.Key? key})
     : super(
         LanguageSettingsViewRoute.name,
         path: '/language-settings-view',
@@ -673,7 +686,7 @@ class LanguageSettingsViewRoute
 class LanguageSettingsViewArgs {
   const LanguageSettingsViewArgs({this.key});
 
-  final _i20.Key? key;
+  final _i21.Key? key;
 
   @override
   String toString() {
@@ -684,8 +697,8 @@ class LanguageSettingsViewArgs {
 /// generated route for
 /// [_i17.SignInSecurityView]
 class SignInSecurityViewRoute
-    extends _i19.PageRouteInfo<SignInSecurityViewArgs> {
-  SignInSecurityViewRoute({_i20.Key? key})
+    extends _i20.PageRouteInfo<SignInSecurityViewArgs> {
+  SignInSecurityViewRoute({_i21.Key? key})
     : super(
         SignInSecurityViewRoute.name,
         path: '/sign-in-security-view',
@@ -698,7 +711,7 @@ class SignInSecurityViewRoute
 class SignInSecurityViewArgs {
   const SignInSecurityViewArgs({this.key});
 
-  final _i20.Key? key;
+  final _i21.Key? key;
 
   @override
   String toString() {
@@ -706,25 +719,52 @@ class SignInSecurityViewArgs {
   }
 }
 
-extension RouterStateExtension on _i18.RouterService {
+/// generated route for
+/// [_i18.UpdatePasswordView]
+class UpdatePasswordViewRoute
+    extends _i20.PageRouteInfo<UpdatePasswordViewArgs> {
+  UpdatePasswordViewRoute({required bool isPasswordSet, _i21.Key? key})
+    : super(
+        UpdatePasswordViewRoute.name,
+        path: '/update-password-view',
+        args: UpdatePasswordViewArgs(isPasswordSet: isPasswordSet, key: key),
+      );
+
+  static const String name = 'UpdatePasswordView';
+}
+
+class UpdatePasswordViewArgs {
+  const UpdatePasswordViewArgs({required this.isPasswordSet, this.key});
+
+  final bool isPasswordSet;
+
+  final _i21.Key? key;
+
+  @override
+  String toString() {
+    return 'UpdatePasswordViewArgs{isPasswordSet: $isPasswordSet, key: $key}';
+  }
+}
+
+extension RouterStateExtension on _i19.RouterService {
   Future<dynamic> navigateToHomeView({
-    _i20.Key? key,
-    void Function(_i19.NavigationFailure)? onFailure,
+    _i21.Key? key,
+    void Function(_i20.NavigationFailure)? onFailure,
   }) async {
     return navigateTo(HomeViewRoute(key: key), onFailure: onFailure);
   }
 
   Future<dynamic> navigateToStartupView({
-    _i20.Key? key,
-    void Function(_i19.NavigationFailure)? onFailure,
+    _i21.Key? key,
+    void Function(_i20.NavigationFailure)? onFailure,
   }) async {
     return navigateTo(StartupViewRoute(key: key), onFailure: onFailure);
   }
 
   Future<dynamic> navigateToOnboardingView({
-    _i20.Key? key,
+    _i21.Key? key,
     bool stopAnimation = false,
-    void Function(_i19.NavigationFailure)? onFailure,
+    void Function(_i20.NavigationFailure)? onFailure,
   }) async {
     return navigateTo(
       OnboardingViewRoute(key: key, stopAnimation: stopAnimation),
@@ -733,15 +773,15 @@ extension RouterStateExtension on _i18.RouterService {
   }
 
   Future<dynamic> navigateToLoginView({
-    _i20.Key? key,
-    void Function(_i19.NavigationFailure)? onFailure,
+    _i21.Key? key,
+    void Function(_i20.NavigationFailure)? onFailure,
   }) async {
     return navigateTo(LoginViewRoute(key: key), onFailure: onFailure);
   }
 
   Future<dynamic> navigateToSignupView({
-    _i20.Key? key,
-    void Function(_i19.NavigationFailure)? onFailure,
+    _i21.Key? key,
+    void Function(_i20.NavigationFailure)? onFailure,
   }) async {
     return navigateTo(SignupViewRoute(key: key), onFailure: onFailure);
   }
@@ -752,8 +792,8 @@ extension RouterStateExtension on _i18.RouterService {
     required String title,
     required String body,
     required String buttonLabel,
-    _i20.Key? key,
-    void Function(_i19.NavigationFailure)? onFailure,
+    _i21.Key? key,
+    void Function(_i20.NavigationFailure)? onFailure,
   }) async {
     return navigateTo(
       SuccessViewRoute(
@@ -770,8 +810,8 @@ extension RouterStateExtension on _i18.RouterService {
 
   Future<dynamic> navigateToForgotPasswordView({
     required String email,
-    _i20.Key? key,
-    void Function(_i19.NavigationFailure)? onFailure,
+    _i21.Key? key,
+    void Function(_i20.NavigationFailure)? onFailure,
   }) async {
     return navigateTo(
       ForgotPasswordViewRoute(email: email, key: key),
@@ -780,16 +820,16 @@ extension RouterStateExtension on _i18.RouterService {
   }
 
   Future<dynamic> navigateToCompleteProfileView({
-    _i20.Key? key,
-    void Function(_i19.NavigationFailure)? onFailure,
+    _i21.Key? key,
+    void Function(_i20.NavigationFailure)? onFailure,
   }) async {
     return navigateTo(CompleteProfileViewRoute(key: key), onFailure: onFailure);
   }
 
   Future<dynamic> navigateToMainView({
-    _i20.Key? key,
+    _i21.Key? key,
     int initialIndex = 0,
-    void Function(_i19.NavigationFailure)? onFailure,
+    void Function(_i20.NavigationFailure)? onFailure,
   }) async {
     return navigateTo(
       MainViewRoute(key: key, initialIndex: initialIndex),
@@ -798,30 +838,30 @@ extension RouterStateExtension on _i18.RouterService {
   }
 
   Future<dynamic> navigateToReportsView({
-    _i20.Key? key,
-    void Function(_i19.NavigationFailure)? onFailure,
+    _i21.Key? key,
+    void Function(_i20.NavigationFailure)? onFailure,
   }) async {
     return navigateTo(ReportsViewRoute(key: key), onFailure: onFailure);
   }
 
   Future<dynamic> navigateToNotificationView({
-    _i20.Key? key,
-    void Function(_i19.NavigationFailure)? onFailure,
+    _i21.Key? key,
+    void Function(_i20.NavigationFailure)? onFailure,
   }) async {
     return navigateTo(NotificationViewRoute(key: key), onFailure: onFailure);
   }
 
   Future<dynamic> navigateToSettingsView({
-    _i20.Key? key,
-    void Function(_i19.NavigationFailure)? onFailure,
+    _i21.Key? key,
+    void Function(_i20.NavigationFailure)? onFailure,
   }) async {
     return navigateTo(SettingsViewRoute(key: key), onFailure: onFailure);
   }
 
   Future<dynamic> navigateToAddReportView({
     int currentStep = 1,
-    _i20.Key? key,
-    void Function(_i19.NavigationFailure)? onFailure,
+    _i21.Key? key,
+    void Function(_i20.NavigationFailure)? onFailure,
   }) async {
     return navigateTo(
       AddReportViewRoute(currentStep: currentStep, key: key),
@@ -830,15 +870,15 @@ extension RouterStateExtension on _i18.RouterService {
   }
 
   Future<dynamic> navigateToProfileView({
-    _i20.Key? key,
-    void Function(_i19.NavigationFailure)? onFailure,
+    _i21.Key? key,
+    void Function(_i20.NavigationFailure)? onFailure,
   }) async {
     return navigateTo(ProfileViewRoute(key: key), onFailure: onFailure);
   }
 
   Future<dynamic> navigateToAppearanceSettingsView({
-    _i20.Key? key,
-    void Function(_i19.NavigationFailure)? onFailure,
+    _i21.Key? key,
+    void Function(_i20.NavigationFailure)? onFailure,
   }) async {
     return navigateTo(
       AppearanceSettingsViewRoute(key: key),
@@ -847,8 +887,8 @@ extension RouterStateExtension on _i18.RouterService {
   }
 
   Future<dynamic> navigateToLanguageSettingsView({
-    _i20.Key? key,
-    void Function(_i19.NavigationFailure)? onFailure,
+    _i21.Key? key,
+    void Function(_i20.NavigationFailure)? onFailure,
   }) async {
     return navigateTo(
       LanguageSettingsViewRoute(key: key),
@@ -857,30 +897,41 @@ extension RouterStateExtension on _i18.RouterService {
   }
 
   Future<dynamic> navigateToSignInSecurityView({
-    _i20.Key? key,
-    void Function(_i19.NavigationFailure)? onFailure,
+    _i21.Key? key,
+    void Function(_i20.NavigationFailure)? onFailure,
   }) async {
     return navigateTo(SignInSecurityViewRoute(key: key), onFailure: onFailure);
   }
 
+  Future<dynamic> navigateToUpdatePasswordView({
+    required bool isPasswordSet,
+    _i21.Key? key,
+    void Function(_i20.NavigationFailure)? onFailure,
+  }) async {
+    return navigateTo(
+      UpdatePasswordViewRoute(isPasswordSet: isPasswordSet, key: key),
+      onFailure: onFailure,
+    );
+  }
+
   Future<dynamic> replaceWithHomeView({
-    _i20.Key? key,
-    void Function(_i19.NavigationFailure)? onFailure,
+    _i21.Key? key,
+    void Function(_i20.NavigationFailure)? onFailure,
   }) async {
     return replaceWith(HomeViewRoute(key: key), onFailure: onFailure);
   }
 
   Future<dynamic> replaceWithStartupView({
-    _i20.Key? key,
-    void Function(_i19.NavigationFailure)? onFailure,
+    _i21.Key? key,
+    void Function(_i20.NavigationFailure)? onFailure,
   }) async {
     return replaceWith(StartupViewRoute(key: key), onFailure: onFailure);
   }
 
   Future<dynamic> replaceWithOnboardingView({
-    _i20.Key? key,
+    _i21.Key? key,
     bool stopAnimation = false,
-    void Function(_i19.NavigationFailure)? onFailure,
+    void Function(_i20.NavigationFailure)? onFailure,
   }) async {
     return replaceWith(
       OnboardingViewRoute(key: key, stopAnimation: stopAnimation),
@@ -889,15 +940,15 @@ extension RouterStateExtension on _i18.RouterService {
   }
 
   Future<dynamic> replaceWithLoginView({
-    _i20.Key? key,
-    void Function(_i19.NavigationFailure)? onFailure,
+    _i21.Key? key,
+    void Function(_i20.NavigationFailure)? onFailure,
   }) async {
     return replaceWith(LoginViewRoute(key: key), onFailure: onFailure);
   }
 
   Future<dynamic> replaceWithSignupView({
-    _i20.Key? key,
-    void Function(_i19.NavigationFailure)? onFailure,
+    _i21.Key? key,
+    void Function(_i20.NavigationFailure)? onFailure,
   }) async {
     return replaceWith(SignupViewRoute(key: key), onFailure: onFailure);
   }
@@ -908,8 +959,8 @@ extension RouterStateExtension on _i18.RouterService {
     required String title,
     required String body,
     required String buttonLabel,
-    _i20.Key? key,
-    void Function(_i19.NavigationFailure)? onFailure,
+    _i21.Key? key,
+    void Function(_i20.NavigationFailure)? onFailure,
   }) async {
     return replaceWith(
       SuccessViewRoute(
@@ -926,8 +977,8 @@ extension RouterStateExtension on _i18.RouterService {
 
   Future<dynamic> replaceWithForgotPasswordView({
     required String email,
-    _i20.Key? key,
-    void Function(_i19.NavigationFailure)? onFailure,
+    _i21.Key? key,
+    void Function(_i20.NavigationFailure)? onFailure,
   }) async {
     return replaceWith(
       ForgotPasswordViewRoute(email: email, key: key),
@@ -936,8 +987,8 @@ extension RouterStateExtension on _i18.RouterService {
   }
 
   Future<dynamic> replaceWithCompleteProfileView({
-    _i20.Key? key,
-    void Function(_i19.NavigationFailure)? onFailure,
+    _i21.Key? key,
+    void Function(_i20.NavigationFailure)? onFailure,
   }) async {
     return replaceWith(
       CompleteProfileViewRoute(key: key),
@@ -946,9 +997,9 @@ extension RouterStateExtension on _i18.RouterService {
   }
 
   Future<dynamic> replaceWithMainView({
-    _i20.Key? key,
+    _i21.Key? key,
     int initialIndex = 0,
-    void Function(_i19.NavigationFailure)? onFailure,
+    void Function(_i20.NavigationFailure)? onFailure,
   }) async {
     return replaceWith(
       MainViewRoute(key: key, initialIndex: initialIndex),
@@ -957,30 +1008,30 @@ extension RouterStateExtension on _i18.RouterService {
   }
 
   Future<dynamic> replaceWithReportsView({
-    _i20.Key? key,
-    void Function(_i19.NavigationFailure)? onFailure,
+    _i21.Key? key,
+    void Function(_i20.NavigationFailure)? onFailure,
   }) async {
     return replaceWith(ReportsViewRoute(key: key), onFailure: onFailure);
   }
 
   Future<dynamic> replaceWithNotificationView({
-    _i20.Key? key,
-    void Function(_i19.NavigationFailure)? onFailure,
+    _i21.Key? key,
+    void Function(_i20.NavigationFailure)? onFailure,
   }) async {
     return replaceWith(NotificationViewRoute(key: key), onFailure: onFailure);
   }
 
   Future<dynamic> replaceWithSettingsView({
-    _i20.Key? key,
-    void Function(_i19.NavigationFailure)? onFailure,
+    _i21.Key? key,
+    void Function(_i20.NavigationFailure)? onFailure,
   }) async {
     return replaceWith(SettingsViewRoute(key: key), onFailure: onFailure);
   }
 
   Future<dynamic> replaceWithAddReportView({
     int currentStep = 1,
-    _i20.Key? key,
-    void Function(_i19.NavigationFailure)? onFailure,
+    _i21.Key? key,
+    void Function(_i20.NavigationFailure)? onFailure,
   }) async {
     return replaceWith(
       AddReportViewRoute(currentStep: currentStep, key: key),
@@ -989,15 +1040,15 @@ extension RouterStateExtension on _i18.RouterService {
   }
 
   Future<dynamic> replaceWithProfileView({
-    _i20.Key? key,
-    void Function(_i19.NavigationFailure)? onFailure,
+    _i21.Key? key,
+    void Function(_i20.NavigationFailure)? onFailure,
   }) async {
     return replaceWith(ProfileViewRoute(key: key), onFailure: onFailure);
   }
 
   Future<dynamic> replaceWithAppearanceSettingsView({
-    _i20.Key? key,
-    void Function(_i19.NavigationFailure)? onFailure,
+    _i21.Key? key,
+    void Function(_i20.NavigationFailure)? onFailure,
   }) async {
     return replaceWith(
       AppearanceSettingsViewRoute(key: key),
@@ -1006,8 +1057,8 @@ extension RouterStateExtension on _i18.RouterService {
   }
 
   Future<dynamic> replaceWithLanguageSettingsView({
-    _i20.Key? key,
-    void Function(_i19.NavigationFailure)? onFailure,
+    _i21.Key? key,
+    void Function(_i20.NavigationFailure)? onFailure,
   }) async {
     return replaceWith(
       LanguageSettingsViewRoute(key: key),
@@ -1016,9 +1067,20 @@ extension RouterStateExtension on _i18.RouterService {
   }
 
   Future<dynamic> replaceWithSignInSecurityView({
-    _i20.Key? key,
-    void Function(_i19.NavigationFailure)? onFailure,
+    _i21.Key? key,
+    void Function(_i20.NavigationFailure)? onFailure,
   }) async {
     return replaceWith(SignInSecurityViewRoute(key: key), onFailure: onFailure);
+  }
+
+  Future<dynamic> replaceWithUpdatePasswordView({
+    required bool isPasswordSet,
+    _i21.Key? key,
+    void Function(_i20.NavigationFailure)? onFailure,
+  }) async {
+    return replaceWith(
+      UpdatePasswordViewRoute(isPasswordSet: isPasswordSet, key: key),
+      onFailure: onFailure,
+    );
   }
 }
