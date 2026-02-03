@@ -11,24 +11,14 @@ import 'package:styles/styles.dart';
 import 'package:utils/utils.dart';
 
 class LogoutDialog extends StackedView<LogoutDialogModel> {
-  const LogoutDialog({
-    required this.request,
-    required this.completer,
-    super.key,
-  });
+  const LogoutDialog({required this.request, required this.completer, super.key});
   final DialogRequest<dynamic> request;
   final Function(DialogResponse<dynamic>) completer;
 
   @override
-  Widget builder(
-    BuildContext context,
-    LogoutDialogModel viewModel,
-    Widget? child,
-  ) {
+  Widget builder(BuildContext context, LogoutDialogModel viewModel, Widget? child) {
     return BackdropFilter(
-      filter: isTest
-          ? ImageFilter.blur()
-          : ImageFilter.blur(sigmaX: 4, sigmaY: 4),
+      filter: isTest ? ImageFilter.blur() : ImageFilter.blur(sigmaX: 4, sigmaY: 4),
       child: ConstrainedBox(
         constraints: const BoxConstraints(maxWidth: 420),
         child: AlertDialog(
@@ -47,9 +37,7 @@ class LogoutDialog extends StackedView<LogoutDialogModel> {
               AppSpacing.medium,
               Text(
                 l10n.featureSettingsLoggingOutHint,
-                style: context.bodyMedium?.copyWith(
-                  color: context.onSurfaceVariant,
-                ),
+                style: context.bodyMedium?.copyWith(color: context.onSurfaceVariant),
                 textAlign: TextAlign.center,
               ),
               AppSpacing.large,
@@ -57,28 +45,15 @@ class LogoutDialog extends StackedView<LogoutDialogModel> {
                 title: l10n.generalLogout,
                 backgroundColor: context.primary,
                 onTap: () async {
-                  completer(
-                    DialogResponse<DialogActionType>(
-                      data: DialogActionType.main,
-                      confirmed: true,
-                    ),
-                  );
+                  completer(DialogResponse<DialogActionType>(data: DialogActionType.main, confirmed: true));
                 },
               ),
               AppSpacing.medium,
               Align(
                 child: TextButton(
-                  style: TextButton.styleFrom(
-                    textStyle: context.bodyLarge,
-                    foregroundColor: context.onSurface,
-                  ),
+                  style: TextButton.styleFrom(textStyle: context.bodyLarge, foregroundColor: context.onSurface),
                   onPressed: () async {
-                    completer(
-                      DialogResponse<DialogActionType>(
-                        data: DialogActionType.secondary,
-                        confirmed: true,
-                      ),
-                    );
+                    completer(DialogResponse<DialogActionType>(data: DialogActionType.secondary, confirmed: true));
                   },
                   child: Text(l10n.generalCancel),
                 ),
@@ -92,6 +67,5 @@ class LogoutDialog extends StackedView<LogoutDialogModel> {
   }
 
   @override
-  LogoutDialogModel viewModelBuilder(BuildContext context) =>
-      LogoutDialogModel();
+  LogoutDialogModel viewModelBuilder(BuildContext context) => LogoutDialogModel();
 }

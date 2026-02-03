@@ -17,7 +17,7 @@ import 'package:stacked/stacked_annotations.dart';
     LazySingleton(classType: PushNotificationService),
     LazySingleton(classType: LocalNotificationService),
     LazySingleton(classType: CrashlyticsService),
-    LazySingleton(classType: CloudinaryStorageService),       
+    LazySingleton(classType: CloudinaryStorageService),
     LazySingleton(classType: SettingsStorageService),
     LazySingleton(classType: UrlLauncherService),
     // @stacked-service

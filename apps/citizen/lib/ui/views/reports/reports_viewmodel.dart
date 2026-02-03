@@ -13,22 +13,17 @@ class ReportsViewModel extends ReactiveViewModel {
   final _reportService = locator<ReportService>();
 
   @override
-  List<ListenableServiceMixin> get listenableServices => [
-    _userService,
-    _reportService,
-  ];
+  List<ListenableServiceMixin> get listenableServices => [_userService, _reportService];
 
   String get user => _userService.user!.id;
   List<Report> get reportList => _reportService.reportList;
 
   List<Report> get myReportList =>
-      reportList.where((r) => r.reportData.userId == user).toList()..sort(
-        (a, b) => b.reportData.createdAt.compareTo(a.reportData.createdAt),
-      );
+      reportList.where((r) => r.reportData.userId == user).toList()
+        ..sort((a, b) => b.reportData.createdAt.compareTo(a.reportData.createdAt));
   List<Report> get bookmarkedReportList =>
-      reportList.where((r) => r.hasBookmarked).toList()..sort(
-        (a, b) => b.reportData.createdAt.compareTo(a.reportData.createdAt),
-      );
+      reportList.where((r) => r.hasBookmarked).toList()
+        ..sort((a, b) => b.reportData.createdAt.compareTo(a.reportData.createdAt));
 
   Future<void> viewComment() async {
     final uploadResponse = await _bottomSheetService.showCustomSheet(
@@ -59,16 +54,11 @@ class ReportsViewModel extends ReactiveViewModel {
       }
     }
 
-    final index = fakeReportDataList.indexWhere(
-      (e) => e.reportData == report.reportData,
-    );
+    final index = fakeReportDataList.indexWhere((e) => e.reportData == report.reportData);
     if (index < 0) return;
 
     fakeReportDataList[index] = Report(
-      reportData: report.reportData.copyWith(
-        likeCount: likes,
-        dislikeCount: dislikes,
-      ),
+      reportData: report.reportData.copyWith(likeCount: likes, dislikeCount: dislikes),
       hasLiked: liked,
       hasDisliked: disliked,
       hasBookmarked: report.hasBookmarked,
@@ -93,16 +83,11 @@ class ReportsViewModel extends ReactiveViewModel {
       }
     }
 
-    final index = fakeReportDataList.indexWhere(
-      (e) => e.reportData == report.reportData,
-    );
+    final index = fakeReportDataList.indexWhere((e) => e.reportData == report.reportData);
     if (index < 0) return;
 
     fakeReportDataList[index] = Report(
-      reportData: report.reportData.copyWith(
-        likeCount: likes,
-        dislikeCount: dislikes,
-      ),
+      reportData: report.reportData.copyWith(likeCount: likes, dislikeCount: dislikes),
       hasLiked: liked,
       hasDisliked: disliked,
       hasBookmarked: report.hasBookmarked,
@@ -122,9 +107,7 @@ class ReportsViewModel extends ReactiveViewModel {
       bookmarked = true;
     }
 
-    final index = fakeReportDataList.indexWhere(
-      (e) => e.reportData == report.reportData,
-    );
+    final index = fakeReportDataList.indexWhere((e) => e.reportData == report.reportData);
     if (index < 0) return;
 
     fakeReportDataList[index] = Report(

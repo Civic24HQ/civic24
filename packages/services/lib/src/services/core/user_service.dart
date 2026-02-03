@@ -79,7 +79,7 @@ class UserService extends FirestoreCollectionService<UserModel> with ListenableS
 
   /// Convenience helper to change appearance mode.
   Future<void> setAppearance(AppearanceMode mode) async {
-    await setDisplayPreferences(displayPreferences.copyWith(themeModeIndex: mode.themeIndex,));
+    await setDisplayPreferences(displayPreferences.copyWith(themeModeIndex: mode.themeIndex));
   }
 
   @override

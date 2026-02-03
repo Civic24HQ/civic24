@@ -10,11 +10,7 @@ class AppearanceSettingsView extends StackedView<AppearanceSettingsViewModel> {
   const AppearanceSettingsView({super.key});
 
   @override
-  Widget builder(
-    BuildContext context,
-    AppearanceSettingsViewModel viewModel,
-    Widget? child,
-  ) {
+  Widget builder(BuildContext context, AppearanceSettingsViewModel viewModel, Widget? child) {
     return Scaffold(
       appBar: AppBar(
         title: Text(l10n.featureSettingsAppearance),
@@ -37,6 +33,5 @@ class AppearanceSettingsView extends StackedView<AppearanceSettingsViewModel> {
   }
 
   @override
-  AppearanceSettingsViewModel viewModelBuilder(BuildContext context) =>
-      AppearanceSettingsViewModel();
+  AppearanceSettingsViewModel viewModelBuilder(BuildContext context) => AppearanceSettingsViewModel();
 }

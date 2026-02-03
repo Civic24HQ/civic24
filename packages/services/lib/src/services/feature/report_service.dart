@@ -50,8 +50,8 @@ class ReportService extends FirestoreCollectionService<Report> with ListenableSe
     // final oneMonthAgo = DateTime(now.year, now.month - 1, now.day);
 
     final query = collectionReference
-    // .where('reportData.createdAt', isGreaterThanOrEqualTo: oneMonthAgo)
-    // .where('reportData.createdAt', isLessThanOrEqualTo: now)
+        // .where('reportData.createdAt', isGreaterThanOrEqualTo: oneMonthAgo)
+        // .where('reportData.createdAt', isLessThanOrEqualTo: now)
         .orderBy('reportData.createdAt', descending: true);
 
     final reportList = await getDocumentsWithQuery(query: query);
@@ -147,8 +147,8 @@ class ReportService extends FirestoreCollectionService<Report> with ListenableSe
       // final now = DateTime.now();
       // final oneMonthAgo = DateTime(now.year, now.month - 1, now.day);
       final query = collectionReference
-      // .where('createdAt', isGreaterThanOrEqualTo: oneMonthAgo)
-      // .where('createdAt', isLessThanOrEqualTo: now)
+          // .where('createdAt', isGreaterThanOrEqualTo: oneMonthAgo)
+          // .where('createdAt', isLessThanOrEqualTo: now)
           .orderBy('createdAt', descending: true);
 
       final reports = await getDocumentsWithQuery(query: query);

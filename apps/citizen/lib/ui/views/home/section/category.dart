@@ -26,9 +26,7 @@ class _CategoryListView extends ViewModelWidget<HomeViewModel> {
     final fakeReportCategoryList = viewModel.reportCategoryList;
 
     if (fakeReportCategoryList.isEmpty) {
-      return const CustomScrollView(
-        slivers: [SliverFillRemaining(hasScrollBody: false, child: SizedBox())],
-      );
+      return const CustomScrollView(slivers: [SliverFillRemaining(hasScrollBody: false, child: SizedBox())]);
     }
 
     return CustomScrollView(

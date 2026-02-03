@@ -14,10 +14,7 @@ class HomeViewModel extends ReactiveViewModel {
   final _reportService = locator<ReportService>();
 
   @override
-  List<ListenableServiceMixin> get listenableServices => [
-    _userService,
-    _reportService,
-  ];
+  List<ListenableServiceMixin> get listenableServices => [_userService, _reportService];
 
   String get user => _userService.user!.id;
   List<Report> get reportList => _reportService.reportList;
@@ -32,24 +29,15 @@ class HomeViewModel extends ReactiveViewModel {
 
   CategoryType selectedCategory = CategoryType.values[0];
   List<Report> get reportCategoryList =>
-      reportList
-          .where((r) => r.reportData.categoryTypes.contains(selectedCategory))
-          .toList()
-        ..sort(
-          (a, b) => b.reportData.createdAt.compareTo(a.reportData.createdAt),
-        );
+      reportList.where((r) => r.reportData.categoryTypes.contains(selectedCategory)).toList()
+        ..sort((a, b) => b.reportData.createdAt.compareTo(a.reportData.createdAt));
 
   List<Report> get reportTrendingInCategory =>
-      reportList
-          .where((r) => r.reportData.categoryTypes.contains(selectedCategory))
-          .toList()
-        ..sort((a, b) {
-          final byLikes = b.reportData.likeCount.compareTo(
-            a.reportData.likeCount,
-          );
-          if (byLikes != 0) return byLikes;
-          return b.reportData.updatedAt.compareTo(a.reportData.updatedAt);
-        });
+      reportList.where((r) => r.reportData.categoryTypes.contains(selectedCategory)).toList()..sort((a, b) {
+        final byLikes = b.reportData.likeCount.compareTo(a.reportData.likeCount);
+        if (byLikes != 0) return byLikes;
+        return b.reportData.updatedAt.compareTo(a.reportData.updatedAt);
+      });
 
   void onCategoryChanged(CategoryType category) {
     selectedCategory = category;
@@ -87,16 +75,11 @@ class HomeViewModel extends ReactiveViewModel {
       }
     }
 
-    final index = fakeReportDataList.indexWhere(
-      (e) => e.reportData == report.reportData,
-    );
+    final index = fakeReportDataList.indexWhere((e) => e.reportData == report.reportData);
     if (index < 0) return;
 
     fakeReportDataList[index] = Report(
-      reportData: report.reportData.copyWith(
-        likeCount: likes,
-        dislikeCount: dislikes,
-      ),
+      reportData: report.reportData.copyWith(likeCount: likes, dislikeCount: dislikes),
       hasLiked: liked,
       hasDisliked: disliked,
       hasBookmarked: report.hasBookmarked,
@@ -121,16 +104,11 @@ class HomeViewModel extends ReactiveViewModel {
       }
     }
 
-    final index = fakeReportDataList.indexWhere(
-      (e) => e.reportData == report.reportData,
-    );
+    final index = fakeReportDataList.indexWhere((e) => e.reportData == report.reportData);
     if (index < 0) return;
 
     fakeReportDataList[index] = Report(
-      reportData: report.reportData.copyWith(
-        likeCount: likes,
-        dislikeCount: dislikes,
-      ),
+      reportData: report.reportData.copyWith(likeCount: likes, dislikeCount: dislikes),
       hasLiked: liked,
       hasDisliked: disliked,
       hasBookmarked: report.hasBookmarked,
@@ -150,9 +128,7 @@ class HomeViewModel extends ReactiveViewModel {
       bookmarked = true;
     }
 
-    final index = fakeReportDataList.indexWhere(
-      (e) => e.reportData == report.reportData,
-    );
+    final index = fakeReportDataList.indexWhere((e) => e.reportData == report.reportData);
     if (index < 0) return;
 
     fakeReportDataList[index] = Report(
