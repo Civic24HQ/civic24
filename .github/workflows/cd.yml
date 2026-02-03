@@ -22,16 +22,10 @@ jobs:
         include:
           - app: citizen
             flavor: development
-          # - app: citizen
-          #   flavor: staging
-          # - app: citizen
-          #   flavor: production
-          # - app: admin
-          #   flavor: ''
+          - app: admin
+            flavor: ''
     env:
       CITIZEN_DEV_SECRETS: ${{ secrets.CITIZEN_DEV_SECRETS }}
-      CITIZEN_STAGING_SECRETS: ${{ secrets.CITIZEN_STAGING_SECRETS }}
-      CITIZEN_PROD_SECRETS: ${{ secrets.CITIZEN_PROD_SECRETS }}
     steps:
       # Clone the repository
       - name: 📚 Clone the repository
@@ -78,26 +72,18 @@ jobs:
         run: |
           melos run flutter:analyze
 
-      - name: 🔐 Inject citizen flavor secrets (if applicable)
-        if: matrix.app == 'citizen'
+      - name: 🔐 Inject citizen flavor secrets (development only)
+        if: matrix.app == 'citizen' && matrix.flavor == 'development'
         env:
-          DEV: ${{ env.CITIZEN_DEV_SECRETS }}
-          STAGING: ${{ env.CITIZEN_STAGING_SECRETS }}
-          PROD: ${{ env.CITIZEN_PROD_SECRETS }}
+          DEV: ${{ secrets.CITIZEN_DEV_SECRETS }}
         run: |
           mkdir -p apps/citizen/secrets
-          case "${{ matrix.flavor }}" in
-            development)
-              if [ -z "$DEV" ]; then echo "CITIZEN_DEV_SECRETS is not set"; exit 1; fi
-              printf '%s' "$DEV" > apps/citizen/secrets/development.json
-              ;;
-            staging)
-              if [ -z "$STAGING" ]; then echo "CITIZEN_STAGING_SECRETS is not set"; exit 1; fi
-              printf '%s' "$STAGING" > apps/citizen/secrets/staging.json
-              ;;
-            production)
-              if [ -z "$PROD" ]; then echo "CITIZEN_PROD_SECRETS is not set"; exit 1; fi
-              printf '%s' "$PROD" > apps/citizen/secrets/production.json
+          if [ -z "$DEV" ]; then echo "CITIZEN_DEV_SECRETS is not set"; exit 1; fi
+          printf '%s' "$DEV" > apps/citizen/secrets/development.json
+
+      - name: 🧠 Debug the runner environment
+        run: |
+          echo "Xcode version:"
           xcodebuild -version
           echo "CocoaPods version:"
           pod --version
@@ -163,8 +149,6 @@ jobs:
           #   flavor: ''
     env:
       CITIZEN_DEV_SECRETS: ${{ secrets.CITIZEN_DEV_SECRETS }}
-      CITIZEN_STAGING_SECRETS: ${{ secrets.CITIZEN_STAGING_SECRETS }}
-      CITIZEN_PROD_SECRETS: ${{ secrets.CITIZEN_PROD_SECRETS }}
     steps:
       - name: 📚 Checkout
         uses: actions/checkout@v4
@@ -194,31 +178,14 @@ jobs:
           melos run flutter:build || true
           melos run flutter:analyze || true
 
-      - name: 🔐 Inject citizen flavor secrets (if applicable)
-        if: matrix.app == 'citizen'
+      - name: 🔐 Inject citizen flavor secrets (development only)
+        if: matrix.app == 'citizen' && matrix.flavor == 'development'
         env:
-          DEV: ${{ env.CITIZEN_DEV_SECRETS }}
-          STAGING: ${{ env.CITIZEN_STAGING_SECRETS }}
-          PROD: ${{ env.CITIZEN_PROD_SECRETS }}
+          DEV: ${{ secrets.CITIZEN_DEV_SECRETS }}
         run: |
           mkdir -p apps/citizen/secrets
-          case "${{ matrix.flavor }}" in
-            development)
-              if [ -z "$DEV" ]; then echo "CITIZEN_DEV_SECRETS is not set"; exit 1; fi
-              printf '%s' "$DEV" > apps/citizen/secrets/development.json
-              ;;
-            staging)
-              if [ -z "$STAGING" ]; then echo "CITIZEN_STAGING_SECRETS is not set"; exit 1; fi
-              printf '%s' "$STAGING" > apps/citizen/secrets/staging.json
-              ;;
-            production)
-              if [ -z "$PROD" ]; then echo "CITIZEN_PROD_SECRETS is not set"; exit 1; fi
-              printf '%s' "$PROD" > apps/citizen/secrets/production.json
-              ;;
-            *)
-              echo "No secrets to inject for ${{ matrix.app }}"
-              ;;
-          esac
+          if [ -z "$DEV" ]; then echo "CITIZEN_DEV_SECRETS is not set"; exit 1; fi
+          printf '%s' "$DEV" > apps/citizen/secrets/development.json
 
       - name: 🧾 Verify no tracked uncommitted changes in ${{ matrix.app }}
         run: |
