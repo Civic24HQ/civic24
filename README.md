@@ -134,6 +134,14 @@ Runs automatically on all Pull Requests targeting the `develop` branch.
 ### Continuous Deployment (`cd.yml`)
 Handles preview deployments and publishing of artifacts on successful merge to the `main` branch.
 
+**Secrets note:** For flavor-based secrets (e.g., `apps/citizen/secrets/development.json`) store the JSON in a GitHub repository secret encoded in base64 to preserve formatting and avoid shell escaping/newline issues. Example:
+
+```bash
+base64 -w0 apps/citizen/secrets/development.json | gh secret set CITIZEN_DEV_SECRETS -b -
+```
+
+The workflow decodes this secret at runtime into `apps/citizen/secrets/development.json` before building.
+
 ### Pull Request Intelligence (`open_pr.yml`)
 This is triggered when a PR is opened or updated. It automatically labels PRs (e.g. `apps/admin`, `packages/constants`) based on which files changed.
 
