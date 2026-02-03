@@ -22,6 +22,8 @@ jobs:
         include:
           - app: citizen
             flavor: development
+    env:
+      CITIZEN_DEV_SECRETS: ${{ secrets.CITIZEN_DEV_SECRETS }}
     steps:
       # Clone the repository
       - name: 📚 Clone the repository
@@ -70,10 +72,12 @@ jobs:
 
       - name: 🔐 Inject citizen flavor secrets (development only)
         if: matrix.app == 'citizen' && matrix.flavor == 'development'
+        env:
+          DEV: ${{ secrets.CITIZEN_DEV_SECRETS }}
         run: |
           mkdir -p apps/citizen/secrets
-          if [ -z "${{ secrets.CITIZEN_DEV_SECRETS }}" ]; then echo "CITIZEN_DEV_SECRETS is not set"; exit 1; fi
-          printf '%s' "${{ secrets.CITIZEN_DEV_SECRETS }}" > apps/citizen/secrets/development.json
+          if [ -z "$DEV" ]; then echo "CITIZEN_DEV_SECRETS is not set"; exit 1; fi
+          printf '%s' "$DEV" > apps/citizen/secrets/development.json
 
       - name: 🧠 Debug the runner environment
         run: |
@@ -154,6 +158,8 @@ jobs:
         include:
           - app: citizen
             flavor: development
+    env:
+      CITIZEN_DEV_SECRETS: ${{ secrets.CITIZEN_DEV_SECRETS }}
     steps:
       - name: 📚 Checkout
         uses: actions/checkout@v3
@@ -185,10 +191,12 @@ jobs:
 
       - name: 🔐 Inject citizen flavor secrets (development only)
         if: matrix.app == 'citizen' && matrix.flavor == 'development'
+        env:
+          DEV: ${{ secrets.CITIZEN_DEV_SECRETS }}
         run: |
           mkdir -p apps/citizen/secrets
-          if [ -z "${{ secrets.CITIZEN_DEV_SECRETS }}" ]; then echo "CITIZEN_DEV_SECRETS is not set"; exit 1; fi
-          printf '%s' "${{ secrets.CITIZEN_DEV_SECRETS }}" > apps/citizen/secrets/development.json
+          if [ -z "$DEV" ]; then echo "CITIZEN_DEV_SECRETS is not set"; exit 1; fi
+          printf '%s' "$DEV" > apps/citizen/secrets/development.json
 
       - name: 🧾 Verify no tracked uncommitted changes in ${{ matrix.app }}
         run: |
