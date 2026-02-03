@@ -22,6 +22,8 @@ jobs:
         include:
           - app: citizen
             flavor: development
+    env:
+      CITIZEN_DEV_SECRETS: ${{ secrets.CITIZEN_DEV_SECRETS }}
     steps:
       # Clone the repository
       - name: 📚 Clone the repository
@@ -70,13 +72,12 @@ jobs:
 
       - name: 🔐 Inject citizen flavor secrets (development only)
         if: matrix.app == 'citizen' && matrix.flavor == 'development'
+        env:
+          DEV: ${{ secrets.CITIZEN_DEV_SECRETS }}
         run: |
           mkdir -p apps/citizen/secrets
-          echo "Writing secret file to apps/citizen/secrets/development.json (contents masked)"
-          # The secret should be base64-encoded JSON to avoid shell quoting/newline issues when stored in GitHub Secrets.
-          # Example local encoding: base64 -w0 apps/citizen/secrets/development.json
-          echo "${{ secrets.CITIZEN_DEV_SECRETS }}" | base64 --decode > apps/citizen/secrets/development.json
-          python -m json.tool apps/citizen/secrets/development.json >/dev/null || (echo "apps/citizen/secrets/development.json is not valid JSON" && exit 1)
+          if [ -z "$DEV" ]; then echo "CITIZEN_DEV_SECRETS is not set"; exit 1; fi
+          printf '%s' "$DEV" > apps/citizen/secrets/development.json
 
       - name: 🧠 Debug the runner environment
         run: |
@@ -157,6 +158,8 @@ jobs:
         include:
           - app: citizen
             flavor: development
+    env:
+      CITIZEN_DEV_SECRETS: ${{ secrets.CITIZEN_DEV_SECRETS }}
     steps:
       - name: 📚 Checkout
         uses: actions/checkout@v3
@@ -188,13 +191,12 @@ jobs:
 
       - name: 🔐 Inject citizen flavor secrets (development only)
         if: matrix.app == 'citizen' && matrix.flavor == 'development'
+        env:
+          DEV: ${{ secrets.CITIZEN_DEV_SECRETS }}
         run: |
           mkdir -p apps/citizen/secrets
-          echo "Writing secret file to apps/citizen/secrets/development.json (contents masked)"
-          # The secret should be base64-encoded JSON to avoid shell quoting/newline issues when stored in GitHub Secrets.
-          # Example local encoding: base64 -w0 apps/citizen/secrets/development.json
-          echo "${{ secrets.CITIZEN_DEV_SECRETS }}" | base64 --decode > apps/citizen/secrets/development.json
-          python -m json.tool apps/citizen/secrets/development.json >/dev/null || (echo "apps/citizen/secrets/development.json is not valid JSON" && exit 1)
+          if [ -z "$DEV" ]; then echo "CITIZEN_DEV_SECRETS is not set"; exit 1; fi
+          printf '%s' "$DEV" > apps/citizen/secrets/development.json
 
       - name: 🧾 Verify no tracked uncommitted changes in ${{ matrix.app }}
         run: |
