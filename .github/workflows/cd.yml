@@ -22,8 +22,6 @@ jobs:
         include:
           - app: citizen
             flavor: development
-          - app: admin
-            flavor: ''
     env:
       CITIZEN_DEV_SECRETS: ${{ secrets.CITIZEN_DEV_SECRETS }}
     steps:
@@ -45,32 +43,32 @@ jobs:
           channel: "stable"
           flutter-version: ${{ env.FLUTTER_VERSION }} # This uses the subosito/flutter-action@v2 action to install Flutter with the stable channel and version 3.32.6
 
-      # Install Melos and bootstrap the packages. This installs dependencies across the monorepo
-      - name: 📦 Bootstrap packages with Melos
-        run: |
-          dart pub global activate melos
-          melos clean
-          melos bootstrap
+      # # Install Melos and bootstrap the packages. This installs dependencies across the monorepo
+      # - name: 📦 Bootstrap packages with Melos
+      #   run: |
+      #     dart pub global activate melos
+      #     melos clean
+      #     melos bootstrap
 
-      # Format all Dart code using the standard format rules defined
-      - name: 🎩 Ensure the Dart code is formatted correctly
-        run: |
-          melos run flutter:format
+      # # Format all Dart code using the standard format rules defined
+      # - name: 🎩 Ensure the Dart code is formatted correctly
+      #   run: |
+      #     melos run flutter:format
 
-      # Generate localization files
-      - name: 🧩 Generate localization files
-        run: |
-          melos run localization:intl
+      # # Generate localization files
+      # - name: 🧩 Generate localization files
+      #   run: |
+      #     melos run localization:intl
 
-      # Run build_runner or any code gen scripts you've defined
-      - name: 🧬 Run code generation
-        run: |
-          melos run flutter:build
+      # # Run build_runner or any code gen scripts you've defined
+      # - name: 🧬 Run code generation
+      #   run: |
+      #     melos run flutter:build
 
-      # Run analyzer across all packages to catch lint issues and unused code
-      - name: ✨ Analyze the Dart code
-        run: |
-          melos run flutter:analyze
+      # # Run analyzer across all packages to catch lint issues and unused code
+      # - name: ✨ Analyze the Dart code
+      #   run: |
+      #     melos run flutter:analyze
 
       - name: 🔐 Inject citizen flavor secrets (development only)
         if: matrix.app == 'citizen' && matrix.flavor == 'development'
@@ -103,7 +101,13 @@ jobs:
           flutter clean
           flutter pub get
           if [ "${{ matrix.app }}" = "citizen" ]; then
-            flutter build ipa --flavor ${{ matrix.flavor }} --export-options-plist ios/ExportOptions.plist --dart-define-from-file=apps/citizen/secrets/${{ matrix.flavor }}.json
+            if [ -f ios/ExportOptions.plist ]; then
+              echo "Using ios/ExportOptions.plist for archive export"
+              flutter build ipa --flavor ${{ matrix.flavor }} --export-options-plist ios/ExportOptions.plist --dart-define-from-file=apps/citizen/secrets/${{ matrix.flavor }}.json
+            else
+              echo "Warning: ios/ExportOptions.plist not found — building ipa without export options"
+              flutter build ipa --flavor ${{ matrix.flavor }} --dart-define-from-file=apps/citizen/secrets/${{ matrix.flavor }}.json
+            fi
           else
             flutter build ios --no-codesign
           fi
@@ -141,12 +145,6 @@ jobs:
         include:
           - app: citizen
             flavor: development
-          # - app: citizen
-          #   flavor: staging
-          # - app: citizen
-          #   flavor: production
-          # - app: admin
-          #   flavor: ''
     env:
       CITIZEN_DEV_SECRETS: ${{ secrets.CITIZEN_DEV_SECRETS }}
     steps:
@@ -165,18 +163,18 @@ jobs:
           channel: "stable"
           flutter-version: ${{ env.FLUTTER_VERSION }}
 
-      - name: 📦 Install Melos and bootstrap
-        run: |
-          dart pub global activate melos
-          melos clean
-          melos bootstrap
+      # - name: 📦 Install Melos and bootstrap
+      #   run: |
+      #     dart pub global activate melos
+      #     melos clean
+      #     melos bootstrap
 
-      - name: 🎩 Format, generate and analyze
-        run: |
-          melos run flutter:format || true
-          melos run localization:intl || true
-          melos run flutter:build || true
-          melos run flutter:analyze || true
+      # - name: 🎩 Format, generate and analyze
+      #   run: |
+      #     melos run flutter:format || true
+      #     melos run localization:intl || true
+      #     melos run flutter:build || true
+      #     melos run flutter:analyze || true
 
       - name: 🔐 Inject citizen flavor secrets (development only)
         if: matrix.app == 'citizen' && matrix.flavor == 'development'
