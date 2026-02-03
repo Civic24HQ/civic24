@@ -22,8 +22,6 @@ jobs:
         include:
           - app: citizen
             flavor: development
-    env:
-      CITIZEN_DEV_SECRETS: ${{ secrets.CITIZEN_DEV_SECRETS }}
     steps:
       # Clone the repository
       - name: 📚 Clone the repository
@@ -72,12 +70,11 @@ jobs:
 
       - name: 🔐 Inject citizen flavor secrets (development only)
         if: matrix.app == 'citizen' && matrix.flavor == 'development'
-        env:
-          DEV: ${{ secrets.CITIZEN_DEV_SECRETS }}
         run: |
           mkdir -p apps/citizen/secrets
-          if [ -z "$DEV" ]; then echo "CITIZEN_DEV_SECRETS is not set"; exit 1; fi
-          printf '%s' "$DEV" > apps/citizen/secrets/development.json
+          echo "Writing secret file to apps/citizen/secrets/development.json (contents masked)"
+          echo "${{ secrets.CITIZEN_DEV_SECRETS }}" > apps/citizen/secrets/development.json
+          python -m json.tool apps/citizen/secrets/development.json >/dev/null || (echo "apps/citizen/secrets/development.json is not valid JSON" && exit 1)
 
       - name: 🧠 Debug the runner environment
         run: |
@@ -158,8 +155,6 @@ jobs:
         include:
           - app: citizen
             flavor: development
-    env:
-      CITIZEN_DEV_SECRETS: ${{ secrets.CITIZEN_DEV_SECRETS }}
     steps:
       - name: 📚 Checkout
         uses: actions/checkout@v3
@@ -191,12 +186,11 @@ jobs:
 
       - name: 🔐 Inject citizen flavor secrets (development only)
         if: matrix.app == 'citizen' && matrix.flavor == 'development'
-        env:
-          DEV: ${{ secrets.CITIZEN_DEV_SECRETS }}
         run: |
           mkdir -p apps/citizen/secrets
-          if [ -z "$DEV" ]; then echo "CITIZEN_DEV_SECRETS is not set"; exit 1; fi
-          printf '%s' "$DEV" > apps/citizen/secrets/development.json
+          echo "Writing secret file to apps/citizen/secrets/development.json (contents masked)"
+          echo "${{ secrets.CITIZEN_DEV_SECRETS }}" > apps/citizen/secrets/development.json
+          python -m json.tool apps/citizen/secrets/development.json >/dev/null || (echo "apps/citizen/secrets/development.json is not valid JSON" && exit 1)
 
       - name: 🧾 Verify no tracked uncommitted changes in ${{ matrix.app }}
         run: |
