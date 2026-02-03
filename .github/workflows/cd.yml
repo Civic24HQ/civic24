@@ -73,7 +73,9 @@ jobs:
         run: |
           mkdir -p apps/citizen/secrets
           echo "Writing secret file to apps/citizen/secrets/development.json (contents masked)"
-          echo "${{ secrets.CITIZEN_DEV_SECRETS }}" > apps/citizen/secrets/development.json
+          # The secret should be base64-encoded JSON to avoid shell quoting/newline issues when stored in GitHub Secrets.
+          # Example local encoding: base64 -w0 apps/citizen/secrets/development.json
+          echo "${{ secrets.CITIZEN_DEV_SECRETS }}" | base64 --decode > apps/citizen/secrets/development.json
           python -m json.tool apps/citizen/secrets/development.json >/dev/null || (echo "apps/citizen/secrets/development.json is not valid JSON" && exit 1)
 
       - name: 🧠 Debug the runner environment
@@ -189,7 +191,9 @@ jobs:
         run: |
           mkdir -p apps/citizen/secrets
           echo "Writing secret file to apps/citizen/secrets/development.json (contents masked)"
-          echo "${{ secrets.CITIZEN_DEV_SECRETS }}" > apps/citizen/secrets/development.json
+          # The secret should be base64-encoded JSON to avoid shell quoting/newline issues when stored in GitHub Secrets.
+          # Example local encoding: base64 -w0 apps/citizen/secrets/development.json
+          echo "${{ secrets.CITIZEN_DEV_SECRETS }}" | base64 --decode > apps/citizen/secrets/development.json
           python -m json.tool apps/citizen/secrets/development.json >/dev/null || (echo "apps/citizen/secrets/development.json is not valid JSON" && exit 1)
 
       - name: 🧾 Verify no tracked uncommitted changes in ${{ matrix.app }}
