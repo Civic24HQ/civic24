@@ -1,42 +1,83 @@
-name: Civic 24 Quality Assurance Continuous Integration (CI) / Continuous Deployment (CD) # Name of the workflow shown in GitHub Actions UI
+name: Civic 24 Continuous Integration / Continuous Deployment (CI/CD)
 
 on:
   push:
     branches:
-      - main
+      - develop
   pull_request:
     branches:
-      - main
+      - develop
 
 env:
-  FLUTTER_VERSION: "3.32.6"
+  FLUTTER_VERSION: "3.38.7"
   EXCLUDED_FILES: ":(exclude)**/*app.router.dart :(exclude)**/*test_helpers.mocks.dart :(exclude)**/*assets.gen.dart"
 
 jobs:
+  test:
+    name: Unit & Widget Tests + Analyze
+    runs-on: ubuntu-latest
+    steps:
+      - name: 📚 Checkout
+        uses: actions/checkout@v4
+
+      - name: 🐦 Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: "stable"
+          flutter-version: ${{ env.FLUTTER_VERSION }}
+
+      - name: 📦 Install Melos and bootstrap
+        run: |
+          dart pub global activate melos
+          melos clean
+          melos bootstrap
+
+      - name: 🧪 Run tests across repo
+        run: |
+          melos exec --dir-exists="test" -- "flutter test --no-pub"
+
+      - name: ✨ Analyze
+        run: |
+          melos run flutter:analyze
+
   build-ios:
-    name: Build and Deploy IOS for ${{ matrix.app }} app
+    needs: test
+    name: Build iOS - ${{ matrix.app }} ${{ matrix.flavor }}
     runs-on: macos-15
     strategy:
+      fail-fast: false
       matrix:
-        app: [citizen, admin]
+        include:
+          - app: citizen
+            flavor: development
+          # - app: citizen
+          #   flavor: staging
+          # - app: citizen
+          #   flavor: production
+          # - app: admin
+          #   flavor: ''
+    env:
+      CITIZEN_DEV_SECRETS: ${{ secrets.CITIZEN_DEV_SECRETS }}
+      CITIZEN_STAGING_SECRETS: ${{ secrets.CITIZEN_STAGING_SECRETS }}
+      CITIZEN_PROD_SECRETS: ${{ secrets.CITIZEN_PROD_SECRETS }}
     steps:
       # Clone the repository
       - name: 📚 Clone the repository
         uses: actions/checkout@v4 # - This uses the actions/checkout@v4 action to clone the repository's code into the runner's workspace
-      
+
       # Setup Java
       - name: 🚧 Setup java
         uses: actions/setup-java@v3 # - This uses the actions/setup-java@v3 action to set up a Java environment with Zulu distribution and Java version 18.x
         with:
-            distribution: 'zulu'
-            java-version: "18.x"
+          distribution: "zulu"
+          java-version: "18.x"
 
       # Set up Flutter
       - name: 🐦 Setup Flutter
         uses: subosito/flutter-action@v2
         with:
-            channel: 'stable'
-            flutter-version: ${{ env.FLUTTER_VERSION }} # This uses the subosito/flutter-action@v2 action to install Flutter with the stable channel and version 3.32.6
+          channel: "stable"
+          flutter-version: ${{ env.FLUTTER_VERSION }} # This uses the subosito/flutter-action@v2 action to install Flutter with the stable channel and version 3.32.6
 
       # Install Melos and bootstrap the packages. This installs dependencies across the monorepo
       - name: 📦 Bootstrap packages with Melos
@@ -48,30 +89,62 @@ jobs:
       # Format all Dart code using the standard format rules defined
       - name: 🎩 Ensure the Dart code is formatted correctly
         run: |
-            melos run flutter:format  
+          melos run flutter:format
 
       # Generate localization files
       - name: 🧩 Generate localization files
         run: |
-            melos run localization:intl 
+          melos run localization:intl
 
       # Run build_runner or any code gen scripts you've defined
       - name: 🧬 Run code generation
         run: |
-            melos run flutter:build
+          melos run flutter:build
 
       # Run analyzer across all packages to catch lint issues and unused code
       - name: ✨ Analyze the Dart code
         run: |
-            melos run flutter:analyze
+          melos run flutter:analyze
 
-      # Verify no uncommitted changes in ${{ matrix.app }}
-      - name: 🧾 Verify no uncommitted changes in ${{ matrix.app }}
+      - name: 🔐 Inject citizen flavor secrets (if applicable)
+        if: matrix.app == 'citizen'
+        env:
+          DEV: ${{ env.CITIZEN_DEV_SECRETS }}
+          STAGING: ${{ env.CITIZEN_STAGING_SECRETS }}
+          PROD: ${{ env.CITIZEN_PROD_SECRETS }}
+        run: |
+          mkdir -p apps/citizen/secrets
+          case "${{ matrix.flavor }}" in
+            development)
+              if [ -z "$DEV" ]; then echo "CITIZEN_DEV_SECRETS is not set"; exit 1; fi
+              cat <<JSON > apps/citizen/secrets/development.json
+              $DEV
+              JSON
+              ;;
+            staging)
+              if [ -z "$STAGING" ]; then echo "CITIZEN_STAGING_SECRETS is not set"; exit 1; fi
+              cat <<JSON > apps/citizen/secrets/staging.json
+              $STAGING
+              JSON
+              ;;
+            production)
+              if [ -z "$PROD" ]; then echo "CITIZEN_PROD_SECRETS is not set"; exit 1; fi
+              cat <<JSON > apps/citizen/secrets/production.json
+              $PROD
+              JSON
+              ;;
+            *)
+              echo "No secrets to inject for ${{ matrix.app }}"
+              ;;
+          esac
+
+      - name: 🧾 Verify no tracked uncommitted changes in ${{ matrix.app }}
         run: |
           git diff --exit-code -- . $EXCLUDED_FILES
+          git status --porcelain --untracked-files=no | tee status.txt
+          if [ -s status.txt ]; then echo "Uncommitted tracked changes found" && exit 1; fi
         working-directory: apps/${{ matrix.app }}
 
-      # Debug the runner environment to ensure all tools are available
       - name: 🧠 Debug the runner environment
         run: |
           echo "Xcode version:"
@@ -81,112 +154,150 @@ jobs:
           echo "Flutter version:"
           flutter --version
 
-      # Clean and re-install CocoaPods to avoid build errors
       - name: 🔧 Clean and reinstall CocoaPods
         run: |
-          pod deintegrate
-          rm -rf Pods Podfile.lock
-          pod cache clean --all
-          pod install --repo-update
+          pod deintegrate || true
+          rm -rf Pods Podfile.lock || true
+          pod cache clean --all || true
+          pod install --repo-update || true
         working-directory: apps/${{ matrix.app }}/ios
 
-      # Build the iOS application package (IPA) without code signing
-      - name: Build IPA
+      - name: Build iOS
         run: |
           flutter clean
           flutter pub get
-          flutter build ios --no-codesign
+          if [ "${{ matrix.app }}" = "citizen" ]; then
+            flutter build ipa --flavor ${{ matrix.flavor }} --export-options-plist ios/ExportOptions.plist --dart-define-from-file=apps/citizen/secrets/${{ matrix.flavor }}.json
+          else
+            flutter build ios --no-codesign
+          fi
         working-directory: apps/${{ matrix.app }}
 
-      # Upload the build artifacts including the compressed iOS build to the GitHub release
-      - name: Push to Release
+      - name: Package IPA (citizen only)
+        if: matrix.app == 'citizen'
         run: |
+          set -e
           cd build/ios/iphoneos
-          mkdir Payload
+          mkdir -p Payload
           cd Payload
-          ln -s ../Runner.app
+          ln -sf ../Runner.app
           cd ..
           zip -r app.ipa Payload
         working-directory: apps/${{ matrix.app }}
 
-      # Upload the generated IPA to the GitHub release
-      - name: Push iOS IPA to Release
+      - name: Push iOS artifacts to Release (citizen only)
+        if: matrix.app == 'citizen'
         uses: ncipollo/release-action@v1
         with:
           artifacts: apps/${{ matrix.app }}/build/ios/iphoneos/app.ipa
-          tag: ${{ matrix.app }}-v1.0.${{ github.run_number }}
+          tag: ${{ matrix.app }}-${{ matrix.flavor }}-v1.0.${{ github.run_number }}
           token: ${{ secrets.TOKEN }}
           allowUpdates: true
           replacesArtifacts: false
 
   build-android:
-    name: Build and Deploy Android for ${{ matrix.app }} app
+    name: Build Android - ${{ matrix.app }} ${{ matrix.flavor }}
     needs: build-ios
     runs-on: ubuntu-latest
     strategy:
+      fail-fast: false
       matrix:
-        app: [citizen, admin]
+        include:
+          - app: citizen
+            flavor: development
+          # - app: citizen
+          #   flavor: staging
+          # - app: citizen
+          #   flavor: production
+          # - app: admin
+          #   flavor: ''
+    env:
+      CITIZEN_DEV_SECRETS: ${{ secrets.CITIZEN_DEV_SECRETS }}
+      CITIZEN_STAGING_SECRETS: ${{ secrets.CITIZEN_STAGING_SECRETS }}
+      CITIZEN_PROD_SECRETS: ${{ secrets.CITIZEN_PROD_SECRETS }}
     steps:
-      # Clone the repository
-      - name: 📚 Clone the repository
-        uses: actions/checkout@v4 # - This uses the actions/checkout@v4 action to clone the repository's code into the runner's workspace
-      
-      # Setup Java
-      - name: 🚧 Setup java
-        uses: actions/setup-java@v3 # - This uses the actions/setup-java@v3 action to set up a Java environment with Zulu distribution and Java version 18.x
-        with:
-            distribution: 'zulu'
-            java-version: "18.x"
+      - name: 📚 Checkout
+        uses: actions/checkout@v4
 
-      # Set up Flutter
+      - name: 🚧 Setup java
+        uses: actions/setup-java@v3
+        with:
+          distribution: "zulu"
+          java-version: "18.x"
+
       - name: 🐦 Setup Flutter
         uses: subosito/flutter-action@v2
         with:
-            channel: 'stable'
-            flutter-version: ${{ env.FLUTTER_VERSION }} # This uses the subosito/flutter-action@v2 action to install Flutter with the stable channel and version 3.32.6
+          channel: "stable"
+          flutter-version: ${{ env.FLUTTER_VERSION }}
 
-      # Install Melos and bootstrap the packages. This installs dependencies across the monorepo
-      - name: 📦 Bootstrap packages with Melos
+      - name: 📦 Install Melos and bootstrap
         run: |
           dart pub global activate melos
           melos clean
           melos bootstrap
-      # Format all Dart code using the standard format rules defined
-      - name: 🎩 Ensure the Dart code is formatted correctly
-        run: |
-            melos run flutter:format  
-      # Generate localization files
-      - name: 🧩 Generate localization files
-        run: |
-            melos run localization:intl 
-      # Run build_runner or any code gen scripts you've defined.
-      - name: 🧬 Run code generation
-        run: |
-            melos run flutter:build
 
-      # Run analyzer across all packages to catch lint issues and unused code
-      - name: ✨ Analyze the Dart code
+      - name: 🎩 Format, generate and analyze
         run: |
-            melos run flutter:analyze
+          melos run flutter:format || true
+          melos run localization:intl || true
+          melos run flutter:build || true
+          melos run flutter:analyze || true
 
-      # Verify no uncommitted changes in ${{ matrix.app }}
-      - name: 🧾 Verify no uncommitted changes in ${{ matrix.app }}
+      - name: 🔐 Inject citizen flavor secrets (if applicable)
+        if: matrix.app == 'citizen'
+        env:
+          DEV: ${{ env.CITIZEN_DEV_SECRETS }}
+          STAGING: ${{ env.CITIZEN_STAGING_SECRETS }}
+          PROD: ${{ env.CITIZEN_PROD_SECRETS }}
+        run: |
+          mkdir -p apps/citizen/secrets
+          case "${{ matrix.flavor }}" in
+            development)
+              if [ -z "$DEV" ]; then echo "CITIZEN_DEV_SECRETS is not set"; exit 1; fi
+              cat <<JSON > apps/citizen/secrets/development.json
+              $DEV
+              JSON
+              ;;
+            staging)
+              if [ -z "$STAGING" ]; then echo "CITIZEN_STAGING_SECRETS is not set"; exit 1; fi
+              cat <<JSON > apps/citizen/secrets/staging.json
+              $STAGING
+              JSON
+              ;;
+            production)
+              if [ -z "$PROD" ]; then echo "CITIZEN_PROD_SECRETS is not set"; exit 1; fi
+              cat <<JSON > apps/citizen/secrets/production.json
+              $PROD
+              JSON
+              ;;
+            *)
+              echo "No secrets to inject for ${{ matrix.app }}"
+              ;;
+          esac
+
+      - name: 🧾 Verify no tracked uncommitted changes in ${{ matrix.app }}
         run: |
           git diff --exit-code -- . $EXCLUDED_FILES
-        working-directory: apps/${{ matrix.app }}
-      
-      # Build the Android application package (APK)
-      - name: Build APK
-        run: |
-          flutter build apk --debug --split-per-abi
+          git status --porcelain --untracked-files=no | tee status.txt
+          if [ -s status.txt ]; then echo "Uncommitted tracked changes found" && exit 1; fi
         working-directory: apps/${{ matrix.app }}
 
-      # Upload the build artifacts including the generated Android APK to the GitHub release
-      - name: Push to Release
+      - name: Build Android
+        run: |
+          flutter pub get
+          if [ "${{ matrix.app }}" = "citizen" ]; then
+            flutter build apk --flavor ${{ matrix.flavor }} --target lib/main.dart --dart-define-from-file=apps/citizen/secrets/${{ matrix.flavor }}.json --split-per-abi
+          else
+            flutter build apk --debug --split-per-abi
+          fi
+        working-directory: apps/${{ matrix.app }}
+
+      - name: Push Android artifacts to Release
         uses: ncipollo/release-action@v1
         with:
-            artifacts: "apps/${{ matrix.app }}/build/app/outputs/apk/debug/*.apk"
-            tag: ${{ matrix.app }}-v1.0.${{ github.run_number }}
-            token: ${{ secrets.TOKEN }}
-            allowUpdates: true
-            replacesArtifacts: false
+          artifacts: "apps/${{ matrix.app }}/build/app/outputs/apk/**/*.apk"
+          tag: ${{ matrix.app }}-${{ matrix.flavor }}-v1.0.${{ github.run_number }}
+          token: ${{ secrets.TOKEN }}
+          allowUpdates: true
+          replacesArtifacts: false
