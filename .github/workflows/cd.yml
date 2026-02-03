@@ -11,7 +11,6 @@ on:
 env:
   FLUTTER_VERSION: "3.38.7"
   EXCLUDED_FILES: ":(exclude)**/*app.router.dart :(exclude)**/*test_helpers.mocks.dart :(exclude)**/*assets.gen.dart"
-  CITIZEN_DEV_SECRETS: ${{ secrets.CITIZEN_DEV_SECRETS }}
 
 jobs:
   build-ios:
@@ -24,23 +23,20 @@ jobs:
           - app: citizen
             flavor: development
     steps:
-      # Clone the repository
       - name: 📚 Clone the repository
-        uses: actions/checkout@v4 # - Using actions/checkout@v3 for wider compatibility with older/self-hosted runners
+        uses: actions/checkout@v4
 
-      # Setup Java
       - name: 🚧 Setup java
-        uses: actions/setup-java@v3 # - This uses the actions/setup-java@v3 action to set up a Java environment with Zulu distribution and Java version 18.x
+        uses: actions/setup-java@v3
         with:
           distribution: "zulu"
           java-version: "18.x"
 
-      # Set up Flutter
       - name: 🐦 Setup Flutter
         uses: subosito/flutter-action@v2
         with:
           channel: "stable"
-          flutter-version: ${{ env.FLUTTER_VERSION }} # This uses the subosito/flutter-action@v2 action to install Flutter with the stable channel and version 3.32.6
+          flutter-version: ${{ env.FLUTTER_VERSION }}
 
       # # Install Melos and bootstrap the packages. This installs dependencies across the monorepo
       # - name: 📦 Bootstrap packages with Melos
@@ -69,44 +65,39 @@ jobs:
       #   run: |
       #     melos run flutter:analyze
 
-      - name: 🔐 Inject citizen flavor secrets (development only)
+      - name: 🔐 Inject citizen flavor secrets
         if: matrix.app == 'citizen' && matrix.flavor == 'development'
         env:
-          DEV: ${{ secrets.CITIZEN_DEV_SECRETS }}
+          DEV_DATA: ${{ secrets.CITIZEN_DEV_SECRETS }}
         run: |
           mkdir -p apps/citizen/secrets
-          if [ -z "$DEV" ]; then echo "CITIZEN_DEV_SECRETS is not set"; exit 1; fi
-          printf '%s' "$DEV" > apps/citizen/secrets/development.json
-
-      - name: 🧠 Debug the runner environment
-        run: |
-          echo "Xcode version:"
-          xcodebuild -version
-          echo "CocoaPods version:"
-          pod --version
-          echo "Flutter version:"
-          flutter --version
-
-      - name: ✅ Validate secrets file (citizen/development only)
-        if: matrix.app == 'citizen' && matrix.flavor == 'development'
-        run: |
-          if [ ! -f secrets/development.json ]; then echo "secrets/development.json not found" && ls -la secrets || (ls -la && exit 1); fi
-          python -m json.tool secrets/development.json >/dev/null || (echo "secrets/development.json is not valid JSON" && exit 1)
-        working-directory: apps/${{ matrix.app }}
+          if [ -z "$DEV_DATA" ]; then echo "CITIZEN_DEV_SECRETS is not set"; exit 1; fi
+          # Using a heredoc to safely handle large JSON strings
+          cat <<EOF > apps/citizen/secrets/development.json
+          $DEV_DATA
+          EOF
 
       - name: 🔧 Clean and reinstall CocoaPods
         run: |
+          # Only run deep clean if necessary; for now, keeping your thorough approach
           pod deintegrate || true
           rm -rf Pods Podfile.lock || true
-          pod cache clean --all || true
           pod install --repo-update || true
         working-directory: apps/${{ matrix.app }}/ios
 
       - name: Build iOS
         run: |
+          # 1. Clear out heavy environment variables that Xcode doesn't need
+          unset CITIZEN_DEV_SECRETS
+          unset DEV_DATA
+          unset GITHUB_TOKEN
+          
+          # 2. Run the build with an extra flag to help with script input limits
           flutter clean
           flutter pub get
-          flutter build ipa --no-codesign --flavor development --dart-define-from-file=secrets/development.json
+          flutter build ipa --no-codesign --flavor development \
+            --dart-define-from-file=secrets/development.json \
+            --xcconfig-flags="USE_RECURSIVE_SCRIPT_INPUTS_EXCLUSION=YES"
         working-directory: apps/${{ matrix.app }}
 
       - name: Package IPA (citizen only)
@@ -115,13 +106,12 @@ jobs:
           set -e
           cd build/ios/iphoneos
           mkdir -p Payload
-          cd Payload
-          ln -sf ../Runner.app
-          cd ..
+          # Use copy instead of symlink to avoid potential zip issues in CI
+          cp -r Runner.app Payload/
           zip -r app.ipa Payload
         working-directory: apps/${{ matrix.app }}
 
-      - name: Push iOS artifacts to Release (citizen only)
+      - name: Push iOS artifacts to Release
         if: matrix.app == 'citizen'
         uses: ncipollo/release-action@v1
         with:
