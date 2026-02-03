@@ -16,7 +16,7 @@ jobs:
     steps:
       # Clone the repository
       - name: 📚 Clone the repository
-        uses: actions/checkout@v4 # - This uses the actions/checkout@v4 action to clone the repository's code into the runner's workspace.
+        uses: actions/checkout@v3 # - Using actions/checkout@v3 for wider compatibility with older/self-hosted runners.
       
       # Setup Java
       - name: 🚧 Setup java
