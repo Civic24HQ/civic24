@@ -1,49 +1,49 @@
 enum LanguageType {
-  arabic,
   english,
   french,
-  hausa,
-  igbo,
-  spanish,
-  yoruba;
+  spanish;
+  // arabic,
+  // hausa,
+  // igbo,
+  // yoruba;
 
   String get title => switch (this) {
     english => 'English',
-    hausa => 'Hausa',
-    yoruba => 'Yorùbá',
-    igbo => 'Igbo',
+    // hausa => 'Hausa',
+    // yoruba => 'Yorùbá',
+    // igbo => 'Igbo',
     french => 'Français',
     spanish => 'Español',
-    arabic => 'العربية',
+    // arabic => 'العربية',
   };
 
   String get subtitle => switch (this) {
     english => 'English',
-    hausa => 'Hausa',
-    yoruba => 'Yorùbá',
-    igbo => 'Igbo',
+    // hausa => 'Hausa',
+    // yoruba => 'Yorùbá',
+    // igbo => 'Igbo',
     french => 'Français',
     spanish => 'Español',
-    arabic => 'العربية',
+    // arabic => 'العربية',
   };
 
   String get locale => switch (this) {
     english => 'en',
-    hausa => 'ha',
-    yoruba => 'yo',
-    igbo => 'ig',
+    // hausa => 'ha',
+    // yoruba => 'yo',
+    // igbo => 'ig',
     french => 'fr',
     spanish => 'es',
-    arabic => 'ar',
+    // arabic => 'ar',
   };
 
   String get flag => switch (this) {
     english => '🇺🇸',
-    hausa => '🇳🇬',
-    yoruba => '🇳🇬',
-    igbo => '🇳🇬',
+    // hausa => '🇳🇬',
+    // yoruba => '🇳🇬',
+    // igbo => '🇳🇬',
     french => '🇫🇷',
     spanish => '🇪🇸',
-    arabic => '🇸🇦',
+    // arabic => '🇸🇦',
   };
 }

@@ -369,7 +369,7 @@ class AuthenticationService {
       _log
         ..i(googleSignInExceptionToMessage(e))
         ..i('Google Sign In error: code: ${e.code.name} description:${e.description} details:${e.details}', error: e);
-      rethrow;
+      return false;
     } catch (e) {
       if (isAndroid && _isNoCredentialError(e)) {
         _log.w('No Google credentials found on device. Opening add account settings.');

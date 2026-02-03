@@ -194,7 +194,7 @@ class AddReportViewModel extends FormViewModel {
     setBusy(true);
 
     _analyticsService.logButtonClick(kAnalyticsButtonAddReport);
-    if (imageUrlList.isNotEmpty) {
+    if (_mediaFiles.isNotEmpty) {
       await uploadImageToCloudinary();
     }
     _log.d('Image URLs: $imageUrlList');
