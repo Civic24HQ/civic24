@@ -87,17 +87,18 @@ jobs:
 
       - name: Build iOS
         run: |
-          # 1. Clear out heavy environment variables that Xcode doesn't need
+          # 1. Unset all non-essential large environment variables.
           unset CITIZEN_DEV_SECRETS
           unset DEV_DATA
           unset GITHUB_TOKEN
+          unset RUNNER_TRACKING_ID
+          unset GITHUB_ENV
+          unset GITHUB_PATH
           
-          # 2. Run the build with an extra flag to help with script input limits
+          # 2. Standard Flutter build
           flutter clean
           flutter pub get
-          flutter build ipa --no-codesign --flavor development \
-            --dart-define-from-file=secrets/development.json \
-            --xcconfig-flags="USE_RECURSIVE_SCRIPT_INPUTS_EXCLUSION=YES"
+          flutter build ipa --no-codesign --flavor development --dart-define-from-file=secrets/development.json
         working-directory: apps/${{ matrix.app }}
 
       - name: Package IPA (citizen only)
