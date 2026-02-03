@@ -27,7 +27,7 @@ jobs:
     steps:
       # Clone the repository
       - name: 📚 Clone the repository
-        uses: actions/checkout@v4 # - This uses the actions/checkout@v4 action to clone the repository's code into the runner's workspace
+        uses: actions/checkout@v3 # - Using actions/checkout@v3 for wider compatibility with older/self-hosted runners
 
       # Setup Java
       - name: 🚧 Setup java
@@ -88,6 +88,13 @@ jobs:
           echo "Flutter version:"
           flutter --version
 
+      - name: ✅ Validate secrets file (citizen/development only)
+        if: matrix.app == 'citizen' && matrix.flavor == 'development'
+        run: |
+          if [ ! -f secrets/development.json ]; then echo "secrets/development.json not found" && ls -la secrets || (ls -la && exit 1); fi
+          python -m json.tool secrets/development.json >/dev/null || (echo "secrets/development.json is not valid JSON" && exit 1)
+        working-directory: apps/${{ matrix.app }}
+
       - name: 🔧 Clean and reinstall CocoaPods
         run: |
           pod deintegrate || true
@@ -103,10 +110,10 @@ jobs:
           if [ "${{ matrix.app }}" = "citizen" ]; then
             if [ -f ios/ExportOptions.plist ]; then
               echo "Using ios/ExportOptions.plist for archive export"
-              flutter build ipa --flavor ${{ matrix.flavor }} --export-options-plist ios/ExportOptions.plist --dart-define-from-file=apps/citizen/secrets/${{ matrix.flavor }}.json
+              flutter build ipa --flavor ${{ matrix.flavor }} --export-options-plist ios/ExportOptions.plist --dart-define-from-file=secrets/${{ matrix.flavor }}.json
             else
               echo "Warning: ios/ExportOptions.plist not found — building ipa without export options"
-              flutter build ipa --flavor ${{ matrix.flavor }} --dart-define-from-file=apps/citizen/secrets/${{ matrix.flavor }}.json
+              flutter build ipa --flavor ${{ matrix.flavor }} --dart-define-from-file=secrets/${{ matrix.flavor }}.json
             fi
           else
             flutter build ios --no-codesign
@@ -149,7 +156,7 @@ jobs:
       CITIZEN_DEV_SECRETS: ${{ secrets.CITIZEN_DEV_SECRETS }}
     steps:
       - name: 📚 Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v3
 
       - name: 🚧 Setup java
         uses: actions/setup-java@v3
@@ -192,11 +199,18 @@ jobs:
           if [ -s status.txt ]; then echo "Uncommitted tracked changes found" && exit 1; fi
         working-directory: apps/${{ matrix.app }}
 
+      - name: ✅ Validate secrets file (citizen/development only)
+        if: matrix.app == 'citizen' && matrix.flavor == 'development'
+        run: |
+          if [ ! -f secrets/development.json ]; then echo "secrets/development.json not found" && ls -la secrets || (ls -la && exit 1); fi
+          python -m json.tool secrets/development.json >/dev/null || (echo "secrets/development.json is not valid JSON" && exit 1)
+        working-directory: apps/${{ matrix.app }}
+
       - name: Build Android
         run: |
           flutter pub get
           if [ "${{ matrix.app }}" = "citizen" ]; then
-            flutter build apk --flavor ${{ matrix.flavor }} --target lib/main.dart --dart-define-from-file=apps/citizen/secrets/${{ matrix.flavor }}.json --split-per-abi
+            flutter build apk --flavor ${{ matrix.flavor }} --target lib/main.dart --dart-define-from-file=secrets/${{ matrix.flavor }}.json --split-per-abi
           else
             flutter build apk --debug --split-per-abi
           fi
