@@ -108,12 +108,18 @@ jobs:
           flutter clean
           flutter pub get
           if [ "${{ matrix.app }}" = "citizen" ]; then
-            if [ -f ios/ExportOptions.plist ]; then
-              echo "Using ios/ExportOptions.plist for archive export"
-              flutter build ipa --flavor ${{ matrix.flavor }} --export-options-plist ios/ExportOptions.plist --dart-define-from-file=secrets/${{ matrix.flavor }}.json
+            # For development flavor, build unsigned to avoid CI code signing errors
+            if [ "${{ matrix.flavor }}" = "development" ]; then
+              echo "Building development IPA without codesign"
+              flutter build ipa --no-codesign --flavor ${{ matrix.flavor }} --dart-define-from-file=secrets/${{ matrix.flavor }}.json
             else
-              echo "Warning: ios/ExportOptions.plist not found — building ipa without export options"
-              flutter build ipa --flavor ${{ matrix.flavor }} --dart-define-from-file=secrets/${{ matrix.flavor }}.json
+              if [ -f ios/ExportOptions.plist ]; then
+                echo "Using ios/ExportOptions.plist for archive export"
+                flutter build ipa --flavor ${{ matrix.flavor }} --export-options-plist ios/ExportOptions.plist --dart-define-from-file=secrets/${{ matrix.flavor }}.json
+              else
+                echo "Warning: ios/ExportOptions.plist not found — building ipa without export options"
+                flutter build ipa --flavor ${{ matrix.flavor }} --dart-define-from-file=secrets/${{ matrix.flavor }}.json
+              fi
             fi
           else
             flutter build ios --no-codesign
