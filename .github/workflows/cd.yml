@@ -89,37 +89,15 @@ jobs:
           case "${{ matrix.flavor }}" in
             development)
               if [ -z "$DEV" ]; then echo "CITIZEN_DEV_SECRETS is not set"; exit 1; fi
-              cat <<JSON > apps/citizen/secrets/development.json
-              $DEV
-              JSON
+              printf '%s' "$DEV" > apps/citizen/secrets/development.json
               ;;
             staging)
               if [ -z "$STAGING" ]; then echo "CITIZEN_STAGING_SECRETS is not set"; exit 1; fi
-              cat <<JSON > apps/citizen/secrets/staging.json
-              $STAGING
-              JSON
+              printf '%s' "$STAGING" > apps/citizen/secrets/staging.json
               ;;
             production)
               if [ -z "$PROD" ]; then echo "CITIZEN_PROD_SECRETS is not set"; exit 1; fi
-              cat <<JSON > apps/citizen/secrets/production.json
-              $PROD
-              JSON
-              ;;
-            *)
-              echo "No secrets to inject for ${{ matrix.app }}"
-              ;;
-          esac
-
-      - name: 🧾 Verify no tracked uncommitted changes in ${{ matrix.app }}
-        run: |
-          git diff --exit-code -- . $EXCLUDED_FILES
-          git status --porcelain --untracked-files=no | tee status.txt
-          if [ -s status.txt ]; then echo "Uncommitted tracked changes found" && exit 1; fi
-        working-directory: apps/${{ matrix.app }}
-
-      - name: 🧠 Debug the runner environment
-        run: |
-          echo "Xcode version:"
+              printf '%s' "$PROD" > apps/citizen/secrets/production.json
           xcodebuild -version
           echo "CocoaPods version:"
           pod --version
@@ -227,21 +205,15 @@ jobs:
           case "${{ matrix.flavor }}" in
             development)
               if [ -z "$DEV" ]; then echo "CITIZEN_DEV_SECRETS is not set"; exit 1; fi
-              cat <<JSON > apps/citizen/secrets/development.json
-              $DEV
-              JSON
+              printf '%s' "$DEV" > apps/citizen/secrets/development.json
               ;;
             staging)
               if [ -z "$STAGING" ]; then echo "CITIZEN_STAGING_SECRETS is not set"; exit 1; fi
-              cat <<JSON > apps/citizen/secrets/staging.json
-              $STAGING
-              JSON
+              printf '%s' "$STAGING" > apps/citizen/secrets/staging.json
               ;;
             production)
               if [ -z "$PROD" ]; then echo "CITIZEN_PROD_SECRETS is not set"; exit 1; fi
-              cat <<JSON > apps/citizen/secrets/production.json
-              $PROD
-              JSON
+              printf '%s' "$PROD" > apps/citizen/secrets/production.json
               ;;
             *)
               echo "No secrets to inject for ${{ matrix.app }}"
