@@ -20,6 +20,7 @@ class UserService extends FirestoreCollectionService<UserModel> with ListenableS
 
   final _authService = serviceLocator<AuthenticationService>();
   final _reportService = serviceLocator<ReportService>();
+  final _settingsStorage = serviceLocator<SettingsStorageService>();
 
   @override
   String get collectionPath => FirestoreCollections.users;
@@ -45,7 +46,40 @@ class UserService extends FirestoreCollectionService<UserModel> with ListenableS
   Future<void> initialize() async {
     log.i('Initializing user service');
     _authService.addObserver(this);
+
+    // Load persisted display preferences from local storage
+    try {
+      _displayPreferences.value = _settingsStorage.displayPreferences;
+      log.d(
+        'Loaded display preferences from storage: ${_displayPreferences.value.themeModeIndex}, ${_displayPreferences.value.language}',
+      );
+    } catch (e, st) {
+      log.w('Failed to load display preferences from storage', error: e, stackTrace: st);
+    }
+
     listenToReactiveValues([_currentUser, _displayPreferences]);
+  }
+
+  /// Persist and apply [displayPreferences] globally.
+  Future<void> setDisplayPreferences(DisplayPreferences displayPreferences) async {
+    _displayPreferences.value = displayPreferences;
+
+    try {
+      _settingsStorage.setDisplayPreferences(displayPreferences);
+      log.d('Saved display preferences to storage');
+    } catch (e, st) {
+      log.w('Failed to persist display preferences', error: e, stackTrace: st);
+    }
+  }
+
+  /// Convenience helper to change language.
+  Future<void> setLanguage(LanguageType language) async {
+    await setDisplayPreferences(displayPreferences.copyWith(language: language.locale));
+  }
+
+  /// Convenience helper to change appearance mode.
+  Future<void> setAppearance(AppearanceMode mode) async {
+    await setDisplayPreferences(displayPreferences.copyWith(themeModeIndex: mode.themeIndex,));
   }
 
   @override

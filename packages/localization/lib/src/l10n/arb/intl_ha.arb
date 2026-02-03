@@ -1,445 +1,445 @@
 {
-    "@@locale": "fr",
+    "@@locale": "ha",
     "title": "Civic24",
     "@title": {
         "description": "Civic24"
     },
-    "pageHome": "Accueil",
+    "pageHome": "Gida",
     "@pageHome": {
         "description": "Home page title"
     },
-    "pageReports": "Rapports",
+    "pageReports": "Rahotanni",
     "@pageReports": {
         "description": "Reports page title"
     },
-    "pageNotifications": "Notifications",
+    "pageNotifications": "Sanarwa",
     "@pageNotifications": {
         "description": "Notifications page title"
     },
-    "pageSettings": "Paramètres",
+    "pageSettings": "Saituna",
     "@pageSettings": {
         "description": "Settings page title"
     },
-    "generalClickToUpload": "Cliquez pour télécharger",
+    "generalClickToUpload": "Danna don loda",
     "@generalClickToUpload": {
         "description": "Text for the upload button"
     },
-    "generalSupportedFormats": "Formats pris en charge : jpg, png, mp4 (max. 800x400px)",
+    "generalSupportedFormats": "Ana goyon baya: jpg, png, mp4 (max. 800x400px)",
     "@generalSupportedFormats": {
         "description": "Text for the supported file formats"
     },
-    "generalContinue": "Continuer",
+    "generalContinue": "Ci gaba",
     "@generalContinue": {
         "description": "Text for Continue button"
     },
-    "generalContinueWithGoogle": "Continuer avec Google",
+    "generalContinueWithGoogle": "Ci gaba tare da Google",
     "@generalContinueWithGoogle": {
         "description": "Text for the Google sign-in button"
     },
-    "generalContinueWithApple": "Continuer avec Apple",
+    "generalContinueWithApple": "Ci gaba tare da Apple",
     "@generalContinueWithApple": {
         "description": "Text for the Apple sign-in button"
     },
-    "generalUploadFile": "Télécharger le fichier",
+    "generalUploadFile": "Loda fayil",
     "@generalUploadFile": {
         "description": "Upload File Label for Button"
     },
-    "generalTakePicture": "Prendre une photo",
+    "generalTakePicture": "Dauki hoto",
     "@generalTakePicture": {
         "description": "Take picture Label for Button"
     },
-    "generalSave": "Enregistrer",
+    "generalSave": "Ajiye",
     "@generalSave": {
         "description": "Text for Save button"
     },
-    "generalEdit": "Modifier",
+    "generalEdit": "Gyara",
     "@generalEdit": {
         "description": "Text for Edit button"
     },
-    "generalCancel": "Annuler",
+    "generalCancel": "Soke",
     "@generalCancel": {
         "description": "Text for Cancel button"
     },
-    "generalDeleteAccountButton": "Supprimer le compte",
+    "generalDeleteAccountButton": "Goge asusu",
     "@generalDeleteAccountButton": {
         "description": "Text for Delete Account button"
     },
-    "generalProceed": "Procéder",
+    "generalProceed": "Ci gaba",
     "@generalProceed": {
         "description": "General Label for Button"
     },
-    "generalSubmit": "Soumettre",
+    "generalSubmit": "Aika",
     "@generalSubmit": {
         "description": "Submit Label for Button"
     },
-    "generalPrevious": "Précédent",
+    "generalPrevious": "Na baya",
     "@generalPrevious": {
         "description": "Previous Label for Button"
     },
-    "generalClose": "Fermer",
+    "generalClose": "Rufe",
     "@generalClose": {
         "description": "Text for the close button"
     },
-    "generalLogin": "Connexion",
+    "generalLogin": "Shiga",
     "@generalLogin": {
         "description": "Text for the login button"
     },
-    "generalSignUp": "S'inscrire",
+    "generalSignUp": "Yi rijista",
     "@generalSignUp": {
         "description": "Text for the SignUp button"
     },
-    "generalEmail": "Adresse e-mail",
+    "generalEmail": "Adireshin imel",
     "@generalEmail": {
         "description": "Label for the email input field"
     },
-    "generalPassword": "Mot de passe",
+    "generalPassword": "Kalmar sirri",
     "@generalPassword": {
         "description": "Label for the password input field"
     },
-    "generalConfirmPassword": "Confirmer le mot de passe",
+    "generalConfirmPassword": "Tabbatar da kalmar sirri",
     "@generalConfirmPassword": {
         "description": "Label for the confirm password input field"
     },
-    "generalForgotPassword": "Mot de passe oublié ?",
+    "generalForgotPassword": "Ka manta kalmar sirri?",
     "@generalForgotPassword": {
         "description": "Text for the forgot password link"
     },
-    "generalResetPassword": "Réinitialiser le mot de passe",
+    "generalResetPassword": "Sake saita kalmar sirri",
     "@generalResetPassword": {
         "description": "Text for the reset password"
     },
-    "generalResetPasswordDesc": "Un e-mail de réinitialisation du mot de passe a été envoyé à {emailValue}. Veuillez vérifier votre boîte de réception et suivre les instructions pour réinitialiser votre mot de passe.",
+    "generalResetPasswordDesc": "An aika imel na sake saita kalmar sirri zuwa {emailValue}. Duba akwatin saƙonka ka bi umarnin don mayar da kalmar sirri.",
     "@generalResetPasswordDesc": {
         "description": "Reset Password Description",
         "placeholders": {
             "emailValue": {}
         }
     },
-    "generalResetPasswordButtonText": "Ouvrir l'application e-mail",
+    "generalResetPasswordButtonText": "Bude manhajar imel",
     "@generalResetPasswordButtonText": {
         "description": "Text for the reset password button"
     },
-    "generalEmailHint": "Entrez votre e-mail",
+    "generalEmailHint": "Shigar da imel ɗinka",
     "@generalEmailHint": {
         "description": "Hint text for the email input field"
     },
-    "generalRequired": "Requis",
+    "generalRequired": "Ana buƙata",
     "@generalRequired": {
         "description": "Text for Required Label"
     },
-    "generalEnterEmail": "Entrez votre adresse e-mail",
+    "generalEnterEmail": "Shigar da adireshin imel ɗinka",
     "@generalEnterEmail": {
         "description": "Text for Enter your Email address Label"
     },
-    "generalValidEmail": "Une adresse e-mail valide est requise",
+    "generalValidEmail": "Ana buƙatar ingantaccen adireshin imel",
     "@generalValidEmail": {
         "description": "Text for Valid email address Label"
     },
-    "generalEnterPassword": "Entrez votre mot de passe",
+    "generalEnterPassword": "Shigar da kalmar sirri",
     "@generalEnterPassword": {
         "description": "Text for Enter your Password Label"
     },
-    "generalValidPassword": "Le mot de passe doit comporter au moins 8 caractères",
+    "generalValidPassword": "Kalmar sirri dole ta kasance akalla haruffa 8",
     "@generalValidPassword": {
         "description": "Text for Valid Password Label"
     },
-    "generalUseAccurateLocation": "Utiliser une position précise",
+    "generalUseAccurateLocation": "Yi amfani da madaidaicin wuri",
     "@generalUseAccurateLocation": {
         "description": "Text for Use accurate location Label"
     },
-    "generalFirstname": "Prénom",
+    "generalFirstname": "Sunan farko",
     "@generalFirstname": {
         "description": "Text for First name Label"
     },
-    "generalLastname": "Nom de famille",
+    "generalLastname": "Sunan ƙarshe",
     "@generalLastname": {
         "description": "Text for Last name Label"
     },
-    "generalEnterFirstname": "Entrez votre prénom",
+    "generalEnterFirstname": "Shigar da sunan farko",
     "@generalEnterFirstname": {
         "description": "Text for Enter your last name"
     },
-    "generalEnterLastname": "Entrez votre nom",
+    "generalEnterLastname": "Shigar da sunan ƙarshe",
     "@generalEnterLastname": {
         "description": "Text for Enter your last name"
     },
-    "generalCountry": "Pays",
+    "generalCountry": "Kasa",
     "@generalCountry": {
         "description": "Text for Country Label"
     },
-    "generalState": "État/Région",
+    "generalState": "Jiha",
     "@generalState": {
         "description": "Text for State Label"
     },
-    "generalSelectCountry": "Sélectionnez un pays",
+    "generalSelectCountry": "Zaɓi ƙasa",
     "@generalSelectCountry": {
         "description": "Hint Text for Select a country"
     },
-    "generalSelectState": "Sélectionnez une région",
+    "generalSelectState": "Zaɓi jiha",
     "@generalSelectState": {
         "description": "Hint Text for Select a state"
     },
-    "generalNoResults": "Aucun résultat",
+    "generalNoResults": "Babu sakamako",
     "@generalNoResults": {
         "description": "Text for No results Label"
     },
-    "generalSearch": "Rechercher ici",
+    "generalSearch": "Nemo anan",
     "@generalSearch": {
         "description": "Text for Search Label"
     },
-    "generalComment": "Commentaires",
+    "generalComment": "Sharhi",
     "@generalComment": {
         "description": "Text for Comment Label"
     },
-    "generalAddComment": "Ajouter un commentaire",
+    "generalAddComment": "Ƙara sharhi",
     "@generalAddComment": {
         "description": "Text for AddComment TextField"
     },
-    "generalAllIssues": "Tous les problèmes",
+    "generalAllIssues": "Duk Matsaloli",
     "@generalAllIssues": {
         "description": "Text for All Issues TextField"
     },
-    "generalTrending": "Tendances",
+    "generalTrending": "Shahara",
     "@generalTrending": {
         "description": "Text for Trending TextField"
     },
-    "generalCategory": "Catégorie",
+    "generalCategory": "Rukuni",
     "@generalCategory": {
         "description": "Text for Category TextField"
     },
-    "generalLogout": "Se déconnecter",
+    "generalLogout": "Fita",
     "@generalLogout": {
         "description": "Text for Logout Label"
     },
-    "featureonboardingGetStarted": "Commencer",
+    "featureonboardingGetStarted": "Fara",
     "@featureonboardingGetStarted": {
         "description": "Text for Onboarding Get Started Button"
     },
-    "featureOnboardingVoiceReport": "Exprimez votre signalement",
+    "featureOnboardingVoiceReport": "Bayyana rahotonka",
     "@featureOnboardingVoiceReport": {
         "description": "Title 1 for Onboarding Sets"
     },
-    "featureOnboardingVoiceReportDesc": "Civic24 vous permet de parler des problèmes urgents de votre communauté et de faire entendre votre voix",
+    "featureOnboardingVoiceReportDesc": "Civic24 yana baka damar yin magana game da matsalolin da suka shafe al'umma kuma ka sa muryarka ta ji",
     "@featureOnboardingVoiceReportDesc": {
         "description": "Title Description 1 for Onboarding Sets"
     },
-    "featureOnboardingVoiceCount": "Faites compter votre voix",
+    "featureOnboardingVoiceCount": "Ka sanya muryarka ta yi tasiri",
     "@featureOnboardingVoiceCount": {
         "description": "Title 2 for Onboarding Sets"
     },
-    "featureOnboardingVoiceCountDesc": "Avec Civic24, vos avis aident à prioriser les problèmes civiques les plus importants pour les gens autour de vous",
+    "featureOnboardingVoiceCountDesc": "Tare da Civic24, amincewarka na taimakawa sa manyan matsaloli na gari zama fifiko",
     "@featureOnboardingVoiceCountDesc": {
         "description": "Title Description 2 for Onboarding Sets"
     },
-    "featureOnboardingConnectVoice": "Connectez-vous avec d'autres voix",
+    "featureOnboardingConnectVoice": "Haɗu da sauran muryoyi",
     "@featureOnboardingConnectVoice": {
         "description": "Title 2 for Onboarding Sets"
     },
-    "featureOnboardingConnectVoiceDesc": "Civic24 offre une plateforme pour interagir avec vos concitoyens en exprimant votre opinion sur des enjeux civiques",
+    "featureOnboardingConnectVoiceDesc": "Civic24 yana ba da dandamali don mu'amala da sauran 'yan ƙasa ta hanyar bayyana ra'ayinka",
     "@featureOnboardingConnectVoiceDesc": {
         "description": "Title Description 3 for Onboarding Sets"
     },
-    "featureDontHaveAccount": "Vous n'avez pas de compte ?",
+    "featureDontHaveAccount": "Bakwai asusu?",
     "@featureDontHaveAccount": {
         "description": "Don't have an account Description"
     },
-    "featureLoginWelcome": "Content de vous revoir !",
+    "featureLoginWelcome": "Maraba da dawowa!",
     "@featureLoginWelcome": {
         "description": "Login Welcome Description"
     },
-    "featureLoginWelcomeHint": "Connectez-vous à votre compte",
+    "featureLoginWelcomeHint": "Shiga cikin asusunka",
     "@featureLoginWelcomeHint": {
         "description": "Login Welcome Hint Description"
     },
-    "featureAlreadyHaveAnAccount": "Vous avez déjà un compte ?",
+    "featureAlreadyHaveAnAccount": "Kuna da asusu tuni?",
     "@featureAlreadyHaveAnAccount": {
         "description": "Already Have An Account Description"
     },
-    "featureSignUpCreateAccount": "Créer un compte",
+    "featureSignUpCreateAccount": "Ƙirƙiri asusu",
     "@featureSignUpCreateAccount": {
         "description": "SignUp Create Account Description"
     },
-    "featureSignUpCreateAccountHint": "Inscrivez-vous pour commencer !",
+    "featureSignUpCreateAccountHint": "Yi rijista don fara!",
     "@featureSignUpCreateAccountHint": {
         "description": "SignUp Create Account Hint Description"
     },
-    "featureSignUpSuccess": "Compte créé",
+    "featureSignUpSuccess": "An ƙirƙiri asusu",
     "@featureSignUpSuccess": {
         "description": "SignUp Success Description"
     },
-    "featureSignUpSuccessHint": "Préparez-vous à découvrir les fonctionnalités incroyables de Civic24.",
+    "featureSignUpSuccessHint": "Shirya don bincika abubuwan ban mamaki da Civic24 ke bayarwa.",
     "@featureSignUpSuccessHint": {
         "description": "SignUp Success Hint Description"
     },
-    "featureForgotPassword": "Mot de passe oublié ?",
+    "featureForgotPassword": "Ka manta kalmar sirri?",
     "@featureForgotPassword": {
         "description": "Forgot Password Description"
     },
-    "featureForgotPasswordHint": "Commencez la réinitialisation en remplissant votre adresse e-mail",
+    "featureForgotPasswordHint": "Fara tsarin sake saiti ta cike adireshin imel ɗinka",
     "@featureForgotPasswordHint": {
         "description": "Forgot Password Hint Description"
     },
-    "featureForgotPasswordGoTo": "Retour à",
+    "featureForgotPasswordGoTo": "Komawa zuwa",
     "@featureForgotPasswordGoTo": {
         "description": "Go back to description"
     },
-    "featureCompleteProfile": "Compléter le profil",
+    "featureCompleteProfile": "Cika bayanin martaba",
     "@featureCompleteProfile": {
         "description": "Complete Profile Description"
     },
-    "featureCategoryTypeRoad": "Routes & transports",
+    "featureCategoryTypeRoad": "Hanyoyi & Sufuri",
     "@featureCategoryTypeRoad": {
         "description": "Road & Transport Description"
     },
-    "featureCategoryTypeLight": "Éclairage & électricité",
+    "featureCategoryTypeLight": "Haske & Wutar Lantarki",
     "@featureCategoryTypeLight": {
         "description": "Light & Electricity Description"
     },
-    "featureCategoryTypeWaste": "Déchets",
+    "featureCategoryTypeWaste": "Shara",
     "@featureCategoryTypeWaste": {
         "description": "Environmental Hazards Description"
     },
-    "featureCategoryTypeAbandoned": "Projets abandonnés",
+    "featureCategoryTypeAbandoned": "Ayyuka da aka bar",
     "@featureCategoryTypeAbandoned": {
         "description": "Abandoned Projects Description"
     },
-    "featureCategoryTypeHealth": "Santé & assainissement",
+    "featureCategoryTypeHealth": "Lafiya & Tsabtace",
     "@featureCategoryTypeHealth": {
         "description": "Health & Sanitation Description"
     },
-    "featureCategoryTypeSecurity": "Sécurité",
+    "featureCategoryTypeSecurity": "Tsaro",
     "@featureCategoryTypeSecurity": {
         "description": "Security Description"
     },
-    "featureCategoryTypeEducation": "Éducation",
+    "featureCategoryTypeEducation": "Ilmi",
     "@featureCategoryTypeEducation": {
         "description": "Education Description"
     },
-    "featureCategoryTypeGovernance": "Gouvernance",
+    "featureCategoryTypeGovernance": "Gwamnati",
     "@featureCategoryTypeGovernance": {
         "description": "Governance Description"
     },
-    "featureCategoryTypeUrban": "Violations de zonage",
+    "featureCategoryTypeUrban": "Keta dokar garuruwa",
     "@featureCategoryTypeUrban": {
         "description": "Zoning Violations Description"
     },
-    "featureCategoryTypeDetailedRoad": "Problèmes de routes & transports",
+    "featureCategoryTypeDetailedRoad": "Matsalolin hanyoyi & sufuri",
     "@featureCategoryTypeDetailedRoad": {
         "description": "Road & Transport Issues Description"
     },
-    "featureCategoryTypeDetailedLight": "Problèmes d'éclairage & d'électricité",
+    "featureCategoryTypeDetailedLight": "Matsalolin haske & wuta",
     "@featureCategoryTypeDetailedLight": {
         "description": "Light & Electricity Issues Description"
     },
-    "featureCategoryTypeDetailedWaste": "Déchets & dangers environnementaux",
+    "featureCategoryTypeDetailedWaste": "Shara & haɗarin muhalli",
     "@featureCategoryTypeDetailedWaste": {
         "description": "Environmental Hazards Description"
     },
-    "featureCategoryTypeDetailedAbandoned": "Projets abandonnés & inachevés",
+    "featureCategoryTypeDetailedAbandoned": "Ayyuka da aka bar & waɗanda ba a kammala ba",
     "@featureCategoryTypeDetailedAbandoned": {
         "description": "Abandoned & Incomplete Projects Description"
     },
-    "featureCategoryTypeDetailedHealth": "Santé & assainissement",
+    "featureCategoryTypeDetailedHealth": "Lafiya & tsabtace",
     "@featureCategoryTypeDetailedHealth": {
         "description": "Health & Sanitation Description"
     },
-    "featureCategoryTypeDetailedSecurity": "Problèmes de sécurité",
+    "featureCategoryTypeDetailedSecurity": "Matsalolin tsaro",
     "@featureCategoryTypeDetailedSecurity": {
         "description": "Security Issues Description"
     },
-    "featureCategoryTypeDetailedEducation": "Éducation & équipements publics",
+    "featureCategoryTypeDetailedEducation": "Ilmi & wuraren jama'a",
     "@featureCategoryTypeDetailedEducation": {
         "description": "Education & Public Facilities Description"
     },
-    "featureCategoryTypeDetailedGovernance": "Gouvernance",
+    "featureCategoryTypeDetailedGovernance": "Gwamnati",
     "@featureCategoryTypeDetailedGovernance": {
         "description": "Governance Description"
     },
-    "featureCategoryTypeDetailedUrban": "Urbanisme & violations de zonage",
+    "featureCategoryTypeDetailedUrban": "Keta dokar birni & batutuwan shari'a",
     "@featureCategoryTypeDetailedUrban": {
         "description": "Urban Planning & Zoning Violations Description"
     },
-    "featureCategoryTypeRoadDescription": "Signalez des nids-de-poule, des routes endommagées, des trottoirs cassés, des feux de circulation défectueux ou une conduite imprudente dans votre région.",
+    "featureCategoryTypeRoadDescription": "Rahoto ramukan titi, hanyoyi marasa kyau, titunan da aka karya, fitilun zirga-zirga da ba sa aiki, ko tukin da bai dace ba a yankinku.",
     "@featureCategoryTypeRoadDescription": {
         "description": "Road & Transport Description"
     },
-    "featureCategoryTypeLightDescription": "Signalez des lampadaires cassés, des fils exposés ou des coupures de courant qui affectent les espaces publics et la sécurité.",
+    "featureCategoryTypeLightDescription": "Rahoto fitilu da suka lalace, wayoyi da aka fallasa, ko yanke wutar lantarki da ke shafar wuraren jama'a da aminci.",
     "@featureCategoryTypeLightDescription": {
         "description": "Light & Electricity Description"
     },
-    "featureCategoryTypeWasteDescription": "Signalez des ordures non collectées, des drains obstrués, des dépôts illégaux ou d'autres problèmes environnementaux.",
+    "featureCategoryTypeWasteDescription": "Rahoto shara da ba a tattara ba, magudanan ruwa da suka toshe, zubar da shara ba bisa ka'ida ba, ko wasu matsalolin muhalli.",
     "@featureCategoryTypeWasteDescription": {
         "description": "Environmental Hazards Description"
     },
-    "featureCategoryTypeAbandonedDescription": "Signalez des projets gouvernementaux ou communautaires inachevés ou abandonnés dans votre localité.",
+    "featureCategoryTypeAbandonedDescription": "Rahoto ayyukan gwamnati/al'umma da aka barsu ba a gama ba ko aka yi watsi da su a yankinku.",
     "@featureCategoryTypeAbandonedDescription": {
         "description": "Abandoned Projects Description"
     },
-    "featureCategoryTypeHealthDescription": "Signalez des toilettes publiques sales, une mauvaise hygiène dans les cliniques, des eaux usées à ciel ouvert ou des conditions sanitaires dangereuses.",
+    "featureCategoryTypeHealthDescription": "Rahoto banɗaki na jama'a da ba su da tsabta, rashin tsafta a asibitoci, kwarara, ko yanayin lafiya da ba su da aminci.",
     "@featureCategoryTypeHealthDescription": {
         "description": "Health & Sanitation Description"
     },
-    "featureCategoryTypeSecurityDescription": "Signalez des zones dangereuses, des infrastructures de sécurité endommagées, du harcèlement de rue ou des zones de regroupement.",
+    "featureCategoryTypeSecurityDescription": "Rahoto yankuna marasa aminci, kayan tsaro da suka lalace, cin zarafi a titi, ko wuraren taruwa.",
     "@featureCategoryTypeSecurityDescription": {
         "description": "Security Description"
     },
-    "featureCategoryTypeEducationDescription": "Signalez des bâtiments scolaires délabrés, des salles communautaires fermées ou des bibliothèques négligées.",
+    "featureCategoryTypeEducationDescription": "Rahoto gine-ginen makarantun da suka lalace, dakunan taro na al'umma da aka kulle, ko dakunan karatu da aka yi watsi da su.",
     "@featureCategoryTypeEducationDescription": {
         "description": "Education Description"
     },
-    "featureCategoryTypeGovernanceDescription": "Signalez des problèmes tels que des retards administratifs, une mauvaise prestation de services, des pratiques corrompues ou un mauvais usage des fonds publics.",
+    "featureCategoryTypeGovernanceDescription": "Rahoto matsaloli kamar jinkirin gwamnati, rashin kyakkyawan isar da sabis, ayyukan cin hanci, ko amfani da kudaden jama'a ba daidai ba.",
     "@featureCategoryTypeGovernanceDescription": {
         "description": "Governance Description"
     },
-    "featureCategoryTypeUrbanDescription": "Signalez des constructions non autorisées, des nuisances sonores, une mauvaise utilisation des terrains ou des violations de zonage dans votre zone.",
+    "featureCategoryTypeUrbanDescription": "Rahoto gine-ginen da ba a amince da su ba, hayaniyar da ke damun mutane, amfani da ƙasa da ba daidai ba, ko keta ƙa'idar yankinku.",
     "@featureCategoryTypeUrbanDescription": {
         "description": "Zoning Violations Description"
     },
-    "featureAddReportCategory": "Sélectionnez la catégorie du rapport",
+    "featureAddReportCategory": "Zaɓi rukuni na rahoton",
     "@featureAddReportCategory": {
         "description": "Category Description"
     },
-    "featureAddReportContent": "Partagez les détails du problème civique",
+    "featureAddReportContent": "Raba cikakken bayanin matsalar al'umma",
     "@featureAddReportContent": {
         "description": "Content Description"
     },
-    "featureAddReportContentHint": "Partagez vos remarques",
+    "featureAddReportContentHint": "Raba ra'ayinka",
     "@featureAddReportContentHint": {
         "description": "Content Hint Description"
     },
-    "featureAddReportMedia": "Veuillez télécharger une image claire de votre signalement",
+    "featureAddReportMedia": "Da fatan za a loda hoto mai kyau na rahotonka",
     "@featureAddReportMedia": {
         "description": "Media Description"
     },
-    "featureAddReport": "Ajouter un signalement",
+    "featureAddReport": "Ƙara Rahoto",
     "@featureAddReport": {
         "description": "Add a Report Description"
     },
-    "featureNotifications": "Notifications",
+    "featureNotifications": "Sanarwa",
     "@featureNotifications": {
         "description": "Notifications Description"
     },
-    "featureNotificationInstruction": "Marquer tout comme lu",
+    "featureNotificationInstruction": "Alamta duk a matsayin an karanta",
     "@featureNotificationInstruction": {
         "description": "Notification Instruction Description"
     },
-    "featureNotificationEmpty": "Vous n'avez aucune notification",
+    "featureNotificationEmpty": "Babu wani sanarwa",
     "@featureNotificationEmpty": {
         "description": "Notification Empty Description"
     },
-    "featureReports": "Rapports",
+    "featureReports": "Rahotanni",
     "@featureReports": {
         "description": "Reports Description"
     },
-    "featureMyReports": "Mes signalements",
+    "featureMyReports": "Rahotannina",
     "@featureMyReports": {
         "description": "My Reports Description"
     },
-    "featureBookmarkedReports": "Favoris",
+    "featureBookmarkedReports": "Ajiye",
     "@featureBookmarkedReports": {
         "description": "Bookmarked Description"
     },
-    "featureSettingsTooltip": "Appuyez pour {action}",
+    "featureSettingsTooltip": "Tabbata don {action}",
     "@featureSettingsTooltip": {
         "description": "Settings Tooltip Description",
         "placeholders": {
@@ -453,55 +453,55 @@
             "version": {}
         }
     },
-    "featureSettingsProfile": "Profil",
+    "featureSettingsProfile": "Bayanan martaba",
     "@featureSettingsProfile": {
         "description": "Profile Description"
     },
-    "featureSettingsEditProfile": "Modifier le profil",
+    "featureSettingsEditProfile": "Gyara bayanan martaba",
     "@featureSettingsEditProfile": {
         "description": "Edit Profile Description"
     },
-    "featureProfileAccountEmail": "L'adresse e-mail de votre compte ne peut pas être modifiée.",
+    "featureProfileAccountEmail": "Ba za a iya canza adireshin imel ɗin asusunka ba.",
     "@featureProfileAccountEmail": {
         "description": "Profile Account Email Description"
     },
-    "featureSettingsLanguage": "Langue",
+    "featureSettingsLanguage": "Harshen",
     "@featureSettingsLanguage": {
         "description": "Language Description"
     },
-    "featureSettingsLanguageDefault": "Langue par défaut",
+    "featureSettingsLanguageDefault": "Harshen tsoho",
     "@featureSettingsLanguageDefault": {
         "description": "Default Language Description"
     },
-    "featureSettingsAppearance": "Apparence",
+    "featureSettingsAppearance": "Bayyanar",
     "@featureSettingsAppearance": {
         "description": "Appearance Description"
     },
-    "featureSettingsSignInSecurity": "Connexion et sécurité",
+    "featureSettingsSignInSecurity": "Shiga & Tsaro",
     "@featureSettingsSignInSecurity": {
         "description": "Sign In & Security Description"
     },
-    "featureSettingsAppearanceSystem": "Paramètres système",
+    "featureSettingsAppearanceSystem": "Saitunan tsarin",
     "@featureSettingsAppearanceSystem": {
         "description": "System Settings Description"
     },
-    "featureSettingsAppearanceLight": "Mode clair",
+    "featureSettingsAppearanceLight": "Yanayin haske",
     "@featureSettingsAppearanceLight": {
         "description": "Light Mode Description"
     },
-    "featureSettingsAppearanceDark": "Mode sombre",
+    "featureSettingsAppearanceDark": "Yanayin duhu",
     "@featureSettingsAppearanceDark": {
         "description": "Dark Mode Description"
     },
-    "featureSettingsAppearanceSystemDesc": "S'ajuste automatiquement aux paramètres d'apparence de votre appareil",
+    "featureSettingsAppearanceSystemDesc": "Yana daidaita ta atomatik zuwa saitunan bayyanar na na'urarka",
     "@featureSettingsAppearanceSystemDesc": {
         "description": "System Settings Description"
     },
-    "featureSettingsAppearanceLightDesc": "Conserver l'application en mode clair",
+    "featureSettingsAppearanceLightDesc": "Riƙe aikin a yanayin haske",
     "@featureSettingsAppearanceLightDesc": {
         "description": "Light Mode Description"
     },
-    "featureSettingsAppearanceDarkDesc": "Conserver l'application en mode sombre",
+    "featureSettingsAppearanceDarkDesc": "Riƙe aikin a yanayin duhu",
     "@featureSettingsAppearanceDarkDesc": {
         "description": "Dark Mode Description"
     },
@@ -509,11 +509,11 @@
     "@featureSettingsSecurityGoogle": {
         "description": "Google Sign-In Description"
     },
-    "featureSettingsSecurityGoogleUnlinkDesc": "Associez votre compte Google pour une connexion sécurisée",
+    "featureSettingsSecurityGoogleUnlinkDesc": "Haɗa asusun Google ɗinka don shiga cikin aminci",
     "@featureSettingsSecurityGoogleUnlinkDesc": {
         "description": "Google Sign-In Unlinked Description"
     },
-    "featureSettingsSecurityGoogleLinkedDesc": "Votre compte Google est disponible pour la connexion",
+    "featureSettingsSecurityGoogleLinkedDesc": "Asusun Google ɗinka yana samuwa don shiga",
     "@featureSettingsSecurityGoogleLinkedDesc": {
         "description": "Google Sign-In Linked Description"
     },
@@ -521,47 +521,47 @@
     "@featureSettingsSecurityApple": {
         "description": "Apple Sign-In Description"
     },
-    "featureSettingsSecurityAppleUnlinkDesc": "Associez votre identifiant Apple pour une connexion sécurisée",
+    "featureSettingsSecurityAppleUnlinkDesc": "Haɗa Apple ID ɗinka don shiga cikin aminci",
     "@featureSettingsSecurityAppleUnlinkDesc": {
         "description": "Apple Sign-In Unlinked Description"
     },
-    "featureSettingsSecurityAppleLinkedDesc": "Votre identifiant Apple est disponible pour la connexion",
+    "featureSettingsSecurityAppleLinkedDesc": "Apple ID ɗinka yana samuwa don shiga",
     "@featureSettingsSecurityAppleLinkedDesc": {
         "description": "Apple ID Linked Description"
     },
-    "featureSettingsSecuritySetPassword": "Définir un mot de passe",
+    "featureSettingsSecuritySetPassword": "Saita kalmar sirri",
     "@featureSettingsSecuritySetPassword": {
         "description": "Set Password Description"
     },
-    "featureSettingsSecuritySetPasswordDesc": "Activer la connexion par e-mail et mot de passe",
+    "featureSettingsSecuritySetPasswordDesc": "Kunna shiga ta imel da kalmar sirri",
     "@featureSettingsSecuritySetPasswordDesc": {
         "description": "Set Password Description"
     },
-    "featureSettingsSecuritySetPasswordLabel": "Saisissez l'e-mail associé à votre compte",
+    "featureSettingsSecuritySetPasswordLabel": "Shigar da imel ɗin da ke da alaƙa da asusunka",
     "@featureSettingsSecuritySetPasswordLabel": {
         "description": "Set Password Label Description"
     },
-    "featureSettingsSecurityResetPassword": "Changer le mot de passe",
+    "featureSettingsSecurityResetPassword": "Canja kalmar sirri",
     "@featureSettingsSecurityResetPassword": {
         "description": "Reset Password Description"
     },
-    "featureSettingsSecurityResetPasswordDesc": "Mettez à jour votre mot de passe existant",
+    "featureSettingsSecurityResetPasswordDesc": "Sabunta kalmar sirri na yanzu",
     "@featureSettingsSecurityResetPasswordDesc": {
         "description": "Reset Password Description"
     },
-    "featureSettingsAbout": "À propos",
+    "featureSettingsAbout": "Game da",
     "@featureSettingsAbout": {
         "description": "About Description"
     },
-    "featureSettingsLoading": "Chargement",
+    "featureSettingsLoading": "Ana loda",
     "@featureSettingsLoading": {
         "description": "Loading Description"
     },
-    "featureSettingsLoggingOut": "Déconnexion ?",
+    "featureSettingsLoggingOut": "Ana fita?",
     "@featureSettingsLoggingOut": {
         "description": "Logging out Description"
     },
-    "featureSettingsLoggingOutHint": "Êtes-vous sûr de vouloir vous déconnecter de votre compte sur cet appareil ?",
+    "featureSettingsLoggingOutHint": "Kuna da tabbacin cewa kuna son fita daga asusunku a wannan na'urar?",
     "@featureSettingsLoggingOutHint": {
         "description": "Logging out Hint Description"
     }

@@ -21,18 +21,36 @@ List<LocalizationsDelegate<dynamic>> appLocalizationsDelegates = const [
 ];
 
 Locale? localeListResolutionCallback(Locale? deviceLocale, Iterable<Locale> supportedLocales) {
-  if (deviceLocale == null) {
-    Intl.defaultLocale = supportedLocales.first.languageCode;
+  // Helper to find the first supported locale that MaterialLocalizations supports
+  Locale firstMaterialSupportedLocale() {
+    for (final locale in supportedLocales) {
+      if (GlobalMaterialLocalizations.delegate.isSupported(locale)) {
+        return locale;
+      }
+    }
     return supportedLocales.first;
+  }
+
+  if (deviceLocale == null) {
+    final fallback = firstMaterialSupportedLocale();
+    Intl.defaultLocale = fallback.languageCode;
+    return fallback;
   }
 
   for (final supportedLocale in supportedLocales) {
     if (supportedLocale.languageCode == deviceLocale.languageCode) {
-      Intl.defaultLocale = supportedLocale.languageCode;
-      return supportedLocale;
+      // If MaterialLocalizations supports this locale, use it; otherwise fall back
+      if (GlobalMaterialLocalizations.delegate.isSupported(supportedLocale)) {
+        Intl.defaultLocale = supportedLocale.languageCode;
+        return supportedLocale;
+      }
+      final fallback = firstMaterialSupportedLocale();
+      Intl.defaultLocale = fallback.languageCode;
+      return fallback;
     }
   }
 
-  Intl.defaultLocale = supportedLocales.first.languageCode;
-  return supportedLocales.first;
+  final fallback = firstMaterialSupportedLocale();
+  Intl.defaultLocale = fallback.languageCode;
+  return fallback;
 }

@@ -12,8 +12,8 @@ class SettingsStorageService extends LocalStorageService {
 
   DisplayPreferences get displayPreferences {
     final data = getData(_kDisplayPreferencesKey);
-    if (data is Map<String, dynamic>) {
-      return DisplayPreferences.fromJson(data);
+    if (data is Map) {
+      return DisplayPreferences.fromJson(Map<String, dynamic>.from(data));
     } else {
       return const DisplayPreferences();
     }
