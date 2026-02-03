@@ -1,445 +1,445 @@
 {
-    "@@locale": "fr",
+    "@@locale": "ar",
     "title": "Civic24",
     "@title": {
         "description": "Civic24"
     },
-    "pageHome": "Accueil",
+    "pageHome": "الرئيسية",
     "@pageHome": {
         "description": "Home page title"
     },
-    "pageReports": "Rapports",
+    "pageReports": "التقارير",
     "@pageReports": {
         "description": "Reports page title"
     },
-    "pageNotifications": "Notifications",
+    "pageNotifications": "الإشعارات",
     "@pageNotifications": {
         "description": "Notifications page title"
     },
-    "pageSettings": "Paramètres",
+    "pageSettings": "الإعدادات",
     "@pageSettings": {
         "description": "Settings page title"
     },
-    "generalClickToUpload": "Cliquez pour télécharger",
+    "generalClickToUpload": "انقر للتحميل",
     "@generalClickToUpload": {
         "description": "Text for the upload button"
     },
-    "generalSupportedFormats": "Formats pris en charge : jpg, png, mp4 (max. 800x400px)",
+    "generalSupportedFormats": "الصيغ المدعومة: jpg, png, mp4 (الحد الأقصى 800x400px)",
     "@generalSupportedFormats": {
         "description": "Text for the supported file formats"
     },
-    "generalContinue": "Continuer",
+    "generalContinue": "متابعة",
     "@generalContinue": {
         "description": "Text for Continue button"
     },
-    "generalContinueWithGoogle": "Continuer avec Google",
+    "generalContinueWithGoogle": "المتابعة عبر Google",
     "@generalContinueWithGoogle": {
         "description": "Text for the Google sign-in button"
     },
-    "generalContinueWithApple": "Continuer avec Apple",
+    "generalContinueWithApple": "المتابعة عبر Apple",
     "@generalContinueWithApple": {
         "description": "Text for the Apple sign-in button"
     },
-    "generalUploadFile": "Télécharger le fichier",
+    "generalUploadFile": "تحميل ملف",
     "@generalUploadFile": {
         "description": "Upload File Label for Button"
     },
-    "generalTakePicture": "Prendre une photo",
+    "generalTakePicture": "التقاط صورة",
     "@generalTakePicture": {
         "description": "Take picture Label for Button"
     },
-    "generalSave": "Enregistrer",
+    "generalSave": "حفظ",
     "@generalSave": {
         "description": "Text for Save button"
     },
-    "generalEdit": "Modifier",
+    "generalEdit": "تعديل",
     "@generalEdit": {
         "description": "Text for Edit button"
     },
-    "generalCancel": "Annuler",
+    "generalCancel": "إلغاء",
     "@generalCancel": {
         "description": "Text for Cancel button"
     },
-    "generalDeleteAccountButton": "Supprimer le compte",
+    "generalDeleteAccountButton": "حذف الحساب",
     "@generalDeleteAccountButton": {
         "description": "Text for Delete Account button"
     },
-    "generalProceed": "Procéder",
+    "generalProceed": "استمر",
     "@generalProceed": {
         "description": "General Label for Button"
     },
-    "generalSubmit": "Soumettre",
+    "generalSubmit": "إرسال",
     "@generalSubmit": {
         "description": "Submit Label for Button"
     },
-    "generalPrevious": "Précédent",
+    "generalPrevious": "السابق",
     "@generalPrevious": {
         "description": "Previous Label for Button"
     },
-    "generalClose": "Fermer",
+    "generalClose": "إغلاق",
     "@generalClose": {
         "description": "Text for the close button"
     },
-    "generalLogin": "Connexion",
+    "generalLogin": "تسجيل الدخول",
     "@generalLogin": {
         "description": "Text for the login button"
     },
-    "generalSignUp": "S'inscrire",
+    "generalSignUp": "إنشاء حساب",
     "@generalSignUp": {
         "description": "Text for the SignUp button"
     },
-    "generalEmail": "Adresse e-mail",
+    "generalEmail": "البريد الإلكتروني",
     "@generalEmail": {
         "description": "Label for the email input field"
     },
-    "generalPassword": "Mot de passe",
+    "generalPassword": "كلمة المرور",
     "@generalPassword": {
         "description": "Label for the password input field"
     },
-    "generalConfirmPassword": "Confirmer le mot de passe",
+    "generalConfirmPassword": "تأكيد كلمة المرور",
     "@generalConfirmPassword": {
         "description": "Label for the confirm password input field"
     },
-    "generalForgotPassword": "Mot de passe oublié ?",
+    "generalForgotPassword": "هل نسيت كلمة المرور؟",
     "@generalForgotPassword": {
         "description": "Text for the forgot password link"
     },
-    "generalResetPassword": "Réinitialiser le mot de passe",
+    "generalResetPassword": "إعادة تعيين كلمة المرور",
     "@generalResetPassword": {
         "description": "Text for the reset password"
     },
-    "generalResetPasswordDesc": "Un e-mail de réinitialisation du mot de passe a été envoyé à {emailValue}. Veuillez vérifier votre boîte de réception et suivre les instructions pour réinitialiser votre mot de passe.",
+    "generalResetPasswordDesc": "تم إرسال بريد إلكتروني لإعادة تعيين كلمة المرور إلى {emailValue}. يرجى التحقق من صندوق الوارد واتباع التعليمات لإعادة تعيين كلمة المرور.",
     "@generalResetPasswordDesc": {
         "description": "Reset Password Description",
         "placeholders": {
             "emailValue": {}
         }
     },
-    "generalResetPasswordButtonText": "Ouvrir l'application e-mail",
+    "generalResetPasswordButtonText": "فتح تطبيق البريد",
     "@generalResetPasswordButtonText": {
         "description": "Text for the reset password button"
     },
-    "generalEmailHint": "Entrez votre e-mail",
+    "generalEmailHint": "أدخل بريدك الإلكتروني",
     "@generalEmailHint": {
         "description": "Hint text for the email input field"
     },
-    "generalRequired": "Requis",
+    "generalRequired": "مطلوب",
     "@generalRequired": {
         "description": "Text for Required Label"
     },
-    "generalEnterEmail": "Entrez votre adresse e-mail",
+    "generalEnterEmail": "أدخل عنوان بريدك الإلكتروني",
     "@generalEnterEmail": {
         "description": "Text for Enter your Email address Label"
     },
-    "generalValidEmail": "Une adresse e-mail valide est requise",
+    "generalValidEmail": "الرجاء إدخال عنوان بريد إلكتروني صالح",
     "@generalValidEmail": {
         "description": "Text for Valid email address Label"
     },
-    "generalEnterPassword": "Entrez votre mot de passe",
+    "generalEnterPassword": "أدخل كلمة المرور",
     "@generalEnterPassword": {
         "description": "Text for Enter your Password Label"
     },
-    "generalValidPassword": "Le mot de passe doit comporter au moins 8 caractères",
+    "generalValidPassword": "يجب أن تحتوي كلمة المرور على 8 أحرف على الأقل",
     "@generalValidPassword": {
         "description": "Text for Valid Password Label"
     },
-    "generalUseAccurateLocation": "Utiliser une position précise",
+    "generalUseAccurateLocation": "استخدم الموقع الدقيق",
     "@generalUseAccurateLocation": {
         "description": "Text for Use accurate location Label"
     },
-    "generalFirstname": "Prénom",
+    "generalFirstname": "الاسم الأول",
     "@generalFirstname": {
         "description": "Text for First name Label"
     },
-    "generalLastname": "Nom de famille",
+    "generalLastname": "اسم العائلة",
     "@generalLastname": {
         "description": "Text for Last name Label"
     },
-    "generalEnterFirstname": "Entrez votre prénom",
+    "generalEnterFirstname": "أدخل اسمك الأول",
     "@generalEnterFirstname": {
         "description": "Text for Enter your last name"
     },
-    "generalEnterLastname": "Entrez votre nom",
+    "generalEnterLastname": "أدخل اسم العائلة",
     "@generalEnterLastname": {
         "description": "Text for Enter your last name"
     },
-    "generalCountry": "Pays",
+    "generalCountry": "البلد",
     "@generalCountry": {
         "description": "Text for Country Label"
     },
-    "generalState": "État/Région",
+    "generalState": "الولاية",
     "@generalState": {
         "description": "Text for State Label"
     },
-    "generalSelectCountry": "Sélectionnez un pays",
+    "generalSelectCountry": "اختر بلدًا",
     "@generalSelectCountry": {
         "description": "Hint Text for Select a country"
     },
-    "generalSelectState": "Sélectionnez une région",
+    "generalSelectState": "اختر ولاية",
     "@generalSelectState": {
         "description": "Hint Text for Select a state"
     },
-    "generalNoResults": "Aucun résultat",
+    "generalNoResults": "لا توجد نتائج",
     "@generalNoResults": {
         "description": "Text for No results Label"
     },
-    "generalSearch": "Rechercher ici",
+    "generalSearch": "ابحث هنا",
     "@generalSearch": {
         "description": "Text for Search Label"
     },
-    "generalComment": "Commentaires",
+    "generalComment": "التعليقات",
     "@generalComment": {
         "description": "Text for Comment Label"
     },
-    "generalAddComment": "Ajouter un commentaire",
+    "generalAddComment": "أضف تعليقًا",
     "@generalAddComment": {
         "description": "Text for AddComment TextField"
     },
-    "generalAllIssues": "Tous les problèmes",
+    "generalAllIssues": "كل القضايا",
     "@generalAllIssues": {
         "description": "Text for All Issues TextField"
     },
-    "generalTrending": "Tendances",
+    "generalTrending": "الشائع",
     "@generalTrending": {
         "description": "Text for Trending TextField"
     },
-    "generalCategory": "Catégorie",
+    "generalCategory": "الفئة",
     "@generalCategory": {
         "description": "Text for Category TextField"
     },
-    "generalLogout": "Se déconnecter",
+    "generalLogout": "تسجيل الخروج",
     "@generalLogout": {
         "description": "Text for Logout Label"
     },
-    "featureonboardingGetStarted": "Commencer",
+    "featureonboardingGetStarted": "البدء",
     "@featureonboardingGetStarted": {
         "description": "Text for Onboarding Get Started Button"
     },
-    "featureOnboardingVoiceReport": "Exprimez votre signalement",
+    "featureOnboardingVoiceReport": "أبلغ صوتك",
     "@featureOnboardingVoiceReport": {
         "description": "Title 1 for Onboarding Sets"
     },
-    "featureOnboardingVoiceReportDesc": "Civic24 vous permet de parler des problèmes urgents de votre communauté et de faire entendre votre voix",
+    "featureOnboardingVoiceReportDesc": "يتيح لك Civic24 التعبير عن المشاكل الملحّة في مجتمعك وإيصال صوتك",
     "@featureOnboardingVoiceReportDesc": {
         "description": "Title Description 1 for Onboarding Sets"
     },
-    "featureOnboardingVoiceCount": "Faites compter votre voix",
+    "featureOnboardingVoiceCount": "اجعل صوتك مهمًا",
     "@featureOnboardingVoiceCount": {
         "description": "Title 2 for Onboarding Sets"
     },
-    "featureOnboardingVoiceCountDesc": "Avec Civic24, vos avis aident à prioriser les problèmes civiques les plus importants pour les gens autour de vous",
+    "featureOnboardingVoiceCountDesc": "مع Civic24، يساعد تأييدك في ترتيب أولويات القضايا المدنية المهمة لمن حولك",
     "@featureOnboardingVoiceCountDesc": {
         "description": "Title Description 2 for Onboarding Sets"
     },
-    "featureOnboardingConnectVoice": "Connectez-vous avec d'autres voix",
+    "featureOnboardingConnectVoice": "تواصل مع أصوات أخرى",
     "@featureOnboardingConnectVoice": {
         "description": "Title 2 for Onboarding Sets"
     },
-    "featureOnboardingConnectVoiceDesc": "Civic24 offre une plateforme pour interagir avec vos concitoyens en exprimant votre opinion sur des enjeux civiques",
+    "featureOnboardingConnectVoiceDesc": "يوفر Civic24 منصة للتفاعل مع المواطنين الآخرين عبر التعبير عن رأيك في القضايا المدنية",
     "@featureOnboardingConnectVoiceDesc": {
         "description": "Title Description 3 for Onboarding Sets"
     },
-    "featureDontHaveAccount": "Vous n'avez pas de compte ?",
+    "featureDontHaveAccount": "لا تملك حسابًا؟",
     "@featureDontHaveAccount": {
         "description": "Don't have an account Description"
     },
-    "featureLoginWelcome": "Content de vous revoir !",
+    "featureLoginWelcome": "مرحبًا بعودتك!",
     "@featureLoginWelcome": {
         "description": "Login Welcome Description"
     },
-    "featureLoginWelcomeHint": "Connectez-vous à votre compte",
+    "featureLoginWelcomeHint": "سجّل الدخول إلى حسابك",
     "@featureLoginWelcomeHint": {
         "description": "Login Welcome Hint Description"
     },
-    "featureAlreadyHaveAnAccount": "Vous avez déjà un compte ?",
+    "featureAlreadyHaveAnAccount": "هل لديك حساب بالفعل؟",
     "@featureAlreadyHaveAnAccount": {
         "description": "Already Have An Account Description"
     },
-    "featureSignUpCreateAccount": "Créer un compte",
+    "featureSignUpCreateAccount": "إنشاء حساب",
     "@featureSignUpCreateAccount": {
         "description": "SignUp Create Account Description"
     },
-    "featureSignUpCreateAccountHint": "Inscrivez-vous pour commencer !",
+    "featureSignUpCreateAccountHint": "سجّل الآن للبدء!",
     "@featureSignUpCreateAccountHint": {
         "description": "SignUp Create Account Hint Description"
     },
-    "featureSignUpSuccess": "Compte créé",
+    "featureSignUpSuccess": "تم إنشاء الحساب",
     "@featureSignUpSuccess": {
         "description": "SignUp Success Description"
     },
-    "featureSignUpSuccessHint": "Préparez-vous à découvrir les fonctionnalités incroyables de Civic24.",
+    "featureSignUpSuccessHint": "استعد لاستكشاف الميزات الرائعة التي يقدمها Civic24.",
     "@featureSignUpSuccessHint": {
         "description": "SignUp Success Hint Description"
     },
-    "featureForgotPassword": "Mot de passe oublié ?",
+    "featureForgotPassword": "هل نسيت كلمة المرور؟",
     "@featureForgotPassword": {
         "description": "Forgot Password Description"
     },
-    "featureForgotPasswordHint": "Commencez la réinitialisation en remplissant votre adresse e-mail",
+    "featureForgotPasswordHint": "ابدأ عملية إعادة التعيين بملء بريدك الإلكتروني",
     "@featureForgotPasswordHint": {
         "description": "Forgot Password Hint Description"
     },
-    "featureForgotPasswordGoTo": "Retour à",
+    "featureForgotPasswordGoTo": "العودة إلى",
     "@featureForgotPasswordGoTo": {
         "description": "Go back to description"
     },
-    "featureCompleteProfile": "Compléter le profil",
+    "featureCompleteProfile": "أكمل الملف الشخصي",
     "@featureCompleteProfile": {
         "description": "Complete Profile Description"
     },
-    "featureCategoryTypeRoad": "Routes & transports",
+    "featureCategoryTypeRoad": "الطرق والنقل",
     "@featureCategoryTypeRoad": {
         "description": "Road & Transport Description"
     },
-    "featureCategoryTypeLight": "Éclairage & électricité",
+    "featureCategoryTypeLight": "الإضاءة والكهرباء",
     "@featureCategoryTypeLight": {
         "description": "Light & Electricity Description"
     },
-    "featureCategoryTypeWaste": "Déchets",
+    "featureCategoryTypeWaste": "النفايات",
     "@featureCategoryTypeWaste": {
         "description": "Environmental Hazards Description"
     },
-    "featureCategoryTypeAbandoned": "Projets abandonnés",
+    "featureCategoryTypeAbandoned": "مشاريع مهجورة",
     "@featureCategoryTypeAbandoned": {
         "description": "Abandoned Projects Description"
     },
-    "featureCategoryTypeHealth": "Santé & assainissement",
+    "featureCategoryTypeHealth": "الصحة والصرف الصحي",
     "@featureCategoryTypeHealth": {
         "description": "Health & Sanitation Description"
     },
-    "featureCategoryTypeSecurity": "Sécurité",
+    "featureCategoryTypeSecurity": "الأمن",
     "@featureCategoryTypeSecurity": {
         "description": "Security Description"
     },
-    "featureCategoryTypeEducation": "Éducation",
+    "featureCategoryTypeEducation": "التعليم",
     "@featureCategoryTypeEducation": {
         "description": "Education Description"
     },
-    "featureCategoryTypeGovernance": "Gouvernance",
+    "featureCategoryTypeGovernance": "الحكم",
     "@featureCategoryTypeGovernance": {
         "description": "Governance Description"
     },
-    "featureCategoryTypeUrban": "Violations de zonage",
+    "featureCategoryTypeUrban": "انتهاكات التخطيط العمراني",
     "@featureCategoryTypeUrban": {
         "description": "Zoning Violations Description"
     },
-    "featureCategoryTypeDetailedRoad": "Problèmes de routes & transports",
+    "featureCategoryTypeDetailedRoad": "مشكلات الطرق والنقل",
     "@featureCategoryTypeDetailedRoad": {
         "description": "Road & Transport Issues Description"
     },
-    "featureCategoryTypeDetailedLight": "Problèmes d'éclairage & d'électricité",
+    "featureCategoryTypeDetailedLight": "مشكلات الإضاءة والكهرباء",
     "@featureCategoryTypeDetailedLight": {
         "description": "Light & Electricity Issues Description"
     },
-    "featureCategoryTypeDetailedWaste": "Déchets & dangers environnementaux",
+    "featureCategoryTypeDetailedWaste": "النفايات والمخاطر البيئية",
     "@featureCategoryTypeDetailedWaste": {
         "description": "Environmental Hazards Description"
     },
-    "featureCategoryTypeDetailedAbandoned": "Projets abandonnés & inachevés",
+    "featureCategoryTypeDetailedAbandoned": "مشاريع مهجورة وغير مكتملة",
     "@featureCategoryTypeDetailedAbandoned": {
         "description": "Abandoned & Incomplete Projects Description"
     },
-    "featureCategoryTypeDetailedHealth": "Santé & assainissement",
+    "featureCategoryTypeDetailedHealth": "الصحة والصرف الصحي",
     "@featureCategoryTypeDetailedHealth": {
         "description": "Health & Sanitation Description"
     },
-    "featureCategoryTypeDetailedSecurity": "Problèmes de sécurité",
+    "featureCategoryTypeDetailedSecurity": "مشكلات الأمن",
     "@featureCategoryTypeDetailedSecurity": {
         "description": "Security Issues Description"
     },
-    "featureCategoryTypeDetailedEducation": "Éducation & équipements publics",
+    "featureCategoryTypeDetailedEducation": "التعليم والمرافق العامة",
     "@featureCategoryTypeDetailedEducation": {
         "description": "Education & Public Facilities Description"
     },
-    "featureCategoryTypeDetailedGovernance": "Gouvernance",
+    "featureCategoryTypeDetailedGovernance": "الحكم",
     "@featureCategoryTypeDetailedGovernance": {
         "description": "Governance Description"
     },
-    "featureCategoryTypeDetailedUrban": "Urbanisme & violations de zonage",
+    "featureCategoryTypeDetailedUrban": "التخطيط العمراني وانتهاكات التخطيط",
     "@featureCategoryTypeDetailedUrban": {
         "description": "Urban Planning & Zoning Violations Description"
     },
-    "featureCategoryTypeRoadDescription": "Signalez des nids-de-poule, des routes endommagées, des trottoirs cassés, des feux de circulation défectueux ou une conduite imprudente dans votre région.",
+    "featureCategoryTypeRoadDescription": "أبلغ عن الحفر، الطرق المتهالكة، الأرصفة المحطمة، إشارات المرور المعطلة أو القيادة المتهورة في منطقتك.",
     "@featureCategoryTypeRoadDescription": {
         "description": "Road & Transport Description"
     },
-    "featureCategoryTypeLightDescription": "Signalez des lampadaires cassés, des fils exposés ou des coupures de courant qui affectent les espaces publics et la sécurité.",
+    "featureCategoryTypeLightDescription": "أبلغ عن أعمدة إنارة معطلة، أسلاك مكشوفة، أو انقطاع التيار يؤثر على الأماكن العامة والسلامة.",
     "@featureCategoryTypeLightDescription": {
         "description": "Light & Electricity Description"
     },
-    "featureCategoryTypeWasteDescription": "Signalez des ordures non collectées, des drains obstrués, des dépôts illégaux ou d'autres problèmes environnementaux.",
+    "featureCategoryTypeWasteDescription": "أبلغ عن نفايات غير مجمعة، مصارف مسدودة، تفريغ غير قانوني أو مخاوف بيئية أخرى.",
     "@featureCategoryTypeWasteDescription": {
         "description": "Environmental Hazards Description"
     },
-    "featureCategoryTypeAbandonedDescription": "Signalez des projets gouvernementaux ou communautaires inachevés ou abandonnés dans votre localité.",
+    "featureCategoryTypeAbandonedDescription": "أبلغ عن مشاريع حكومية/مجتمعية غير مكتملة أو مهجورة في منطقتك.",
     "@featureCategoryTypeAbandonedDescription": {
         "description": "Abandoned Projects Description"
     },
-    "featureCategoryTypeHealthDescription": "Signalez des toilettes publiques sales, une mauvaise hygiène dans les cliniques, des eaux usées à ciel ouvert ou des conditions sanitaires dangereuses.",
+    "featureCategoryTypeHealthDescription": "أبلغ عن دورات مياه عامة قذرة، سوء النظافة في العيادات، مجاري مياه مكشوفة أو ظروف صحية غير آمنة.",
     "@featureCategoryTypeHealthDescription": {
         "description": "Health & Sanitation Description"
     },
-    "featureCategoryTypeSecurityDescription": "Signalez des zones dangereuses, des infrastructures de sécurité endommagées, du harcèlement de rue ou des zones de regroupement.",
+    "featureCategoryTypeSecurityDescription": "أبلغ عن مناطق غير آمنة، بنية أمنية مكسورة، تحرّش في الشوارع أو أماكن تجمع.",
     "@featureCategoryTypeSecurityDescription": {
         "description": "Security Description"
     },
-    "featureCategoryTypeEducationDescription": "Signalez des bâtiments scolaires délabrés, des salles communautaires fermées ou des bibliothèques négligées.",
+    "featureCategoryTypeEducationDescription": "أبلغ عن مبان مدرسية متدهورة، قاعات مجتمع مغلقة أو مكتبات مهملة.",
     "@featureCategoryTypeEducationDescription": {
         "description": "Education Description"
     },
-    "featureCategoryTypeGovernanceDescription": "Signalez des problèmes tels que des retards administratifs, une mauvaise prestation de services, des pratiques corrompues ou un mauvais usage des fonds publics.",
+    "featureCategoryTypeGovernanceDescription": "أبلغ عن قضايا مثل تأخيرات حكومية، سوء تقديم الخدمات، ممارسات فاسدة أو إساءة استخدام الأموال العامة.",
     "@featureCategoryTypeGovernanceDescription": {
         "description": "Governance Description"
     },
-    "featureCategoryTypeUrbanDescription": "Signalez des constructions non autorisées, des nuisances sonores, une mauvaise utilisation des terrains ou des violations de zonage dans votre zone.",
+    "featureCategoryTypeUrbanDescription": "أبلغ عن إقامات غير مرخّصة، التلوث الضوضائي، إساءة استخدام الأراضي أو انتهاكات التخطيط في منطقتك.",
     "@featureCategoryTypeUrbanDescription": {
         "description": "Zoning Violations Description"
     },
-    "featureAddReportCategory": "Sélectionnez la catégorie du rapport",
+    "featureAddReportCategory": "اختر فئة التقرير",
     "@featureAddReportCategory": {
         "description": "Category Description"
     },
-    "featureAddReportContent": "Partagez les détails du problème civique",
+    "featureAddReportContent": "شارك تفاصيل المشكلة المدنية",
     "@featureAddReportContent": {
         "description": "Content Description"
     },
-    "featureAddReportContentHint": "Partagez vos remarques",
+    "featureAddReportContentHint": "شارك أفكارك",
     "@featureAddReportContentHint": {
         "description": "Content Hint Description"
     },
-    "featureAddReportMedia": "Veuillez télécharger une image claire de votre signalement",
+    "featureAddReportMedia": "يرجى رفع صورة واضحة لتقريرك",
     "@featureAddReportMedia": {
         "description": "Media Description"
     },
-    "featureAddReport": "Ajouter un signalement",
+    "featureAddReport": "أضف تقريرًا",
     "@featureAddReport": {
         "description": "Add a Report Description"
     },
-    "featureNotifications": "Notifications",
+    "featureNotifications": "الإشعارات",
     "@featureNotifications": {
         "description": "Notifications Description"
     },
-    "featureNotificationInstruction": "Marquer tout comme lu",
+    "featureNotificationInstruction": "تعليم الكل كمقروء",
     "@featureNotificationInstruction": {
         "description": "Notification Instruction Description"
     },
-    "featureNotificationEmpty": "Vous n'avez aucune notification",
+    "featureNotificationEmpty": "ليس لديك أية إشعارات",
     "@featureNotificationEmpty": {
         "description": "Notification Empty Description"
     },
-    "featureReports": "Rapports",
+    "featureReports": "التقارير",
     "@featureReports": {
         "description": "Reports Description"
     },
-    "featureMyReports": "Mes signalements",
+    "featureMyReports": "تقاريري",
     "@featureMyReports": {
         "description": "My Reports Description"
     },
-    "featureBookmarkedReports": "Favoris",
+    "featureBookmarkedReports": "المحفوظة",
     "@featureBookmarkedReports": {
         "description": "Bookmarked Description"
     },
-    "featureSettingsTooltip": "Appuyez pour {action}",
+    "featureSettingsTooltip": "اضغط لـ {action}",
     "@featureSettingsTooltip": {
         "description": "Settings Tooltip Description",
         "placeholders": {
@@ -453,55 +453,55 @@
             "version": {}
         }
     },
-    "featureSettingsProfile": "Profil",
+    "featureSettingsProfile": "الملف الشخصي",
     "@featureSettingsProfile": {
         "description": "Profile Description"
     },
-    "featureSettingsEditProfile": "Modifier le profil",
+    "featureSettingsEditProfile": "تعديل الملف الشخصي",
     "@featureSettingsEditProfile": {
         "description": "Edit Profile Description"
     },
-    "featureProfileAccountEmail": "L'adresse e-mail de votre compte ne peut pas être modifiée.",
+    "featureProfileAccountEmail": "لا يمكن تغيير بريد حسابك الإلكتروني.",
     "@featureProfileAccountEmail": {
         "description": "Profile Account Email Description"
     },
-    "featureSettingsLanguage": "Langue",
+    "featureSettingsLanguage": "اللغة",
     "@featureSettingsLanguage": {
         "description": "Language Description"
     },
-    "featureSettingsLanguageDefault": "Langue par défaut",
+    "featureSettingsLanguageDefault": "اللغة الافتراضية",
     "@featureSettingsLanguageDefault": {
         "description": "Default Language Description"
     },
-    "featureSettingsAppearance": "Apparence",
+    "featureSettingsAppearance": "المظهر",
     "@featureSettingsAppearance": {
         "description": "Appearance Description"
     },
-    "featureSettingsSignInSecurity": "Connexion et sécurité",
+    "featureSettingsSignInSecurity": "تسجيل الدخول والأمان",
     "@featureSettingsSignInSecurity": {
         "description": "Sign In & Security Description"
     },
-    "featureSettingsAppearanceSystem": "Paramètres système",
+    "featureSettingsAppearanceSystem": "إعدادات النظام",
     "@featureSettingsAppearanceSystem": {
         "description": "System Settings Description"
     },
-    "featureSettingsAppearanceLight": "Mode clair",
+    "featureSettingsAppearanceLight": "الوضع الفاتح",
     "@featureSettingsAppearanceLight": {
         "description": "Light Mode Description"
     },
-    "featureSettingsAppearanceDark": "Mode sombre",
+    "featureSettingsAppearanceDark": "الوضع الداكن",
     "@featureSettingsAppearanceDark": {
         "description": "Dark Mode Description"
     },
-    "featureSettingsAppearanceSystemDesc": "S'ajuste automatiquement aux paramètres d'apparence de votre appareil",
+    "featureSettingsAppearanceSystemDesc": "يتكيف تلقائيًا مع إعدادات مظهر جهازك",
     "@featureSettingsAppearanceSystemDesc": {
         "description": "System Settings Description"
     },
-    "featureSettingsAppearanceLightDesc": "Conserver l'application en mode clair",
+    "featureSettingsAppearanceLightDesc": "احتفظ بالتطبيق في الوضع الفاتح",
     "@featureSettingsAppearanceLightDesc": {
         "description": "Light Mode Description"
     },
-    "featureSettingsAppearanceDarkDesc": "Conserver l'application en mode sombre",
+    "featureSettingsAppearanceDarkDesc": "احتفظ بالتطبيق في الوضع الداكن",
     "@featureSettingsAppearanceDarkDesc": {
         "description": "Dark Mode Description"
     },
@@ -509,11 +509,11 @@
     "@featureSettingsSecurityGoogle": {
         "description": "Google Sign-In Description"
     },
-    "featureSettingsSecurityGoogleUnlinkDesc": "Associez votre compte Google pour une connexion sécurisée",
+    "featureSettingsSecurityGoogleUnlinkDesc": "اربط حساب Google الخاص بك لتسجيل دخول آمن",
     "@featureSettingsSecurityGoogleUnlinkDesc": {
         "description": "Google Sign-In Unlinked Description"
     },
-    "featureSettingsSecurityGoogleLinkedDesc": "Votre compte Google est disponible pour la connexion",
+    "featureSettingsSecurityGoogleLinkedDesc": "حساب Google متاح لتسجيل الدخول",
     "@featureSettingsSecurityGoogleLinkedDesc": {
         "description": "Google Sign-In Linked Description"
     },
@@ -521,47 +521,47 @@
     "@featureSettingsSecurityApple": {
         "description": "Apple Sign-In Description"
     },
-    "featureSettingsSecurityAppleUnlinkDesc": "Associez votre identifiant Apple pour une connexion sécurisée",
+    "featureSettingsSecurityAppleUnlinkDesc": "اربط Apple ID الخاص بك لتسجيل دخول آمن",
     "@featureSettingsSecurityAppleUnlinkDesc": {
         "description": "Apple Sign-In Unlinked Description"
     },
-    "featureSettingsSecurityAppleLinkedDesc": "Votre identifiant Apple est disponible pour la connexion",
+    "featureSettingsSecurityAppleLinkedDesc": "Apple ID متاح لتسجيل الدخول",
     "@featureSettingsSecurityAppleLinkedDesc": {
         "description": "Apple ID Linked Description"
     },
-    "featureSettingsSecuritySetPassword": "Définir un mot de passe",
+    "featureSettingsSecuritySetPassword": "تعيين كلمة المرور",
     "@featureSettingsSecuritySetPassword": {
         "description": "Set Password Description"
     },
-    "featureSettingsSecuritySetPasswordDesc": "Activer la connexion par e-mail et mot de passe",
+    "featureSettingsSecuritySetPasswordDesc": "تمكين تسجيل الدخول بالبريد الإلكتروني وكلمة المرور",
     "@featureSettingsSecuritySetPasswordDesc": {
         "description": "Set Password Description"
     },
-    "featureSettingsSecuritySetPasswordLabel": "Saisissez l'e-mail associé à votre compte",
+    "featureSettingsSecuritySetPasswordLabel": "أدخل البريد الإلكتروني المرتبط بحسابك",
     "@featureSettingsSecuritySetPasswordLabel": {
         "description": "Set Password Label Description"
     },
-    "featureSettingsSecurityResetPassword": "Changer le mot de passe",
+    "featureSettingsSecurityResetPassword": "تغيير كلمة المرور",
     "@featureSettingsSecurityResetPassword": {
         "description": "Reset Password Description"
     },
-    "featureSettingsSecurityResetPasswordDesc": "Mettez à jour votre mot de passe existant",
+    "featureSettingsSecurityResetPasswordDesc": "قم بتحديث كلمة مرورك الحالية",
     "@featureSettingsSecurityResetPasswordDesc": {
         "description": "Reset Password Description"
     },
-    "featureSettingsAbout": "À propos",
+    "featureSettingsAbout": "حول",
     "@featureSettingsAbout": {
         "description": "About Description"
     },
-    "featureSettingsLoading": "Chargement",
+    "featureSettingsLoading": "جارٍ التحميل",
     "@featureSettingsLoading": {
         "description": "Loading Description"
     },
-    "featureSettingsLoggingOut": "Déconnexion ?",
+    "featureSettingsLoggingOut": "تسجيل الخروج؟",
     "@featureSettingsLoggingOut": {
         "description": "Logging out Description"
     },
-    "featureSettingsLoggingOutHint": "Êtes-vous sûr de vouloir vous déconnecter de votre compte sur cet appareil ?",
+    "featureSettingsLoggingOutHint": "هل أنت متأكد أنك تريد تسجيل الخروج من حسابك على هذا الجهاز؟",
     "@featureSettingsLoggingOutHint": {
         "description": "Logging out Hint Description"
     }

@@ -29,7 +29,9 @@ class LanguageSettingsView extends StackedView<LanguageSettingsViewModel> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              for (final language in LanguageType.values)
+              for (final language in LanguageType.values.where(
+                (l) => appSupportedLocales.map((e) => e.languageCode).contains(l.locale),
+              ))
                 AppLanguageListTile(
                   value: language,
                   groupValue: viewModel.selectedLanguage,

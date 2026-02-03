@@ -1,5 +1,5 @@
 // DO NOT EDIT. This is code generated via package:intl/generate_localized.dart
-// This is a library that provides messages for a es locale. All the
+// This is a library that provides messages for a ig locale. All the
 // messages from the main program should be duplicated here with the same
 // function name.
 
@@ -18,365 +18,345 @@ final messages = new MessageLookup();
 typedef String MessageIfAbsent(String messageStr, List<dynamic> args);
 
 class MessageLookup extends MessageLookupByLibrary {
-  String get localeName => 'es';
+  String get localeName => 'ig';
 
-  static String m0(action) => "Toque para ${action}";
+  static String m0(action) => "Pịa ka ${action}";
 
   static String m1(version) => "(v${version})";
 
   static String m2(emailValue) =>
-      "Se ha enviado un correo para restablecer la contraseña a ${emailValue}. Consulta tu bandeja de entrada y sigue las instrucciones para cambiar tu contraseña.";
+      "E zigara email iji tọgharịa okwuntughe na ${emailValue}. Biko lelee igbe ozi gị ma soro ntuziaka iji tọgharịa okwuntughe.";
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
-    "featureAddReport": MessageLookupByLibrary.simpleMessage(
-      "Añadir un informe",
-    ),
+    "featureAddReport": MessageLookupByLibrary.simpleMessage("Tinye Akụkọ"),
     "featureAddReportCategory": MessageLookupByLibrary.simpleMessage(
-      "Selecciona la categoría del informe",
+      "Họrọ ụdị akụkọ",
     ),
     "featureAddReportContent": MessageLookupByLibrary.simpleMessage(
-      "Comparte los detalles del problema cívico",
+      "Kekọrịta nkọwa banyere nsogbu obodo",
     ),
     "featureAddReportContentHint": MessageLookupByLibrary.simpleMessage(
-      "Comparte tus comentarios",
+      "Kekọrịta echiche gị",
     ),
     "featureAddReportMedia": MessageLookupByLibrary.simpleMessage(
-      "Por favor sube una imagen clara de tu informe",
+      "Biko bulite foto doro anya nke akụkọ gị",
     ),
     "featureAlreadyHaveAnAccount": MessageLookupByLibrary.simpleMessage(
-      "¿Ya tienes una cuenta?",
+      "Ị nwere akaụntụ?",
     ),
     "featureBookmarkedReports": MessageLookupByLibrary.simpleMessage(
-      "Guardados",
+      "E debere",
     ),
     "featureCategoryTypeAbandoned": MessageLookupByLibrary.simpleMessage(
-      "Proyectos abandonados",
+      "Orụ ọrụ hapụrụ",
     ),
     "featureCategoryTypeAbandonedDescription": MessageLookupByLibrary.simpleMessage(
-      "Informa sobre proyectos gubernamentales o comunitarios incompletos o abandonados en tu localidad.",
+      "Kpọtụrụ gbasara ọrụ gọọmenti/obodo ndị a hapụrụ ma ọ bụ a naghị emecha ya n\'ógbè gị.",
     ),
     "featureCategoryTypeDetailedAbandoned":
         MessageLookupByLibrary.simpleMessage(
-          "Proyectos abandonados e incompletos",
+          "Orụ ọrụ hapụrụ & ndị a dịghị emechaa",
         ),
     "featureCategoryTypeDetailedEducation":
-        MessageLookupByLibrary.simpleMessage(
-          "Educación e instalaciones públicas",
-        ),
+        MessageLookupByLibrary.simpleMessage("Agụmakwụkwọ & ọrụ obula obodo"),
     "featureCategoryTypeDetailedGovernance":
-        MessageLookupByLibrary.simpleMessage("Gobernanza"),
+        MessageLookupByLibrary.simpleMessage("Nchịkwa"),
     "featureCategoryTypeDetailedHealth": MessageLookupByLibrary.simpleMessage(
-      "Salud y saneamiento",
+      "Ahụike & nnọchi",
     ),
     "featureCategoryTypeDetailedLight": MessageLookupByLibrary.simpleMessage(
-      "Problemas de iluminación y electricidad",
+      "Nsogbu ọkụ & eletrik",
     ),
     "featureCategoryTypeDetailedRoad": MessageLookupByLibrary.simpleMessage(
-      "Problemas de carreteras y transporte",
+      "Nsogbu ụzọ & njem",
     ),
     "featureCategoryTypeDetailedSecurity": MessageLookupByLibrary.simpleMessage(
-      "Problemas de seguridad",
+      "Nsogbu nchekwa",
     ),
     "featureCategoryTypeDetailedUrban": MessageLookupByLibrary.simpleMessage(
-      "Planificación urbana e infracciones de zonificación",
+      "Nhazi obodo & mmebi iwu nhazi ala",
     ),
     "featureCategoryTypeDetailedWaste": MessageLookupByLibrary.simpleMessage(
-      "Residuos y peligros ambientales",
+      "Mkpofu & ihe egwu gburugburu ebe obibi",
     ),
     "featureCategoryTypeEducation": MessageLookupByLibrary.simpleMessage(
-      "Educación",
+      "Agụmakwụkwọ",
     ),
     "featureCategoryTypeEducationDescription": MessageLookupByLibrary.simpleMessage(
-      "Informa sobre edificios escolares deteriorados, salas comunitarias cerradas o bibliotecas descuidadas.",
+      "Kpọtụrụ gbasara ụlọ akwụkwọ mebiri emebi, ụlọ obodo emechiri, ma ọ bụ akwụkwọ ụlọ akwụkwọ na-ezere.",
     ),
     "featureCategoryTypeGovernance": MessageLookupByLibrary.simpleMessage(
-      "Gobernanza",
+      "Nchịkwa",
     ),
     "featureCategoryTypeGovernanceDescription":
         MessageLookupByLibrary.simpleMessage(
-          "Plantea problemas como retrasos administrativos, mala prestación de servicios, prácticas corruptas o mal uso de fondos públicos.",
+          "Kpọtụrụ gbasara nsogbu dị ka ịnọ ọdụ n\'ọrụ gọọmenti, ojiji ọrụ ọjọọ nke ọrụ, omume aghụghọ, ma ọ bụ ojiji iwu nke ego ọha.",
         ),
     "featureCategoryTypeHealth": MessageLookupByLibrary.simpleMessage(
-      "Salud y saneamiento",
+      "Ahụike & nnọchi",
     ),
     "featureCategoryTypeHealthDescription": MessageLookupByLibrary.simpleMessage(
-      "Informa sobre servicios sanitarios públicos sucios, mala higiene en clínicas, aguas residuales abiertas o condiciones de salud inseguras.",
+      "Kpọtụrụ gbasara ụlọ mposi ọha jọgburu onwe ha, enweghị nhicha n\'ụlọ ọgwụ, mmiri mkpofu emere ogwe, ma ọ bụ ọnọdụ ahụike na-adịghị nchebe.",
     ),
     "featureCategoryTypeLight": MessageLookupByLibrary.simpleMessage(
-      "Iluminación y electricidad",
+      "Ihu ọkụ & Ịkụ ọkụ",
     ),
     "featureCategoryTypeLightDescription": MessageLookupByLibrary.simpleMessage(
-      "Informa sobre farolas rotas, cables expuestos o cortes de energía que afectan a los espacios públicos y la seguridad.",
+      "Kpọtụrụ gbasara ọkụ e gbajiri agbaji, wires gosipụtara, ma ọ bụ nkwụsị ike na-emetụta ebe ọha na eze na nchekwa.",
     ),
     "featureCategoryTypeRoad": MessageLookupByLibrary.simpleMessage(
-      "Carreteras y transporte",
+      "Ugbo & njem",
     ),
     "featureCategoryTypeRoadDescription": MessageLookupByLibrary.simpleMessage(
-      "Informa sobre baches, carreteras en mal estado, aceras rotas, semáforos averiados o conducción imprudente en tu zona.",
+      "Kpọtụrụ gbasara oghere n\'okporo ụzọ, ụzọ ndị mebiri emebi, ụzọ ụkwụ mebiri, ọkụ okporo ụzọ na-adịghị arụ ọrụ, ma ọ bụ ịnya ụgbọ ala n\'ụzọ na-ezighị ezi n\'ógbè gị.",
     ),
     "featureCategoryTypeSecurity": MessageLookupByLibrary.simpleMessage(
-      "Seguridad",
+      "Nchekwa",
     ),
     "featureCategoryTypeSecurityDescription": MessageLookupByLibrary.simpleMessage(
-      "Informa sobre zonas inseguras, infraestructuras de seguridad dañadas, acoso en la calle o lugares de aglomeración.",
+      "Kpọtụrụ gbasara ebe ndị na-adịghị nchebe, akụrụngwa nchekwa mebiri emebi, mmegbu n\'okporo ụzọ, ma ọ bụ ebe ikpokọta.",
     ),
     "featureCategoryTypeUrban": MessageLookupByLibrary.simpleMessage(
-      "Infracciones de zonificación",
+      "Mmebi iwu nhazi ala",
     ),
     "featureCategoryTypeUrbanDescription": MessageLookupByLibrary.simpleMessage(
-      "Informa sobre estructuras no aprobadas, contaminación acústica, uso indebido de terrenos o infracciones de zonificación en tu área.",
+      "Kpọtụrụ gbasara ihe owuwu na-enweghị ikikere, mkpọtụ, ojiji ala n\'eziokwu, ma ọ bụ mmebi iwu nhazi n\'ógbè gị.",
     ),
     "featureCategoryTypeWaste": MessageLookupByLibrary.simpleMessage(
-      "Residuos",
+      "Ịchekwa ihe mkpofu",
     ),
     "featureCategoryTypeWasteDescription": MessageLookupByLibrary.simpleMessage(
-      "Informa sobre basura sin recoger, desagües bloqueados, vertidos ilegales u otras preocupaciones ambientales.",
+      "Kpọtụrụ gbasara mkpofu a na-anakọghị, drains juru, imegbu iwu ma ọ bụ nsogbu gburugburu ebe obibi ndị ọzọ.",
     ),
     "featureCompleteProfile": MessageLookupByLibrary.simpleMessage(
-      "Completar el perfil",
+      "Mezue profaịlụ",
     ),
     "featureDontHaveAccount": MessageLookupByLibrary.simpleMessage(
-      "¿No tienes una cuenta?",
+      "Enweghị akaụntụ?",
     ),
     "featureForgotPassword": MessageLookupByLibrary.simpleMessage(
-      "¿Olvidaste tu contraseña?",
+      "Chefuo okwuntughe?",
     ),
     "featureForgotPasswordGoTo": MessageLookupByLibrary.simpleMessage(
-      "Volver a",
+      "Laghachị na",
     ),
     "featureForgotPasswordHint": MessageLookupByLibrary.simpleMessage(
-      "Inicia el proceso rellenando tu correo electrónico",
+      "Malite usoro ịtọgharịrị site na ịkpọtụrụ email gị",
     ),
-    "featureLoginWelcome": MessageLookupByLibrary.simpleMessage(
-      "¡Bienvenido de nuevo!",
-    ),
+    "featureLoginWelcome": MessageLookupByLibrary.simpleMessage("Nnọọ azụ!"),
     "featureLoginWelcomeHint": MessageLookupByLibrary.simpleMessage(
-      "Inicia sesión en tu cuenta",
+      "Banye na akaụntụ gị",
     ),
-    "featureMyReports": MessageLookupByLibrary.simpleMessage("Mis informes"),
+    "featureMyReports": MessageLookupByLibrary.simpleMessage("Akụkọ m"),
     "featureNotificationEmpty": MessageLookupByLibrary.simpleMessage(
-      "No tienes notificaciones",
+      "Ị nweghị nkwupụta ọ bụla",
     ),
     "featureNotificationInstruction": MessageLookupByLibrary.simpleMessage(
-      "Marcar todo como leído",
+      "Mee ka niile ghara ịgụ",
     ),
-    "featureNotifications": MessageLookupByLibrary.simpleMessage(
-      "Notificaciones",
-    ),
+    "featureNotifications": MessageLookupByLibrary.simpleMessage("Nkwupụta"),
     "featureOnboardingConnectVoice": MessageLookupByLibrary.simpleMessage(
-      "Conecta con otras voces",
+      "Jikọọ na olu ndị ọzọ",
     ),
     "featureOnboardingConnectVoiceDesc": MessageLookupByLibrary.simpleMessage(
-      "Civic24 te ofrece una plataforma para interactuar con otros ciudadanos expresando tu opinión sobre temas cívicos",
+      "Civic24 na-enye ikpo okwu iji sonyere na ndị obodo site na ikwu okwu banyere okwu obodo",
     ),
     "featureOnboardingVoiceCount": MessageLookupByLibrary.simpleMessage(
-      "Haz que tu voz cuente",
+      "Mee ka olu gị baa uru",
     ),
     "featureOnboardingVoiceCountDesc": MessageLookupByLibrary.simpleMessage(
-      "Con Civic24, tus votos ayudan a priorizar los problemas que más preocupan a tu comunidad",
+      "Na Civic24, nkwado gị na-enyere ịhazi nsogbu obodo ndị kachasị mkpa n\'ịbụ ndị agbata obi gị",
     ),
     "featureOnboardingVoiceReport": MessageLookupByLibrary.simpleMessage(
-      "Exprésate con tu informe",
+      "Kwuo banyere akụkọ gị",
     ),
     "featureOnboardingVoiceReportDesc": MessageLookupByLibrary.simpleMessage(
-      "Civic24 te permite hablar sobre los problemas de tu comunidad y hacer que tu voz sea escuchada",
+      "Civic24 na-enye gị ohere ịgwa banyere nsogbu obodo gị ma mee ka olu gị dịrị ncheta",
     ),
     "featureProfileAccountEmail": MessageLookupByLibrary.simpleMessage(
-      "El correo electrónico de tu cuenta no se puede cambiar.",
+      "A pụghị ịgbanwe email akaụntụ gị.",
     ),
-    "featureReports": MessageLookupByLibrary.simpleMessage("Informes"),
-    "featureSettingsAbout": MessageLookupByLibrary.simpleMessage("Acerca de"),
+    "featureReports": MessageLookupByLibrary.simpleMessage("Akụkọ"),
+    "featureSettingsAbout": MessageLookupByLibrary.simpleMessage("Banyere"),
     "featureSettingsAppearance": MessageLookupByLibrary.simpleMessage(
-      "Apariencia",
+      "Ihe ngosi",
     ),
     "featureSettingsAppearanceDark": MessageLookupByLibrary.simpleMessage(
-      "Modo oscuro",
+      "Ụdị gbara ọchịchịrị",
     ),
     "featureSettingsAppearanceDarkDesc": MessageLookupByLibrary.simpleMessage(
-      "Mantener la aplicación en modo oscuro",
+      "Nabata ngwa ahụ n\'ụdị gbara ọchịchịrị",
     ),
     "featureSettingsAppearanceLight": MessageLookupByLibrary.simpleMessage(
-      "Modo claro",
+      "Ụdị ọkụ",
     ),
     "featureSettingsAppearanceLightDesc": MessageLookupByLibrary.simpleMessage(
-      "Mantener la aplicación en modo claro",
+      "Nabata ngwa ahụ n\'ụdị ọkụ",
     ),
     "featureSettingsAppearanceSystem": MessageLookupByLibrary.simpleMessage(
-      "Configuración del sistema",
+      "Ntọala usoro",
     ),
     "featureSettingsAppearanceSystemDesc": MessageLookupByLibrary.simpleMessage(
-      "Se ajusta automáticamente a la apariencia de su dispositivo",
+      "O na-emeziwanye onwe ya akpaka na nhazi ọdịdị ngwaọrụ gị",
     ),
     "featureSettingsEditProfile": MessageLookupByLibrary.simpleMessage(
-      "Editar perfil",
+      "Dezie profaili",
     ),
-    "featureSettingsLanguage": MessageLookupByLibrary.simpleMessage("Idioma"),
+    "featureSettingsLanguage": MessageLookupByLibrary.simpleMessage("Asụsụ"),
     "featureSettingsLanguageDefault": MessageLookupByLibrary.simpleMessage(
-      "Idioma predeterminado",
+      "Asụsụ ndabara",
     ),
-    "featureSettingsLoading": MessageLookupByLibrary.simpleMessage("Cargando"),
+    "featureSettingsLoading": MessageLookupByLibrary.simpleMessage(
+      "Na-ebudata",
+    ),
     "featureSettingsLoggingOut": MessageLookupByLibrary.simpleMessage(
-      "¿Cerrar sesión?",
+      "Na-apụ n\'ọrụ?",
     ),
     "featureSettingsLoggingOutHint": MessageLookupByLibrary.simpleMessage(
-      "¿Estás seguro de que quieres cerrar sesión de tu cuenta en este dispositivo?",
+      "Ị nwere n\'aka na ịchọrọ ịpụ na akaụntụ gị na ngwaọrụ a?",
     ),
-    "featureSettingsProfile": MessageLookupByLibrary.simpleMessage("Perfil"),
+    "featureSettingsProfile": MessageLookupByLibrary.simpleMessage("Profaili"),
     "featureSettingsSecurityApple": MessageLookupByLibrary.simpleMessage(
       "Apple",
     ),
     "featureSettingsSecurityAppleLinkedDesc":
-        MessageLookupByLibrary.simpleMessage(
-          "Tu ID de Apple está disponible para iniciar sesión",
-        ),
+        MessageLookupByLibrary.simpleMessage("Apple ID gị dị maka nbanye"),
     "featureSettingsSecurityAppleUnlinkDesc":
         MessageLookupByLibrary.simpleMessage(
-          "Vincula tu ID de Apple para iniciar sesión de forma segura",
+          "Jikọọ Apple ID gị don nbanye echekwabara",
         ),
     "featureSettingsSecurityGoogle": MessageLookupByLibrary.simpleMessage(
       "Google",
     ),
     "featureSettingsSecurityGoogleLinkedDesc":
         MessageLookupByLibrary.simpleMessage(
-          "Tu cuenta de Google está disponible para iniciar sesión",
+          "Akaụntụ Google gị dị maka nbanye",
         ),
     "featureSettingsSecurityGoogleUnlinkDesc":
         MessageLookupByLibrary.simpleMessage(
-          "Vincula tu cuenta de Google para iniciar sesión de forma segura",
+          "Jikọọ akaụntụ Google gị maka nbanye echekwabara",
         ),
     "featureSettingsSecurityResetPassword":
-        MessageLookupByLibrary.simpleMessage("Cambiar contraseña"),
+        MessageLookupByLibrary.simpleMessage("Gbanwee okwuntughe"),
     "featureSettingsSecurityResetPasswordDesc":
-        MessageLookupByLibrary.simpleMessage("Actualiza tu contraseña actual"),
+        MessageLookupByLibrary.simpleMessage("Mmelite okwuntughe gị dị ugbu a"),
     "featureSettingsSecuritySetPassword": MessageLookupByLibrary.simpleMessage(
-      "Establecer contraseña",
+      "Tọgharịa okwuntughe",
     ),
     "featureSettingsSecuritySetPasswordDesc":
         MessageLookupByLibrary.simpleMessage(
-          "Habilitar inicio de sesión con correo y contraseña",
+          "Kwadoo nbanye email na okwuntughe",
         ),
     "featureSettingsSecuritySetPasswordLabel":
         MessageLookupByLibrary.simpleMessage(
-          "Introduce el correo asociado a tu cuenta",
+          "Tinye email jikọtara na akaụntụ gị",
         ),
     "featureSettingsSignInSecurity": MessageLookupByLibrary.simpleMessage(
-      "Inicio de sesión y seguridad",
+      "Nbanye & Nche",
     ),
     "featureSettingsTooltip": m0,
     "featureSettingsVersion": m1,
     "featureSignUpCreateAccount": MessageLookupByLibrary.simpleMessage(
-      "Crear cuenta",
+      "Mepụta akaụntụ",
     ),
     "featureSignUpCreateAccountHint": MessageLookupByLibrary.simpleMessage(
-      "¡Regístrate para empezar!",
+      "Debanye aha ka ịmalite!",
     ),
     "featureSignUpSuccess": MessageLookupByLibrary.simpleMessage(
-      "Cuenta creada",
+      "Akụkọ e kere",
     ),
     "featureSignUpSuccessHint": MessageLookupByLibrary.simpleMessage(
-      "Prepárate para explorar las increíbles funciones que Civic24 ofrece.",
+      "Kwadebe iji chọpụta ezigbo atụmatụ Civic24 nwere.",
     ),
     "featureonboardingGetStarted": MessageLookupByLibrary.simpleMessage(
-      "Comenzar",
+      "Malite",
     ),
-    "generalAddComment": MessageLookupByLibrary.simpleMessage(
-      "Añadir un comentario",
-    ),
-    "generalAllIssues": MessageLookupByLibrary.simpleMessage(
-      "Todos los problemas",
-    ),
-    "generalCancel": MessageLookupByLibrary.simpleMessage("Cancelar"),
-    "generalCategory": MessageLookupByLibrary.simpleMessage("Categoría"),
+    "generalAddComment": MessageLookupByLibrary.simpleMessage("Tinye okwu"),
+    "generalAllIssues": MessageLookupByLibrary.simpleMessage("Ihe niile"),
+    "generalCancel": MessageLookupByLibrary.simpleMessage("Kagbuo"),
+    "generalCategory": MessageLookupByLibrary.simpleMessage("Nkwupụta"),
     "generalClickToUpload": MessageLookupByLibrary.simpleMessage(
-      "Haga clic para subir",
+      "Pịa iji bulite",
     ),
-    "generalClose": MessageLookupByLibrary.simpleMessage("Cerrar"),
-    "generalComment": MessageLookupByLibrary.simpleMessage("Comentarios"),
+    "generalClose": MessageLookupByLibrary.simpleMessage("Mechie"),
+    "generalComment": MessageLookupByLibrary.simpleMessage("Eziokwu"),
     "generalConfirmPassword": MessageLookupByLibrary.simpleMessage(
-      "Confirmar contraseña",
+      "Kwenye okwuntughe",
     ),
-    "generalContinue": MessageLookupByLibrary.simpleMessage("Continuar"),
+    "generalContinue": MessageLookupByLibrary.simpleMessage("Gaa n’ihu"),
     "generalContinueWithApple": MessageLookupByLibrary.simpleMessage(
-      "Continuar con Apple",
+      "Gaa n’ihu na Apple",
     ),
     "generalContinueWithGoogle": MessageLookupByLibrary.simpleMessage(
-      "Continuar con Google",
+      "Gaa n’ihu na Google",
     ),
-    "generalCountry": MessageLookupByLibrary.simpleMessage("País"),
+    "generalCountry": MessageLookupByLibrary.simpleMessage("Mba"),
     "generalDeleteAccountButton": MessageLookupByLibrary.simpleMessage(
-      "Eliminar cuenta",
+      "Hichapụ akaụntụ",
     ),
-    "generalEdit": MessageLookupByLibrary.simpleMessage("Editar"),
-    "generalEmail": MessageLookupByLibrary.simpleMessage("Correo electrónico"),
-    "generalEmailHint": MessageLookupByLibrary.simpleMessage(
-      "Introduce tu correo electrónico",
-    ),
+    "generalEdit": MessageLookupByLibrary.simpleMessage("Dezie"),
+    "generalEmail": MessageLookupByLibrary.simpleMessage("Adreesị ozi-e"),
+    "generalEmailHint": MessageLookupByLibrary.simpleMessage("Tinye email gị"),
     "generalEnterEmail": MessageLookupByLibrary.simpleMessage(
-      "Introduce tu dirección de correo electrónico",
+      "Tinye adreesị email gị",
     ),
     "generalEnterFirstname": MessageLookupByLibrary.simpleMessage(
-      "Introduce tu nombre",
+      "Tinye aha mbụ gị",
     ),
     "generalEnterLastname": MessageLookupByLibrary.simpleMessage(
-      "Introduce tu apellido",
+      "Tinye aha ikpeazụ gị",
     ),
     "generalEnterPassword": MessageLookupByLibrary.simpleMessage(
-      "Introduce tu contraseña",
+      "Tinye okwuntughe gị",
     ),
-    "generalFirstname": MessageLookupByLibrary.simpleMessage("Nombre"),
+    "generalFirstname": MessageLookupByLibrary.simpleMessage("Aha mbụ"),
     "generalForgotPassword": MessageLookupByLibrary.simpleMessage(
-      "¿Olvidaste tu contraseña?",
+      "Chefuo okwuntughe?",
     ),
-    "generalLastname": MessageLookupByLibrary.simpleMessage("Apellido"),
-    "generalLogin": MessageLookupByLibrary.simpleMessage("Iniciar sesión"),
-    "generalLogout": MessageLookupByLibrary.simpleMessage("Cerrar sesión"),
+    "generalLastname": MessageLookupByLibrary.simpleMessage("Aha ikpeazụ"),
+    "generalLogin": MessageLookupByLibrary.simpleMessage("Banye"),
+    "generalLogout": MessageLookupByLibrary.simpleMessage("Pụọ"),
     "generalNoResults": MessageLookupByLibrary.simpleMessage(
-      "No hay resultados",
+      "Enweghị nsonaazụ",
     ),
-    "generalPassword": MessageLookupByLibrary.simpleMessage("Contraseña"),
-    "generalPrevious": MessageLookupByLibrary.simpleMessage("Anterior"),
-    "generalProceed": MessageLookupByLibrary.simpleMessage("Continuar"),
-    "generalRequired": MessageLookupByLibrary.simpleMessage("Requerido"),
+    "generalPassword": MessageLookupByLibrary.simpleMessage("Okwuntughe"),
+    "generalPrevious": MessageLookupByLibrary.simpleMessage("Nke gara aga"),
+    "generalProceed": MessageLookupByLibrary.simpleMessage("Gaa n’ihu"),
+    "generalRequired": MessageLookupByLibrary.simpleMessage("Chọrọ"),
     "generalResetPassword": MessageLookupByLibrary.simpleMessage(
-      "Restablecer contraseña",
+      "Tụgharịa okwuntughe",
     ),
     "generalResetPasswordButtonText": MessageLookupByLibrary.simpleMessage(
-      "Abrir la app de correo",
+      "Meghee ngwa email",
     ),
     "generalResetPasswordDesc": m2,
-    "generalSave": MessageLookupByLibrary.simpleMessage("Guardar"),
-    "generalSearch": MessageLookupByLibrary.simpleMessage("Buscar aquí"),
-    "generalSelectCountry": MessageLookupByLibrary.simpleMessage(
-      "Selecciona un país",
-    ),
-    "generalSelectState": MessageLookupByLibrary.simpleMessage(
-      "Selecciona una región",
-    ),
-    "generalSignUp": MessageLookupByLibrary.simpleMessage("Registrarse"),
-    "generalState": MessageLookupByLibrary.simpleMessage("Estado/Provincia"),
-    "generalSubmit": MessageLookupByLibrary.simpleMessage("Enviar"),
+    "generalSave": MessageLookupByLibrary.simpleMessage("Chekwa"),
+    "generalSearch": MessageLookupByLibrary.simpleMessage("Chọta ebe a"),
+    "generalSelectCountry": MessageLookupByLibrary.simpleMessage("Họrọ mba"),
+    "generalSelectState": MessageLookupByLibrary.simpleMessage("Họrọ steeti"),
+    "generalSignUp": MessageLookupByLibrary.simpleMessage("Debanye aha"),
+    "generalState": MessageLookupByLibrary.simpleMessage("Steeti"),
+    "generalSubmit": MessageLookupByLibrary.simpleMessage("Zipu"),
     "generalSupportedFormats": MessageLookupByLibrary.simpleMessage(
-      "Formatos admitidos: jpg, png, mp4 (máx. 800x400px)",
+      "A na-akwado: jpg, png, mp4 (max. 800x400px)",
     ),
-    "generalTakePicture": MessageLookupByLibrary.simpleMessage(
-      "Tomar una foto",
-    ),
-    "generalTrending": MessageLookupByLibrary.simpleMessage("Tendencias"),
-    "generalUploadFile": MessageLookupByLibrary.simpleMessage("Subir archivo"),
+    "generalTakePicture": MessageLookupByLibrary.simpleMessage("Were foto"),
+    "generalTrending": MessageLookupByLibrary.simpleMessage("Na-akpali"),
+    "generalUploadFile": MessageLookupByLibrary.simpleMessage("Bulite faịlụ"),
     "generalUseAccurateLocation": MessageLookupByLibrary.simpleMessage(
-      "Usar ubicación precisa",
+      "Jiri ebe ziri ezi",
     ),
     "generalValidEmail": MessageLookupByLibrary.simpleMessage(
-      "Se requiere una dirección de correo válida",
+      "A chọrọ adreesị email ziri ezi",
     ),
     "generalValidPassword": MessageLookupByLibrary.simpleMessage(
-      "La contraseña debe tener al menos 8 caracteres",
+      "Okwuntughe aghaghị ịnwe akwụkwọ 8 ma ọ dịkarịa ala",
     ),
-    "pageHome": MessageLookupByLibrary.simpleMessage("Inicio"),
-    "pageNotifications": MessageLookupByLibrary.simpleMessage("Notificaciones"),
-    "pageReports": MessageLookupByLibrary.simpleMessage("Informes"),
-    "pageSettings": MessageLookupByLibrary.simpleMessage("Ajustes"),
+    "pageHome": MessageLookupByLibrary.simpleMessage("Ụlọ"),
+    "pageNotifications": MessageLookupByLibrary.simpleMessage("Nkwupụta"),
+    "pageReports": MessageLookupByLibrary.simpleMessage("Akụkọ"),
+    "pageSettings": MessageLookupByLibrary.simpleMessage("Ntọọala"),
     "title": MessageLookupByLibrary.simpleMessage("Civic24"),
   };
 }

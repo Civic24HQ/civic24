@@ -1,7 +1,402 @@
 {
     "@@locale": "pt",
-    "title": "cívico24",
+    "title": "Civic24",
     "@title": {
-        "description": "cívico24"
+        "description": "Civic24"
+    },
+    "pageHome": "Início",
+    "@pageHome": {
+        "description": "Home page title"
+    },
+    "pageReports": "Relatórios",
+    "@pageReports": {
+        "description": "Reports page title"
+    },
+    "pageNotifications": "Notificações",
+    "@pageNotifications": {
+        "description": "Notifications page title"
+    },
+    "pageSettings": "Configurações",
+    "@pageSettings": {
+        "description": "Settings page title"
+    },
+    "generalClickToUpload": "Clique para enviar",
+    "@generalClickToUpload": {
+        "description": "Text for the upload button"
+    },
+    "generalSupportedFormats": "Suportado: jpg, png, mp4 (máx. 800x400px)",
+    "@generalSupportedFormats": {
+        "description": "Text for the supported file formats"
+    },
+    "generalContinue": "Continuar",
+    "@generalContinue": {
+        "description": "Text for Continue button"
+    },
+    "generalContinueWithGoogle": "Continuar com o Google",
+    "@generalContinueWithGoogle": {
+        "description": "Text for the Google sign-in button"
+    },
+    "generalContinueWithApple": "Continuar com a Apple",
+    "@generalContinueWithApple": {
+        "description": "Text for the Apple sign-in button"
+    },
+    "generalUploadFile": "Enviar arquivo",
+    "@generalUploadFile": {
+        "description": "Upload File Label for Button"
+    },
+    "generalTakePicture": "Tirar uma foto",
+    "@generalTakePicture": {
+        "description": "Take picture Label for Button"
+    },
+    "generalSave": "Salvar",
+    "@generalSave": {
+        "description": "Text for Save button"
+    },
+    "generalEdit": "Editar",
+    "@generalEdit": {
+        "description": "Text for Edit button"
+    },
+    "generalCancel": "Cancelar",
+    "@generalCancel": {
+        "description": "Text for Cancel button"
+    },
+    "generalDeleteAccountButton": "Excluir conta",
+    "@generalDeleteAccountButton": {
+        "description": "Text for Delete Account button"
+    },
+    "generalProceed": "Prosseguir",
+    "@generalProceed": {
+        "description": "General Label for Button"
+    },
+    "generalSubmit": "Enviar",
+    "@generalSubmit": {
+        "description": "Submit Label for Button"
+    },
+    "generalPrevious": "Anterior",
+    "@generalPrevious": {
+        "description": "Previous Label for Button"
+    },
+    "generalClose": "Fechar",
+    "@generalClose": {
+        "description": "Text for the close button"
+    },
+    "generalLogin": "Entrar",
+    "@generalLogin": {
+        "description": "Text for the login button"
+    },
+    "generalSignUp": "Cadastrar-se",
+    "@generalSignUp": {
+        "description": "Text for the SignUp button"
+    },
+    "generalEmail": "Endereço de e-mail",
+    "@generalEmail": {
+        "description": "Label for the email input field"
+    },
+    "generalPassword": "Senha",
+    "@generalPassword": {
+        "description": "Label for the password input field"
+    },
+    "generalConfirmPassword": "Confirmar senha",
+    "@generalConfirmPassword": {
+        "description": "Label for the confirm password input field"
+    },
+    "generalForgotPassword": "Esqueceu a senha?",
+    "@generalForgotPassword": {
+        "description": "Text for the forgot password link"
+    },
+    "generalResetPassword": "Redefinir senha",
+    "@generalResetPassword": {
+        "description": "Text for the reset password"
+    },
+    "generalResetPasswordDesc": "Um e-mail para redefinir sua senha foi enviado para {emailValue}. Verifique sua caixa de entrada e siga as instruções para redefinir sua senha.",
+    "@generalResetPasswordDesc": {
+        "description": "Reset Password Description",
+        "placeholders": {
+            "emailValue": {}
+        }
+    },
+    "generalResetPasswordButtonText": "Abrir o app de e-mail",
+    "@generalResetPasswordButtonText": {
+        "description": "Text for the reset password button"
+    },
+    "generalEmailHint": "Digite seu e-mail",
+    "@generalEmailHint": {
+        "description": "Hint text for the email input field"
+    },
+    "generalRequired": "Obrigatório",
+    "@generalRequired": {
+        "description": "Text for Required Label"
+    },
+    "generalEnterEmail": "Digite seu endereço de e-mail",
+    "@generalEnterEmail": {
+        "description": "Text for Enter your Email address Label"
+    },
+    "generalValidEmail": "É necessário um endereço de e-mail válido",
+    "@generalValidEmail": {
+        "description": "Text for Valid email address Label"
+    },
+    "generalEnterPassword": "Digite sua senha",
+    "@generalEnterPassword": {
+        "description": "Text for Enter your Password Label"
+    },
+    "generalValidPassword": "A senha deve ter pelo menos 8 caracteres",
+    "@generalValidPassword": {
+        "description": "Text for Valid Password Label"
+    },
+    "generalUseAccurateLocation": "Usar localização precisa",
+    "@generalUseAccurateLocation": {
+        "description": "Text for Use accurate location Label"
+    },
+    "generalFirstname": "Nome",
+    "@generalFirstname": {
+        "description": "Text for First name Label"
+    },
+    "generalLastname": "Sobrenome",
+    "@generalLastname": {
+        "description": "Text for Last name Label"
+    },
+    "generalEnterFirstname": "Digite seu nome",
+    "@generalEnterFirstname": {
+        "description": "Text for Enter your last name"
+    },
+    "generalEnterLastname": "Digite seu sobrenome",
+    "@generalEnterLastname": {
+        "description": "Text for Enter your last name"
+    },
+    "generalCountry": "País",
+    "@generalCountry": {
+        "description": "Text for Country Label"
+    },
+    "generalState": "Estado/Região",
+    "@generalState": {
+        "description": "Text for State Label"
+    },
+    "generalSelectCountry": "Selecione um país",
+    "@generalSelectCountry": {
+        "description": "Hint Text for Select a country"
+    },
+    "generalSelectState": "Selecione uma região",
+    "@generalSelectState": {
+        "description": "Hint Text for Select a state"
+    },
+    "generalNoResults": "Nenhum resultado",
+    "@generalNoResults": {
+        "description": "Text for No results Label"
+    },
+    "generalSearch": "Pesquisar aqui",
+    "@generalSearch": {
+        "description": "Text for Search Label"
+    },
+    "generalComment": "Comentários",
+    "@generalComment": {
+        "description": "Text for Comment Label"
+    },
+    "generalAddComment": "Adicionar um comentário",
+    "@generalAddComment": {
+        "description": "Text for AddComment TextField"
+    },
+    "generalAllIssues": "Todos os problemas",
+    "@generalAllIssues": {
+        "description": "Text for All Issues TextField"
+    },
+    "generalTrending": "Em alta",
+    "@generalTrending": {
+        "description": "Text for Trending TextField"
+    },
+    "generalCategory": "Categoria",
+    "@generalCategory": {
+        "description": "Text for Category TextField"
+    },
+    "generalLogout": "Sair",
+    "@generalLogout": {
+        "description": "Text for Logout Label"
+    },
+    "featureonboardingGetStarted": "Começar",
+    "@featureonboardingGetStarted": {
+        "description": "Text for Onboarding Get Started Button"
+    },
+    "featureOnboardingVoiceReport": "Dê voz ao seu relato",
+    "@featureOnboardingVoiceReport": {
+        "description": "Title 1 for Onboarding Sets"
+    },
+    "featureOnboardingVoiceReportDesc": "O Civic24 permite que você fale sobre problemas urgentes em sua comunidade e faça sua voz ser ouvida",
+    "@featureOnboardingVoiceReportDesc": {
+        "description": "Title Description 1 for Onboarding Sets"
+    },
+    "featureOnboardingVoiceCount": "Faça sua voz contar",
+    "@featureOnboardingVoiceCount": {
+        "description": "Title 2 for Onboarding Sets"
+    },
+    "featureOnboardingVoiceCountDesc": "Com o Civic24, seu voto ajuda a priorizar os problemas cívicos que mais importam para as pessoas ao seu redor",
+    "@featureOnboardingVoiceCountDesc": {
+        "description": "Title Description 2 for Onboarding Sets"
+    },
+    "featureOnboardingConnectVoice": "Conecte-se com outras vozes",
+    "@featureOnboardingConnectVoice": {
+        "description": "Title 2 for Onboarding Sets"
+    },
+    "featureOnboardingConnectVoiceDesc": "O Civic24 oferece uma plataforma para você interagir com outros cidadãos expressando sua opinião sobre questões cívicas",
+    "@featureOnboardingConnectVoiceDesc": {
+        "description": "Title Description 3 for Onboarding Sets"
+    },
+    "featureDontHaveAccount": "Não tem uma conta?",
+    "@featureDontHaveAccount": {
+        "description": "Don't have an account Description"
+    },
+    "featureLoginWelcome": "Bem-vindo de volta!",
+    "@featureLoginWelcome": {
+        "description": "Login Welcome Description"
+    },
+    "featureLoginWelcomeHint": "Faça login na sua conta",
+    "@featureLoginWelcomeHint": {
+        "description": "Login Welcome Hint Description"
+    },
+    "featureAlreadyHaveAnAccount": "Já tem uma conta?",
+    "@featureAlreadyHaveAnAccount": {
+        "description": "Already Have An Account Description"
+    },
+    "featureSignUpCreateAccount": "Criar conta",
+    "@featureSignUpCreateAccount": {
+        "description": "SignUp Create Account Description"
+    },
+    "featureSignUpCreateAccountHint": "Cadastre-se para começar!",
+    "@featureSignUpCreateAccountHint": {
+        "description": "SignUp Create Account Hint Description"
+    },
+    "featureSignUpSuccess": "Conta criada",
+    "@featureSignUpSuccess": {
+        "description": "SignUp Success Description"
+    },
+    "featureSignUpSuccessHint": "Prepare-se para explorar os incríveis recursos do Civic24.",
+    "@featureSignUpSuccessHint": {
+        "description": "SignUp Success Hint Description"
+    },
+    "featureForgotPassword": "Esqueceu a senha?",
+    "@featureForgotPassword": {
+        "description": "Forgot Password Description"
+    },
+    "featureForgotPasswordHint": "Inicie a redefinição preenchendo seu e-mail",
+    "@featureForgotPasswordHint": {
+        "description": "Forgot Password Hint Description"
+    },
+    "featureForgotPasswordGoTo": "Voltar para",
+    "@featureForgotPasswordGoTo": {
+        "description": "Go back to description"
+    },
+    "featureCompleteProfile": "Completar perfil",
+    "@featureCompleteProfile": {
+        "description": "Complete Profile Description"
+    },
+    "featureCategoryTypeRoad": "Estradas e transporte",
+    "@featureCategoryTypeRoad": {
+        "description": "Road & Transport Description"
+    },
+    "featureCategoryTypeLight": "Iluminação e eletricidade",
+    "@featureCategoryTypeLight": {
+        "description": "Light & Electricity Description"
+    },
+    "featureCategoryTypeWaste": "Lixo",
+    "@featureCategoryTypeWaste": {
+        "description": "Environmental Hazards Description"
+    },
+    "featureCategoryTypeAbandoned": "Projetos abandonados",
+    "@featureCategoryTypeAbandoned": {
+        "description": "Abandoned Projects Description"
+    },
+    "featureCategoryTypeHealth": "Saúde e saneamento",
+    "@featureCategoryTypeHealth": {
+        "description": "Health & Sanitation Description"
+    },
+    "featureCategoryTypeSecurity": "Segurança",
+    "@featureCategoryTypeSecurity": {
+        "description": "Security Description"
+    },
+    "featureCategoryTypeEducation": "Educação",
+    "@featureCategoryTypeEducation": {
+        "description": "Education Description"
+    },
+    "featureCategoryTypeGovernance": "Governança",
+    "@featureCategoryTypeGovernance": {
+        "description": "Governance Description"
+    },
+    "featureCategoryTypeUrban": "Violações de zoneamento",
+    "@featureCategoryTypeUrban": {
+        "description": "Zoning Violations Description"
+    },
+    "featureCategoryTypeDetailedRoad": "Problemas de estradas e transporte",
+    "@featureCategoryTypeDetailedRoad": {
+        "description": "Road & Transport Issues Description"
+    },
+    "featureCategoryTypeDetailedLight": "Problemas de iluminação e eletricidade",
+    "@featureCategoryTypeDetailedLight": {
+        "description": "Light & Electricity Issues Description"
+    },
+    "featureCategoryTypeDetailedWaste": "Lixo e riscos ambientais",
+    "@featureCategoryTypeDetailedWaste": {
+        "description": "Environmental Hazards Description"
+    },
+    "featureCategoryTypeDetailedAbandoned": "Projetos abandonados e incompletos",
+    "@featureCategoryTypeDetailedAbandoned": {
+        "description": "Abandoned & Incomplete Projects Description"
+    },
+    "featureCategoryTypeDetailedHealth": "Saúde e saneamento",
+    "@featureCategoryTypeDetailedHealth": {
+        "description": "Health & Sanitation Description"
+    },
+    "featureCategoryTypeDetailedSecurity": "Problemas de segurança",
+    "@featureCategoryTypeDetailedSecurity": {
+        "description": "Security Issues Description"
+    },
+    "featureCategoryTypeDetailedEducation": "Educação e instalações públicas",
+    "@featureCategoryTypeDetailedEducation": {
+        "description": "Education & Public Facilities Description"
+    },
+    "featureCategoryTypeDetailedGovernance": "Governança",
+    "@featureCategoryTypeDetailedGovernance": {
+        "description": "Governance Description"
+    },
+    "featureCategoryTypeDetailedUrban": "Planejamento urbano e violações de zoneamento",
+    "@featureCategoryTypeDetailedUrban": {
+        "description": "Urban Planning & Zoning Violations Description"
+    },
+    "featureCategoryTypeRoadDescription": "Reporte buracos, estradas ruins, calçadas quebradas, semáforos defeituosos ou direção imprudente em sua área.",
+    "@featureCategoryTypeRoadDescription": {
+        "description": "Road & Transport Description"
+    },
+    "featureCategoryTypeLightDescription": "Reporte postes quebrados, fios expostos ou quedas de energia que afetam espaços públicos e a segurança.",
+    "@featureCategoryTypeLightDescription": {
+        "description": "Light & Electricity Description"
+    },
+    "featureCategoryTypeWasteDescription": "Reporte lixo não coletado, ralos entupidos, descarte ilegal ou outras preocupações ambientais.",
+    "@featureCategoryTypeWasteDescription": {
+        "description": "Environmental Hazards Description"
+    },
+    "featureCategoryTypeAbandonedDescription": "Reporte projetos governamentais ou comunitários incompletos ou abandonados em sua localidade.",
+    "@featureCategoryTypeAbandonedDescription": {
+        "description": "Abandoned Projects Description"
+    },
+    "featureCategoryTypeHealthDescription": "Reporte banheiros públicos sujos, higiene inadequada em clínicas, esgoto a céu aberto ou condições de saúde inseguras.",
+    "@featureCategoryTypeHealthDescription": {
+        "description": "Health & Sanitation Description"
+    },
+    "featureCategoryTypeSecurityDescription": "Reporte áreas inseguras, infraestrutura de segurança danificada, assédio na rua ou zonas de aglomeração.",
+    "@featureCategoryTypeSecurityDescription": {
+        "description": "Security Description"
+    },
+    "featureCategoryTypeEducationDescription": "Reporte prédios escolares em ruínas, centros comunitários fechados ou bibliotecas negligenciadas.",
+    "@featureCategoryTypeEducationDescription": {
+        "description": "Education Description"
+    },
+    "featureCategoryTypeGovernanceDescription": "Reporte problemas como atrasos administrativos, prestação de serviços inadequada, práticas corruptas ou uso indevido de fundos públicos.",
+    "@featureCategoryTypeGovernanceDescription": {
+        "description": "Governance Description"
+    },
+    "featureCategoryTypeUrbanDescription": "Reporte construções não autorizadas, poluição sonora, uso indevido de terrenos ou violações de zoneamento em sua área.",
+    "@featureCategoryTypeUrbanDescription": {
+        "description": "Zoning Violations Description"
+    },
+    "featureAddReportCategory": "Selecione a categoria do relatório",
+    "@featureAddReportCategory": {
+        "description": "Category Description"
     }
 }
