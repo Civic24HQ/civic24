@@ -11,6 +11,7 @@ on:
 env:
   FLUTTER_VERSION: "3.38.7"
   EXCLUDED_FILES: ":(exclude)**/*app.router.dart :(exclude)**/*test_helpers.mocks.dart :(exclude)**/*assets.gen.dart"
+  CITIZEN_DEV_SECRETS: ${{ secrets.CITIZEN_DEV_SECRETS }}
 
 jobs:
   build-ios:
@@ -22,12 +23,10 @@ jobs:
         include:
           - app: citizen
             flavor: development
-    env:
-      CITIZEN_DEV_SECRETS: ${{ secrets.CITIZEN_DEV_SECRETS }}
     steps:
       # Clone the repository
       - name: 📚 Clone the repository
-        uses: actions/checkout@v3 # - Using actions/checkout@v3 for wider compatibility with older/self-hosted runners
+        uses: actions/checkout@v4 # - Using actions/checkout@v3 for wider compatibility with older/self-hosted runners
 
       # Setup Java
       - name: 🚧 Setup java
@@ -107,23 +106,7 @@ jobs:
         run: |
           flutter clean
           flutter pub get
-          if [ "${{ matrix.app }}" = "citizen" ]; then
-            # For development flavor, build unsigned to avoid CI code signing errors
-            if [ "${{ matrix.flavor }}" = "development" ]; then
-              echo "Building development IPA without codesign"
-              flutter build ipa --no-codesign --flavor ${{ matrix.flavor }} --dart-define-from-file=secrets/${{ matrix.flavor }}.json
-            else
-              if [ -f ios/ExportOptions.plist ]; then
-                echo "Using ios/ExportOptions.plist for archive export"
-                flutter build ipa --flavor ${{ matrix.flavor }} --export-options-plist ios/ExportOptions.plist --dart-define-from-file=secrets/${{ matrix.flavor }}.json
-              else
-                echo "Warning: ios/ExportOptions.plist not found — building ipa without export options"
-                flutter build ipa --flavor ${{ matrix.flavor }} --dart-define-from-file=secrets/${{ matrix.flavor }}.json
-              fi
-            fi
-          else
-            flutter build ios --no-codesign
-          fi
+          flutter build ipa --no-codesign --flavor development --dart-define-from-file=secrets/development.json
         working-directory: apps/${{ matrix.app }}
 
       - name: Package IPA (citizen only)
@@ -158,11 +141,10 @@ jobs:
         include:
           - app: citizen
             flavor: development
-    env:
-      CITIZEN_DEV_SECRETS: ${{ secrets.CITIZEN_DEV_SECRETS }}
+
     steps:
       - name: 📚 Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: 🚧 Setup java
         uses: actions/setup-java@v3
