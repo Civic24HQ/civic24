@@ -1,3 +1,5 @@
+// ignore_for_file: deprecated_member_use
+
 import 'package:constants/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:localization/localization.dart';
@@ -25,6 +27,7 @@ class AppLanguageListTile extends StatelessWidget {
       color: Colors.transparent,
       margin: EdgeInsets.zero,
       shape: RoundedRectangleBorder(borderRadius: AppBorderRadius.radius8),
+      // TODO(Civic24): Implement the use of RadioGroup to manage group value instead
       child: RadioListTile(
         value: value,
         groupValue: groupValue,

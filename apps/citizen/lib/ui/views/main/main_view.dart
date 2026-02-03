@@ -30,10 +30,7 @@ class _MainViewState extends State<MainView> {
     _pageController.jumpToPage(index);
 
     final screenName = citizenDestinations[index].label;
-    _analyticsService.logScreenView(
-      screenClass: kAnalyticViewClass,
-      screenName: '${screenName}View',
-    );
+    _analyticsService.logScreenView(screenClass: kAnalyticViewClass, screenName: '${screenName}View');
   }
 
   @override
@@ -67,12 +64,7 @@ class _MainViewState extends State<MainView> {
             controller: _pageController,
             physics: const ClampingScrollPhysics(),
             onPageChanged: updateIndex,
-            children: const <Widget>[
-              HomeView(),
-              ReportsView(),
-              NotificationView(),
-              SettingsView(),
-            ],
+            children: const <Widget>[HomeView(), ReportsView(), NotificationView(), SettingsView()],
           ),
           bottomNavigationBar: AppNavigationBar.citizen(
             selectedIndex: _selectedIndex,

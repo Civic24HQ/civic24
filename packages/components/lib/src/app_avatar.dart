@@ -112,7 +112,6 @@ class AppAvatar extends StatelessWidget {
       content = Hero(tag: heroTag, child: content);
     }
 
-    return InkWell(onTap: onTap, child: content,
-    );
+    return InkWell(onTap: onTap, child: content);
   }
 }

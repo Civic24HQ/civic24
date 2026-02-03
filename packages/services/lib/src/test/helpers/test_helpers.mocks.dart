@@ -4,13 +4,13 @@
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'dart:async' as _i12;
-import 'dart:io' as _i15;
-import 'dart:math' as _i14;
+import 'dart:io' as _i16;
+import 'dart:math' as _i15;
 
 import 'package:cloud_firestore/cloud_firestore.dart' as _i4;
-import 'package:constants/constants.dart' as _i16;
+import 'package:constants/constants.dart' as _i13;
 import 'package:firebase_analytics/firebase_analytics.dart' as _i8;
-import 'package:firebase_auth/firebase_auth.dart' as _i13;
+import 'package:firebase_auth/firebase_auth.dart' as _i14;
 import 'package:firebase_messaging/firebase_messaging.dart' as _i17;
 import 'package:firebase_storage/firebase_storage.dart' as _i7;
 import 'package:flutter_image_compress/flutter_image_compress.dart' as _i18;
@@ -221,7 +221,36 @@ class MockUserService extends _i1.Mock implements _i10.UserService {
           as _i12.Future<void>);
 
   @override
-  void onAuthenticated(_i13.User? user) => super.noSuchMethod(
+  _i12.Future<void> setDisplayPreferences(
+    _i3.DisplayPreferences? displayPreferences,
+  ) =>
+      (super.noSuchMethod(
+            Invocation.method(#setDisplayPreferences, [displayPreferences]),
+            returnValue: _i12.Future<void>.value(),
+            returnValueForMissingStub: _i12.Future<void>.value(),
+          )
+          as _i12.Future<void>);
+
+  @override
+  _i12.Future<void> setLanguage(_i13.LanguageType? language) =>
+      (super.noSuchMethod(
+            Invocation.method(#setLanguage, [language]),
+            returnValue: _i12.Future<void>.value(),
+            returnValueForMissingStub: _i12.Future<void>.value(),
+          )
+          as _i12.Future<void>);
+
+  @override
+  _i12.Future<void> setAppearance(_i13.AppearanceMode? mode) =>
+      (super.noSuchMethod(
+            Invocation.method(#setAppearance, [mode]),
+            returnValue: _i12.Future<void>.value(),
+            returnValueForMissingStub: _i12.Future<void>.value(),
+          )
+          as _i12.Future<void>);
+
+  @override
+  void onAuthenticated(_i14.User? user) => super.noSuchMethod(
     Invocation.method(#onAuthenticated, [user]),
     returnValueForMissingStub: null,
   );
@@ -680,6 +709,42 @@ class MockUserService extends _i1.Mock implements _i10.UserService {
 class MockAuthenticationService extends _i1.Mock
     implements _i10.AuthenticationService {
   @override
+  List<String> get linkedProviders =>
+      (super.noSuchMethod(
+            Invocation.getter(#linkedProviders),
+            returnValue: <String>[],
+            returnValueForMissingStub: <String>[],
+          )
+          as List<String>);
+
+  @override
+  bool get hasGoogleProvider =>
+      (super.noSuchMethod(
+            Invocation.getter(#hasGoogleProvider),
+            returnValue: false,
+            returnValueForMissingStub: false,
+          )
+          as bool);
+
+  @override
+  bool get hasAppleProvider =>
+      (super.noSuchMethod(
+            Invocation.getter(#hasAppleProvider),
+            returnValue: false,
+            returnValueForMissingStub: false,
+          )
+          as bool);
+
+  @override
+  bool get hasPasswordProvider =>
+      (super.noSuchMethod(
+            Invocation.getter(#hasPasswordProvider),
+            returnValue: false,
+            returnValueForMissingStub: false,
+          )
+          as bool);
+
+  @override
   ({String? firstName, String? lastName}) get userName =>
       (super.noSuchMethod(
             Invocation.getter(#userName),
@@ -878,6 +943,15 @@ class MockAuthenticationService extends _i1.Mock
           as _i12.Future<bool>);
 
   @override
+  _i12.Future<bool> linkGoogleToCurrentUser() =>
+      (super.noSuchMethod(
+            Invocation.method(#linkGoogleToCurrentUser, []),
+            returnValue: _i12.Future<bool>.value(false),
+            returnValueForMissingStub: _i12.Future<bool>.value(false),
+          )
+          as _i12.Future<bool>);
+
+  @override
   String sha256HashNonce(String? nonce) =>
       (super.noSuchMethod(
             Invocation.method(#sha256HashNonce, [nonce]),
@@ -893,7 +967,7 @@ class MockAuthenticationService extends _i1.Mock
           as String);
 
   @override
-  String nonceString(int? length, [_i14.Random? randomSecure]) =>
+  String nonceString(int? length, [_i15.Random? randomSecure]) =>
       (super.noSuchMethod(
             Invocation.method(#nonceString, [length, randomSecure]),
             returnValue: _i11.dummyValue<String>(
@@ -1778,7 +1852,7 @@ class MockReportService extends _i1.Mock implements _i10.ReportService {
 
   @override
   _i12.Future<bool> uploadFile({
-    required _i15.File? file,
+    required _i16.File? file,
     required String? userId,
   }) =>
       (super.noSuchMethod(
@@ -1819,27 +1893,27 @@ class MockReportService extends _i1.Mock implements _i10.ReportService {
 /// See the documentation for Mockito's code generation for more information.
 class MockMediaService extends _i1.Mock implements _i10.MediaService {
   @override
-  _i12.Future<_i15.File?> pickImage({required _i16.AssetSource? source}) =>
+  _i12.Future<_i16.File?> pickImage({required _i13.AssetSource? source}) =>
       (super.noSuchMethod(
             Invocation.method(#pickImage, [], {#source: source}),
-            returnValue: _i12.Future<_i15.File?>.value(),
-            returnValueForMissingStub: _i12.Future<_i15.File?>.value(),
+            returnValue: _i12.Future<_i16.File?>.value(),
+            returnValueForMissingStub: _i12.Future<_i16.File?>.value(),
           )
-          as _i12.Future<_i15.File?>);
+          as _i12.Future<_i16.File?>);
 
   @override
-  _i12.Future<List<_i15.File?>> pickMultiImage() =>
+  _i12.Future<List<_i16.File?>> pickMultiImage() =>
       (super.noSuchMethod(
             Invocation.method(#pickMultiImage, []),
-            returnValue: _i12.Future<List<_i15.File?>>.value(<_i15.File?>[]),
-            returnValueForMissingStub: _i12.Future<List<_i15.File?>>.value(
-              <_i15.File?>[],
+            returnValue: _i12.Future<List<_i16.File?>>.value(<_i16.File?>[]),
+            returnValueForMissingStub: _i12.Future<List<_i16.File?>>.value(
+              <_i16.File?>[],
             ),
           )
-          as _i12.Future<List<_i15.File?>>);
+          as _i12.Future<List<_i16.File?>>);
 
   @override
-  _i12.Future<_i3.ImageMetadata> extractImageMetadata(_i15.File? pickedFile) =>
+  _i12.Future<_i3.ImageMetadata> extractImageMetadata(_i16.File? pickedFile) =>
       (super.noSuchMethod(
             Invocation.method(#extractImageMetadata, [pickedFile]),
             returnValue: _i12.Future<_i3.ImageMetadata>.value(
@@ -1858,13 +1932,13 @@ class MockMediaService extends _i1.Mock implements _i10.MediaService {
           as _i12.Future<_i3.ImageMetadata>);
 
   @override
-  _i12.Future<_i15.File?> cropImage(_i15.File? imageFile) =>
+  _i12.Future<_i16.File?> cropImage(_i16.File? imageFile) =>
       (super.noSuchMethod(
             Invocation.method(#cropImage, [imageFile]),
-            returnValue: _i12.Future<_i15.File?>.value(),
-            returnValueForMissingStub: _i12.Future<_i15.File?>.value(),
+            returnValue: _i12.Future<_i16.File?>.value(),
+            returnValueForMissingStub: _i12.Future<_i16.File?>.value(),
           )
-          as _i12.Future<_i15.File?>);
+          as _i12.Future<_i16.File?>);
 
   @override
   _i12.Future<_i3.ProcessedImage?> pickImageFromCamera() =>
@@ -1890,13 +1964,13 @@ class MockMediaService extends _i1.Mock implements _i10.MediaService {
           as _i12.Future<List<_i3.ProcessedImage?>>);
 
   @override
-  _i12.Future<_i15.File?> compressImage(_i15.File? imageFile) =>
+  _i12.Future<_i16.File?> compressImage(_i16.File? imageFile) =>
       (super.noSuchMethod(
             Invocation.method(#compressImage, [imageFile]),
-            returnValue: _i12.Future<_i15.File?>.value(),
-            returnValueForMissingStub: _i12.Future<_i15.File?>.value(),
+            returnValue: _i12.Future<_i16.File?>.value(),
+            returnValueForMissingStub: _i12.Future<_i16.File?>.value(),
           )
-          as _i12.Future<_i15.File?>);
+          as _i12.Future<_i16.File?>);
 }
 
 /// A class which mocks [PermissionService].
@@ -2311,7 +2385,7 @@ class MockCloudinaryStorageService extends _i1.Mock
 
   @override
   _i12.Future<String?> uploadFile({
-    required _i15.File? file,
+    required _i16.File? file,
     String? folder,
     String? publicIdPrefix,
   }) =>
