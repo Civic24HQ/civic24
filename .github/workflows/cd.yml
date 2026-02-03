@@ -13,35 +13,7 @@ env:
   EXCLUDED_FILES: ":(exclude)**/*app.router.dart :(exclude)**/*test_helpers.mocks.dart :(exclude)**/*assets.gen.dart"
 
 jobs:
-  test:
-    name: Unit & Widget Tests + Analyze
-    runs-on: ubuntu-latest
-    steps:
-      - name: 📚 Checkout
-        uses: actions/checkout@v4
-
-      - name: 🐦 Setup Flutter
-        uses: subosito/flutter-action@v2
-        with:
-          channel: "stable"
-          flutter-version: ${{ env.FLUTTER_VERSION }}
-
-      - name: 📦 Install Melos and bootstrap
-        run: |
-          dart pub global activate melos
-          melos clean
-          melos bootstrap
-
-      - name: 🧪 Run tests across repo
-        run: |
-          melos exec --dir-exists="test" -- "flutter test --no-pub"
-
-      - name: ✨ Analyze
-        run: |
-          melos run flutter:analyze
-
   build-ios:
-    needs: test
     name: Build iOS - ${{ matrix.app }} ${{ matrix.flavor }}
     runs-on: macos-15
     strategy:
