@@ -1,445 +1,445 @@
 {
-    "@@locale": "fr",
+    "@@locale": "ig",
     "title": "Civic24",
     "@title": {
         "description": "Civic24"
     },
-    "pageHome": "Accueil",
+    "pageHome": "Ụlọ",
     "@pageHome": {
         "description": "Home page title"
     },
-    "pageReports": "Rapports",
+    "pageReports": "Akụkọ",
     "@pageReports": {
         "description": "Reports page title"
     },
-    "pageNotifications": "Notifications",
+    "pageNotifications": "Nkwupụta",
     "@pageNotifications": {
         "description": "Notifications page title"
     },
-    "pageSettings": "Paramètres",
+    "pageSettings": "Ntọọala",
     "@pageSettings": {
         "description": "Settings page title"
     },
-    "generalClickToUpload": "Cliquez pour télécharger",
+    "generalClickToUpload": "Pịa iji bulite",
     "@generalClickToUpload": {
         "description": "Text for the upload button"
     },
-    "generalSupportedFormats": "Formats pris en charge : jpg, png, mp4 (max. 800x400px)",
+    "generalSupportedFormats": "A na-akwado: jpg, png, mp4 (max. 800x400px)",
     "@generalSupportedFormats": {
         "description": "Text for the supported file formats"
     },
-    "generalContinue": "Continuer",
+    "generalContinue": "Gaa n’ihu",
     "@generalContinue": {
         "description": "Text for Continue button"
     },
-    "generalContinueWithGoogle": "Continuer avec Google",
+    "generalContinueWithGoogle": "Gaa n’ihu na Google",
     "@generalContinueWithGoogle": {
         "description": "Text for the Google sign-in button"
     },
-    "generalContinueWithApple": "Continuer avec Apple",
+    "generalContinueWithApple": "Gaa n’ihu na Apple",
     "@generalContinueWithApple": {
         "description": "Text for the Apple sign-in button"
     },
-    "generalUploadFile": "Télécharger le fichier",
+    "generalUploadFile": "Bulite faịlụ",
     "@generalUploadFile": {
         "description": "Upload File Label for Button"
     },
-    "generalTakePicture": "Prendre une photo",
+    "generalTakePicture": "Were foto",
     "@generalTakePicture": {
         "description": "Take picture Label for Button"
     },
-    "generalSave": "Enregistrer",
+    "generalSave": "Chekwa",
     "@generalSave": {
         "description": "Text for Save button"
     },
-    "generalEdit": "Modifier",
+    "generalEdit": "Dezie",
     "@generalEdit": {
         "description": "Text for Edit button"
     },
-    "generalCancel": "Annuler",
+    "generalCancel": "Kagbuo",
     "@generalCancel": {
         "description": "Text for Cancel button"
     },
-    "generalDeleteAccountButton": "Supprimer le compte",
+    "generalDeleteAccountButton": "Hichapụ akaụntụ",
     "@generalDeleteAccountButton": {
         "description": "Text for Delete Account button"
     },
-    "generalProceed": "Procéder",
+    "generalProceed": "Gaa n’ihu",
     "@generalProceed": {
         "description": "General Label for Button"
     },
-    "generalSubmit": "Soumettre",
+    "generalSubmit": "Zipu",
     "@generalSubmit": {
         "description": "Submit Label for Button"
     },
-    "generalPrevious": "Précédent",
+    "generalPrevious": "Nke gara aga",
     "@generalPrevious": {
         "description": "Previous Label for Button"
     },
-    "generalClose": "Fermer",
+    "generalClose": "Mechie",
     "@generalClose": {
         "description": "Text for the close button"
     },
-    "generalLogin": "Connexion",
+    "generalLogin": "Banye",
     "@generalLogin": {
         "description": "Text for the login button"
     },
-    "generalSignUp": "S'inscrire",
+    "generalSignUp": "Debanye aha",
     "@generalSignUp": {
         "description": "Text for the SignUp button"
     },
-    "generalEmail": "Adresse e-mail",
+    "generalEmail": "Adreesị ozi-e",
     "@generalEmail": {
         "description": "Label for the email input field"
     },
-    "generalPassword": "Mot de passe",
+    "generalPassword": "Okwuntughe",
     "@generalPassword": {
         "description": "Label for the password input field"
     },
-    "generalConfirmPassword": "Confirmer le mot de passe",
+    "generalConfirmPassword": "Kwenye okwuntughe",
     "@generalConfirmPassword": {
         "description": "Label for the confirm password input field"
     },
-    "generalForgotPassword": "Mot de passe oublié ?",
+    "generalForgotPassword": "Chefuo okwuntughe?",
     "@generalForgotPassword": {
         "description": "Text for the forgot password link"
     },
-    "generalResetPassword": "Réinitialiser le mot de passe",
+    "generalResetPassword": "Tụgharịa okwuntughe",
     "@generalResetPassword": {
         "description": "Text for the reset password"
     },
-    "generalResetPasswordDesc": "Un e-mail de réinitialisation du mot de passe a été envoyé à {emailValue}. Veuillez vérifier votre boîte de réception et suivre les instructions pour réinitialiser votre mot de passe.",
+    "generalResetPasswordDesc": "E zigara email iji tọgharịa okwuntughe na {emailValue}. Biko lelee igbe ozi gị ma soro ntuziaka iji tọgharịa okwuntughe.",
     "@generalResetPasswordDesc": {
         "description": "Reset Password Description",
         "placeholders": {
             "emailValue": {}
         }
     },
-    "generalResetPasswordButtonText": "Ouvrir l'application e-mail",
+    "generalResetPasswordButtonText": "Meghee ngwa email",
     "@generalResetPasswordButtonText": {
         "description": "Text for the reset password button"
     },
-    "generalEmailHint": "Entrez votre e-mail",
+    "generalEmailHint": "Tinye email gị",
     "@generalEmailHint": {
         "description": "Hint text for the email input field"
     },
-    "generalRequired": "Requis",
+    "generalRequired": "Chọrọ",
     "@generalRequired": {
         "description": "Text for Required Label"
     },
-    "generalEnterEmail": "Entrez votre adresse e-mail",
+    "generalEnterEmail": "Tinye adreesị email gị",
     "@generalEnterEmail": {
         "description": "Text for Enter your Email address Label"
     },
-    "generalValidEmail": "Une adresse e-mail valide est requise",
+    "generalValidEmail": "A chọrọ adreesị email ziri ezi",
     "@generalValidEmail": {
         "description": "Text for Valid email address Label"
     },
-    "generalEnterPassword": "Entrez votre mot de passe",
+    "generalEnterPassword": "Tinye okwuntughe gị",
     "@generalEnterPassword": {
         "description": "Text for Enter your Password Label"
     },
-    "generalValidPassword": "Le mot de passe doit comporter au moins 8 caractères",
+    "generalValidPassword": "Okwuntughe aghaghị ịnwe akwụkwọ 8 ma ọ dịkarịa ala",
     "@generalValidPassword": {
         "description": "Text for Valid Password Label"
     },
-    "generalUseAccurateLocation": "Utiliser une position précise",
+    "generalUseAccurateLocation": "Jiri ebe ziri ezi",
     "@generalUseAccurateLocation": {
         "description": "Text for Use accurate location Label"
     },
-    "generalFirstname": "Prénom",
+    "generalFirstname": "Aha mbụ",
     "@generalFirstname": {
         "description": "Text for First name Label"
     },
-    "generalLastname": "Nom de famille",
+    "generalLastname": "Aha ikpeazụ",
     "@generalLastname": {
         "description": "Text for Last name Label"
     },
-    "generalEnterFirstname": "Entrez votre prénom",
+    "generalEnterFirstname": "Tinye aha mbụ gị",
     "@generalEnterFirstname": {
         "description": "Text for Enter your last name"
     },
-    "generalEnterLastname": "Entrez votre nom",
+    "generalEnterLastname": "Tinye aha ikpeazụ gị",
     "@generalEnterLastname": {
         "description": "Text for Enter your last name"
     },
-    "generalCountry": "Pays",
+    "generalCountry": "Mba",
     "@generalCountry": {
         "description": "Text for Country Label"
     },
-    "generalState": "État/Région",
+    "generalState": "Steeti",
     "@generalState": {
         "description": "Text for State Label"
     },
-    "generalSelectCountry": "Sélectionnez un pays",
+    "generalSelectCountry": "Họrọ mba",
     "@generalSelectCountry": {
         "description": "Hint Text for Select a country"
     },
-    "generalSelectState": "Sélectionnez une région",
+    "generalSelectState": "Họrọ steeti",
     "@generalSelectState": {
         "description": "Hint Text for Select a state"
     },
-    "generalNoResults": "Aucun résultat",
+    "generalNoResults": "Enweghị nsonaazụ",
     "@generalNoResults": {
         "description": "Text for No results Label"
     },
-    "generalSearch": "Rechercher ici",
+    "generalSearch": "Chọta ebe a",
     "@generalSearch": {
         "description": "Text for Search Label"
     },
-    "generalComment": "Commentaires",
+    "generalComment": "Eziokwu",
     "@generalComment": {
         "description": "Text for Comment Label"
     },
-    "generalAddComment": "Ajouter un commentaire",
+    "generalAddComment": "Tinye okwu",
     "@generalAddComment": {
         "description": "Text for AddComment TextField"
     },
-    "generalAllIssues": "Tous les problèmes",
+    "generalAllIssues": "Ihe niile",
     "@generalAllIssues": {
         "description": "Text for All Issues TextField"
     },
-    "generalTrending": "Tendances",
+    "generalTrending": "Na-akpali",
     "@generalTrending": {
         "description": "Text for Trending TextField"
     },
-    "generalCategory": "Catégorie",
+    "generalCategory": "Nkwupụta",
     "@generalCategory": {
         "description": "Text for Category TextField"
     },
-    "generalLogout": "Se déconnecter",
+    "generalLogout": "Pụọ",
     "@generalLogout": {
         "description": "Text for Logout Label"
     },
-    "featureonboardingGetStarted": "Commencer",
+    "featureonboardingGetStarted": "Malite",
     "@featureonboardingGetStarted": {
         "description": "Text for Onboarding Get Started Button"
     },
-    "featureOnboardingVoiceReport": "Exprimez votre signalement",
+    "featureOnboardingVoiceReport": "Kwuo banyere akụkọ gị",
     "@featureOnboardingVoiceReport": {
         "description": "Title 1 for Onboarding Sets"
     },
-    "featureOnboardingVoiceReportDesc": "Civic24 vous permet de parler des problèmes urgents de votre communauté et de faire entendre votre voix",
+    "featureOnboardingVoiceReportDesc": "Civic24 na-enye gị ohere ịgwa banyere nsogbu obodo gị ma mee ka olu gị dịrị ncheta",
     "@featureOnboardingVoiceReportDesc": {
         "description": "Title Description 1 for Onboarding Sets"
     },
-    "featureOnboardingVoiceCount": "Faites compter votre voix",
+    "featureOnboardingVoiceCount": "Mee ka olu gị baa uru",
     "@featureOnboardingVoiceCount": {
         "description": "Title 2 for Onboarding Sets"
     },
-    "featureOnboardingVoiceCountDesc": "Avec Civic24, vos avis aident à prioriser les problèmes civiques les plus importants pour les gens autour de vous",
+    "featureOnboardingVoiceCountDesc": "Na Civic24, nkwado gị na-enyere ịhazi nsogbu obodo ndị kachasị mkpa n'ịbụ ndị agbata obi gị",
     "@featureOnboardingVoiceCountDesc": {
         "description": "Title Description 2 for Onboarding Sets"
     },
-    "featureOnboardingConnectVoice": "Connectez-vous avec d'autres voix",
+    "featureOnboardingConnectVoice": "Jikọọ na olu ndị ọzọ",
     "@featureOnboardingConnectVoice": {
         "description": "Title 2 for Onboarding Sets"
     },
-    "featureOnboardingConnectVoiceDesc": "Civic24 offre une plateforme pour interagir avec vos concitoyens en exprimant votre opinion sur des enjeux civiques",
+    "featureOnboardingConnectVoiceDesc": "Civic24 na-enye ikpo okwu iji sonyere na ndị obodo site na ikwu okwu banyere okwu obodo",
     "@featureOnboardingConnectVoiceDesc": {
         "description": "Title Description 3 for Onboarding Sets"
     },
-    "featureDontHaveAccount": "Vous n'avez pas de compte ?",
+    "featureDontHaveAccount": "Enweghị akaụntụ?",
     "@featureDontHaveAccount": {
         "description": "Don't have an account Description"
     },
-    "featureLoginWelcome": "Content de vous revoir !",
+    "featureLoginWelcome": "Nnọọ azụ!",
     "@featureLoginWelcome": {
         "description": "Login Welcome Description"
     },
-    "featureLoginWelcomeHint": "Connectez-vous à votre compte",
+    "featureLoginWelcomeHint": "Banye na akaụntụ gị",
     "@featureLoginWelcomeHint": {
         "description": "Login Welcome Hint Description"
     },
-    "featureAlreadyHaveAnAccount": "Vous avez déjà un compte ?",
+    "featureAlreadyHaveAnAccount": "Ị nwere akaụntụ?",
     "@featureAlreadyHaveAnAccount": {
         "description": "Already Have An Account Description"
     },
-    "featureSignUpCreateAccount": "Créer un compte",
+    "featureSignUpCreateAccount": "Mepụta akaụntụ",
     "@featureSignUpCreateAccount": {
         "description": "SignUp Create Account Description"
     },
-    "featureSignUpCreateAccountHint": "Inscrivez-vous pour commencer !",
+    "featureSignUpCreateAccountHint": "Debanye aha ka ịmalite!",
     "@featureSignUpCreateAccountHint": {
         "description": "SignUp Create Account Hint Description"
     },
-    "featureSignUpSuccess": "Compte créé",
+    "featureSignUpSuccess": "Akụkọ e kere",
     "@featureSignUpSuccess": {
         "description": "SignUp Success Description"
     },
-    "featureSignUpSuccessHint": "Préparez-vous à découvrir les fonctionnalités incroyables de Civic24.",
+    "featureSignUpSuccessHint": "Kwadebe iji chọpụta ezigbo atụmatụ Civic24 nwere.",
     "@featureSignUpSuccessHint": {
         "description": "SignUp Success Hint Description"
     },
-    "featureForgotPassword": "Mot de passe oublié ?",
+    "featureForgotPassword": "Chefuo okwuntughe?",
     "@featureForgotPassword": {
         "description": "Forgot Password Description"
     },
-    "featureForgotPasswordHint": "Commencez la réinitialisation en remplissant votre adresse e-mail",
+    "featureForgotPasswordHint": "Malite usoro ịtọgharịrị site na ịkpọtụrụ email gị",
     "@featureForgotPasswordHint": {
         "description": "Forgot Password Hint Description"
     },
-    "featureForgotPasswordGoTo": "Retour à",
+    "featureForgotPasswordGoTo": "Laghachị na",
     "@featureForgotPasswordGoTo": {
         "description": "Go back to description"
     },
-    "featureCompleteProfile": "Compléter le profil",
+    "featureCompleteProfile": "Mezue profaịlụ",
     "@featureCompleteProfile": {
         "description": "Complete Profile Description"
     },
-    "featureCategoryTypeRoad": "Routes & transports",
+    "featureCategoryTypeRoad": "Ugbo & njem",
     "@featureCategoryTypeRoad": {
         "description": "Road & Transport Description"
     },
-    "featureCategoryTypeLight": "Éclairage & électricité",
+    "featureCategoryTypeLight": "Ihu ọkụ & Ịkụ ọkụ",
     "@featureCategoryTypeLight": {
         "description": "Light & Electricity Description"
     },
-    "featureCategoryTypeWaste": "Déchets",
+    "featureCategoryTypeWaste": "Ịchekwa ihe mkpofu",
     "@featureCategoryTypeWaste": {
         "description": "Environmental Hazards Description"
     },
-    "featureCategoryTypeAbandoned": "Projets abandonnés",
+    "featureCategoryTypeAbandoned": "Orụ ọrụ hapụrụ",
     "@featureCategoryTypeAbandoned": {
         "description": "Abandoned Projects Description"
     },
-    "featureCategoryTypeHealth": "Santé & assainissement",
+    "featureCategoryTypeHealth": "Ahụike & nnọchi",
     "@featureCategoryTypeHealth": {
         "description": "Health & Sanitation Description"
     },
-    "featureCategoryTypeSecurity": "Sécurité",
+    "featureCategoryTypeSecurity": "Nchekwa",
     "@featureCategoryTypeSecurity": {
         "description": "Security Description"
     },
-    "featureCategoryTypeEducation": "Éducation",
+    "featureCategoryTypeEducation": "Agụmakwụkwọ",
     "@featureCategoryTypeEducation": {
         "description": "Education Description"
     },
-    "featureCategoryTypeGovernance": "Gouvernance",
+    "featureCategoryTypeGovernance": "Nchịkwa",
     "@featureCategoryTypeGovernance": {
         "description": "Governance Description"
     },
-    "featureCategoryTypeUrban": "Violations de zonage",
+    "featureCategoryTypeUrban": "Mmebi iwu nhazi ala",
     "@featureCategoryTypeUrban": {
         "description": "Zoning Violations Description"
     },
-    "featureCategoryTypeDetailedRoad": "Problèmes de routes & transports",
+    "featureCategoryTypeDetailedRoad": "Nsogbu ụzọ & njem",
     "@featureCategoryTypeDetailedRoad": {
         "description": "Road & Transport Issues Description"
     },
-    "featureCategoryTypeDetailedLight": "Problèmes d'éclairage & d'électricité",
+    "featureCategoryTypeDetailedLight": "Nsogbu ọkụ & eletrik",
     "@featureCategoryTypeDetailedLight": {
         "description": "Light & Electricity Issues Description"
     },
-    "featureCategoryTypeDetailedWaste": "Déchets & dangers environnementaux",
+    "featureCategoryTypeDetailedWaste": "Mkpofu & ihe egwu gburugburu ebe obibi",
     "@featureCategoryTypeDetailedWaste": {
         "description": "Environmental Hazards Description"
     },
-    "featureCategoryTypeDetailedAbandoned": "Projets abandonnés & inachevés",
+    "featureCategoryTypeDetailedAbandoned": "Orụ ọrụ hapụrụ & ndị a dịghị emechaa",
     "@featureCategoryTypeDetailedAbandoned": {
         "description": "Abandoned & Incomplete Projects Description"
     },
-    "featureCategoryTypeDetailedHealth": "Santé & assainissement",
+    "featureCategoryTypeDetailedHealth": "Ahụike & nnọchi",
     "@featureCategoryTypeDetailedHealth": {
         "description": "Health & Sanitation Description"
     },
-    "featureCategoryTypeDetailedSecurity": "Problèmes de sécurité",
+    "featureCategoryTypeDetailedSecurity": "Nsogbu nchekwa",
     "@featureCategoryTypeDetailedSecurity": {
         "description": "Security Issues Description"
     },
-    "featureCategoryTypeDetailedEducation": "Éducation & équipements publics",
+    "featureCategoryTypeDetailedEducation": "Agụmakwụkwọ & ọrụ obula obodo",
     "@featureCategoryTypeDetailedEducation": {
         "description": "Education & Public Facilities Description"
     },
-    "featureCategoryTypeDetailedGovernance": "Gouvernance",
+    "featureCategoryTypeDetailedGovernance": "Nchịkwa",
     "@featureCategoryTypeDetailedGovernance": {
         "description": "Governance Description"
     },
-    "featureCategoryTypeDetailedUrban": "Urbanisme & violations de zonage",
+    "featureCategoryTypeDetailedUrban": "Nhazi obodo & mmebi iwu nhazi ala",
     "@featureCategoryTypeDetailedUrban": {
         "description": "Urban Planning & Zoning Violations Description"
     },
-    "featureCategoryTypeRoadDescription": "Signalez des nids-de-poule, des routes endommagées, des trottoirs cassés, des feux de circulation défectueux ou une conduite imprudente dans votre région.",
+    "featureCategoryTypeRoadDescription": "Kpọtụrụ gbasara oghere n'okporo ụzọ, ụzọ ndị mebiri emebi, ụzọ ụkwụ mebiri, ọkụ okporo ụzọ na-adịghị arụ ọrụ, ma ọ bụ ịnya ụgbọ ala n'ụzọ na-ezighị ezi n'ógbè gị.",
     "@featureCategoryTypeRoadDescription": {
         "description": "Road & Transport Description"
     },
-    "featureCategoryTypeLightDescription": "Signalez des lampadaires cassés, des fils exposés ou des coupures de courant qui affectent les espaces publics et la sécurité.",
+    "featureCategoryTypeLightDescription": "Kpọtụrụ gbasara ọkụ e gbajiri agbaji, wires gosipụtara, ma ọ bụ nkwụsị ike na-emetụta ebe ọha na eze na nchekwa.",
     "@featureCategoryTypeLightDescription": {
         "description": "Light & Electricity Description"
     },
-    "featureCategoryTypeWasteDescription": "Signalez des ordures non collectées, des drains obstrués, des dépôts illégaux ou d'autres problèmes environnementaux.",
+    "featureCategoryTypeWasteDescription": "Kpọtụrụ gbasara mkpofu a na-anakọghị, drains juru, imegbu iwu ma ọ bụ nsogbu gburugburu ebe obibi ndị ọzọ.",
     "@featureCategoryTypeWasteDescription": {
         "description": "Environmental Hazards Description"
     },
-    "featureCategoryTypeAbandonedDescription": "Signalez des projets gouvernementaux ou communautaires inachevés ou abandonnés dans votre localité.",
+    "featureCategoryTypeAbandonedDescription": "Kpọtụrụ gbasara ọrụ gọọmenti/obodo ndị a hapụrụ ma ọ bụ a naghị emecha ya n'ógbè gị.",
     "@featureCategoryTypeAbandonedDescription": {
         "description": "Abandoned Projects Description"
     },
-    "featureCategoryTypeHealthDescription": "Signalez des toilettes publiques sales, une mauvaise hygiène dans les cliniques, des eaux usées à ciel ouvert ou des conditions sanitaires dangereuses.",
+    "featureCategoryTypeHealthDescription": "Kpọtụrụ gbasara ụlọ mposi ọha jọgburu onwe ha, enweghị nhicha n'ụlọ ọgwụ, mmiri mkpofu emere ogwe, ma ọ bụ ọnọdụ ahụike na-adịghị nchebe.",
     "@featureCategoryTypeHealthDescription": {
         "description": "Health & Sanitation Description"
     },
-    "featureCategoryTypeSecurityDescription": "Signalez des zones dangereuses, des infrastructures de sécurité endommagées, du harcèlement de rue ou des zones de regroupement.",
+    "featureCategoryTypeSecurityDescription": "Kpọtụrụ gbasara ebe ndị na-adịghị nchebe, akụrụngwa nchekwa mebiri emebi, mmegbu n'okporo ụzọ, ma ọ bụ ebe ikpokọta.",
     "@featureCategoryTypeSecurityDescription": {
         "description": "Security Description"
     },
-    "featureCategoryTypeEducationDescription": "Signalez des bâtiments scolaires délabrés, des salles communautaires fermées ou des bibliothèques négligées.",
+    "featureCategoryTypeEducationDescription": "Kpọtụrụ gbasara ụlọ akwụkwọ mebiri emebi, ụlọ obodo emechiri, ma ọ bụ akwụkwọ ụlọ akwụkwọ na-ezere.",
     "@featureCategoryTypeEducationDescription": {
         "description": "Education Description"
     },
-    "featureCategoryTypeGovernanceDescription": "Signalez des problèmes tels que des retards administratifs, une mauvaise prestation de services, des pratiques corrompues ou un mauvais usage des fonds publics.",
+    "featureCategoryTypeGovernanceDescription": "Kpọtụrụ gbasara nsogbu dị ka ịnọ ọdụ n'ọrụ gọọmenti, ojiji ọrụ ọjọọ nke ọrụ, omume aghụghọ, ma ọ bụ ojiji iwu nke ego ọha.",
     "@featureCategoryTypeGovernanceDescription": {
         "description": "Governance Description"
     },
-    "featureCategoryTypeUrbanDescription": "Signalez des constructions non autorisées, des nuisances sonores, une mauvaise utilisation des terrains ou des violations de zonage dans votre zone.",
+    "featureCategoryTypeUrbanDescription": "Kpọtụrụ gbasara ihe owuwu na-enweghị ikikere, mkpọtụ, ojiji ala n'eziokwu, ma ọ bụ mmebi iwu nhazi n'ógbè gị.",
     "@featureCategoryTypeUrbanDescription": {
         "description": "Zoning Violations Description"
     },
-    "featureAddReportCategory": "Sélectionnez la catégorie du rapport",
+    "featureAddReportCategory": "Họrọ ụdị akụkọ",
     "@featureAddReportCategory": {
         "description": "Category Description"
     },
-    "featureAddReportContent": "Partagez les détails du problème civique",
+    "featureAddReportContent": "Kekọrịta nkọwa banyere nsogbu obodo",
     "@featureAddReportContent": {
         "description": "Content Description"
     },
-    "featureAddReportContentHint": "Partagez vos remarques",
+    "featureAddReportContentHint": "Kekọrịta echiche gị",
     "@featureAddReportContentHint": {
         "description": "Content Hint Description"
     },
-    "featureAddReportMedia": "Veuillez télécharger une image claire de votre signalement",
+    "featureAddReportMedia": "Biko bulite foto doro anya nke akụkọ gị",
     "@featureAddReportMedia": {
         "description": "Media Description"
     },
-    "featureAddReport": "Ajouter un signalement",
+    "featureAddReport": "Tinye Akụkọ",
     "@featureAddReport": {
         "description": "Add a Report Description"
     },
-    "featureNotifications": "Notifications",
+    "featureNotifications": "Nkwupụta",
     "@featureNotifications": {
         "description": "Notifications Description"
     },
-    "featureNotificationInstruction": "Marquer tout comme lu",
+    "featureNotificationInstruction": "Mee ka niile ghara ịgụ",
     "@featureNotificationInstruction": {
         "description": "Notification Instruction Description"
     },
-    "featureNotificationEmpty": "Vous n'avez aucune notification",
+    "featureNotificationEmpty": "Ị nweghị nkwupụta ọ bụla",
     "@featureNotificationEmpty": {
         "description": "Notification Empty Description"
     },
-    "featureReports": "Rapports",
+    "featureReports": "Akụkọ",
     "@featureReports": {
         "description": "Reports Description"
     },
-    "featureMyReports": "Mes signalements",
+    "featureMyReports": "Akụkọ m",
     "@featureMyReports": {
         "description": "My Reports Description"
     },
-    "featureBookmarkedReports": "Favoris",
+    "featureBookmarkedReports": "E debere",
     "@featureBookmarkedReports": {
         "description": "Bookmarked Description"
     },
-    "featureSettingsTooltip": "Appuyez pour {action}",
+    "featureSettingsTooltip": "Pịa ka {action}",
     "@featureSettingsTooltip": {
         "description": "Settings Tooltip Description",
         "placeholders": {
@@ -453,55 +453,55 @@
             "version": {}
         }
     },
-    "featureSettingsProfile": "Profil",
+    "featureSettingsProfile": "Profaili",
     "@featureSettingsProfile": {
         "description": "Profile Description"
     },
-    "featureSettingsEditProfile": "Modifier le profil",
+    "featureSettingsEditProfile": "Dezie profaili",
     "@featureSettingsEditProfile": {
         "description": "Edit Profile Description"
     },
-    "featureProfileAccountEmail": "L'adresse e-mail de votre compte ne peut pas être modifiée.",
+    "featureProfileAccountEmail": "A pụghị ịgbanwe email akaụntụ gị.",
     "@featureProfileAccountEmail": {
         "description": "Profile Account Email Description"
     },
-    "featureSettingsLanguage": "Langue",
+    "featureSettingsLanguage": "Asụsụ",
     "@featureSettingsLanguage": {
         "description": "Language Description"
     },
-    "featureSettingsLanguageDefault": "Langue par défaut",
+    "featureSettingsLanguageDefault": "Asụsụ ndabara",
     "@featureSettingsLanguageDefault": {
         "description": "Default Language Description"
     },
-    "featureSettingsAppearance": "Apparence",
+    "featureSettingsAppearance": "Ihe ngosi",
     "@featureSettingsAppearance": {
         "description": "Appearance Description"
     },
-    "featureSettingsSignInSecurity": "Connexion et sécurité",
+    "featureSettingsSignInSecurity": "Nbanye & Nche",
     "@featureSettingsSignInSecurity": {
         "description": "Sign In & Security Description"
     },
-    "featureSettingsAppearanceSystem": "Paramètres système",
+    "featureSettingsAppearanceSystem": "Ntọala usoro",
     "@featureSettingsAppearanceSystem": {
         "description": "System Settings Description"
     },
-    "featureSettingsAppearanceLight": "Mode clair",
+    "featureSettingsAppearanceLight": "Ụdị ọkụ",
     "@featureSettingsAppearanceLight": {
         "description": "Light Mode Description"
     },
-    "featureSettingsAppearanceDark": "Mode sombre",
+    "featureSettingsAppearanceDark": "Ụdị gbara ọchịchịrị",
     "@featureSettingsAppearanceDark": {
         "description": "Dark Mode Description"
     },
-    "featureSettingsAppearanceSystemDesc": "S'ajuste automatiquement aux paramètres d'apparence de votre appareil",
+    "featureSettingsAppearanceSystemDesc": "O na-emeziwanye onwe ya akpaka na nhazi ọdịdị ngwaọrụ gị",
     "@featureSettingsAppearanceSystemDesc": {
         "description": "System Settings Description"
     },
-    "featureSettingsAppearanceLightDesc": "Conserver l'application en mode clair",
+    "featureSettingsAppearanceLightDesc": "Nabata ngwa ahụ n'ụdị ọkụ",
     "@featureSettingsAppearanceLightDesc": {
         "description": "Light Mode Description"
     },
-    "featureSettingsAppearanceDarkDesc": "Conserver l'application en mode sombre",
+    "featureSettingsAppearanceDarkDesc": "Nabata ngwa ahụ n'ụdị gbara ọchịchịrị",
     "@featureSettingsAppearanceDarkDesc": {
         "description": "Dark Mode Description"
     },
@@ -509,11 +509,11 @@
     "@featureSettingsSecurityGoogle": {
         "description": "Google Sign-In Description"
     },
-    "featureSettingsSecurityGoogleUnlinkDesc": "Associez votre compte Google pour une connexion sécurisée",
+    "featureSettingsSecurityGoogleUnlinkDesc": "Jikọọ akaụntụ Google gị maka nbanye echekwabara",
     "@featureSettingsSecurityGoogleUnlinkDesc": {
         "description": "Google Sign-In Unlinked Description"
     },
-    "featureSettingsSecurityGoogleLinkedDesc": "Votre compte Google est disponible pour la connexion",
+    "featureSettingsSecurityGoogleLinkedDesc": "Akaụntụ Google gị dị maka nbanye",
     "@featureSettingsSecurityGoogleLinkedDesc": {
         "description": "Google Sign-In Linked Description"
     },
@@ -521,47 +521,47 @@
     "@featureSettingsSecurityApple": {
         "description": "Apple Sign-In Description"
     },
-    "featureSettingsSecurityAppleUnlinkDesc": "Associez votre identifiant Apple pour une connexion sécurisée",
+    "featureSettingsSecurityAppleUnlinkDesc": "Jikọọ Apple ID gị don nbanye echekwabara",
     "@featureSettingsSecurityAppleUnlinkDesc": {
         "description": "Apple Sign-In Unlinked Description"
     },
-    "featureSettingsSecurityAppleLinkedDesc": "Votre identifiant Apple est disponible pour la connexion",
+    "featureSettingsSecurityAppleLinkedDesc": "Apple ID gị dị maka nbanye",
     "@featureSettingsSecurityAppleLinkedDesc": {
         "description": "Apple ID Linked Description"
     },
-    "featureSettingsSecuritySetPassword": "Définir un mot de passe",
+    "featureSettingsSecuritySetPassword": "Tọgharịa okwuntughe",
     "@featureSettingsSecuritySetPassword": {
         "description": "Set Password Description"
     },
-    "featureSettingsSecuritySetPasswordDesc": "Activer la connexion par e-mail et mot de passe",
+    "featureSettingsSecuritySetPasswordDesc": "Kwadoo nbanye email na okwuntughe",
     "@featureSettingsSecuritySetPasswordDesc": {
         "description": "Set Password Description"
     },
-    "featureSettingsSecuritySetPasswordLabel": "Saisissez l'e-mail associé à votre compte",
+    "featureSettingsSecuritySetPasswordLabel": "Tinye email jikọtara na akaụntụ gị",
     "@featureSettingsSecuritySetPasswordLabel": {
         "description": "Set Password Label Description"
     },
-    "featureSettingsSecurityResetPassword": "Changer le mot de passe",
+    "featureSettingsSecurityResetPassword": "Gbanwee okwuntughe",
     "@featureSettingsSecurityResetPassword": {
         "description": "Reset Password Description"
     },
-    "featureSettingsSecurityResetPasswordDesc": "Mettez à jour votre mot de passe existant",
+    "featureSettingsSecurityResetPasswordDesc": "Mmelite okwuntughe gị dị ugbu a",
     "@featureSettingsSecurityResetPasswordDesc": {
         "description": "Reset Password Description"
     },
-    "featureSettingsAbout": "À propos",
+    "featureSettingsAbout": "Banyere",
     "@featureSettingsAbout": {
         "description": "About Description"
     },
-    "featureSettingsLoading": "Chargement",
+    "featureSettingsLoading": "Na-ebudata",
     "@featureSettingsLoading": {
         "description": "Loading Description"
     },
-    "featureSettingsLoggingOut": "Déconnexion ?",
+    "featureSettingsLoggingOut": "Na-apụ n'ọrụ?",
     "@featureSettingsLoggingOut": {
         "description": "Logging out Description"
     },
-    "featureSettingsLoggingOutHint": "Êtes-vous sûr de vouloir vous déconnecter de votre compte sur cet appareil ?",
+    "featureSettingsLoggingOutHint": "Ị nwere n'aka na ịchọrọ ịpụ na akaụntụ gị na ngwaọrụ a?",
     "@featureSettingsLoggingOutHint": {
         "description": "Logging out Hint Description"
     }

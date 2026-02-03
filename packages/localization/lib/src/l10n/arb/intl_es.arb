@@ -1,7 +1,568 @@
 {
     "@@locale": "es",
-    "title": "cívico24",
+    "title": "Civic24",
     "@title": {
-        "description": "cívico24"
+        "description": "Civic24"
+    },
+    "pageHome": "Inicio",
+    "@pageHome": {
+        "description": "Home page title"
+    },
+    "pageReports": "Informes",
+    "@pageReports": {
+        "description": "Reports page title"
+    },
+    "pageNotifications": "Notificaciones",
+    "@pageNotifications": {
+        "description": "Notifications page title"
+    },
+    "pageSettings": "Ajustes",
+    "@pageSettings": {
+        "description": "Settings page title"
+    },
+    "generalClickToUpload": "Haga clic para subir",
+    "@generalClickToUpload": {
+        "description": "Text for the upload button"
+    },
+    "generalSupportedFormats": "Formatos admitidos: jpg, png, mp4 (máx. 800x400px)",
+    "@generalSupportedFormats": {
+        "description": "Text for the supported file formats"
+    },
+    "generalContinue": "Continuar",
+    "@generalContinue": {
+        "description": "Text for Continue button"
+    },
+    "generalContinueWithGoogle": "Continuar con Google",
+    "@generalContinueWithGoogle": {
+        "description": "Text for the Google sign-in button"
+    },
+    "generalContinueWithApple": "Continuar con Apple",
+    "@generalContinueWithApple": {
+        "description": "Text for the Apple sign-in button"
+    },
+    "generalUploadFile": "Subir archivo",
+    "@generalUploadFile": {
+        "description": "Upload File Label for Button"
+    },
+    "generalTakePicture": "Tomar una foto",
+    "@generalTakePicture": {
+        "description": "Take picture Label for Button"
+    },
+    "generalSave": "Guardar",
+    "@generalSave": {
+        "description": "Text for Save button"
+    },
+    "generalEdit": "Editar",
+    "@generalEdit": {
+        "description": "Text for Edit button"
+    },
+    "generalCancel": "Cancelar",
+    "@generalCancel": {
+        "description": "Text for Cancel button"
+    },
+    "generalDeleteAccountButton": "Eliminar cuenta",
+    "@generalDeleteAccountButton": {
+        "description": "Text for Delete Account button"
+    },
+    "generalProceed": "Continuar",
+    "@generalProceed": {
+        "description": "General Label for Button"
+    },
+    "generalSubmit": "Enviar",
+    "@generalSubmit": {
+        "description": "Submit Label for Button"
+    },
+    "generalPrevious": "Anterior",
+    "@generalPrevious": {
+        "description": "Previous Label for Button"
+    },
+    "generalClose": "Cerrar",
+    "@generalClose": {
+        "description": "Text for the close button"
+    },
+    "generalLogin": "Iniciar sesión",
+    "@generalLogin": {
+        "description": "Text for the login button"
+    },
+    "generalSignUp": "Registrarse",
+    "@generalSignUp": {
+        "description": "Text for the SignUp button"
+    },
+    "generalEmail": "Correo electrónico",
+    "@generalEmail": {
+        "description": "Label for the email input field"
+    },
+    "generalPassword": "Contraseña",
+    "@generalPassword": {
+        "description": "Label for the password input field"
+    },
+    "generalConfirmPassword": "Confirmar contraseña",
+    "@generalConfirmPassword": {
+        "description": "Label for the confirm password input field"
+    },
+    "generalForgotPassword": "¿Olvidaste tu contraseña?",
+    "@generalForgotPassword": {
+        "description": "Text for the forgot password link"
+    },
+    "generalResetPassword": "Restablecer contraseña",
+    "@generalResetPassword": {
+        "description": "Text for the reset password"
+    },
+    "generalResetPasswordDesc": "Se ha enviado un correo para restablecer la contraseña a {emailValue}. Consulta tu bandeja de entrada y sigue las instrucciones para cambiar tu contraseña.",
+    "@generalResetPasswordDesc": {
+        "description": "Reset Password Description",
+        "placeholders": {
+            "emailValue": {}
+        }
+    },
+    "generalResetPasswordButtonText": "Abrir la app de correo",
+    "@generalResetPasswordButtonText": {
+        "description": "Text for the reset password button"
+    },
+    "generalEmailHint": "Introduce tu correo electrónico",
+    "@generalEmailHint": {
+        "description": "Hint text for the email input field"
+    },
+    "generalRequired": "Requerido",
+    "@generalRequired": {
+        "description": "Text for Required Label"
+    },
+    "generalEnterEmail": "Introduce tu dirección de correo electrónico",
+    "@generalEnterEmail": {
+        "description": "Text for Enter your Email address Label"
+    },
+    "generalValidEmail": "Se requiere una dirección de correo válida",
+    "@generalValidEmail": {
+        "description": "Text for Valid email address Label"
+    },
+    "generalEnterPassword": "Introduce tu contraseña",
+    "@generalEnterPassword": {
+        "description": "Text for Enter your Password Label"
+    },
+    "generalValidPassword": "La contraseña debe tener al menos 8 caracteres",
+    "@generalValidPassword": {
+        "description": "Text for Valid Password Label"
+    },
+    "generalUseAccurateLocation": "Usar ubicación precisa",
+    "@generalUseAccurateLocation": {
+        "description": "Text for Use accurate location Label"
+    },
+    "generalFirstname": "Nombre",
+    "@generalFirstname": {
+        "description": "Text for First name Label"
+    },
+    "generalLastname": "Apellido",
+    "@generalLastname": {
+        "description": "Text for Last name Label"
+    },
+    "generalEnterFirstname": "Introduce tu nombre",
+    "@generalEnterFirstname": {
+        "description": "Text for Enter your last name"
+    },
+    "generalEnterLastname": "Introduce tu apellido",
+    "@generalEnterLastname": {
+        "description": "Text for Enter your last name"
+    },
+    "generalCountry": "País",
+    "@generalCountry": {
+        "description": "Text for Country Label"
+    },
+    "generalState": "Estado/Provincia",
+    "@generalState": {
+        "description": "Text for State Label"
+    },
+    "generalSelectCountry": "Selecciona un país",
+    "@generalSelectCountry": {
+        "description": "Hint Text for Select a country"
+    },
+    "generalSelectState": "Selecciona una región",
+    "@generalSelectState": {
+        "description": "Hint Text for Select a state"
+    },
+    "generalNoResults": "No hay resultados",
+    "@generalNoResults": {
+        "description": "Text for No results Label"
+    },
+    "generalSearch": "Buscar aquí",
+    "@generalSearch": {
+        "description": "Text for Search Label"
+    },
+    "generalComment": "Comentarios",
+    "@generalComment": {
+        "description": "Text for Comment Label"
+    },
+    "generalAddComment": "Añadir un comentario",
+    "@generalAddComment": {
+        "description": "Text for AddComment TextField"
+    },
+    "generalAllIssues": "Todos los problemas",
+    "@generalAllIssues": {
+        "description": "Text for All Issues TextField"
+    },
+    "generalTrending": "Tendencias",
+    "@generalTrending": {
+        "description": "Text for Trending TextField"
+    },
+    "generalCategory": "Categoría",
+    "@generalCategory": {
+        "description": "Text for Category TextField"
+    },
+    "generalLogout": "Cerrar sesión",
+    "@generalLogout": {
+        "description": "Text for Logout Label"
+    },
+    "featureonboardingGetStarted": "Comenzar",
+    "@featureonboardingGetStarted": {
+        "description": "Text for Onboarding Get Started Button"
+    },
+    "featureOnboardingVoiceReport": "Exprésate con tu informe",
+    "@featureOnboardingVoiceReport": {
+        "description": "Title 1 for Onboarding Sets"
+    },
+    "featureOnboardingVoiceReportDesc": "Civic24 te permite hablar sobre los problemas de tu comunidad y hacer que tu voz sea escuchada",
+    "@featureOnboardingVoiceReportDesc": {
+        "description": "Title Description 1 for Onboarding Sets"
+    },
+    "featureOnboardingVoiceCount": "Haz que tu voz cuente",
+    "@featureOnboardingVoiceCount": {
+        "description": "Title 2 for Onboarding Sets"
+    },
+    "featureOnboardingVoiceCountDesc": "Con Civic24, tus votos ayudan a priorizar los problemas que más preocupan a tu comunidad",
+    "@featureOnboardingVoiceCountDesc": {
+        "description": "Title Description 2 for Onboarding Sets"
+    },
+    "featureOnboardingConnectVoice": "Conecta con otras voces",
+    "@featureOnboardingConnectVoice": {
+        "description": "Title 2 for Onboarding Sets"
+    },
+    "featureOnboardingConnectVoiceDesc": "Civic24 te ofrece una plataforma para interactuar con otros ciudadanos expresando tu opinión sobre temas cívicos",
+    "@featureOnboardingConnectVoiceDesc": {
+        "description": "Title Description 3 for Onboarding Sets"
+    },
+    "featureDontHaveAccount": "¿No tienes una cuenta?",
+    "@featureDontHaveAccount": {
+        "description": "Don't have an account Description"
+    },
+    "featureLoginWelcome": "¡Bienvenido de nuevo!",
+    "@featureLoginWelcome": {
+        "description": "Login Welcome Description"
+    },
+    "featureLoginWelcomeHint": "Inicia sesión en tu cuenta",
+    "@featureLoginWelcomeHint": {
+        "description": "Login Welcome Hint Description"
+    },
+    "featureAlreadyHaveAnAccount": "¿Ya tienes una cuenta?",
+    "@featureAlreadyHaveAnAccount": {
+        "description": "Already Have An Account Description"
+    },
+    "featureSignUpCreateAccount": "Crear cuenta",
+    "@featureSignUpCreateAccount": {
+        "description": "SignUp Create Account Description"
+    },
+    "featureSignUpCreateAccountHint": "¡Regístrate para empezar!",
+    "@featureSignUpCreateAccountHint": {
+        "description": "SignUp Create Account Hint Description"
+    },
+    "featureSignUpSuccess": "Cuenta creada",
+    "@featureSignUpSuccess": {
+        "description": "SignUp Success Description"
+    },
+    "featureSignUpSuccessHint": "Prepárate para explorar las increíbles funciones que Civic24 ofrece.",
+    "@featureSignUpSuccessHint": {
+        "description": "SignUp Success Hint Description"
+    },
+    "featureForgotPassword": "¿Olvidaste tu contraseña?",
+    "@featureForgotPassword": {
+        "description": "Forgot Password Description"
+    },
+    "featureForgotPasswordHint": "Inicia el proceso rellenando tu correo electrónico",
+    "@featureForgotPasswordHint": {
+        "description": "Forgot Password Hint Description"
+    },
+    "featureForgotPasswordGoTo": "Volver a",
+    "@featureForgotPasswordGoTo": {
+        "description": "Go back to description"
+    },
+    "featureCompleteProfile": "Completar el perfil",
+    "@featureCompleteProfile": {
+        "description": "Complete Profile Description"
+    },
+    "featureCategoryTypeRoad": "Carreteras y transporte",
+    "@featureCategoryTypeRoad": {
+        "description": "Road & Transport Description"
+    },
+    "featureCategoryTypeLight": "Iluminación y electricidad",
+    "@featureCategoryTypeLight": {
+        "description": "Light & Electricity Description"
+    },
+    "featureCategoryTypeWaste": "Residuos",
+    "@featureCategoryTypeWaste": {
+        "description": "Environmental Hazards Description"
+    },
+    "featureCategoryTypeAbandoned": "Proyectos abandonados",
+    "@featureCategoryTypeAbandoned": {
+        "description": "Abandoned Projects Description"
+    },
+    "featureCategoryTypeHealth": "Salud y saneamiento",
+    "@featureCategoryTypeHealth": {
+        "description": "Health & Sanitation Description"
+    },
+    "featureCategoryTypeSecurity": "Seguridad",
+    "@featureCategoryTypeSecurity": {
+        "description": "Security Description"
+    },
+    "featureCategoryTypeEducation": "Educación",
+    "@featureCategoryTypeEducation": {
+        "description": "Education Description"
+    },
+    "featureCategoryTypeGovernance": "Gobernanza",
+    "@featureCategoryTypeGovernance": {
+        "description": "Governance Description"
+    },
+    "featureCategoryTypeUrban": "Infracciones de zonificación",
+    "@featureCategoryTypeUrban": {
+        "description": "Zoning Violations Description"
+    },
+    "featureCategoryTypeDetailedRoad": "Problemas de carreteras y transporte",
+    "@featureCategoryTypeDetailedRoad": {
+        "description": "Road & Transport Issues Description"
+    },
+    "featureCategoryTypeDetailedLight": "Problemas de iluminación y electricidad",
+    "@featureCategoryTypeDetailedLight": {
+        "description": "Light & Electricity Issues Description"
+    },
+    "featureCategoryTypeDetailedWaste": "Residuos y peligros ambientales",
+    "@featureCategoryTypeDetailedWaste": {
+        "description": "Environmental Hazards Description"
+    },
+    "featureCategoryTypeDetailedAbandoned": "Proyectos abandonados e incompletos",
+    "@featureCategoryTypeDetailedAbandoned": {
+        "description": "Abandoned & Incomplete Projects Description"
+    },
+    "featureCategoryTypeDetailedHealth": "Salud y saneamiento",
+    "@featureCategoryTypeDetailedHealth": {
+        "description": "Health & Sanitation Description"
+    },
+    "featureCategoryTypeDetailedSecurity": "Problemas de seguridad",
+    "@featureCategoryTypeDetailedSecurity": {
+        "description": "Security Issues Description"
+    },
+    "featureCategoryTypeDetailedEducation": "Educación e instalaciones públicas",
+    "@featureCategoryTypeDetailedEducation": {
+        "description": "Education & Public Facilities Description"
+    },
+    "featureCategoryTypeDetailedGovernance": "Gobernanza",
+    "@featureCategoryTypeDetailedGovernance": {
+        "description": "Governance Description"
+    },
+    "featureCategoryTypeDetailedUrban": "Planificación urbana e infracciones de zonificación",
+    "@featureCategoryTypeDetailedUrban": {
+        "description": "Urban Planning & Zoning Violations Description"
+    },
+    "featureCategoryTypeRoadDescription": "Informa sobre baches, carreteras en mal estado, aceras rotas, semáforos averiados o conducción imprudente en tu zona.",
+    "@featureCategoryTypeRoadDescription": {
+        "description": "Road & Transport Description"
+    },
+    "featureCategoryTypeLightDescription": "Informa sobre farolas rotas, cables expuestos o cortes de energía que afectan a los espacios públicos y la seguridad.",
+    "@featureCategoryTypeLightDescription": {
+        "description": "Light & Electricity Description"
+    },
+    "featureCategoryTypeWasteDescription": "Informa sobre basura sin recoger, desagües bloqueados, vertidos ilegales u otras preocupaciones ambientales.",
+    "@featureCategoryTypeWasteDescription": {
+        "description": "Environmental Hazards Description"
+    },
+    "featureCategoryTypeAbandonedDescription": "Informa sobre proyectos gubernamentales o comunitarios incompletos o abandonados en tu localidad.",
+    "@featureCategoryTypeAbandonedDescription": {
+        "description": "Abandoned Projects Description"
+    },
+    "featureCategoryTypeHealthDescription": "Informa sobre servicios sanitarios públicos sucios, mala higiene en clínicas, aguas residuales abiertas o condiciones de salud inseguras.",
+    "@featureCategoryTypeHealthDescription": {
+        "description": "Health & Sanitation Description"
+    },
+    "featureCategoryTypeSecurityDescription": "Informa sobre zonas inseguras, infraestructuras de seguridad dañadas, acoso en la calle o lugares de aglomeración.",
+    "@featureCategoryTypeSecurityDescription": {
+        "description": "Security Description"
+    },
+    "featureCategoryTypeEducationDescription": "Informa sobre edificios escolares deteriorados, salas comunitarias cerradas o bibliotecas descuidadas.",
+    "@featureCategoryTypeEducationDescription": {
+        "description": "Education Description"
+    },
+    "featureCategoryTypeGovernanceDescription": "Plantea problemas como retrasos administrativos, mala prestación de servicios, prácticas corruptas o mal uso de fondos públicos.",
+    "@featureCategoryTypeGovernanceDescription": {
+        "description": "Governance Description"
+    },
+    "featureCategoryTypeUrbanDescription": "Informa sobre estructuras no aprobadas, contaminación acústica, uso indebido de terrenos o infracciones de zonificación en tu área.",
+    "@featureCategoryTypeUrbanDescription": {
+        "description": "Zoning Violations Description"
+    },
+    "featureAddReportCategory": "Selecciona la categoría del informe",
+    "@featureAddReportCategory": {
+        "description": "Category Description"
+    },
+    "featureAddReportContent": "Comparte los detalles del problema cívico",
+    "@featureAddReportContent": {
+        "description": "Content Description"
+    },
+    "featureAddReportContentHint": "Comparte tus comentarios",
+    "@featureAddReportContentHint": {
+        "description": "Content Hint Description"
+    },
+    "featureAddReportMedia": "Por favor sube una imagen clara de tu informe",
+    "@featureAddReportMedia": {
+        "description": "Media Description"
+    },
+    "featureAddReport": "Añadir un informe",
+    "@featureAddReport": {
+        "description": "Add a Report Description"
+    },
+    "featureNotifications": "Notificaciones",
+    "@featureNotifications": {
+        "description": "Notifications Description"
+    },
+    "featureNotificationInstruction": "Marcar todo como leído",
+    "@featureNotificationInstruction": {
+        "description": "Notification Instruction Description"
+    },
+    "featureNotificationEmpty": "No tienes notificaciones",
+    "@featureNotificationEmpty": {
+        "description": "Notification Empty Description"
+    },
+    "featureReports": "Informes",
+    "@featureReports": {
+        "description": "Reports Description"
+    },
+    "featureMyReports": "Mis informes",
+    "@featureMyReports": {
+        "description": "My Reports Description"
+    },
+    "featureBookmarkedReports": "Guardados",
+    "@featureBookmarkedReports": {
+        "description": "Bookmarked Description"
+    },
+    "featureSettingsTooltip": "Toque para {action}",
+    "@featureSettingsTooltip": {
+        "description": "Settings Tooltip Description",
+        "placeholders": {
+            "action": {}
+        }
+    },
+    "featureSettingsVersion": "(v{version})",
+    "@featureSettingsVersion": {
+        "description": "Settings Version Description",
+        "placeholders": {
+            "version": {}
+        }
+    },
+    "featureSettingsProfile": "Perfil",
+    "@featureSettingsProfile": {
+        "description": "Profile Description"
+    },
+    "featureSettingsEditProfile": "Editar perfil",
+    "@featureSettingsEditProfile": {
+        "description": "Edit Profile Description"
+    },
+    "featureProfileAccountEmail": "El correo electrónico de tu cuenta no se puede cambiar.",
+    "@featureProfileAccountEmail": {
+        "description": "Profile Account Email Description"
+    },
+    "featureSettingsLanguage": "Idioma",
+    "@featureSettingsLanguage": {
+        "description": "Language Description"
+    },
+    "featureSettingsLanguageDefault": "Idioma predeterminado",
+    "@featureSettingsLanguageDefault": {
+        "description": "Default Language Description"
+    },
+    "featureSettingsAppearance": "Apariencia",
+    "@featureSettingsAppearance": {
+        "description": "Appearance Description"
+    },
+    "featureSettingsSignInSecurity": "Inicio de sesión y seguridad",
+    "@featureSettingsSignInSecurity": {
+        "description": "Sign In & Security Description"
+    },
+    "featureSettingsAppearanceSystem": "Configuración del sistema",
+    "@featureSettingsAppearanceSystem": {
+        "description": "System Settings Description"
+    },
+    "featureSettingsAppearanceLight": "Modo claro",
+    "@featureSettingsAppearanceLight": {
+        "description": "Light Mode Description"
+    },
+    "featureSettingsAppearanceDark": "Modo oscuro",
+    "@featureSettingsAppearanceDark": {
+        "description": "Dark Mode Description"
+    },
+    "featureSettingsAppearanceSystemDesc": "Se ajusta automáticamente a la apariencia de su dispositivo",
+    "@featureSettingsAppearanceSystemDesc": {
+        "description": "System Settings Description"
+    },
+    "featureSettingsAppearanceLightDesc": "Mantener la aplicación en modo claro",
+    "@featureSettingsAppearanceLightDesc": {
+        "description": "Light Mode Description"
+    },
+    "featureSettingsAppearanceDarkDesc": "Mantener la aplicación en modo oscuro",
+    "@featureSettingsAppearanceDarkDesc": {
+        "description": "Dark Mode Description"
+    },
+    "featureSettingsSecurityGoogle": "Google",
+    "@featureSettingsSecurityGoogle": {
+        "description": "Google Sign-In Description"
+    },
+    "featureSettingsSecurityGoogleUnlinkDesc": "Vincula tu cuenta de Google para iniciar sesión de forma segura",
+    "@featureSettingsSecurityGoogleUnlinkDesc": {
+        "description": "Google Sign-In Unlinked Description"
+    },
+    "featureSettingsSecurityGoogleLinkedDesc": "Tu cuenta de Google está disponible para iniciar sesión",
+    "@featureSettingsSecurityGoogleLinkedDesc": {
+        "description": "Google Sign-In Linked Description"
+    },
+    "featureSettingsSecurityApple": "Apple",
+    "@featureSettingsSecurityApple": {
+        "description": "Apple Sign-In Description"
+    },
+    "featureSettingsSecurityAppleUnlinkDesc": "Vincula tu ID de Apple para iniciar sesión de forma segura",
+    "@featureSettingsSecurityAppleUnlinkDesc": {
+        "description": "Apple Sign-In Unlinked Description"
+    },
+    "featureSettingsSecurityAppleLinkedDesc": "Tu ID de Apple está disponible para iniciar sesión",
+    "@featureSettingsSecurityAppleLinkedDesc": {
+        "description": "Apple ID Linked Description"
+    },
+    "featureSettingsSecuritySetPassword": "Establecer contraseña",
+    "@featureSettingsSecuritySetPassword": {
+        "description": "Set Password Description"
+    },
+    "featureSettingsSecuritySetPasswordDesc": "Habilitar inicio de sesión con correo y contraseña",
+    "@featureSettingsSecuritySetPasswordDesc": {
+        "description": "Set Password Description"
+    },
+    "featureSettingsSecuritySetPasswordLabel": "Introduce el correo asociado a tu cuenta",
+    "@featureSettingsSecuritySetPasswordLabel": {
+        "description": "Set Password Label Description"
+    },
+    "featureSettingsSecurityResetPassword": "Cambiar contraseña",
+    "@featureSettingsSecurityResetPassword": {
+        "description": "Reset Password Description"
+    },
+    "featureSettingsSecurityResetPasswordDesc": "Actualiza tu contraseña actual",
+    "@featureSettingsSecurityResetPasswordDesc": {
+        "description": "Reset Password Description"
+    },
+    "featureSettingsAbout": "Acerca de",
+    "@featureSettingsAbout": {
+        "description": "About Description"
+    },
+    "featureSettingsLoading": "Cargando",
+    "@featureSettingsLoading": {
+        "description": "Loading Description"
+    },
+    "featureSettingsLoggingOut": "¿Cerrar sesión?",
+    "@featureSettingsLoggingOut": {
+        "description": "Logging out Description"
+    },
+    "featureSettingsLoggingOutHint": "¿Estás seguro de que quieres cerrar sesión de tu cuenta en este dispositivo?",
+    "@featureSettingsLoggingOutHint": {
+        "description": "Logging out Hint Description"
     }
 }
