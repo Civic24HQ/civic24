@@ -11,6 +11,7 @@ on:
 env:
   FLUTTER_VERSION: "3.38.7"
   EXCLUDED_FILES: ":(exclude)**/*app.router.dart :(exclude)**/*test_helpers.mocks.dart :(exclude)**/*assets.gen.dart"
+  
 
 jobs:
   build-ios:
@@ -21,10 +22,16 @@ jobs:
       matrix:
         include:
           - app: citizen
-            flavor: development
+            flavor: development      
+    env:
+      cwd: code/apps/${{ matrix.app }}
+
     steps:
       - name: 📚 Clone the repository
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+          path: code
 
       - name: 🚧 Setup java
         uses: actions/setup-java@v3
@@ -44,32 +51,51 @@ jobs:
       #     dart pub global activate melos
       #     melos clean
       #     melos bootstrap
+      #   working-directory: code
 
       # # Format all Dart code using the standard format rules defined
       # - name: 🎩 Ensure the Dart code is formatted correctly
       #   run: |
       #     melos run flutter:format
+      #   working-directory: code
 
       # # Generate localization files
       # - name: 🧩 Generate localization files
       #   run: |
       #     melos run localization:intl
+      #   working-directory: code
 
       # # Run build_runner or any code gen scripts you've defined
       # - name: 🧬 Run code generation
       #   run: |
       #     melos run flutter:build
+      #   working-directory: code
 
       # # Run analyzer across all packages to catch lint issues and unused code
       # - name: ✨ Analyze the Dart code
       #   run: |
       #     melos run flutter:analyze
+      #   working-directory: code
+
+      - name: 🧭 Debug repo layout
+        if: matrix.app == 'citizen' && matrix.flavor == 'development'
+        working-directory: code
+        shell: bash
+        run: |
+          echo "Runner: $(uname -a)"
+          echo "/bin/sh -> $(ls -l /bin/sh || true)"
+          echo "cwd env value: ${{ env.cwd }}"
+          ls -la code || true
+
       - name: 🔐 Decode & write encoded secret (citizen/development)
         if: matrix.app == 'citizen' && matrix.flavor == 'development'
+        working-directory: ${{ env.cwd }}
+        shell: bash
         run: |
-          mkdir -p apps/${{ matrix.app }}/secrets
+          set -euo pipefail
+          mkdir -p secrets
           SECRET_VALUE="${{ secrets[format('ENCODED_DEVELOPMENT_JSON_{0}', matrix.app)] }}"
-          if [[ -z "$SECRET_VALUE" ]]; then
+          if [ -z "$SECRET_VALUE" ]; then
             echo "No Base64 secret found for ${{ matrix.app }}."
             echo "secrets_file_valid=false" >> $GITHUB_ENV
             exit 1
@@ -77,12 +103,12 @@ jobs:
 
           # Portable decode: GNU, BSD, or python fallback
           printf '%s' "$SECRET_VALUE" | \
-            (base64 --decode 2>/dev/null || base64 -d 2>/dev/null || base64 -D 2>/dev/null || python -c "import sys,base64; sys.stdout.buffer.write(base64.b64decode(sys.stdin.read()))") \
-            > apps/${{ matrix.app }}/secrets/development.json || true
+            (base64 --decode 2>/dev/null || base64 -d 2>/dev/null || python -c "import sys,base64; sys.stdout.buffer.write(base64.b64decode(sys.stdin.read()))") \
+            > secrets/development.json || true
 
-          if [[ -s "apps/${{ matrix.app }}/secrets/development.json" ]]; then
-            wc -c "apps/${{ matrix.app }}/secrets/development.json" | awk '{print "secrets_file_bytes="$1}' >> $GITHUB_ENV
-            shasum -a 256 "apps/${{ matrix.app }}/secrets/development.json" | awk '{print "secrets_sha256="$1}' >> $GITHUB_ENV
+          if [ -s "secrets/development.json" ]; then
+            wc -c "secrets/development.json" | awk '{print "secrets_file_bytes="$1}' >> $GITHUB_ENV
+            shasum -a 256 "secrets/development.json" | awk '{print "secrets_sha256="$1}' >> $GITHUB_ENV
             echo "secrets_file_valid=true" >> $GITHUB_ENV
             echo "Secrets file decoded (bytes, sha256) available in env."
           else
@@ -93,11 +119,13 @@ jobs:
 
       - name: ✅ Validate secrets JSON (citizen/development only)
         if: matrix.app == 'citizen' && matrix.flavor == 'development'
+        working-directory: ${{ env.cwd }}
+        shell: bash
         run: |
-          if [ ! -f apps/${{ matrix.app }}/secrets/development.json ]; then
-            echo "secrets/development.json missing" && ls -la apps/${{ matrix.app }}/secrets || (ls -la && exit 1)
+          if [ ! -f secrets/development.json ]; then
+            echo "secrets/development.json missing" && ls -la secrets || (ls -la && exit 1)
           fi
-          python -m json.tool apps/${{ matrix.app }}/secrets/development.json >/dev/null || (echo "secrets/development.json is not valid JSON" && exit 1)
+          python -m json.tool secrets/development.json >/dev/null || (echo "secrets/development.json is not valid JSON" && exit 1)
 
       - name: 🔧 Clean and reinstall CocoaPods
         run: |
@@ -105,7 +133,7 @@ jobs:
           pod deintegrate || true
           rm -rf Pods Podfile.lock || true
           pod install --repo-update || true
-        working-directory: apps/${{ matrix.app }}/ios
+        working-directory: ${{ env.cwd }}/ios
 
       - name: Build iOS
         run: |
@@ -121,7 +149,7 @@ jobs:
           flutter clean
           flutter pub get
           flutter build ipa --no-codesign --flavor development --dart-define-from-file=secrets/development.json
-        working-directory: apps/${{ matrix.app }}
+        working-directory: ${{ env.cwd }}
 
       - name: Package IPA (citizen only)
         if: matrix.app == 'citizen'
@@ -132,13 +160,13 @@ jobs:
           # Use copy instead of symlink to avoid potential zip issues in CI
           cp -r Runner.app Payload/
           zip -r app.ipa Payload
-        working-directory: apps/${{ matrix.app }}
+        working-directory: ${{ env.cwd }}
 
       - name: Push iOS artifacts to Release
         if: matrix.app == 'citizen'
         uses: ncipollo/release-action@v1
         with:
-          artifacts: apps/${{ matrix.app }}/build/ios/iphoneos/app.ipa
+          artifacts: ${{ env.cwd }}/build/ios/iphoneos/app.ipa
           tag: ${{ matrix.app }}-${{ matrix.flavor }}-v1.0.${{ github.run_number }}
           token: ${{ secrets.TOKEN }}
           allowUpdates: true
@@ -154,10 +182,15 @@ jobs:
         include:
           - app: citizen
             flavor: development
+    env:
+      cwd: code/apps/${{ matrix.app }}
 
     steps:
       - name: 📚 Checkout
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+          path: code
 
       - name: 🚧 Setup java
         uses: actions/setup-java@v3
@@ -176,6 +209,7 @@ jobs:
       #     dart pub global activate melos
       #     melos clean
       #     melos bootstrap
+      #   working-directory: code
 
       # - name: 🎩 Format, generate and analyze
       #   run: |
@@ -183,13 +217,17 @@ jobs:
       #     melos run localization:intl || true
       #     melos run flutter:build || true
       #     melos run flutter:analyze || true
+      #   working-directory: code
 
       - name: 🔐 Decode & write encoded secret (citizen/development)
         if: matrix.app == 'citizen' && matrix.flavor == 'development'
+        working-directory: ${{ env.cwd }}
+        shell: bash
         run: |
-          mkdir -p apps/${{ matrix.app }}/secrets
+          set -euo pipefail
+          mkdir -p secrets
           SECRET_VALUE="${{ secrets[format('ENCODED_DEVELOPMENT_JSON_{0}', matrix.app)] }}"
-          if [[ -z "$SECRET_VALUE" ]]; then
+          if [ -z "$SECRET_VALUE" ]; then
             echo "No Base64 secret found for ${{ matrix.app }}."
             echo "secrets_file_valid=false" >> $GITHUB_ENV
             exit 1
@@ -197,12 +235,12 @@ jobs:
 
           # Portable decode: GNU, BSD, or python fallback
           printf '%s' "$SECRET_VALUE" | \
-            (base64 --decode 2>/dev/null || base64 -d 2>/dev/null || base64 -D 2>/dev/null || python -c "import sys,base64; sys.stdout.buffer.write(base64.b64decode(sys.stdin.read()))") \
-            > apps/${{ matrix.app }}/secrets/development.json || true
+            (base64 --decode 2>/dev/null || base64 -d 2>/dev/null || python -c "import sys,base64;sys.stdout.buffer.write(base64.b64decode(sys.stdin.read()))") \
+            > secrets/development.json || true
 
-          if [[ -s "apps/${{ matrix.app }}/secrets/development.json" ]]; then
-            wc -c "apps/${{ matrix.app }}/secrets/development.json" | awk '{print "secrets_file_bytes="$1}' >> $GITHUB_ENV
-            shasum -a 256 "apps/${{ matrix.app }}/secrets/development.json" | awk '{print "secrets_sha256="$1}' >> $GITHUB_ENV
+          if [ -s "secrets/development.json" ]; then
+            wc -c "secrets/development.json" | awk '{print "secrets_file_bytes="$1}' >> $GITHUB_ENV
+            shasum -a 256 "secrets/development.json" | awk '{print "secrets_sha256="$1}' >> $GITHUB_ENV
             echo "secrets_file_valid=true" >> $GITHUB_ENV
             echo "Secrets file decoded (bytes, sha256) available in env."
           else
@@ -216,14 +254,15 @@ jobs:
           git diff --exit-code -- . $EXCLUDED_FILES
           git status --porcelain --untracked-files=no | tee status.txt
           if [ -s status.txt ]; then echo "Uncommitted tracked changes found" && exit 1; fi
-        working-directory: apps/${{ matrix.app }}
+        working-directory: ${{ env.cwd }}
 
       - name: ✅ Validate secrets file (citizen/development only)
         if: matrix.app == 'citizen' && matrix.flavor == 'development'
+        working-directory: ${{ env.cwd }}
+        shell: bash
         run: |
           if [ ! -f secrets/development.json ]; then echo "secrets/development.json not found" && ls -la secrets || (ls -la && exit 1); fi
           python -m json.tool secrets/development.json >/dev/null || (echo "secrets/development.json is not valid JSON" && exit 1)
-        working-directory: apps/${{ matrix.app }}
 
       - name: Build Android
         run: |
@@ -233,12 +272,12 @@ jobs:
           else
             flutter build apk --debug --split-per-abi
           fi
-        working-directory: apps/${{ matrix.app }}
+        working-directory: ${{ env.cwd }}
 
       - name: Push Android artifacts to Release
         uses: ncipollo/release-action@v1
         with:
-          artifacts: "apps/${{ matrix.app }}/build/app/outputs/apk/**/*.apk"
+          artifacts: "${{ env.cwd }}/build/app/outputs/apk/**/*.apk"
           tag: ${{ matrix.app }}-${{ matrix.flavor }}-v1.0.${{ github.run_number }}
           token: ${{ secrets.TOKEN }}
           allowUpdates: true
