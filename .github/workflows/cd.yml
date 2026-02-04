@@ -64,18 +64,40 @@ jobs:
       # - name: ✨ Analyze the Dart code
       #   run: |
       #     melos run flutter:analyze
-
-      - name: 🔐 Inject citizen flavor secrets
+      - name: 🔐 Decode & write encoded secret (citizen/development)
         if: matrix.app == 'citizen' && matrix.flavor == 'development'
-        env:
-          DEV_DATA: ${{ secrets.CITIZEN_DEV_SECRETS }}
         run: |
-          mkdir -p apps/citizen/secrets
-          if [ -z "$DEV_DATA" ]; then echo "CITIZEN_DEV_SECRETS is not set"; exit 1; fi
-          # Using a heredoc to safely handle large JSON strings
-          cat <<EOF > apps/citizen/secrets/development.json
-          $DEV_DATA
-          EOF
+          mkdir -p apps/${{ matrix.app }}/secrets
+          SECRET_VALUE="${{ secrets[format('ENCODED_DEVELOPMENT_JSON_{0}', matrix.app)] }}"
+          if [[ -z "$SECRET_VALUE" ]]; then
+            echo "No Base64 secret found for ${{ matrix.app }}."
+            echo "secrets_file_valid=false" >> $GITHUB_ENV
+            exit 1
+          fi
+
+          # Portable decode: GNU, BSD, or python fallback
+          printf '%s' "$SECRET_VALUE" | \
+            (base64 --decode 2>/dev/null || base64 -d 2>/dev/null || base64 -D 2>/dev/null || python -c "import sys,base64; sys.stdout.buffer.write(base64.b64decode(sys.stdin.read()))") \
+            > apps/${{ matrix.app }}/secrets/development.json || true
+
+          if [[ -s "apps/${{ matrix.app }}/secrets/development.json" ]]; then
+            wc -c "apps/${{ matrix.app }}/secrets/development.json" | awk '{print "secrets_file_bytes="$1}' >> $GITHUB_ENV
+            shasum -a 256 "apps/${{ matrix.app }}/secrets/development.json" | awk '{print "secrets_sha256="$1}' >> $GITHUB_ENV
+            echo "secrets_file_valid=true" >> $GITHUB_ENV
+            echo "Secrets file decoded (bytes, sha256) available in env."
+          else
+            echo "Decoded file is empty or decode failed."
+            echo "secrets_file_valid=false" >> $GITHUB_ENV
+            exit 1
+          fi
+
+      - name: ✅ Validate secrets JSON (citizen/development only)
+        if: matrix.app == 'citizen' && matrix.flavor == 'development'
+        run: |
+          if [ ! -f apps/${{ matrix.app }}/secrets/development.json ]; then
+            echo "secrets/development.json missing" && ls -la apps/${{ matrix.app }}/secrets || (ls -la && exit 1)
+          fi
+          python -m json.tool apps/${{ matrix.app }}/secrets/development.json >/dev/null || (echo "secrets/development.json is not valid JSON" && exit 1)
 
       - name: 🔧 Clean and reinstall CocoaPods
         run: |
@@ -162,14 +184,32 @@ jobs:
       #     melos run flutter:build || true
       #     melos run flutter:analyze || true
 
-      - name: 🔐 Inject citizen flavor secrets (development only)
+      - name: 🔐 Decode & write encoded secret (citizen/development)
         if: matrix.app == 'citizen' && matrix.flavor == 'development'
-        env:
-          DEV: ${{ secrets.CITIZEN_DEV_SECRETS }}
         run: |
-          mkdir -p apps/citizen/secrets
-          if [ -z "$DEV" ]; then echo "CITIZEN_DEV_SECRETS is not set"; exit 1; fi
-          printf '%s' "$DEV" > apps/citizen/secrets/development.json
+          mkdir -p apps/${{ matrix.app }}/secrets
+          SECRET_VALUE="${{ secrets[format('ENCODED_DEVELOPMENT_JSON_{0}', matrix.app)] }}"
+          if [[ -z "$SECRET_VALUE" ]]; then
+            echo "No Base64 secret found for ${{ matrix.app }}."
+            echo "secrets_file_valid=false" >> $GITHUB_ENV
+            exit 1
+          fi
+
+          # Portable decode: GNU, BSD, or python fallback
+          printf '%s' "$SECRET_VALUE" | \
+            (base64 --decode 2>/dev/null || base64 -d 2>/dev/null || base64 -D 2>/dev/null || python -c "import sys,base64; sys.stdout.buffer.write(base64.b64decode(sys.stdin.read()))") \
+            > apps/${{ matrix.app }}/secrets/development.json || true
+
+          if [[ -s "apps/${{ matrix.app }}/secrets/development.json" ]]; then
+            wc -c "apps/${{ matrix.app }}/secrets/development.json" | awk '{print "secrets_file_bytes="$1}' >> $GITHUB_ENV
+            shasum -a 256 "apps/${{ matrix.app }}/secrets/development.json" | awk '{print "secrets_sha256="$1}' >> $GITHUB_ENV
+            echo "secrets_file_valid=true" >> $GITHUB_ENV
+            echo "Secrets file decoded (bytes, sha256) available in env."
+          else
+            echo "Decoded file is empty or decode failed."
+            echo "secrets_file_valid=false" >> $GITHUB_ENV
+            exit 1
+          fi
 
       - name: 🧾 Verify no tracked uncommitted changes in ${{ matrix.app }}
         run: |
