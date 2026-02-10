@@ -10,3 +10,5 @@ const List<String> kPopularEmailDomains = [
 ];
 
 const String kSuccessLottie = 'assets/lottie/Success.json';
+
+const int kPageLimit = 10;

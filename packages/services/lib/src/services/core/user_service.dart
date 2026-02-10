@@ -19,7 +19,6 @@ class UserService extends FirestoreCollectionService<UserModel> with ListenableS
   final log = getLogger('UserService');
 
   final _authService = serviceLocator<AuthenticationService>();
-  final _reportService = serviceLocator<ReportService>();
   final _settingsStorage = serviceLocator<SettingsStorageService>();
 
   @override
@@ -107,7 +106,7 @@ class UserService extends FirestoreCollectionService<UserModel> with ListenableS
       log.i('User //${firebaseUser.uid}// document found');
       _currentUser.value = userDoc;
       unawaited(_subscribeToUserStream());
-      unawaited(syncExternalServices());
+      // unawaited(syncExternalServices());
     } else {
       log.w('User //${firebaseUser.uid}// document not found');
       _currentUser.value = null;
@@ -116,15 +115,15 @@ class UserService extends FirestoreCollectionService<UserModel> with ListenableS
     log.d('User //${firebaseUser.uid}// sync completed');
   }
 
-  @visibleForTesting
-  Future<void> syncExternalServices() async {
-    if (!hasUser) {
-      log.i('Cannot update other services as user is null');
-      return;
-    }
-    unawaited(_reportService.syncReportList());
-    log.i('External services synced successfully');
-  }
+  // @visibleForTesting
+  // Future<void> syncExternalServices() async {
+  //   if (!hasUser) {
+  //     log.i('Cannot update other services as user is null');
+  //     return;
+  //   }
+  //   unawaited(_reportService.syncReportList());
+  //   log.i('External services synced successfully');
+  // }
 
   Future<void> _subscribeToUserStream() async {
     log.d('Subscribing to user stream');

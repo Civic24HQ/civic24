@@ -19,7 +19,7 @@ class ReportsViewModel extends ReactiveViewModel {
   ];
 
   String get user => _userService.user!.id;
-  List<Report> get reportList => _reportService.reportList;
+  List<Report> get reportList => [];
 
   List<Report> get myReportList =>
       reportList.where((r) => r.reportData.userId == user).toList()..sort(
