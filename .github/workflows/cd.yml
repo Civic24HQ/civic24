@@ -361,9 +361,15 @@ jobs:
 
           python -m json.tool secrets/development.json >/dev/null
 
+      - name: Prepare Flutter iOS build
+        working-directory: ${{ env.cwd }}
+        run: |
+          flutter clean
+          flutter pub get
+
       - name: Install CocoaPods
-        run: pod install
         working-directory: ${{ env.cwd }}/ios
+        run: pod install
 
       # ---- iOS Build ----
       - name: Build iOS IPA (unsigned)
@@ -387,88 +393,88 @@ jobs:
           replacesArtifacts: false
 
 
-  build-android:
-    name: Build Android - ${{ matrix.app }} ${{ matrix.flavor }}
-    runs-on: ubuntu-latest
+  # build-android:
+  #   name: Build Android - ${{ matrix.app }} ${{ matrix.flavor }}
+  #   runs-on: ubuntu-latest
 
-    strategy:
-      fail-fast: false
-      matrix:
-        include:
-          - app: citizen
-            flavor: development
+  #   strategy:
+  #     fail-fast: false
+  #     matrix:
+  #       include:
+  #         - app: citizen
+  #           flavor: development
 
-    env:
-      cwd: code/apps/${{ matrix.app }}
+  #   env:
+  #     cwd: code/apps/${{ matrix.app }}
 
-    steps:
-      - name: 📚 Checkout
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 1
-          path: code
+  #   steps:
+  #     - name: 📚 Checkout
+  #       uses: actions/checkout@v4
+  #       with:
+  #         fetch-depth: 1
+  #         path: code
 
-      - name: ☕ Setup Java
-        uses: actions/setup-java@v3
-        with:
-          distribution: zulu
-          java-version: "18.x"
+  #     - name: ☕ Setup Java
+  #       uses: actions/setup-java@v3
+  #       with:
+  #         distribution: zulu
+  #         java-version: "18.x"
 
-      - name: 🐦 Setup Flutter
-        uses: subosito/flutter-action@v2
-        with:
-          channel: stable
-          flutter-version: ${{ env.FLUTTER_VERSION }}
+  #     - name: 🐦 Setup Flutter
+  #       uses: subosito/flutter-action@v2
+  #       with:
+  #         channel: stable
+  #         flutter-version: ${{ env.FLUTTER_VERSION }}
 
-      # - name: 📦 Install Melos & bootstrap
-      #   run: |
-      #     dart pub global activate melos
-      #     melos bootstrap
-      #   working-directory: code
+  #     - name: 📦 Install Melos & bootstrap
+  #       run: |
+  #         dart pub global activate melos
+  #         melos bootstrap
+  #       working-directory: code
 
-      # - name: 🧬 Run code generation
-      #   run: melos run flutter:build
-      #   working-directory: code
+  #     - name: 🧬 Run code generation
+  #       run: melos run flutter:build
+  #       working-directory: code
 
-      # - name: ✨ Analyze code
-      #   run: melos run flutter:analyze
-      #   working-directory: code
+  #     - name: ✨ Analyze code
+  #       run: melos run flutter:analyze
+  #       working-directory: code
 
-      # ---- Secrets Handling ----
-      - name: 🔐 Decode secrets JSON
-        working-directory: ${{ env.cwd }}
-        shell: bash
-        run: |
-          set -euo pipefail
-          mkdir -p secrets
-          SECRET_VALUE="${{ secrets[format('ENCODED_DEVELOPMENT_JSON_{0}', matrix.app)] }}"
-          if [ -z "$SECRET_VALUE" ]; then
-            echo "Missing Base64 secret" && exit 1
-          fi
+  #     # ---- Secrets Handling ----
+  #     - name: 🔐 Decode secrets JSON
+  #       working-directory: ${{ env.cwd }}
+  #       shell: bash
+  #       run: |
+  #         set -euo pipefail
+  #         mkdir -p secrets
+  #         SECRET_VALUE="${{ secrets[format('ENCODED_DEVELOPMENT_JSON_{0}', matrix.app)] }}"
+  #         if [ -z "$SECRET_VALUE" ]; then
+  #           echo "Missing Base64 secret" && exit 1
+  #         fi
 
-          printf '%s' "$SECRET_VALUE" | \
-            (base64 --decode 2>/dev/null || base64 -d 2>/dev/null || python -c "import sys,base64;sys.stdout.buffer.write(base64.b64decode(sys.stdin.read()))") \
-            > secrets/development.json
+  #         printf '%s' "$SECRET_VALUE" | \
+  #           (base64 --decode 2>/dev/null || base64 -d 2>/dev/null || python -c "import sys,base64;sys.stdout.buffer.write(base64.b64decode(sys.stdin.read()))") \
+  #           > secrets/development.json
 
-          python -m json.tool secrets/development.json >/dev/null
+  #         python -m json.tool secrets/development.json >/dev/null
 
-      # ---- Android Build ----
-      - name: Build Android Release APKs
-        working-directory: ${{ env.cwd }}
-        run: |
-          flutter pub get
-          flutter build apk \
-            --release \
-            --flavor development \
-            --target lib/main.dart \
-            --dart-define-from-file=secrets/development.json \
-            --split-per-abi
+  #     # ---- Android Build ----
+  #     - name: Build Android Release APKs
+  #       working-directory: ${{ env.cwd }}
+  #       run: |
+  #         flutter pub get
+  #         flutter build apk \
+  #           --release \
+  #           --flavor development \
+  #           --target lib/main.dart \
+  #           --dart-define-from-file=secrets/development.json \
+  #           --split-per-abi
 
-      - name: 🚀 Upload Android APKs to Release
-        uses: ncipollo/release-action@v1
-        with:
-          artifacts: "${{ env.cwd }}/build/app/outputs/apk/release/*.apk"
-          tag: ${{ matrix.app }}-${{ matrix.flavor }}-v1.0.${{ github.run_number }}
-          token: ${{ secrets.TOKEN }}
-          allowUpdates: true
-          replacesArtifacts: false
+  #     - name: 🚀 Upload Android APKs to Release
+  #       uses: ncipollo/release-action@v1
+  #       with:
+  #         artifacts: "${{ env.cwd }}/build/app/outputs/apk/release/*.apk"
+  #         tag: ${{ matrix.app }}-${{ matrix.flavor }}-v1.0.${{ github.run_number }}
+  #         token: ${{ secrets.TOKEN }}
+  #         allowUpdates: true
+  #         replacesArtifacts: false
