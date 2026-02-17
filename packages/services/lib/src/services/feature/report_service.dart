@@ -18,6 +18,10 @@ class FeedPageState {
   bool hasMore = true;
   bool isLoadingFirstPage = false;
   bool isLoadingNextPage = false;
+  Future<void> dispose() async {
+    await liveSubscription?.cancel();
+    liveSubscription = null;
+  }
 }
 
 // This class is responsible for managing report data related operations
@@ -32,6 +36,7 @@ class ReportService extends FirestoreCollectionService<Report> with ListenableSe
   final log = getLogger('ReportService');
 
   final _alertService = serviceLocator<AlertService>();
+  final _reportCache = serviceLocator<ReportCacheService>();
 
   @override
   String get collectionPath => FirestoreCollections.reports;
@@ -42,8 +47,11 @@ class ReportService extends FirestoreCollectionService<Report> with ListenableSe
   /// Holds all active feed states (all, trending, category_x)
   final ReactiveValue<Map<String, FeedPageState>> _feedStates = ReactiveValue({});
 
+  final Set<String> _activeRealtimeFeeds = {};
+
   Future<void> _init() async {
     listenToReactiveValues([_feedStates]);
+    await loadFeedsFromCache();
   }
 
   /// Builds a unique key representing a feed.
@@ -132,17 +140,33 @@ class ReportService extends FirestoreCollectionService<Report> with ListenableSe
 
     notifyListeners();
 
+    // Load from cache first for instant UI response
+    final cached = _reportCache.loadFeed(key);
+    if (cached != null && cached.isNotEmpty) {
+      state
+        ..items = cached
+        ..lastDocument = null
+        ..hasMore = true
+        ..isLoadingFirstPage = false;
+      notifyListeners();
+    }
+
     final snapshot = await fetchQuerySnapshot(
       query: _buildFeedQuery(type, category: category, limit: limit),
     );
 
+    final reports = snapshot.docs.map((d) => d.data()).toList();
+
     state
-      ..items = snapshot.docs.map((d) => d.data()).toList()
+      ..items = reports
       ..lastDocument = snapshot.docs.isNotEmpty ? snapshot.docs.last : null
       ..hasMore = snapshot.docs.length == limit
       ..isLoadingFirstPage = false;
 
     notifyListeners();
+
+    // Cache the loaded feed
+    await _reportCache.saveFeed(key, reports);
   }
 
   void _removeFromFeed({required ReportFeedType type, required String reportId, CategoryType? category}) {
@@ -150,7 +174,11 @@ class ReportService extends FirestoreCollectionService<Report> with ListenableSe
     state.items.removeWhere((r) => r.reportData.reportId == reportId);
   }
 
-  void _handleRealtimeChanges(QuerySnapshot<Report> snapshot, ReportFeedType type, CategoryType? category) {
+  Future<void> _handleRealtimeChanges(
+    QuerySnapshot<Report> snapshot,
+    ReportFeedType type,
+    CategoryType? category,
+  ) async {
     for (final change in snapshot.docChanges) {
       final report = change.doc.data();
       final id = report!.reportData.reportId;
@@ -170,15 +198,23 @@ class ReportService extends FirestoreCollectionService<Report> with ListenableSe
     }
 
     notifyListeners();
+    await _reportCache.saveFeed(
+      _feedKey(type, category: category),
+      _stateFor(_feedKey(type, category: category)).items,
+    );
   }
 
   // Starts a real-time listener for a feed to receive live updates.
-  void startRealtimeFeed(ReportFeedType type, {CategoryType? category}) {
+  Future<void> startRealtimeFeed(ReportFeedType type, {CategoryType? category}) async {
     final key = _feedKey(type, category: category);
-    final state = _stateFor(key);
 
     // Prevent duplicate listeners
-    if (state.liveSubscription != null) return;
+    if (_activeRealtimeFeeds.contains(key)) {
+      log.d('Realtime feed already active: $key');
+      return;
+    }
+
+    final state = _stateFor(key);
 
     log.i('Starting realtime listener for feed: $key');
 
@@ -188,19 +224,26 @@ class ReportService extends FirestoreCollectionService<Report> with ListenableSe
       (QuerySnapshot<Report> snapshot) => _handleRealtimeChanges(snapshot, type, category),
       onError: (e) => log.e('Realtime listener error for $key', error: e),
     );
+
+    _activeRealtimeFeeds.add(key);
   }
 
   // Prevents Memory leaks by cancelling the real-time listener when it's no longer needed.
-  void stopRealtimeFeed(ReportFeedType type, {CategoryType? category}) {
+  Future<void> stopRealtimeFeed(ReportFeedType type, {CategoryType? category}) async {
     final key = _feedKey(type, category: category);
+
+    if (!_activeRealtimeFeeds.contains(key)) return;
+
     final state = _feedStates.value[key];
 
-    state?.liveSubscription?.cancel();
+    log.i('Stopping realtime listener: $key');
+
+    await state?.liveSubscription?.cancel();
+
     state?.liveSubscription = null;
 
-    log.i('Stopped realtime listener for feed: $key');
+    _activeRealtimeFeeds.remove(key);
   }
-
 
   /// Loads the next page for a feed.
   Future<void> loadMoreFeed(ReportFeedType type, {CategoryType? category, int limit = kPageLimit}) async {
@@ -227,13 +270,26 @@ class ReportService extends FirestoreCollectionService<Report> with ListenableSe
       ..isLoadingNextPage = false;
 
     notifyListeners();
+
+    // Save Cache Feed After Pagination
+    await _reportCache.saveFeed(key, state.items);
   }
 
   // Refreshes the specified feed by resetting its state and loading the initial feed.
   Future<void> refreshFeed(ReportFeedType type, {CategoryType? category, int limit = kPageLimit}) async {
     final key = _feedKey(type, category: category);
+
+    final wasActive = _activeRealtimeFeeds.contains(key);
+
+    await stopRealtimeFeed(type, category: category);
+
     _feedStates.value.remove(key);
+
     await loadInitialFeed(type, category: category, limit: limit);
+
+    if (wasActive) {
+      await startRealtimeFeed(type, category: category);
+    }
   }
 
   /// Inserts a report at the top of a feed without breaking pagination.
@@ -311,12 +367,20 @@ class ReportService extends FirestoreCollectionService<Report> with ListenableSe
       // Inject into feeds BEFORE network call for instant UI response
       _injectIntoFeed(type: ReportFeedType.all, report: newReport);
 
+      await _reportCache.saveFeed(_feedKey(ReportFeedType.all), _stateFor(_feedKey(ReportFeedType.all)).items);
+
       if (_qualifiesForTrending(newReport)) {
         _injectIntoFeed(type: ReportFeedType.trending, report: newReport);
+        await _reportCache.saveFeed(
+          _feedKey(ReportFeedType.trending),
+          _stateFor(_feedKey(ReportFeedType.trending)).items,
+        );
       }
 
       for (final category in newReport.reportData.categoryTypes) {
+        final key = _feedKey(ReportFeedType.category, category: category);
         _injectIntoFeed(type: ReportFeedType.category, category: category, report: newReport);
+        await _reportCache.saveFeed(key, _stateFor(key).items);
       }
 
       notifyListeners();
@@ -339,9 +403,61 @@ class ReportService extends FirestoreCollectionService<Report> with ListenableSe
       _reconcileCategories(updated);
 
       notifyListeners();
+      for (final entry in _feedStates.value.entries) {
+        await _reportCache.saveFeed(entry.key, entry.value.items);
+      }
     } catch (e) {
       log.e('Failed to update report', error: e);
       _alertService.showErrorAlert(title: 'Update Failed', message: 'Could not update report.');
     }
+  }
+
+  Future<void> loadFeedsFromCache() async {
+    // Load ALL feed
+    final allKey = _feedKey(ReportFeedType.all);
+    final allCached = _reportCache.loadFeed(allKey);
+    if (allCached != null) {
+      _stateFor(allKey).items = allCached;
+    }
+
+    // Load TRENDING feed
+    final trendingKey = _feedKey(ReportFeedType.trending);
+    final trendingCached = _reportCache.loadFeed(trendingKey);
+    if (trendingCached != null) {
+      _stateFor(trendingKey).items = trendingCached;
+    }
+
+    // Load CATEGORY feeds
+    for (final category in CategoryType.values) {
+      final key = _feedKey(ReportFeedType.category, category: category);
+      final cached = _reportCache.loadFeed(key);
+      if (cached != null) {
+        _stateFor(key).items = cached;
+      }
+    }
+
+    notifyListeners();
+  }
+
+  Future<void> stopAllRealtimeFeeds() async {
+    for (final key in _activeRealtimeFeeds.toList()) {
+      final state = _feedStates.value[key];
+
+      await state?.liveSubscription?.cancel();
+
+      state?.liveSubscription = null;
+    }
+
+    _activeRealtimeFeeds.clear();
+  }
+
+  Future<void> dispose() async {
+    log.i('Disposing ReportService and cancelling all feed subscriptions');
+    await stopAllRealtimeFeeds();
+    for (final state in _feedStates.value.values) {
+      await state.dispose();
+    }
+    _feedStates.value.clear();
+    _activeRealtimeFeeds.clear();
   }
 }

@@ -5,8 +5,23 @@ class CategoryReports extends ViewModelWidget<HomeViewModel> {
 
   @override
   Widget build(BuildContext context, HomeViewModel viewModel) {
+    CategoryType? currentCategory;
+
     return AppTabs.buttoned(
-      onTabChanged: (i) => viewModel.onCategoryChanged(CategoryType.values[i]),
+      onTabChanged: (i) async {
+        viewModel.onCategoryChanged(CategoryType.values[i]);
+        final newCategory = CategoryType.values[i];
+
+        if (currentCategory != null) {
+          viewModel.stopRealTimeFeed(ReportFeedType.category, category: currentCategory);
+        }
+
+        currentCategory = newCategory;
+
+        await viewModel.initCategoryFeed(newCategory);
+
+        await viewModel.startRealTimeFeed(ReportFeedType.category, category: newCategory);
+      },
       tabs: CategoryType.values.map((type) {
         return AppTab(
           label: type.label,
@@ -29,7 +44,13 @@ class _CategoryListViewState extends State<_CategoryListView> {
   final _controller = ScrollController();
   static const int _categoryReportsPageLimit = 12;
 
-  HomeViewModel get viewModel => getParentViewModel<HomeViewModel>(context, listen: false);
+  late HomeViewModel _viewModel;
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    _viewModel = getParentViewModel<HomeViewModel>(context, listen: false);
+  }
 
   @override
   void initState() {
@@ -37,28 +58,26 @@ class _CategoryListViewState extends State<_CategoryListView> {
     _controller.addListener(_onScroll);
 
     // Delay init to after build
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      viewModel
-        ..initCategoryFeed(widget.category)
-        ..startRealTimeFeed(ReportFeedType.category, category: widget.category);
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      await _viewModel.initCategoryFeed(widget.category);
     });
   }
 
   void _onScroll() {
     if (_controller.position.pixels > _controller.position.maxScrollExtent - 300) {
-      viewModel.loadMoreCategory(widget.category, limit: _categoryReportsPageLimit);
+      _viewModel.loadMoreCategory(widget.category, limit: _categoryReportsPageLimit);
     }
   }
 
   @override
   void dispose() {
     _controller.dispose();
-    viewModel.stopRealTimeFeed(ReportFeedType.category, category: widget.category);
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
+    final viewModel = getParentViewModel<HomeViewModel>(context);
     final categoryReports = viewModel.getCategoryReports(widget.category);
 
     if (viewModel.isCategoryInitialLoading(widget.category)) {
@@ -80,7 +99,7 @@ class _CategoryListViewState extends State<_CategoryListView> {
               onTapLike: () => viewModel.likeReport(report),
               onTapDislike: () => viewModel.dislikeReport(report),
               onTapBookmark: () => viewModel.bookmarkReport(report),
-              onTapComment: () => viewModel.viewComment(),
+              onTapComment: viewModel.viewComment,
               report: report,
             );
           }, childCount: categoryReports.length),

@@ -9,11 +9,7 @@ class SignInSecurityView extends StackedView<SignInSecurityViewModel> {
   const SignInSecurityView({super.key});
 
   @override
-  Widget builder(
-    BuildContext context,
-    SignInSecurityViewModel viewModel,
-    Widget? child,
-  ) {
+  Widget builder(BuildContext context, SignInSecurityViewModel viewModel, Widget? child) {
     return Scaffold(
       appBar: AppBar(
         title: Text(l10n.featureSettingsSignInSecurity),

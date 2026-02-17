@@ -20,6 +20,7 @@ class UserService extends FirestoreCollectionService<UserModel> with ListenableS
 
   final _authService = serviceLocator<AuthenticationService>();
   final _settingsStorage = serviceLocator<SettingsStorageService>();
+  final _reportService = serviceLocator<ReportService>();
 
   @override
   String get collectionPath => FirestoreCollections.users;
@@ -78,7 +79,7 @@ class UserService extends FirestoreCollectionService<UserModel> with ListenableS
 
   /// Convenience helper to change appearance mode.
   Future<void> setAppearance(AppearanceMode mode) async {
-    await setDisplayPreferences(displayPreferences.copyWith(themeModeIndex: mode.themeIndex,));
+    await setDisplayPreferences(displayPreferences.copyWith(themeModeIndex: mode.themeIndex));
   }
 
   @override
@@ -224,6 +225,7 @@ class UserService extends FirestoreCollectionService<UserModel> with ListenableS
       log.w('Cannot clear user data as user is null');
       return;
     }
+    await _reportService.dispose();
     log.i('User session data cleared successfully');
   }
 
