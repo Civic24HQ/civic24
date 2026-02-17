@@ -27,8 +27,9 @@ class HomeViewModel extends ReactiveViewModel {
   List<Report> getCategoryReports(CategoryType category) =>
       _reportService.getFeedItems(ReportFeedType.category, category: category);
 
-  void startRealTimeFeed(ReportFeedType reportTypeFeed, {CategoryType? category}) =>
-      _reportService.startRealtimeFeed(reportTypeFeed, category: category);
+  Future<void> startRealTimeFeed(ReportFeedType reportTypeFeed, {CategoryType? category}) async {
+    await _reportService.startRealtimeFeed(reportTypeFeed, category: category);
+  }
 
   void stopRealTimeFeed(ReportFeedType reportTypeFeed, {CategoryType? category}) =>
       _reportService.stopRealtimeFeed(reportTypeFeed, category: category);

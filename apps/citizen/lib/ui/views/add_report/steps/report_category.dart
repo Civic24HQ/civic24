@@ -19,15 +19,9 @@ class ReportCategory extends ViewModelWidget<AddReportViewModel> {
                 label: categoryType.label,
                 isSelected: viewModel.isCategoryTypeSelected(categoryType),
                 tooltip: categoryType.detailedLabel,
-                trailingIcon: const Icon(
-                  SolarIconsOutline.infoCircle,
-                  size: AppDimensions.size16,
-                ),
+                trailingIcon: const Icon(SolarIconsOutline.infoCircle, size: AppDimensions.size16),
                 onSelected: (isSelected) {
-                  viewModel.toggleCategoryType(
-                    categoryType,
-                    isSelected: isSelected,
-                  );
+                  viewModel.toggleCategoryType(categoryType, isSelected: isSelected);
                 },
               ),
           ],

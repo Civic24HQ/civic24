@@ -57,7 +57,7 @@ List<String> fakeMedia = [
   'https://i.imghippo.com/files/eIv6463Sc.jpeg',
   'https://i.imghippo.com/files/ay1655RTE.jpg',
   'https://i.imghippo.com/files/bAXP3405rp.jpg',
-  'https://i.imghippo.com/files/GJvD3698RM.jpg'
+  'https://i.imghippo.com/files/GJvD3698RM.jpg',
 ];
 
 List<String> fakeNotificationTitle = [

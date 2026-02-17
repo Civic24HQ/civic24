@@ -22,11 +22,7 @@ class LoginView extends StackedView<LoginViewModel> with $LoginView {
   const LoginView({super.key});
 
   @override
-  Widget builder(
-    BuildContext context,
-    LoginViewModel viewModel,
-    Widget? child,
-  ) {
+  Widget builder(BuildContext context, LoginViewModel viewModel, Widget? child) {
     return GestureDetector(
       onTap: () => FocusScope.of(context).unfocus(),
       child: AbsorbPointer(
@@ -38,9 +34,7 @@ class LoginView extends StackedView<LoginViewModel> with $LoginView {
                 return SingleChildScrollView(
                   padding: AppEdgeInsets.adaptiveHorizontalPadding(context),
                   child: ConstrainedBox(
-                    constraints: BoxConstraints(
-                      minHeight: constraints.maxHeight,
-                    ),
+                    constraints: BoxConstraints(minHeight: constraints.maxHeight),
                     child: IntrinsicHeight(
                       child: Column(
                         children: [
@@ -52,10 +46,7 @@ class LoginView extends StackedView<LoginViewModel> with $LoginView {
                                   width: AppDimensions.size56,
                                   height: AppDimensions.size56,
                                 ),
-                                Assets.png.civic24Logo2.image(
-                                  color: context.onSurface,
-                                  width: AppDimensions.size150,
-                                ),
+                                Assets.png.civic24Logo2.image(color: context.onSurface, width: AppDimensions.size150),
                               ],
                             ),
                           ),
@@ -104,22 +95,15 @@ class LoginView extends StackedView<LoginViewModel> with $LoginView {
                             label: l10n.generalPassword,
                             hintText: l10n.generalEnterPassword,
                             suffixIcon: passwordController.text.isNotEmpty
-                                ? PasswordButton(
-                                    onTap: viewModel.toggleShowPassword,
-                                    show: viewModel.showPassword,
-                                  )
+                                ? PasswordButton(onTap: viewModel.toggleShowPassword, show: viewModel.showPassword)
                                 : null,
-                            prefixIcon: const Icon(
-                              SolarIconsOutline.lockPassword,
-                            ),
+                            prefixIcon: const Icon(SolarIconsOutline.lockPassword),
                             obscureText: !viewModel.showPassword,
                             onEditingComplete: () {
                               FocusScope.of(context).unfocus();
                               viewModel.loginWithEmail();
                             },
-                            keyboardType: viewModel.showPassword
-                                ? TextInputType.visiblePassword
-                                : TextInputType.text,
+                            keyboardType: viewModel.showPassword ? TextInputType.visiblePassword : TextInputType.text,
                             autofillHints: const [AutofillHints.password],
                             textInputAction: TextInputAction.done,
                           ),
@@ -130,9 +114,7 @@ class LoginView extends StackedView<LoginViewModel> with $LoginView {
                               onTap: viewModel.navigateToForgetPassword,
                               child: Text(
                                 l10n.featureForgotPassword,
-                                style: context.bodyMedium?.copyWith(
-                                  color: context.primary,
-                                ),
+                                style: context.bodyMedium?.copyWith(color: context.primary),
                               ),
                             ),
                           ),
@@ -147,9 +129,7 @@ class LoginView extends StackedView<LoginViewModel> with $LoginView {
                           AuthButton(
                             isAppleButtonBusy: viewModel.isAppleButtonBusy,
                             isGoogleButtonBusy: viewModel.isGoogleButtonBusy,
-                            onAppleTap: viewModel.isAppleSignInAvailable
-                                ? viewModel.handleApple
-                                : null,
+                            onAppleTap: viewModel.isAppleSignInAvailable ? viewModel.handleApple : null,
                             onGoogleTap: viewModel.handleGoogle,
                           ),
                           AppSpacing.normal,
