@@ -8,9 +8,13 @@ typedef BoxInitialiser = void Function(Box<dynamic>);
 
 // Add all the box initializers here
 late Box<dynamic> settingsBox;
+late Box<dynamic> reportsBox;
 
 // Register all the box initializers here
-final boxInitializers = <String, BoxInitialiser>{'settings': (box) => settingsBox = box};
+final boxInitializers = <String, BoxInitialiser>{
+  'settings': (box) => settingsBox = box,
+  'reports': (box) => reportsBox = box,
+};
 
 abstract class LocalStorageService {
   LocalStorageService(this.box, String logString) : logger = getLogger(logString);

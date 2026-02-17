@@ -14,14 +14,9 @@ class BookmarkedReports extends ViewModelWidget<ReportsViewModel> {
         SliverList(
           delegate: SliverChildBuilderDelegate((context, index) {
             return AppReport(
-              onTapLike: () =>
-                  viewModel.likeReport(viewModel.bookmarkedReportList[index]),
-              onTapDislike: () => viewModel.dislikeReport(
-                viewModel.bookmarkedReportList[index],
-              ),
-              onTapBookmark: () => viewModel.bookmarkReport(
-                viewModel.bookmarkedReportList[index],
-              ),
+              onTapLike: () => viewModel.likeReport(viewModel.bookmarkedReportList[index]),
+              onTapDislike: () => viewModel.dislikeReport(viewModel.bookmarkedReportList[index]),
+              onTapBookmark: () => viewModel.bookmarkReport(viewModel.bookmarkedReportList[index]),
               onTapComment: () => viewModel.viewComment(),
               report: viewModel.bookmarkedReportList[index],
             );

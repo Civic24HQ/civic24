@@ -16,32 +16,23 @@ enum TappableVariant {
   faded,
 
   /// The child widget will be scaled in and out on tap.
-  scaled
+  scaled,
 }
 
 abstract class _ParentTappableState {
-  void markChildTappablePressed(
-    _ParentTappableState childState,
-    bool value,
-  );
+  void markChildTappablePressed(_ParentTappableState childState, bool value);
 }
 
 class _ParentTappableProvider extends InheritedWidget {
-  const _ParentTappableProvider({
-    required this.state,
-    required super.child,
-  });
+  const _ParentTappableProvider({required this.state, required super.child});
 
   final _ParentTappableState state;
 
   @override
-  bool updateShouldNotify(_ParentTappableProvider oldWidget) =>
-      state != oldWidget.state;
+  bool updateShouldNotify(_ParentTappableProvider oldWidget) => state != oldWidget.state;
 
   static _ParentTappableState? maybeOf(BuildContext context) {
-    return context
-        .dependOnInheritedWidgetOfExactType<_ParentTappableProvider>()
-        ?.state;
+    return context.dependOnInheritedWidgetOfExactType<_ParentTappableProvider>()?.state;
   }
 }
 
@@ -119,9 +110,9 @@ class Tappable extends StatelessWidget {
     this.onLongPressEnd,
     this.boxShadow,
     this.enableFeedback = true,
-  })  : _variant = TappableVariant.faded,
-        scaleAlignment = null,
-        scaleStrength = null;
+  }) : _variant = TappableVariant.faded,
+       scaleAlignment = null,
+       scaleStrength = null;
 
   /// {@macro tappable.scaled}
   const Tappable.scaled({
@@ -144,8 +135,8 @@ class Tappable extends StatelessWidget {
     this.onLongPressEnd,
     this.boxShadow,
     this.enableFeedback = true,
-  })  : _variant = TappableVariant.scaled,
-        fadeStrength = null;
+  }) : _variant = TappableVariant.scaled,
+       fadeStrength = null;
 
   /// The tappable variant, which is used to determine the visual effect.
   final TappableVariant _variant;
@@ -292,14 +283,10 @@ class _TappableStateWidget extends StatefulWidget {
 class _TappableStateWidgetState extends State<_TappableStateWidget>
     with SingleTickerProviderStateMixin
     implements _ParentTappableState {
-  final ObserverList<_ParentTappableState> _activeChildren =
-      ObserverList<_ParentTappableState>();
+  final ObserverList<_ParentTappableState> _activeChildren = ObserverList<_ParentTappableState>();
 
   @override
-  void markChildTappablePressed(
-    _ParentTappableState childState,
-    bool value,
-  ) {
+  void markChildTappablePressed(_ParentTappableState childState, bool value) {
     final lastAnyPressed = _anyChildTappablePressed;
     if (value) {
       _activeChildren.add(childState);
@@ -333,14 +320,8 @@ class _TappableStateWidgetState extends State<_TappableStateWidget>
   @override
   void initState() {
     super.initState();
-    _animationController = AnimationController(
-      duration: const Duration(milliseconds: 200),
-      value: 0,
-      vsync: this,
-    );
-    _animation = _animationController
-        .drive(CurveTween(curve: Curves.decelerate))
-        .drive(_animationTween);
+    _animationController = AnimationController(duration: const Duration(milliseconds: 200), value: 0, vsync: this);
+    _animation = _animationController.drive(CurveTween(curve: Curves.decelerate)).drive(_animationTween);
     _setTween();
   }
 
@@ -395,26 +376,14 @@ class _TappableStateWidgetState extends State<_TappableStateWidget>
     }
     if (_animationController.value < _animationValue) {
       _animationController
-          .animateTo(
-            _animationValue,
-            duration: animationOutDuration,
-            curve: Curves.easeInOutCubicEmphasized,
-          )
+          .animateTo(_animationValue, duration: animationOutDuration, curve: Curves.easeInOutCubicEmphasized)
           .then(
-            (value) => _animationController.animateTo(
-              0,
-              duration: animationInDuration,
-              curve: Curves.easeOutCubic,
-            ),
+            (value) => _animationController.animateTo(0, duration: animationInDuration, curve: Curves.easeOutCubic),
           );
       widget.onTapUp?.call(event);
     }
     if (_animationController.value >= _animationValue) {
-      _animationController.animateTo(
-        0,
-        duration: animationInDuration,
-        curve: Curves.easeOutCubic,
-      );
+      _animationController.animateTo(0, duration: animationInDuration, curve: Curves.easeOutCubic);
     }
   }
 
@@ -444,25 +413,16 @@ class _TappableStateWidgetState extends State<_TappableStateWidget>
             duration: animationOutDuration,
             curve: Curves.easeInOutCubicEmphasized,
           )
-        : _animationController
-            .animateTo(
-            0,
-            duration: animationInDuration,
-            curve: Curves.easeOutCubic,
-          )
-            .then(
-            (_) {
-              if (mounted && wasHeldDown != _buttonHeldDown) {
-                _animate();
-              }
-            },
-          );
+        : _animationController.animateTo(0, duration: animationInDuration, curve: Curves.easeOutCubic).then((_) {
+            if (mounted && wasHeldDown != _buttonHeldDown) {
+              _animate();
+            }
+          });
   }
 
   Future<void> _onPointerDown(PointerDownEvent event) async {
     // Check if right mouse button clicked
-    if (event.kind == PointerDeviceKind.mouse &&
-        event.buttons == kSecondaryMouseButton) {
+    if (event.kind == PointerDeviceKind.mouse && event.buttons == kSecondaryMouseButton) {
       if (widget.onLongPress != null) widget.onLongPress!.call();
     }
   }
@@ -487,44 +447,39 @@ class _TappableStateWidgetState extends State<_TappableStateWidget>
             color: widget.backgroundColor,
             boxShadow: widget.boxShadow,
           ),
-          child: Padding(
-            padding: widget.padding ?? EdgeInsets.zero,
-            child: widget.child,
-          ),
+          child: Padding(padding: widget.padding ?? EdgeInsets.zero, child: widget.child),
         ),
       ),
     );
 
     Widget button;
-    Widget tappable({required VoidCallback? onTap, required Widget child}) =>
-        MouseRegion(
-          cursor: kIsWeb ? SystemMouseCursors.click : MouseCursor.defer,
-          child: IgnorePointer(
-            ignoring: widget.onLongPress == null && onTap == null,
-            child: GestureDetector(
-              behavior: HitTestBehavior.opaque,
-              onTap: onTap,
-              onDoubleTap: widget.onDoubleTap,
-              onTapUp: _handleTapUp,
-              onTapDown: _handleTapDown,
-              onTapCancel: _handleTapCancel,
-              onLongPressStart: widget.onLongPressStart,
-              onLongPressEnd: widget.onLongPressEnd,
-              onLongPressMoveUpdate: widget.onLongPressMoveUpdate,
-              // Use null so other long press actions can be captured
-              onLongPress: widget.onLongPress == null ? null : _handleLongPress,
-              child: child,
-            ),
-          ),
-        );
+    Widget tappable({required VoidCallback? onTap, required Widget child}) => MouseRegion(
+      cursor: kIsWeb ? SystemMouseCursors.click : MouseCursor.defer,
+      child: IgnorePointer(
+        ignoring: widget.onLongPress == null && onTap == null,
+        child: GestureDetector(
+          behavior: HitTestBehavior.opaque,
+          onTap: onTap,
+          onDoubleTap: widget.onDoubleTap,
+          onTapUp: _handleTapUp,
+          onTapDown: _handleTapDown,
+          onTapCancel: _handleTapCancel,
+          onLongPressStart: widget.onLongPressStart,
+          onLongPressEnd: widget.onLongPressEnd,
+          onLongPressMoveUpdate: widget.onLongPressMoveUpdate,
+          // Use null so other long press actions can be captured
+          onLongPress: widget.onLongPress == null ? null : _handleLongPress,
+          child: child,
+        ),
+      ),
+    );
 
     if (widget.throttle) {
       button = ThrottledButton(
         onTap: _handleTap(),
         throttleDuration: widget.throttleDuration?.inMilliseconds,
         child: animatedDecoratedBox,
-        builder: (isThrottled, onTap, child) =>
-            tappable(onTap: onTap, child: child!),
+        builder: (isThrottled, onTap, child) => tappable(onTap: onTap, child: child!),
       );
     } else {
       button = tappable(onTap: _handleTap(), child: animatedDecoratedBox);
@@ -536,10 +491,7 @@ class _TappableStateWidgetState extends State<_TappableStateWidget>
 
     return _ParentTappableProvider(
       state: this,
-      child: Listener(
-        onPointerDown: _onPointerDown,
-        child: button,
-      ),
+      child: Listener(onPointerDown: _onPointerDown, child: button),
     );
   }
 }
@@ -561,11 +513,7 @@ class _ButtonAnimationWrapper extends StatelessWidget {
   Widget build(BuildContext context) {
     return switch (variant) {
       TappableVariant.faded => FadeTransition(opacity: animation, child: child),
-      TappableVariant.scaled => ScaleTransition(
-          scale: animation,
-          alignment: scaleAlignment!,
-          child: child,
-        ),
+      TappableVariant.scaled => ScaleTransition(scale: animation, alignment: scaleAlignment!, child: child),
       _ => child,
     };
   }
@@ -593,10 +541,7 @@ class Throttler {
 
     timer?.cancel();
     action();
-    timer = Timer(
-      Duration(milliseconds: milliseconds ?? kDefaultThrottlerDuration),
-      () {},
-    );
+    timer = Timer(Duration(milliseconds: milliseconds ?? kDefaultThrottlerDuration), () {});
   }
 
   /// Disposes the timer.
@@ -630,8 +575,7 @@ class ThrottledButton extends StatefulWidget {
   final Widget? child;
 
   /// The builder of the button being wrapped.
-  final Widget Function(bool isThrottled, VoidCallback? onTap, Widget? child)
-      builder;
+  final Widget Function(bool isThrottled, VoidCallback? onTap, Widget? child) builder;
 
   @override
   State<ThrottledButton> createState() => _ThrottledButtonState();
@@ -664,20 +608,14 @@ class _ThrottledButtonState extends State<ThrottledButton> {
       builder: (context, isThrottled, _) {
         final onTap = isThrottled || widget.onTap == null
             ? null
-            : () => _throttler.run(
-                  () {
-                    _isThrottled.value = true;
-                    widget.onTap?.call();
-                    Future<void>.delayed(
-                      Duration(
-                        milliseconds: widget.throttleDuration ??
-                            _throttler.milliseconds ??
-                            350,
-                      ),
-                      () => _isThrottled.value = false,
-                    );
-                  },
+            : () => _throttler.run(() {
+                _isThrottled.value = true;
+                widget.onTap?.call();
+                Future<void>.delayed(
+                  Duration(milliseconds: widget.throttleDuration ?? _throttler.milliseconds ?? 350),
+                  () => _isThrottled.value = false,
                 );
+              });
 
         return widget.builder(isThrottled, onTap, widget.child);
       },

@@ -55,9 +55,7 @@ class StartupViewModel extends BaseViewModel {
 
       _userService.userInitializedStream.distinct().listen((userInitialized) {
         if (userInitialized) {
-          _log.d(
-            'User initialized: Navigating to either MainView or CompleteProfileView',
-          );
+          _log.d('User initialized: Navigating to either MainView or CompleteProfileView');
           handleUserReady();
         }
       });
@@ -66,14 +64,10 @@ class StartupViewModel extends BaseViewModel {
 
   void handleUserReady() {
     if (_userService.hasUser) {
-      _log.d(
-        'Existing user has a document in Firestore: Navigating to MainView',
-      );
+      _log.d('Existing user has a document in Firestore: Navigating to MainView');
       _navigationService.clearStackAndShow(MainViewRoute());
     } else {
-      _log.d(
-        'New user does not have a document yet in Firestore: Navigating to CompleteProfileView',
-      );
+      _log.d('New user does not have a document yet in Firestore: Navigating to CompleteProfileView');
       _navigationService.clearStackAndShow(CompleteProfileViewRoute());
     }
   }

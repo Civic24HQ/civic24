@@ -109,7 +109,21 @@ abstract mixin class FirestoreService<T> {
   Future<List<T>> fetchDocumentsWithQuery({required Query<T> query}) async {
     log.d('fetchDocumentsWithQuery() -> listQuery: ${query.parameters}');
     final collectionItems = await query.get();
+    log.i('Fetched ${collectionItems.docs.length} documents');
     return collectionItems.docs.map<T>((e) => e.data()).toList();
+  }
+
+  /// Retrieves the raw [QuerySnapshot] for a given Firestore [Query].
+  ///
+  /// This method can be used by services that need access to the
+  /// underlying document snapshots (for example, to implement
+  /// cursor-based pagination using `startAfterDocument`).
+  @protected
+  Future<QuerySnapshot<T>> fetchQuerySnapshot({required Query<T> query}) async {
+    log.d('fetchQuerySnapshot() -> listQuery: ${query.parameters}');
+    final collectionItems = await query.get();
+    log.i('Fetched ${collectionItems.docs.length} documents');
+    return collectionItems;
   }
 
   /// Updates an entire document in the specified [collectionReference] using
@@ -224,6 +238,20 @@ abstract mixin class FirestoreService<T> {
   Stream<List<T>> subscribeToListWithQuery({required Query<T> query, int? limit}) {
     log.d('subscribeToListWithQuery() -> limit: $limit');
     return query.limit(limit ?? 9999).snapshots().map((snapshot) => snapshot.docs.map((e) => e.data()).toList());
+  }
+
+  /// Subscribes to real-time updates for an entire collection with a custom [Query]
+  ///
+  /// The optional [limit] parameter restricts the number of results
+  /// (default is 9999).
+  ///
+  /// Returns:
+  /// - A [Stream] emitting a [QuerySnapshot] of type [T].
+  @protected
+  Stream<QuerySnapshot<T>> subscribeToSnapshotWithQuery({required Query<T> query, int? limit}) {
+    log.d('subscribeToQuerySnapshot() -> limit: $limit');
+    final snapshots = query.limit(limit ?? 9999).snapshots();
+    return snapshots;
   }
 
   /// Creates an exception for missing or empty document IDs.

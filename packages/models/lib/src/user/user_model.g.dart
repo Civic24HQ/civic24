@@ -39,7 +39,7 @@ _UserAccount _$UserAccountFromJson(Map<String, dynamic> json) => _UserAccount(
   address: json['address'] as String,
   postalCode: json['postalCode'] as String,
   registrationDate: const TimestampConverter().fromJson(
-    json['registrationDate'] as Timestamp,
+    json['registrationDate'],
   ),
   userType:
       $enumDecodeNullable(_$UserTypeEnumMap, json['userType']) ??
@@ -47,24 +47,16 @@ _UserAccount _$UserAccountFromJson(Map<String, dynamic> json) => _UserAccount(
   phoneNumber: json['phoneNumber'] as String?,
   profilePicture: json['profilePicture'] as String?,
   gender: json['gender'] as String?,
-  dateOfBirth: const TimestampNullableConverter().fromJson(
-    json['dateOfBirth'] as Timestamp?,
-  ),
+  dateOfBirth: const TimestampNullableConverter().fromJson(json['dateOfBirth']),
   hasCompletedOnboarding: json['hasCompletedOnboarding'] as bool? ?? false,
   mustAuthenticate: json['mustAuthenticate'] as bool? ?? false,
-  deletedAt: const TimestampNullableConverter().fromJson(
-    json['deletedAt'] as Timestamp?,
-  ),
+  deletedAt: const TimestampNullableConverter().fromJson(json['deletedAt']),
   isDeleted: json['isDeleted'] as bool? ?? false,
   deleteReason: json['deleteReason'] as String? ?? '',
   isDisabled: json['isDisabled'] as bool? ?? false,
-  disabledAt: const TimestampNullableConverter().fromJson(
-    json['disabledAt'] as Timestamp?,
-  ),
+  disabledAt: const TimestampNullableConverter().fromJson(json['disabledAt']),
   disableReason: json['disableReason'] as String? ?? '',
-  lastUpdated: const TimestampNullableConverter().fromJson(
-    json['lastUpdated'] as Timestamp?,
-  ),
+  lastUpdated: const TimestampNullableConverter().fromJson(json['lastUpdated']),
 );
 
 Map<String, dynamic> _$UserAccountToJson(
@@ -78,7 +70,7 @@ Map<String, dynamic> _$UserAccountToJson(
   'city': instance.city,
   'address': instance.address,
   'postalCode': instance.postalCode,
-  'registrationDate': const TimestampConverter().toJson(
+  'registrationDate': ?const TimestampConverter().toJson(
     instance.registrationDate,
   ),
   'userType': _$UserTypeEnumMap[instance.userType]!,
@@ -112,9 +104,7 @@ _UserDeviceModel _$UserDeviceModelFromJson(Map<String, dynamic> json) =>
       currentTimeZone: TimeZone.fromJson(
         json['currentTimeZone'] as Map<String, dynamic>,
       ),
-      lastUsed: const TimestampNullableConverter().fromJson(
-        json['lastUsed'] as Timestamp?,
-      ),
+      lastUsed: const TimestampNullableConverter().fromJson(json['lastUsed']),
     );
 
 Map<String, dynamic> _$UserDeviceModelToJson(_UserDeviceModel instance) =>

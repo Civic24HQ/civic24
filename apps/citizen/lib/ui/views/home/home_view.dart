@@ -2,6 +2,7 @@ import 'package:citizen/ui/shared/src/assets.gen.dart';
 import 'package:citizen/ui/views/home/home_viewmodel.dart';
 import 'package:components/components.dart';
 import 'package:constants/constants.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:localization/localization.dart';
 import 'package:stacked/stacked.dart';
@@ -22,11 +23,7 @@ class HomeView extends StackedView<HomeViewModel> {
         shape: const CircleBorder(),
         backgroundColor: context.primary,
         onPressed: viewModel.onAddReport,
-        child: Icon(
-          Icons.add,
-          color: context.onPrimary,
-          size: AppDimensions.size28,
-        ),
+        child: Icon(Icons.add, color: context.onPrimary, size: AppDimensions.size28),
       ),
       appBar: AppBar(
         toolbarHeight: AppDimensions.size64,
@@ -36,10 +33,7 @@ class HomeView extends StackedView<HomeViewModel> {
         scrolledUnderElevation: 0,
         automaticallyImplyLeading: false,
         shape: const Border(bottom: BorderSide(color: Colors.transparent)),
-        title: Assets.png.civic24SplashScreenIOS.image(
-          width: AppDimensions.size72,
-          height: AppDimensions.size48,
-        ),
+        title: Assets.png.civic24SplashScreenIOS.image(width: AppDimensions.size72, height: AppDimensions.size48),
       ),
       body: AppTabs.underlined(
         tabs: [
