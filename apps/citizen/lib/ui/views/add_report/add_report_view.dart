@@ -18,17 +18,12 @@ part 'steps/report_media.dart';
   autoTextFieldValidation: false,
   fields: [FormTextField(name: 'content', validator: Validator.validateEmpty)],
 )
-class AddReportView extends StackedView<AddReportViewModel>
-    with $AddReportView {
+class AddReportView extends StackedView<AddReportViewModel> with $AddReportView {
   const AddReportView({this.currentStep = 1, super.key});
   final int currentStep;
 
   @override
-  Widget builder(
-    BuildContext context,
-    AddReportViewModel viewModel,
-    Widget? child,
-  ) {
+  Widget builder(BuildContext context, AddReportViewModel viewModel, Widget? child) {
     return GestureDetector(
       onTap: () => FocusScope.of(context).unfocus(),
       child: AbsorbPointer(
@@ -56,19 +51,13 @@ class AddReportView extends StackedView<AddReportViewModel>
                     ),
                   ),
                   AppSpacing.standard,
-                  PageProgressBar(
-                    currentPage: viewModel.currentStep,
-                    totalPages: viewModel.totalSteps,
-                  ),
+                  PageProgressBar(currentPage: viewModel.currentStep, totalPages: viewModel.totalSteps),
                   AppSpacing.large,
                   Expanded(
                     child: Stack(
                       fit: StackFit.expand,
                       children: [
-                        Offstage(
-                          offstage: viewModel.currentStep != 1,
-                          child: const ReportCategory(),
-                        ),
+                        Offstage(offstage: viewModel.currentStep != 1, child: const ReportCategory()),
                         Offstage(
                           offstage: viewModel.currentStep != 2,
                           child: ReportContent(
@@ -77,10 +66,7 @@ class AddReportView extends StackedView<AddReportViewModel>
                             errorText: viewModel.contentValidationMessage,
                           ),
                         ),
-                        Offstage(
-                          offstage: viewModel.currentStep != 3,
-                          child: const ReportMedia(),
-                        ),
+                        Offstage(offstage: viewModel.currentStep != 3, child: const ReportMedia()),
                       ],
                     ),
                   ),
@@ -89,23 +75,16 @@ class AddReportView extends StackedView<AddReportViewModel>
                     children: [
                       if (viewModel.currentStep > 1) ...[
                         Expanded(
-                          child: SecondaryButton(
-                            title: l10n.generalPrevious,
-                            onTap: viewModel.previousStep,
-                          ),
+                          child: SecondaryButton(title: l10n.generalPrevious, onTap: viewModel.previousStep),
                         ),
                         AppSpacing.normal,
                       ],
                       Expanded(
                         child: PrimaryButton(
-                          title: viewModel.isLastStep
-                              ? l10n.generalSubmit
-                              : l10n.generalContinue,
+                          title: viewModel.isLastStep ? l10n.generalSubmit : l10n.generalContinue,
                           disabled: viewModel.canContinue,
                           isBusy: viewModel.isSaveBusy,
-                          onTap: viewModel.isLastStep
-                              ? viewModel.saveReportData
-                              : viewModel.nextStep,
+                          onTap: viewModel.isLastStep ? viewModel.saveReportData : viewModel.nextStep,
                         ),
                       ),
                     ],
@@ -133,6 +112,5 @@ class AddReportView extends StackedView<AddReportViewModel>
   }
 
   @override
-  AddReportViewModel viewModelBuilder(BuildContext context) =>
-      AddReportViewModel();
+  AddReportViewModel viewModelBuilder(BuildContext context) => AddReportViewModel();
 }

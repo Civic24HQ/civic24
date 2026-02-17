@@ -52,7 +52,6 @@ abstract class FirestoreCollectionService<T extends SerializeJson> extends Fires
         toFirestore: (object, _) => object.toJson(),
       );
 
-
   /// Generates a new document ID for the Firestore collection.
   ///
   /// This method ensures that new documents have unique IDs before being added
@@ -154,6 +153,18 @@ abstract class FirestoreCollectionService<T extends SerializeJson> extends Fires
   Stream<List<T>> subscribeListWithQuery({required Query<T> query, int? limit}) {
     _validateQuery(query);
     return subscribeToListWithQuery(query: query, limit: limit);
+  }
+
+  /// Subscribes to real-time updates for a query-based document list.
+  ///
+  /// Returns a stream of filtered documents that updates when data changes.
+  ///
+  /// - [query]: A Firestore query to filter the results.
+  /// - [limit]: The maximum number of documents to include in the stream.
+  @protected
+  Stream<QuerySnapshot<T>> subscribeSnapshotWithQuery({required Query<T> query, int? limit}) {
+    _validateQuery(query);
+    return subscribeToSnapshotWithQuery(query: query, limit: limit);
   }
 
   /// Ensures that the query belongs to the correct collection reference.

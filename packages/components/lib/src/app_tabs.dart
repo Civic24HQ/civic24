@@ -7,6 +7,7 @@ const double _kCounterWidth = 30;
 const double _kCounterHeight = 20;
 
 enum _TabBarStyle { underlined, buttoned }
+
 class AppTab {
   const AppTab({required this.label, this.view, this.count = 0});
 
@@ -28,7 +29,6 @@ class AppTabs extends StatefulWidget {
   final EdgeInsets? padding;
 
   final _TabBarStyle _tabBarStyle;
-
 
   @override
   State<AppTabs> createState() => _AppTabsState();

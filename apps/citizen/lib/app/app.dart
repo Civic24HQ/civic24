@@ -115,10 +115,7 @@ class CustomTextScaleClamper extends StatelessWidget {
     return Builder(
       builder: (context) {
         final mediaQueryData = MediaQuery.of(context);
-        final constrainedTextScaleFactor = mediaQueryData.textScaler.clamp(
-          minScaleFactor: 1,
-          maxScaleFactor: 1.3,
-        );
+        final constrainedTextScaleFactor = mediaQueryData.textScaler.clamp(minScaleFactor: 1, maxScaleFactor: 1.3);
 
         return MediaQuery(
           data: mediaQueryData.copyWith(textScaler: constrainedTextScaleFactor),

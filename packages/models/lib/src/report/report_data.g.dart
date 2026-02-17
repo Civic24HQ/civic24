@@ -17,12 +17,8 @@ _ReportData _$ReportDataFromJson(Map<String, dynamic> json) => _ReportData(
   dislikeCount: (json['dislikeCount'] as num).toInt(),
   commentCount: (json['commentCount'] as num).toInt(),
   bookmarkCount: (json['bookmarkCount'] as num).toInt(),
-  createdAt: const TimestampConverter().fromJson(
-    json['createdAt'] as Timestamp,
-  ),
-  updatedAt: const TimestampConverter().fromJson(
-    json['updatedAt'] as Timestamp,
-  ),
+  createdAt: const TimestampConverter().fromJson(json['createdAt']),
+  updatedAt: const TimestampConverter().fromJson(json['updatedAt']),
   media:
       (json['media'] as List<dynamic>?)?.map((e) => e as String).toList() ??
       const [],
@@ -48,8 +44,8 @@ Map<String, dynamic> _$ReportDataToJson(_ReportData instance) =>
       'dislikeCount': instance.dislikeCount,
       'commentCount': instance.commentCount,
       'bookmarkCount': instance.bookmarkCount,
-      'createdAt': const TimestampConverter().toJson(instance.createdAt),
-      'updatedAt': const TimestampConverter().toJson(instance.updatedAt),
+      'createdAt': ?const TimestampConverter().toJson(instance.createdAt),
+      'updatedAt': ?const TimestampConverter().toJson(instance.updatedAt),
       'media': ?instance.media,
       'userId': ?instance.userId,
       'userImageUrl': ?instance.userImageUrl,

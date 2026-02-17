@@ -28,7 +28,7 @@ class SettingsListTile extends StatelessWidget {
   final VoidCallback? onTap;
 
   @override
-  Widget build(BuildContext context) { 
+  Widget build(BuildContext context) {
     return Semantics(
       container: true,
       child: Tooltip(
@@ -59,10 +59,7 @@ class SettingsListTile extends StatelessWidget {
                         AppSpacing.small,
                         Padding(
                           padding: const EdgeInsets.only(top: AppDimensions.size2),
-                          child: Text(
-                            subtitle!,
-                            style: context.labelMedium?.copyWith(color: context.neutralHigh),
-                          ),
+                          child: Text(subtitle!, style: context.labelMedium?.copyWith(color: context.neutralHigh)),
                         ),
                       ],
                     ],
