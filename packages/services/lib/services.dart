@@ -7,6 +7,7 @@ export 'src/services/core/analytics_service.dart';
 export 'src/services/core/authentication_service.dart';
 export 'src/services/core/cloudinary_storage_service.dart';
 export 'src/services/core/crashlytics_service.dart';
+export 'src/services/core/internet_connectivity_service.dart';
 export 'src/services/core/local_notification_service.dart';
 export 'src/services/core/media_service.dart';
 export 'src/services/core/permission_service.dart';
