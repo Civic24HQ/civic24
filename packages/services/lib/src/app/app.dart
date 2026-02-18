@@ -19,7 +19,9 @@ import 'package:stacked/stacked_annotations.dart';
     LazySingleton(classType: CrashlyticsService),
     LazySingleton(classType: CloudinaryStorageService),
     LazySingleton(classType: SettingsStorageService),
+    LazySingleton(classType: ReportCacheService),
     LazySingleton(classType: UrlLauncherService),
+    LazySingleton(classType: InternetConnectivityService),
     // @stacked-service
   ],
   locatorName: 'serviceLocator',
