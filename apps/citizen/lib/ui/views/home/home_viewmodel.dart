@@ -6,8 +6,10 @@ import 'package:models/models.dart';
 import 'package:services/services.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
+import 'package:utils/utils.dart';
 
 class HomeViewModel extends ReactiveViewModel {
+  final _log = getLogger('HomeViewModel');
   final _bottomSheetService = locator<BottomSheetService>();
   final _navigationService = locator<RouterService>();
   final _userService = locator<UserService>();
@@ -17,31 +19,58 @@ class HomeViewModel extends ReactiveViewModel {
   List<ListenableServiceMixin> get listenableServices => [_userService, _reportService];
 
   String get user => _userService.user!.id;
-  List<Report> get reportList => _reportService.reportList;
 
-  List<Report> get allReportList => reportList;
-  List<Report> get trendingReportList => reportList.toList()
-    ..sort((a, b) {
-      final byLikes = b.reportData.likeCount.compareTo(a.reportData.likeCount);
-      if (byLikes != 0) return byLikes;
-      return b.reportData.updatedAt.compareTo(a.reportData.updatedAt);
-    });
+  List<Report> getAllReports() => _reportService.getFeedItems(ReportFeedType.all);
 
-  CategoryType selectedCategory = CategoryType.values[0];
-  List<Report> get reportCategoryList =>
-      reportList.where((r) => r.reportData.categoryTypes.contains(selectedCategory)).toList()
-        ..sort((a, b) => b.reportData.createdAt.compareTo(a.reportData.createdAt));
+  List<Report> getTrendingReports() => _reportService.getFeedItems(ReportFeedType.trending);
 
-  List<Report> get reportTrendingInCategory =>
-      reportList.where((r) => r.reportData.categoryTypes.contains(selectedCategory)).toList()..sort((a, b) {
-        final byLikes = b.reportData.likeCount.compareTo(a.reportData.likeCount);
-        if (byLikes != 0) return byLikes;
-        return b.reportData.updatedAt.compareTo(a.reportData.updatedAt);
-      });
+  List<Report> getCategoryReports(CategoryType category) =>
+      _reportService.getFeedItems(ReportFeedType.category, category: category);
+
+  Future<void> startRealTimeFeed(ReportFeedType reportTypeFeed, {CategoryType? category}) async {
+    await _reportService.startRealtimeFeed(reportTypeFeed, category: category);
+  }
+
+  void stopRealTimeFeed(ReportFeedType reportTypeFeed, {CategoryType? category}) =>
+      _reportService.stopRealtimeFeed(reportTypeFeed, category: category);
+
+  bool isAllInitialLoading() => _reportService.isInitialReportLoading(ReportFeedType.all);
+  bool isTrendingInitialLoading() => _reportService.isInitialReportLoading(ReportFeedType.trending);
+  bool isCategoryInitialLoading(CategoryType category) =>
+      _reportService.isInitialReportLoading(ReportFeedType.category, category: category);
+
+  bool isAllPaginationLoading() => _reportService.isPaginationLoading(ReportFeedType.all);
+  bool isTrendingPaginationLoading() => _reportService.isPaginationLoading(ReportFeedType.trending);
+  bool isCategoryPaginationLoading(CategoryType category) =>
+      _reportService.isPaginationLoading(ReportFeedType.category, category: category);
+
+  Future<void> loadMoreAll({int limit = kPageLimit}) => _reportService.loadMoreFeed(ReportFeedType.all, limit: limit);
+
+  Future<void> loadMoreTrending({int limit = kPageLimit}) =>
+      _reportService.loadMoreFeed(ReportFeedType.trending, limit: limit);
+
+  Future<void> loadMoreCategory(CategoryType category, {int limit = kPageLimit}) =>
+      _reportService.loadMoreFeed(ReportFeedType.category, category: category, limit: limit);
+
+  Future<void> refreshAll({int limit = kPageLimit}) => _reportService.refreshFeed(ReportFeedType.all, limit: limit);
+
+  Future<void> refreshTrending({int limit = kPageLimit}) =>
+      _reportService.refreshFeed(ReportFeedType.trending, limit: limit);
+
+  Future<void> refreshCategory(CategoryType category, {int limit = kPageLimit}) =>
+      _reportService.refreshFeed(ReportFeedType.category, category: category, limit: limit);
+
+  Future<void> initAllFeed({int limit = kPageLimit}) =>
+      _reportService.loadInitialFeed(ReportFeedType.all, limit: limit);
+
+  Future<void> initTrendingFeed({int limit = kPageLimit}) =>
+      _reportService.loadInitialFeed(ReportFeedType.trending, limit: limit);
+
+  Future<void> initCategoryFeed(CategoryType category, {int limit = kPageLimit}) =>
+      _reportService.loadInitialFeed(ReportFeedType.category, category: category, limit: limit);
 
   void onCategoryChanged(CategoryType category) {
-    selectedCategory = category;
-    rebuildUi();
+    _log.i('User switched to $category Tab');
   }
 
   Future<void> viewComment() async {

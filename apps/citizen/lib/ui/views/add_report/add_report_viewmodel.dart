@@ -25,7 +25,6 @@ class AddReportViewModel extends FormViewModel {
   List<ListenableServiceMixin> get listenableServices => [_userService, _reportService];
 
   String get user => _userService.user!.id;
-  List<Report> get reportList => _reportService.reportList;
 
   int get totalSteps => 3;
 

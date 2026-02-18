@@ -16,7 +16,7 @@ class ReportsViewModel extends ReactiveViewModel {
   List<ListenableServiceMixin> get listenableServices => [_userService, _reportService];
 
   String get user => _userService.user!.id;
-  List<Report> get reportList => _reportService.reportList;
+  List<Report> get reportList => [];
 
   List<Report> get myReportList =>
       reportList.where((r) => r.reportData.userId == user).toList()

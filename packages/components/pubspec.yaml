@@ -17,6 +17,7 @@ dependencies:
   font_awesome_flutter: ^10.4.0
   dotted_border: ^2.1.0
   flutter_animate: ^4.5.2
+  shimmer: ^2.0.0
   cached_network_image: ^3.4.1
   overlay_support: ^2.1.0
 

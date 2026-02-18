@@ -60,41 +60,47 @@ class _FakeUserModel_3 extends _i1.SmartFake implements _i3.UserModel {
     : super(parent, parentInvocation);
 }
 
-class _FakeReactiveList_4<E> extends _i1.SmartFake
+class _FakeQuerySnapshot_4<T extends Object?> extends _i1.SmartFake
+    implements _i4.QuerySnapshot<T> {
+  _FakeQuerySnapshot_4(Object parent, Invocation parentInvocation)
+    : super(parent, parentInvocation);
+}
+
+class _FakeReactiveList_5<E> extends _i1.SmartFake
     implements _i5.ReactiveList<E> {
-  _FakeReactiveList_4(Object parent, Invocation parentInvocation)
+  _FakeReactiveList_5(Object parent, Invocation parentInvocation)
     : super(parent, parentInvocation);
 }
 
-class _FakeBox_5<E> extends _i1.SmartFake implements _i6.Box<E> {
-  _FakeBox_5(Object parent, Invocation parentInvocation)
+class _FakeBox_6<E> extends _i1.SmartFake implements _i6.Box<E> {
+  _FakeBox_6(Object parent, Invocation parentInvocation)
     : super(parent, parentInvocation);
 }
 
-class _FakeReference_6 extends _i1.SmartFake implements _i7.Reference {
-  _FakeReference_6(Object parent, Invocation parentInvocation)
+class _FakeReference_7 extends _i1.SmartFake implements _i7.Reference {
+  _FakeReference_7(Object parent, Invocation parentInvocation)
     : super(parent, parentInvocation);
 }
 
-class _FakeReport_7 extends _i1.SmartFake implements _i3.Report {
-  _FakeReport_7(Object parent, Invocation parentInvocation)
+class _FakeReport_8 extends _i1.SmartFake implements _i3.Report {
+  _FakeReport_8(Object parent, Invocation parentInvocation)
     : super(parent, parentInvocation);
 }
 
-class _FakeImageMetadata_8 extends _i1.SmartFake implements _i3.ImageMetadata {
-  _FakeImageMetadata_8(Object parent, Invocation parentInvocation)
+class _FakeImageMetadata_9 extends _i1.SmartFake implements _i3.ImageMetadata {
+  _FakeImageMetadata_9(Object parent, Invocation parentInvocation)
     : super(parent, parentInvocation);
 }
 
-class _FakeFirebaseAnalyticsObserver_9 extends _i1.SmartFake
+class _FakeFirebaseAnalyticsObserver_10 extends _i1.SmartFake
     implements _i8.FirebaseAnalyticsObserver {
-  _FakeFirebaseAnalyticsObserver_9(Object parent, Invocation parentInvocation)
+  _FakeFirebaseAnalyticsObserver_10(Object parent, Invocation parentInvocation)
     : super(parent, parentInvocation);
 }
 
-class _FakeNotificationDetails_10 extends _i1.SmartFake
+class _FakeNotificationDetails_11 extends _i1.SmartFake
     implements _i9.NotificationDetails {
-  _FakeNotificationDetails_10(Object parent, Invocation parentInvocation)
+  _FakeNotificationDetails_11(Object parent, Invocation parentInvocation)
     : super(parent, parentInvocation);
 }
 
@@ -274,15 +280,6 @@ class MockUserService extends _i1.Mock implements _i10.UserService {
   _i12.Future<void> syncUser() =>
       (super.noSuchMethod(
             Invocation.method(#syncUser, []),
-            returnValue: _i12.Future<void>.value(),
-            returnValueForMissingStub: _i12.Future<void>.value(),
-          )
-          as _i12.Future<void>);
-
-  @override
-  _i12.Future<void> syncExternalServices() =>
-      (super.noSuchMethod(
-            Invocation.method(#syncExternalServices, []),
             returnValue: _i12.Future<void>.value(),
             returnValueForMissingStub: _i12.Future<void>.value(),
           )
@@ -493,6 +490,22 @@ class MockUserService extends _i1.Mock implements _i10.UserService {
           as _i12.Stream<List<_i3.UserModel>>);
 
   @override
+  _i12.Stream<_i4.QuerySnapshot<_i3.UserModel>> subscribeSnapshotWithQuery({
+    required _i4.Query<_i3.UserModel>? query,
+    int? limit,
+  }) =>
+      (super.noSuchMethod(
+            Invocation.method(#subscribeSnapshotWithQuery, [], {
+              #query: query,
+              #limit: limit,
+            }),
+            returnValue: _i12.Stream<_i4.QuerySnapshot<_i3.UserModel>>.empty(),
+            returnValueForMissingStub:
+                _i12.Stream<_i4.QuerySnapshot<_i3.UserModel>>.empty(),
+          )
+          as _i12.Stream<_i4.QuerySnapshot<_i3.UserModel>>);
+
+  @override
   String newDocId({
     required _i4.CollectionReference<_i3.UserModel>? collectionReference,
   }) =>
@@ -582,6 +595,28 @@ class MockUserService extends _i1.Mock implements _i10.UserService {
             ),
           )
           as _i12.Future<List<_i3.UserModel>>);
+
+  @override
+  _i12.Future<_i4.QuerySnapshot<_i3.UserModel>> fetchQuerySnapshot({
+    required _i4.Query<_i3.UserModel>? query,
+  }) =>
+      (super.noSuchMethod(
+            Invocation.method(#fetchQuerySnapshot, [], {#query: query}),
+            returnValue: _i12.Future<_i4.QuerySnapshot<_i3.UserModel>>.value(
+              _FakeQuerySnapshot_4<_i3.UserModel>(
+                this,
+                Invocation.method(#fetchQuerySnapshot, [], {#query: query}),
+              ),
+            ),
+            returnValueForMissingStub:
+                _i12.Future<_i4.QuerySnapshot<_i3.UserModel>>.value(
+                  _FakeQuerySnapshot_4<_i3.UserModel>(
+                    this,
+                    Invocation.method(#fetchQuerySnapshot, [], {#query: query}),
+                  ),
+                ),
+          )
+          as _i12.Future<_i4.QuerySnapshot<_i3.UserModel>>);
 
   @override
   _i12.Future<void> updateDocument({
@@ -676,6 +711,22 @@ class MockUserService extends _i1.Mock implements _i10.UserService {
             returnValueForMissingStub: _i12.Stream<List<_i3.UserModel>>.empty(),
           )
           as _i12.Stream<List<_i3.UserModel>>);
+
+  @override
+  _i12.Stream<_i4.QuerySnapshot<_i3.UserModel>> subscribeToSnapshotWithQuery({
+    required _i4.Query<_i3.UserModel>? query,
+    int? limit,
+  }) =>
+      (super.noSuchMethod(
+            Invocation.method(#subscribeToSnapshotWithQuery, [], {
+              #query: query,
+              #limit: limit,
+            }),
+            returnValue: _i12.Stream<_i4.QuerySnapshot<_i3.UserModel>>.empty(),
+            returnValueForMissingStub:
+                _i12.Stream<_i4.QuerySnapshot<_i3.UserModel>>.empty(),
+          )
+          as _i12.Stream<_i4.QuerySnapshot<_i3.UserModel>>);
 
   @override
   void listenToReactiveValues(List<dynamic>? reactiveValues) =>
@@ -1059,11 +1110,11 @@ class MockAlertService extends _i1.Mock implements _i10.AlertService {
   _i5.ReactiveList<_i10.AlertMixin> get alertListeners =>
       (super.noSuchMethod(
             Invocation.getter(#alertListeners),
-            returnValue: _FakeReactiveList_4<_i10.AlertMixin>(
+            returnValue: _FakeReactiveList_5<_i10.AlertMixin>(
               this,
               Invocation.getter(#alertListeners),
             ),
-            returnValueForMissingStub: _FakeReactiveList_4<_i10.AlertMixin>(
+            returnValueForMissingStub: _FakeReactiveList_5<_i10.AlertMixin>(
               this,
               Invocation.getter(#alertListeners),
             ),
@@ -1202,8 +1253,8 @@ class MockSettingsStorageService extends _i1.Mock
   _i6.Box<dynamic> get box =>
       (super.noSuchMethod(
             Invocation.getter(#box),
-            returnValue: _FakeBox_5<dynamic>(this, Invocation.getter(#box)),
-            returnValueForMissingStub: _FakeBox_5<dynamic>(
+            returnValue: _FakeBox_6<dynamic>(this, Invocation.getter(#box)),
+            returnValueForMissingStub: _FakeBox_6<dynamic>(
               this,
               Invocation.getter(#box),
             ),
@@ -1352,24 +1403,6 @@ class MockReportService extends _i1.Mock implements _i10.ReportService {
           as String);
 
   @override
-  List<_i3.Report> get reportList =>
-      (super.noSuchMethod(
-            Invocation.getter(#reportList),
-            returnValue: <_i3.Report>[],
-            returnValueForMissingStub: <_i3.Report>[],
-          )
-          as List<_i3.Report>);
-
-  @override
-  _i12.Stream<List<_i3.Report>> get reportsStream =>
-      (super.noSuchMethod(
-            Invocation.getter(#reportsStream),
-            returnValue: _i12.Stream<List<_i3.Report>>.empty(),
-            returnValueForMissingStub: _i12.Stream<List<_i3.Report>>.empty(),
-          )
-          as _i12.Stream<List<_i3.Report>>);
-
-  @override
   _i4.CollectionReference<_i3.Report> get collectionReference =>
       (super.noSuchMethod(
             Invocation.getter(#collectionReference),
@@ -1397,11 +1430,11 @@ class MockReportService extends _i1.Mock implements _i10.ReportService {
   _i7.Reference get storageReference =>
       (super.noSuchMethod(
             Invocation.getter(#storageReference),
-            returnValue: _FakeReference_6(
+            returnValue: _FakeReference_7(
               this,
               Invocation.getter(#storageReference),
             ),
-            returnValueForMissingStub: _FakeReference_6(
+            returnValueForMissingStub: _FakeReference_7(
               this,
               Invocation.getter(#storageReference),
             ),
@@ -1412,11 +1445,11 @@ class MockReportService extends _i1.Mock implements _i10.ReportService {
   _i3.Report convertFromJson(Map<String, dynamic>? json) =>
       (super.noSuchMethod(
             Invocation.method(#convertFromJson, [json]),
-            returnValue: _FakeReport_7(
+            returnValue: _FakeReport_8(
               this,
               Invocation.method(#convertFromJson, [json]),
             ),
-            returnValueForMissingStub: _FakeReport_7(
+            returnValueForMissingStub: _FakeReport_8(
               this,
               Invocation.method(#convertFromJson, [json]),
             ),
@@ -1424,18 +1457,132 @@ class MockReportService extends _i1.Mock implements _i10.ReportService {
           as _i3.Report);
 
   @override
-  _i12.Future<void> initialize() =>
+  List<_i3.Report> getFeedItems(
+    _i13.ReportFeedType? type, {
+    _i13.CategoryType? category,
+  }) =>
       (super.noSuchMethod(
-            Invocation.method(#initialize, []),
+            Invocation.method(#getFeedItems, [type], {#category: category}),
+            returnValue: <_i3.Report>[],
+            returnValueForMissingStub: <_i3.Report>[],
+          )
+          as List<_i3.Report>);
+
+  @override
+  bool isInitialReportLoading(
+    _i13.ReportFeedType? type, {
+    _i13.CategoryType? category,
+  }) =>
+      (super.noSuchMethod(
+            Invocation.method(
+              #isInitialReportLoading,
+              [type],
+              {#category: category},
+            ),
+            returnValue: false,
+            returnValueForMissingStub: false,
+          )
+          as bool);
+
+  @override
+  bool isPaginationLoading(
+    _i13.ReportFeedType? type, {
+    _i13.CategoryType? category,
+  }) =>
+      (super.noSuchMethod(
+            Invocation.method(
+              #isPaginationLoading,
+              [type],
+              {#category: category},
+            ),
+            returnValue: false,
+            returnValueForMissingStub: false,
+          )
+          as bool);
+
+  @override
+  bool hasMore(_i13.ReportFeedType? type, {_i13.CategoryType? category}) =>
+      (super.noSuchMethod(
+            Invocation.method(#hasMore, [type], {#category: category}),
+            returnValue: false,
+            returnValueForMissingStub: false,
+          )
+          as bool);
+
+  @override
+  _i12.Future<void> loadInitialFeed(
+    _i13.ReportFeedType? type, {
+    _i13.CategoryType? category,
+    int? limit = 10,
+  }) =>
+      (super.noSuchMethod(
+            Invocation.method(
+              #loadInitialFeed,
+              [type],
+              {#category: category, #limit: limit},
+            ),
             returnValue: _i12.Future<void>.value(),
             returnValueForMissingStub: _i12.Future<void>.value(),
           )
           as _i12.Future<void>);
 
   @override
-  _i12.Future<void> syncReportList() =>
+  _i12.Future<void> startRealtimeFeed(
+    _i13.ReportFeedType? type, {
+    _i13.CategoryType? category,
+  }) =>
       (super.noSuchMethod(
-            Invocation.method(#syncReportList, []),
+            Invocation.method(
+              #startRealtimeFeed,
+              [type],
+              {#category: category},
+            ),
+            returnValue: _i12.Future<void>.value(),
+            returnValueForMissingStub: _i12.Future<void>.value(),
+          )
+          as _i12.Future<void>);
+
+  @override
+  _i12.Future<void> stopRealtimeFeed(
+    _i13.ReportFeedType? type, {
+    _i13.CategoryType? category,
+  }) =>
+      (super.noSuchMethod(
+            Invocation.method(#stopRealtimeFeed, [type], {#category: category}),
+            returnValue: _i12.Future<void>.value(),
+            returnValueForMissingStub: _i12.Future<void>.value(),
+          )
+          as _i12.Future<void>);
+
+  @override
+  _i12.Future<void> loadMoreFeed(
+    _i13.ReportFeedType? type, {
+    _i13.CategoryType? category,
+    int? limit = 10,
+  }) =>
+      (super.noSuchMethod(
+            Invocation.method(
+              #loadMoreFeed,
+              [type],
+              {#category: category, #limit: limit},
+            ),
+            returnValue: _i12.Future<void>.value(),
+            returnValueForMissingStub: _i12.Future<void>.value(),
+          )
+          as _i12.Future<void>);
+
+  @override
+  _i12.Future<void> refreshFeed(
+    _i13.ReportFeedType? type, {
+    _i13.CategoryType? category,
+    int? limit = 10,
+  }) =>
+      (super.noSuchMethod(
+            Invocation.method(
+              #refreshFeed,
+              [type],
+              {#category: category, #limit: limit},
+            ),
             returnValue: _i12.Future<void>.value(),
             returnValueForMissingStub: _i12.Future<void>.value(),
           )
@@ -1460,39 +1607,31 @@ class MockReportService extends _i1.Mock implements _i10.ReportService {
           as _i12.Future<void>);
 
   @override
-  _i12.Future<List<_i3.Report>> fetchReports() =>
+  _i12.Future<void> loadFeedsFromCache() =>
       (super.noSuchMethod(
-            Invocation.method(#fetchReports, []),
-            returnValue: _i12.Future<List<_i3.Report>>.value(<_i3.Report>[]),
-            returnValueForMissingStub: _i12.Future<List<_i3.Report>>.value(
-              <_i3.Report>[],
-            ),
-          )
-          as _i12.Future<List<_i3.Report>>);
-
-  @override
-  _i12.Future<void> fetchReportByIds(List<String>? reportIds) =>
-      (super.noSuchMethod(
-            Invocation.method(#fetchReportByIds, [reportIds]),
+            Invocation.method(#loadFeedsFromCache, []),
             returnValue: _i12.Future<void>.value(),
             returnValueForMissingStub: _i12.Future<void>.value(),
           )
           as _i12.Future<void>);
 
   @override
-  _i12.Future<void> seedFakeReports() =>
+  _i12.Future<void> stopAllRealtimeFeeds() =>
       (super.noSuchMethod(
-            Invocation.method(#seedFakeReports, []),
+            Invocation.method(#stopAllRealtimeFeeds, []),
             returnValue: _i12.Future<void>.value(),
             returnValueForMissingStub: _i12.Future<void>.value(),
           )
           as _i12.Future<void>);
 
   @override
-  void dispose() => super.noSuchMethod(
-    Invocation.method(#dispose, []),
-    returnValueForMissingStub: null,
-  );
+  _i12.Future<void> dispose() =>
+      (super.noSuchMethod(
+            Invocation.method(#dispose, []),
+            returnValue: _i12.Future<void>.value(),
+            returnValueForMissingStub: _i12.Future<void>.value(),
+          )
+          as _i12.Future<void>);
 
   @override
   String generateNewDocId() =>
@@ -1645,6 +1784,22 @@ class MockReportService extends _i1.Mock implements _i10.ReportService {
           as _i12.Stream<List<_i3.Report>>);
 
   @override
+  _i12.Stream<_i4.QuerySnapshot<_i3.Report>> subscribeSnapshotWithQuery({
+    required _i4.Query<_i3.Report>? query,
+    int? limit,
+  }) =>
+      (super.noSuchMethod(
+            Invocation.method(#subscribeSnapshotWithQuery, [], {
+              #query: query,
+              #limit: limit,
+            }),
+            returnValue: _i12.Stream<_i4.QuerySnapshot<_i3.Report>>.empty(),
+            returnValueForMissingStub:
+                _i12.Stream<_i4.QuerySnapshot<_i3.Report>>.empty(),
+          )
+          as _i12.Stream<_i4.QuerySnapshot<_i3.Report>>);
+
+  @override
   String newDocId({
     required _i4.CollectionReference<_i3.Report>? collectionReference,
   }) =>
@@ -1730,6 +1885,28 @@ class MockReportService extends _i1.Mock implements _i10.ReportService {
             ),
           )
           as _i12.Future<List<_i3.Report>>);
+
+  @override
+  _i12.Future<_i4.QuerySnapshot<_i3.Report>> fetchQuerySnapshot({
+    required _i4.Query<_i3.Report>? query,
+  }) =>
+      (super.noSuchMethod(
+            Invocation.method(#fetchQuerySnapshot, [], {#query: query}),
+            returnValue: _i12.Future<_i4.QuerySnapshot<_i3.Report>>.value(
+              _FakeQuerySnapshot_4<_i3.Report>(
+                this,
+                Invocation.method(#fetchQuerySnapshot, [], {#query: query}),
+              ),
+            ),
+            returnValueForMissingStub:
+                _i12.Future<_i4.QuerySnapshot<_i3.Report>>.value(
+                  _FakeQuerySnapshot_4<_i3.Report>(
+                    this,
+                    Invocation.method(#fetchQuerySnapshot, [], {#query: query}),
+                  ),
+                ),
+          )
+          as _i12.Future<_i4.QuerySnapshot<_i3.Report>>);
 
   @override
   _i12.Future<void> updateDocument({
@@ -1826,6 +2003,22 @@ class MockReportService extends _i1.Mock implements _i10.ReportService {
           as _i12.Stream<List<_i3.Report>>);
 
   @override
+  _i12.Stream<_i4.QuerySnapshot<_i3.Report>> subscribeToSnapshotWithQuery({
+    required _i4.Query<_i3.Report>? query,
+    int? limit,
+  }) =>
+      (super.noSuchMethod(
+            Invocation.method(#subscribeToSnapshotWithQuery, [], {
+              #query: query,
+              #limit: limit,
+            }),
+            returnValue: _i12.Stream<_i4.QuerySnapshot<_i3.Report>>.empty(),
+            returnValueForMissingStub:
+                _i12.Stream<_i4.QuerySnapshot<_i3.Report>>.empty(),
+          )
+          as _i12.Stream<_i4.QuerySnapshot<_i3.Report>>);
+
+  @override
   void listenToReactiveValues(List<dynamic>? reactiveValues) =>
       super.noSuchMethod(
         Invocation.method(#listenToReactiveValues, [reactiveValues]),
@@ -1917,13 +2110,13 @@ class MockMediaService extends _i1.Mock implements _i10.MediaService {
       (super.noSuchMethod(
             Invocation.method(#extractImageMetadata, [pickedFile]),
             returnValue: _i12.Future<_i3.ImageMetadata>.value(
-              _FakeImageMetadata_8(
+              _FakeImageMetadata_9(
                 this,
                 Invocation.method(#extractImageMetadata, [pickedFile]),
               ),
             ),
             returnValueForMissingStub: _i12.Future<_i3.ImageMetadata>.value(
-              _FakeImageMetadata_8(
+              _FakeImageMetadata_9(
                 this,
                 Invocation.method(#extractImageMetadata, [pickedFile]),
               ),
@@ -2119,11 +2312,11 @@ class MockAnalyticsService extends _i1.Mock implements _i10.AnalyticsService {
   _i8.FirebaseAnalyticsObserver getAnalyticsObserver() =>
       (super.noSuchMethod(
             Invocation.method(#getAnalyticsObserver, []),
-            returnValue: _FakeFirebaseAnalyticsObserver_9(
+            returnValue: _FakeFirebaseAnalyticsObserver_10(
               this,
               Invocation.method(#getAnalyticsObserver, []),
             ),
-            returnValueForMissingStub: _FakeFirebaseAnalyticsObserver_9(
+            returnValueForMissingStub: _FakeFirebaseAnalyticsObserver_10(
               this,
               Invocation.method(#getAnalyticsObserver, []),
             ),
@@ -2280,11 +2473,11 @@ class MockLocalNotificationService extends _i1.Mock
   _i9.NotificationDetails getPlatformChannelDetails(String? type) =>
       (super.noSuchMethod(
             Invocation.method(#getPlatformChannelDetails, [type]),
-            returnValue: _FakeNotificationDetails_10(
+            returnValue: _FakeNotificationDetails_11(
               this,
               Invocation.method(#getPlatformChannelDetails, [type]),
             ),
-            returnValueForMissingStub: _FakeNotificationDetails_10(
+            returnValueForMissingStub: _FakeNotificationDetails_11(
               this,
               Invocation.method(#getPlatformChannelDetails, [type]),
             ),

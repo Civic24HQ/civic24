@@ -44,6 +44,7 @@ dependencies:
   http: ^1.6.0
   http_parser: ^4.1.2
   mime: ^2.0.0
+  internet_connection_checker_plus: ^2.9.1+2
 
   # Google/Firebase Dependencies
   firebase_auth: ^6.1.4
