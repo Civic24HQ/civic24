@@ -29,5 +29,6 @@ Future<void> _preLocatorSetup() async {
 Future<void> _postLocatorSetup() async {
   setupBottomSheetUi();
   setupDialogUi();
+  await InternetConnectivityService().initialize();
   runApp(const App());
 }

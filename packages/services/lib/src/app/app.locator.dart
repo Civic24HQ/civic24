@@ -14,6 +14,7 @@ import '../services/core/analytics_service.dart';
 import '../services/core/authentication_service.dart';
 import '../services/core/cloudinary_storage_service.dart';
 import '../services/core/crashlytics_service.dart';
+import '../services/core/internet_connectivity_service.dart';
 import '../services/core/local_notification_service.dart';
 import '../services/core/media_service.dart';
 import '../services/core/permission_service.dart';
@@ -51,4 +52,5 @@ Future<void> setupServiceLocator({
   serviceLocator.registerLazySingleton(() => SettingsStorageService());
   serviceLocator.registerLazySingleton(() => ReportCacheService());
   serviceLocator.registerLazySingleton(() => UrlLauncherService());
+  serviceLocator.registerLazySingleton(() => InternetConnectivityService());
 }
