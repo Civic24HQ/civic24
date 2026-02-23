@@ -250,7 +250,7 @@ abstract mixin class FirestoreService<T> {
   @protected
   Stream<QuerySnapshot<T>> subscribeToSnapshotWithQuery({required Query<T> query, int? limit}) {
     log.d('subscribeToQuerySnapshot() -> limit: $limit');
-    final snapshots = query.limit(limit ?? 9999).snapshots();
+    final snapshots = query.limit(limit ?? 9999).snapshots(includeMetadataChanges: true);
     return snapshots;
   }
 

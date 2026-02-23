@@ -3,8 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:solar_icons/solar_icons.dart';
 import 'package:styles/styles.dart';
 
-/// An action button with an icon plus optional count that
-/// supports different variants through the named constructors.
 class SocialActionButton extends StatelessWidget {
   const SocialActionButton._({
     required this.iconActive,
