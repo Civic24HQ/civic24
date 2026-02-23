@@ -24,6 +24,7 @@ import '../services/feature/report_service.dart';
 import '../services/feature/url_launcher_service.dart';
 import '../services/local_storage/src/report_cache_service.dart';
 import '../services/local_storage/src/settings_storage_service.dart';
+import '../services/local_storage/src/user_storage_service.dart';
 
 final serviceLocator = StackedLocator.instance;
 
@@ -53,4 +54,5 @@ Future<void> setupServiceLocator({
   serviceLocator.registerLazySingleton(() => ReportCacheService());
   serviceLocator.registerLazySingleton(() => UrlLauncherService());
   serviceLocator.registerLazySingleton(() => InternetConnectivityService());
+  serviceLocator.registerLazySingleton(() => UserStorageService());
 }

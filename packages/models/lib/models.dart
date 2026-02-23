@@ -4,6 +4,7 @@ library models;
 export 'factories/fake.dart';
 export 'src/comment/comment_data.dart';
 export 'src/notification/notification_data.dart';
+export 'src/report/interaction.dart';
 export 'src/report/report_data.dart';
 export 'src/user/country.dart';
 export 'src/user/display_preferences.dart';

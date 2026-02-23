@@ -8,8 +8,8 @@ class AppReportShimmer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final baseColor = Colors.grey.shade300;
-    final highlightColor = Colors.grey.shade100;
+    final baseColor = context.neutralHighest.withValues(alpha: 0.5);
+    final highlightColor = context.neutralHighest.withValues(alpha: 0.2);
 
     return Padding(
       padding: AppEdgeInsets.horizontalPadding12,

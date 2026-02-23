@@ -27,9 +27,6 @@ class FeedPageState {
 // This class is responsible for managing report data related operations
 // such as fetching report data, updating report information, etc.
 class ReportService extends FirestoreCollectionService<Report> with ListenableServiceMixin, FirebaseStorageService {
-  ReportService() {
-    _init();
-  }
 
   @override
   @protected
@@ -37,6 +34,7 @@ class ReportService extends FirestoreCollectionService<Report> with ListenableSe
 
   final _alertService = serviceLocator<AlertService>();
   final _reportCache = serviceLocator<ReportCacheService>();
+  final _userStorageService = serviceLocator<UserStorageService>();
 
   @override
   String get collectionPath => FirestoreCollections.reports;
@@ -49,7 +47,9 @@ class ReportService extends FirestoreCollectionService<Report> with ListenableSe
 
   final Set<String> _activeRealtimeFeeds = {};
 
-  Future<void> _init() async {
+  final Set<String> _pendingInteractionReportIds = {};
+
+  Future<void> syncReportList() async {
     listenToReactiveValues([_feedStates]);
     await loadFeedsFromCache();
   }
@@ -126,8 +126,36 @@ class ReportService extends FirestoreCollectionService<Report> with ListenableSe
     return query.limit(limit);
   }
 
+Future<List<Report>> hydrateUserInteractionsBatch(List<Report> reports, String userId) async {
+    if (reports.isEmpty) return reports;
+
+    final firestore = FirebaseFirestore.instance;
+
+    final futures = reports.map((report) async {
+      final doc = await firestore
+          .collection(collectionPath)
+          .doc(report.reportData.reportId)
+          .collection('interactions')
+          .doc(userId)
+          .get();
+
+      if (!doc.exists) return report;
+
+      final interaction = Interaction.fromJson(doc.data()!);
+
+      return report.copyWith(
+        hasLiked: interaction.hasLiked,
+        hasDisliked: interaction.hasDisliked,
+        hasBookmarked: interaction.hasBookmarked,
+      );
+    });
+
+    return Future.wait(futures);
+  }
+
   /// Loads the first page of a feed.
   Future<void> loadInitialFeed(ReportFeedType type, {CategoryType? category, int limit = kPageLimit}) async {
+    final userId = _userStorageService.userId!;
     final key = _feedKey(type, category: category);
     final state = _stateFor(key);
 
@@ -143,8 +171,10 @@ class ReportService extends FirestoreCollectionService<Report> with ListenableSe
     // Load from cache first for instant UI response
     final cached = _reportCache.loadFeed(key);
     if (cached != null && cached.isNotEmpty) {
+      final hydratedCached = await hydrateUserInteractionsBatch(cached, userId);
+
       state
-        ..items = cached
+        ..items = hydratedCached
         ..lastDocument = null
         ..hasMore = true
         ..isLoadingFirstPage = false;
@@ -157,8 +187,10 @@ class ReportService extends FirestoreCollectionService<Report> with ListenableSe
 
     final reports = snapshot.docs.map((d) => d.data()).toList();
 
+    final hydratedReports = await hydrateUserInteractionsBatch(reports, userId);
+
     state
-      ..items = reports
+      ..items = hydratedReports
       ..lastDocument = snapshot.docs.isNotEmpty ? snapshot.docs.last : null
       ..hasMore = snapshot.docs.length == limit
       ..isLoadingFirstPage = false;
@@ -166,7 +198,7 @@ class ReportService extends FirestoreCollectionService<Report> with ListenableSe
     notifyListeners();
 
     // Cache the loaded feed
-    await _reportCache.saveFeed(key, reports);
+    await _reportCache.saveFeed(key, hydratedReports);
   }
 
   void _removeFromFeed({required ReportFeedType type, required String reportId, CategoryType? category}) {
@@ -182,21 +214,42 @@ class ReportService extends FirestoreCollectionService<Report> with ListenableSe
     for (final change in snapshot.docChanges) {
       final report = change.doc.data();
       final id = report!.reportData.reportId;
+      final userId = _userStorageService.userId!;
 
       switch (change.type) {
         case DocumentChangeType.added:
-          _injectIntoFeed(type: type, category: category, report: report);
+          final hydrated = await hydrateUserInteractionsBatch([report], userId);
+          _injectIntoFeed(type: type, category: category, report: hydrated.first);
 
         case DocumentChangeType.modified:
-          _updateReportEverywhere(report);
-          _reconcileTrending(report);
-          _reconcileCategories(report);
+
+          final existing = _findReportById(report.reportData.reportId);
+
+          if (existing == null) {
+            _updateReportEverywhere(report);
+            break;
+          }
+
+          final merged = report.copyWith(
+            hasLiked: existing.hasLiked,
+            hasDisliked: existing.hasDisliked,
+            hasBookmarked: existing.hasBookmarked,
+
+            reportData: report.reportData,
+          );
+
+          _updateReportEverywhere(merged);
+
+          await _saveReportToAllFeedCaches(merged.reportData.reportId);
+
+          _reconcileTrending(merged);
+
+          _reconcileCategories(merged);
 
         case DocumentChangeType.removed:
           _removeFromFeed(type: type, category: category, reportId: id);
       }
     }
-
     notifyListeners();
     await _reportCache.saveFeed(
       _feedKey(type, category: category),
@@ -249,6 +302,7 @@ class ReportService extends FirestoreCollectionService<Report> with ListenableSe
   Future<void> loadMoreFeed(ReportFeedType type, {CategoryType? category, int limit = kPageLimit}) async {
     final key = _feedKey(type, category: category);
     final state = _stateFor(key);
+    final userId = _userStorageService.userId!;
 
     if (state.isLoadingNextPage || !state.hasMore || state.lastDocument == null) return;
 
@@ -262,7 +316,9 @@ class ReportService extends FirestoreCollectionService<Report> with ListenableSe
     final newReports = snapshot.docs.map((d) => d.data()).toList();
     final existingIds = state.items.map((e) => e.reportData.reportId).toSet();
 
-    state.items.addAll(newReports.where((r) => !existingIds.contains(r.reportData.reportId)));
+    final hydrated = await hydrateUserInteractionsBatch(newReports, userId);
+
+    state.items.addAll(hydrated.where((r) => !existingIds.contains(r.reportData.reportId)));
 
     state
       ..lastDocument = snapshot.docs.isNotEmpty ? snapshot.docs.last : state.lastDocument
@@ -296,15 +352,15 @@ class ReportService extends FirestoreCollectionService<Report> with ListenableSe
   @protected
   void _injectIntoFeed({required ReportFeedType type, required Report report, CategoryType? category}) {
     final state = _stateFor(_feedKey(type, category: category));
-    final id = report.reportData.reportId;
 
-    if (state.items.any((r) => r.reportData.reportId == id)) return;
+    state.items.removeWhere((r) => r.reportData.reportId == report.reportData.reportId);
 
-    state.items.insert(0, report);
+    state.items.add(report);
 
-    const maxCache = 100;
-    if (state.items.length > maxCache) {
-      state.items = state.items.take(maxCache).toList();
+    state.items.sort((a, b) => b.reportData.createdAt.compareTo(a.reportData.createdAt));
+
+    if (state.items.length > 100) {
+      state.items = state.items.take(100).toList();
     }
   }
 
@@ -412,28 +468,276 @@ class ReportService extends FirestoreCollectionService<Report> with ListenableSe
     }
   }
 
+Future<void> toggleLike({required String reportId, required String userId}) async {
+    final firestore = FirebaseFirestore.instance;
+
+    final reportRef = firestore.collection(collectionPath).doc(reportId);
+
+    final interactionRef = reportRef.collection('interactions').doc(userId);
+
+    final interactionSnap = await interactionRef.get();
+
+    final interaction = interactionSnap.exists
+        ? Interaction.fromJson(interactionSnap.data()!)
+        : Interaction(userId: userId);
+
+    final likeDelta = interaction.hasLiked ? -1 : 1;
+    final dislikeDelta = interaction.hasDisliked ? -1 : 0;
+
+    final batch = firestore.batch()
+      ..update(reportRef, {
+        'reportData.likeCount': FieldValue.increment(likeDelta),
+        if (dislikeDelta != 0) 'reportData.dislikeCount': FieldValue.increment(dislikeDelta),
+      })
+      ..set(
+        interactionRef,
+        interaction.copyWith(hasLiked: !interaction.hasLiked, hasDisliked: false, updatedAt: DateTime.now()).toJson(),
+        SetOptions(merge: true),
+      );
+
+    await batch.commit();
+  }
+
+  Future<void> toggleDislike({required String reportId, required String userId}) async {
+    final firestore = FirebaseFirestore.instance;
+
+    final reportRef = firestore.collection(collectionPath).doc(reportId);
+
+    final interactionRef = reportRef.collection('interactions').doc(userId);
+
+    final interactionSnap = await interactionRef.get();
+
+    final interaction = interactionSnap.exists
+        ? Interaction.fromJson(interactionSnap.data()!)
+        : Interaction(userId: userId);
+
+    final dislikeDelta = interaction.hasDisliked ? -1 : 1;
+    final likeDelta = interaction.hasLiked ? -1 : 0;
+
+    final batch = firestore.batch()
+      ..update(reportRef, {
+        'reportData.dislikeCount': FieldValue.increment(dislikeDelta),
+        if (likeDelta != 0) 'reportData.likeCount': FieldValue.increment(likeDelta),
+      })
+      ..set(
+        interactionRef,
+        interaction
+            .copyWith(hasDisliked: !interaction.hasDisliked, hasLiked: false, updatedAt: DateTime.now())
+            .toJson(),
+        SetOptions(merge: true),
+      );
+
+    await batch.commit();
+  }
+
+  Future<void> toggleBookmark({required String reportId, required String userId}) async {
+    final firestore = FirebaseFirestore.instance;
+
+    final reportRef = firestore.collection(collectionPath).doc(reportId);
+
+    final interactionRef = reportRef.collection('interactions').doc(userId);
+
+    final interactionSnap = await interactionRef.get();
+
+    final interaction = interactionSnap.exists
+        ? Interaction.fromJson(interactionSnap.data()!)
+        : Interaction(userId: userId);
+
+    final delta = interaction.hasBookmarked ? -1 : 1;
+
+    final batch = firestore.batch()
+      ..update(reportRef, {'reportData.bookmarkCount': FieldValue.increment(delta)})
+      ..set(
+        interactionRef,
+        interaction.copyWith(hasBookmarked: !interaction.hasBookmarked, updatedAt: DateTime.now()).toJson(),
+        SetOptions(merge: true),
+      );
+
+    await batch.commit();
+  }
+
+  Report? _findReportById(String id) {
+    for (final state in _feedStates.value.values) {
+      final index = state.items.indexWhere((r) => r.reportData.reportId == id);
+
+      if (index != -1) {
+        return state.items[index];
+      }
+    }
+    return null;
+  }
+
+  Future<void> _saveReportToAllFeedCaches(String reportId) async {
+    for (final entry in _feedStates.value.entries) {
+      final key = entry.key;
+      final state = entry.value;
+
+      final exists = state.items.any((r) => r.reportData.reportId == reportId);
+
+      if (exists) {
+        await _reportCache.saveFeed(key, state.items);
+      }
+    }
+  }
+
+  Future<void> optimisticToggleLike(Report report) async {
+    final current = _findReportById(report.reportData.reportId);
+
+    if (current == null) return;
+
+    final updated = current.copyWith(
+      hasLiked: !current.hasLiked,
+      hasDisliked: false,
+      reportData: current.reportData.copyWith(
+        likeCount: current.hasLiked
+            ? (current.reportData.likeCount - 1).clamp(0, 2147483647)
+            : (current.reportData.likeCount + 1).clamp(0, 2147483647),
+        dislikeCount: current.hasDisliked
+            ? (current.reportData.dislikeCount - 1).clamp(0, 2147483647)
+            : current.reportData.dislikeCount,
+      ),
+    );
+
+    _updateReportEverywhere(updated);
+
+    notifyListeners();
+
+    await _saveReportToAllFeedCaches(updated.reportData.reportId);
+  }
+
+  Future<void> optimisticToggleDislike(Report report) async {
+    final current = _findReportById(report.reportData.reportId);
+
+    if (current == null) return;
+
+    final updatedReport = current.copyWith(
+      hasDisliked: !current.hasDisliked,
+      hasLiked: false,
+      reportData: current.reportData.copyWith(
+        dislikeCount: current.hasDisliked
+            ? (current.reportData.dislikeCount - 1).clamp(0, 2147483647)
+            : (current.reportData.dislikeCount + 1).clamp(0, 2147483647),
+        likeCount: current.hasLiked
+            ? (current.reportData.likeCount - 1).clamp(0, 2147483647)
+            : current.reportData.likeCount,
+      ),
+    );
+
+    _updateReportEverywhere(updatedReport);
+
+    notifyListeners();
+
+    await _saveReportToAllFeedCaches(updatedReport.reportData.reportId);
+  }
+
+  Future<void> optimisticToggleBookmark(Report report) async {
+    final current = _findReportById(report.reportData.reportId);
+
+    if (current == null) return;
+
+    final updatedReport = current.copyWith(
+      hasBookmarked: !current.hasBookmarked,
+      reportData: current.reportData.copyWith(
+        bookmarkCount: current.hasBookmarked
+            ? (current.reportData.bookmarkCount - 1).clamp(0, 2147483647)
+            : (current.reportData.bookmarkCount + 1).clamp(0, 2147483647),
+      ),
+    );
+
+    _updateReportEverywhere(updatedReport);
+
+    notifyListeners();
+    await _saveReportToAllFeedCaches(updatedReport.reportData.reportId);
+  }
+
+  Future<void> likeReportOptimistic(Report report, String userId) async {
+    final reportId = report.reportData.reportId;
+
+    if (_pendingInteractionReportIds.contains(reportId)) return;
+
+    _pendingInteractionReportIds.add(reportId);
+
+    await optimisticToggleLike(report);
+
+    try {
+      await toggleLike(reportId: reportId, userId: userId);
+    } catch (e, stack) {
+      log.e('Like failed, reverting', error: e, stackTrace: stack);
+    } finally {
+      _pendingInteractionReportIds.remove(reportId);
+    }
+  }
+
+  Future<void> dislikeReportOptimistic(Report report, String userId) async {
+    final reportId = report.reportData.reportId;
+
+    if (_pendingInteractionReportIds.contains(reportId)) return;
+
+    _pendingInteractionReportIds.add(reportId);
+
+    await optimisticToggleDislike(report);
+
+    try {
+      await toggleDislike(reportId: reportId, userId: userId);
+    } catch (e, stack) {
+      log.e('Dislike failed, reverting', error: e, stackTrace: stack);
+    } finally {
+      _pendingInteractionReportIds.remove(reportId);
+    }
+  }
+
+  Future<void> bookmarkReportOptimistic(Report report, String userId) async {
+    final reportId = report.reportData.reportId;
+
+    if (_pendingInteractionReportIds.contains(reportId)) return;
+
+    _pendingInteractionReportIds.add(reportId);
+
+    await optimisticToggleBookmark(report);
+
+    try {
+      await toggleBookmark(reportId: reportId, userId: userId);
+    } catch (e, stack) {
+      log.e('Bookmark failed, reverting', error: e, stackTrace: stack);
+    } finally {
+      _pendingInteractionReportIds.remove(reportId);
+    }
+  }
+
   Future<void> loadFeedsFromCache() async {
     // Load ALL feed
+    final userId = _userStorageService.userId!;
+
     final allKey = _feedKey(ReportFeedType.all);
     final allCached = _reportCache.loadFeed(allKey);
+
     if (allCached != null) {
-      _stateFor(allKey).items = allCached;
+      final hydratedReports = await hydrateUserInteractionsBatch(allCached, userId);
+      _stateFor(allKey).items = hydratedReports;
+      notifyListeners();
     }
 
     // Load TRENDING feed
     final trendingKey = _feedKey(ReportFeedType.trending);
     final trendingCached = _reportCache.loadFeed(trendingKey);
+
     if (trendingCached != null) {
-      _stateFor(trendingKey).items = trendingCached;
+      final hydratedReports = await hydrateUserInteractionsBatch(trendingCached, userId);
+      _stateFor(trendingKey).items = hydratedReports;
+      notifyListeners();
     }
 
     // Load CATEGORY feeds
     for (final category in CategoryType.values) {
       final key = _feedKey(ReportFeedType.category, category: category);
+
       final cached = _reportCache.loadFeed(key);
+
       if (cached != null) {
-        _stateFor(key).items = cached;
+        final hydratedReports = await hydrateUserInteractionsBatch(cached, userId);
+        _stateFor(key).items = hydratedReports;
       }
+      
     }
 
     notifyListeners();

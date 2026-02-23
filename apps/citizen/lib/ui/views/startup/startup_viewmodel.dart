@@ -55,7 +55,6 @@ class StartupViewModel extends BaseViewModel {
 
       _userService.userInitializedStream.distinct().listen((userInitialized) {
         if (userInitialized) {
-          _log.d('User initialized: Navigating to either MainView or CompleteProfileView');
           handleUserReady();
         }
       });
