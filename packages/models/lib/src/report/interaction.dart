@@ -8,8 +8,6 @@ part 'interaction.g.dart';
 abstract class Interaction with _$Interaction {
   @JsonSerializable()
   const factory Interaction({
-    required String userId,
-
     @Default(false) bool hasLiked,
 
     @Default(false) bool hasDisliked,
