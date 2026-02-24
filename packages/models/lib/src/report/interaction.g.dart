@@ -7,7 +7,6 @@ part of 'interaction.dart';
 // **************************************************************************
 
 _Interaction _$InteractionFromJson(Map<String, dynamic> json) => _Interaction(
-  userId: json['userId'] as String,
   hasLiked: json['hasLiked'] as bool? ?? false,
   hasDisliked: json['hasDisliked'] as bool? ?? false,
   hasBookmarked: json['hasBookmarked'] as bool? ?? false,
@@ -16,7 +15,6 @@ _Interaction _$InteractionFromJson(Map<String, dynamic> json) => _Interaction(
 
 Map<String, dynamic> _$InteractionToJson(_Interaction instance) =>
     <String, dynamic>{
-      'userId': instance.userId,
       'hasLiked': instance.hasLiked,
       'hasDisliked': instance.hasDisliked,
       'hasBookmarked': instance.hasBookmarked,

@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$Interaction {
 
- String get userId; bool get hasLiked; bool get hasDisliked; bool get hasBookmarked;@TimestampConverter() DateTime? get updatedAt;
+ bool get hasLiked; bool get hasDisliked; bool get hasBookmarked;@TimestampConverter() DateTime? get updatedAt;
 /// Create a copy of Interaction
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -28,16 +28,16 @@ $InteractionCopyWith<Interaction> get copyWith => _$InteractionCopyWithImpl<Inte
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is Interaction&&(identical(other.userId, userId) || other.userId == userId)&&(identical(other.hasLiked, hasLiked) || other.hasLiked == hasLiked)&&(identical(other.hasDisliked, hasDisliked) || other.hasDisliked == hasDisliked)&&(identical(other.hasBookmarked, hasBookmarked) || other.hasBookmarked == hasBookmarked)&&(identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is Interaction&&(identical(other.hasLiked, hasLiked) || other.hasLiked == hasLiked)&&(identical(other.hasDisliked, hasDisliked) || other.hasDisliked == hasDisliked)&&(identical(other.hasBookmarked, hasBookmarked) || other.hasBookmarked == hasBookmarked)&&(identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,userId,hasLiked,hasDisliked,hasBookmarked,updatedAt);
+int get hashCode => Object.hash(runtimeType,hasLiked,hasDisliked,hasBookmarked,updatedAt);
 
 @override
 String toString() {
-  return 'Interaction(userId: $userId, hasLiked: $hasLiked, hasDisliked: $hasDisliked, hasBookmarked: $hasBookmarked, updatedAt: $updatedAt)';
+  return 'Interaction(hasLiked: $hasLiked, hasDisliked: $hasDisliked, hasBookmarked: $hasBookmarked, updatedAt: $updatedAt)';
 }
 
 
@@ -48,7 +48,7 @@ abstract mixin class $InteractionCopyWith<$Res>  {
   factory $InteractionCopyWith(Interaction value, $Res Function(Interaction) _then) = _$InteractionCopyWithImpl;
 @useResult
 $Res call({
- String userId, bool hasLiked, bool hasDisliked, bool hasBookmarked,@TimestampConverter() DateTime? updatedAt
+ bool hasLiked, bool hasDisliked, bool hasBookmarked,@TimestampConverter() DateTime? updatedAt
 });
 
 
@@ -65,10 +65,9 @@ class _$InteractionCopyWithImpl<$Res>
 
 /// Create a copy of Interaction
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? userId = null,Object? hasLiked = null,Object? hasDisliked = null,Object? hasBookmarked = null,Object? updatedAt = freezed,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? hasLiked = null,Object? hasDisliked = null,Object? hasBookmarked = null,Object? updatedAt = freezed,}) {
   return _then(_self.copyWith(
-userId: null == userId ? _self.userId : userId // ignore: cast_nullable_to_non_nullable
-as String,hasLiked: null == hasLiked ? _self.hasLiked : hasLiked // ignore: cast_nullable_to_non_nullable
+hasLiked: null == hasLiked ? _self.hasLiked : hasLiked // ignore: cast_nullable_to_non_nullable
 as bool,hasDisliked: null == hasDisliked ? _self.hasDisliked : hasDisliked // ignore: cast_nullable_to_non_nullable
 as bool,hasBookmarked: null == hasBookmarked ? _self.hasBookmarked : hasBookmarked // ignore: cast_nullable_to_non_nullable
 as bool,updatedAt: freezed == updatedAt ? _self.updatedAt : updatedAt // ignore: cast_nullable_to_non_nullable
@@ -157,10 +156,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String userId,  bool hasLiked,  bool hasDisliked,  bool hasBookmarked, @TimestampConverter()  DateTime? updatedAt)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( bool hasLiked,  bool hasDisliked,  bool hasBookmarked, @TimestampConverter()  DateTime? updatedAt)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _Interaction() when $default != null:
-return $default(_that.userId,_that.hasLiked,_that.hasDisliked,_that.hasBookmarked,_that.updatedAt);case _:
+return $default(_that.hasLiked,_that.hasDisliked,_that.hasBookmarked,_that.updatedAt);case _:
   return orElse();
 
 }
@@ -178,10 +177,10 @@ return $default(_that.userId,_that.hasLiked,_that.hasDisliked,_that.hasBookmarke
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String userId,  bool hasLiked,  bool hasDisliked,  bool hasBookmarked, @TimestampConverter()  DateTime? updatedAt)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( bool hasLiked,  bool hasDisliked,  bool hasBookmarked, @TimestampConverter()  DateTime? updatedAt)  $default,) {final _that = this;
 switch (_that) {
 case _Interaction():
-return $default(_that.userId,_that.hasLiked,_that.hasDisliked,_that.hasBookmarked,_that.updatedAt);case _:
+return $default(_that.hasLiked,_that.hasDisliked,_that.hasBookmarked,_that.updatedAt);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -198,10 +197,10 @@ return $default(_that.userId,_that.hasLiked,_that.hasDisliked,_that.hasBookmarke
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String userId,  bool hasLiked,  bool hasDisliked,  bool hasBookmarked, @TimestampConverter()  DateTime? updatedAt)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( bool hasLiked,  bool hasDisliked,  bool hasBookmarked, @TimestampConverter()  DateTime? updatedAt)?  $default,) {final _that = this;
 switch (_that) {
 case _Interaction() when $default != null:
-return $default(_that.userId,_that.hasLiked,_that.hasDisliked,_that.hasBookmarked,_that.updatedAt);case _:
+return $default(_that.hasLiked,_that.hasDisliked,_that.hasBookmarked,_that.updatedAt);case _:
   return null;
 
 }
@@ -213,10 +212,9 @@ return $default(_that.userId,_that.hasLiked,_that.hasDisliked,_that.hasBookmarke
 
 @JsonSerializable()
 class _Interaction implements Interaction {
-  const _Interaction({required this.userId, this.hasLiked = false, this.hasDisliked = false, this.hasBookmarked = false, @TimestampConverter() this.updatedAt});
+  const _Interaction({this.hasLiked = false, this.hasDisliked = false, this.hasBookmarked = false, @TimestampConverter() this.updatedAt});
   factory _Interaction.fromJson(Map<String, dynamic> json) => _$InteractionFromJson(json);
 
-@override final  String userId;
 @override@JsonKey() final  bool hasLiked;
 @override@JsonKey() final  bool hasDisliked;
 @override@JsonKey() final  bool hasBookmarked;
@@ -235,16 +233,16 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Interaction&&(identical(other.userId, userId) || other.userId == userId)&&(identical(other.hasLiked, hasLiked) || other.hasLiked == hasLiked)&&(identical(other.hasDisliked, hasDisliked) || other.hasDisliked == hasDisliked)&&(identical(other.hasBookmarked, hasBookmarked) || other.hasBookmarked == hasBookmarked)&&(identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Interaction&&(identical(other.hasLiked, hasLiked) || other.hasLiked == hasLiked)&&(identical(other.hasDisliked, hasDisliked) || other.hasDisliked == hasDisliked)&&(identical(other.hasBookmarked, hasBookmarked) || other.hasBookmarked == hasBookmarked)&&(identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,userId,hasLiked,hasDisliked,hasBookmarked,updatedAt);
+int get hashCode => Object.hash(runtimeType,hasLiked,hasDisliked,hasBookmarked,updatedAt);
 
 @override
 String toString() {
-  return 'Interaction(userId: $userId, hasLiked: $hasLiked, hasDisliked: $hasDisliked, hasBookmarked: $hasBookmarked, updatedAt: $updatedAt)';
+  return 'Interaction(hasLiked: $hasLiked, hasDisliked: $hasDisliked, hasBookmarked: $hasBookmarked, updatedAt: $updatedAt)';
 }
 
 
@@ -255,7 +253,7 @@ abstract mixin class _$InteractionCopyWith<$Res> implements $InteractionCopyWith
   factory _$InteractionCopyWith(_Interaction value, $Res Function(_Interaction) _then) = __$InteractionCopyWithImpl;
 @override @useResult
 $Res call({
- String userId, bool hasLiked, bool hasDisliked, bool hasBookmarked,@TimestampConverter() DateTime? updatedAt
+ bool hasLiked, bool hasDisliked, bool hasBookmarked,@TimestampConverter() DateTime? updatedAt
 });
 
 
@@ -272,10 +270,9 @@ class __$InteractionCopyWithImpl<$Res>
 
 /// Create a copy of Interaction
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? userId = null,Object? hasLiked = null,Object? hasDisliked = null,Object? hasBookmarked = null,Object? updatedAt = freezed,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? hasLiked = null,Object? hasDisliked = null,Object? hasBookmarked = null,Object? updatedAt = freezed,}) {
   return _then(_Interaction(
-userId: null == userId ? _self.userId : userId // ignore: cast_nullable_to_non_nullable
-as String,hasLiked: null == hasLiked ? _self.hasLiked : hasLiked // ignore: cast_nullable_to_non_nullable
+hasLiked: null == hasLiked ? _self.hasLiked : hasLiked // ignore: cast_nullable_to_non_nullable
 as bool,hasDisliked: null == hasDisliked ? _self.hasDisliked : hasDisliked // ignore: cast_nullable_to_non_nullable
 as bool,hasBookmarked: null == hasBookmarked ? _self.hasBookmarked : hasBookmarked // ignore: cast_nullable_to_non_nullable
 as bool,updatedAt: freezed == updatedAt ? _self.updatedAt : updatedAt // ignore: cast_nullable_to_non_nullable
