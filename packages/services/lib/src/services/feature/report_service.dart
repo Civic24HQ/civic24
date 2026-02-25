@@ -13,8 +13,8 @@ import 'package:utils/utils.dart';
 /// Holds pagination and loading state for a single feed.
 class FeedPageState {
   List<Report> items = [];
-  QueryDocumentSnapshot<Report>? lastDocument;
-  StreamSubscription<QuerySnapshot<Report>>? liveSubscription;
+  QueryDocumentSnapshot? lastDocument;
+  StreamSubscription<dynamic>? liveSubscription;
   bool hasMore = true;
   bool isLoadingFirstPage = false;
   bool isLoadingNextPage = false;
@@ -93,8 +93,28 @@ class ReportService extends FirestoreCollectionService<Report> with ListenableSe
     notifyListeners();
   }
 
+  @protected
+  Future<QuerySnapshot<Map<String, dynamic>>> _getBookmarkedInteractionSnapshot({
+    QueryDocumentSnapshot<Map<String, dynamic>>? lastDoc,
+    int limit = kPageLimit,
+  }) async {
+    var query = FirebaseFirestore.instance
+        .collection('users')
+        .doc(_userStorageService.userId)
+        .collection('interactions')
+        .where('hasBookmarked', isEqualTo: true)
+        .orderBy('updatedAt', descending: true)
+        .limit(limit);
+
+    if (lastDoc != null) {
+      query = query.startAfterDocument(lastDoc);
+    }
+
+    return query.get();
+  }
+
   /// Builds a Firestore query for a specific feed.
-@protected
+  @protected
   Query<Report> _buildFeedQuery(ReportFeedType type, {CategoryType? category, int limit = kPageLimit}) {
     Query<Report> query = collectionReference;
 
@@ -112,13 +132,21 @@ class ReportService extends FirestoreCollectionService<Report> with ListenableSe
         query = query
             .where('reportData.categoryTypes', arrayContains: category!.name)
             .orderBy('reportData.createdAt', descending: true);
+
+      case ReportFeedType.userReports:
+        query = query
+            .where('reportData.userId', isEqualTo: _userStorageService.userId)
+            .orderBy('reportData.createdAt', descending: true);
+
+      case ReportFeedType.userBookmarks:
+        throw UnsupportedError('userBookmarkedReports does not use _buildFeedQuery.');
     }
 
     return query.limit(limit);
   }
 
   /// Builds a Firestore query for real-time updates of a specific feed.
-@protected
+  @protected
   Query<Report> _buildRealtimeQuery(ReportFeedType type, {CategoryType? category, int limit = kPageLimit}) {
     return _buildFeedQuery(type, category: category, limit: limit);
   }
@@ -168,6 +196,10 @@ class ReportService extends FirestoreCollectionService<Report> with ListenableSe
 
   /// Loads the first page of a feed.
   Future<void> loadInitialFeed(ReportFeedType type, {CategoryType? category, int limit = kPageLimit}) async {
+    if (type == ReportFeedType.userBookmarks) {
+      await loadInitialUserBookmarks(limit: limit);
+      return;
+    }
     final userId = _userStorageService.userId!;
     final key = _feedKey(type, category: category);
     final state = _stateFor(key);
@@ -193,14 +225,64 @@ class ReportService extends FirestoreCollectionService<Report> with ListenableSe
     try {
       final snapshot = await fetchQuerySnapshot(query: _buildFeedQuery(type, category: category));
 
-    final reports = snapshot.docs.map((d) => d.data()).toList();
+      final reports = snapshot.docs.map((d) => d.data()).toList();
       final hydrated = await hydrateUserInteractionsBatch(reports, userId);
 
-    state
+      state
         ..items = hydrated
         ..lastDocument = snapshot.docs.isNotEmpty ? snapshot.docs.last : null
         ..hasMore = snapshot.docs.length == limit
-      ..isLoadingFirstPage = false;
+        ..isLoadingFirstPage = false;
+
+      _commitFeedMutation();
+
+      await _reportCache.saveFeed(key, hydrated);
+    } catch (e) {
+      state.isLoadingFirstPage = false;
+      _commitFeedMutation();
+    }
+  }
+
+  Future<void> loadInitialUserBookmarks({int limit = kPageLimit}) async {
+    final key = _feedKey(ReportFeedType.userBookmarks);
+    final state = _stateFor(key);
+
+    if (state.items.isNotEmpty) return;
+
+    state.isLoadingFirstPage = true;
+    _commitFeedMutation();
+
+    try {
+      final interactionSnapshot = await _getBookmarkedInteractionSnapshot(limit: limit);
+
+      final reportIds = interactionSnapshot.docs.map((d) => d.id).toList();
+
+      if (reportIds.isEmpty) {
+        state
+          ..items = []
+          ..isLoadingFirstPage = false
+          ..hasMore = false;
+
+        _commitFeedMutation();
+        return;
+      }
+
+      final reportSnapshot = await FirebaseFirestore.instance
+          .collection(collectionPath)
+          .where(FieldPath.documentId, whereIn: reportIds)
+          .get();
+
+      final reportMap = {for (final doc in reportSnapshot.docs) doc.id: convertFromJson(doc.data())};
+
+      final orderedReports = reportIds.where(reportMap.containsKey).map((id) => reportMap[id]!).toList();
+
+      final hydrated = await hydrateUserInteractionsBatch(orderedReports, _userStorageService.userId!);
+
+      state
+        ..items = hydrated
+        ..isLoadingFirstPage = false
+        ..hasMore = interactionSnapshot.docs.length == limit
+        ..lastDocument = interactionSnapshot.docs.isNotEmpty ? interactionSnapshot.docs.last : null;
 
       _commitFeedMutation();
 
@@ -261,6 +343,10 @@ class ReportService extends FirestoreCollectionService<Report> with ListenableSe
 
   // Starts a real-time listener for a feed to receive live updates.
   Future<void> startRealtimeFeed(ReportFeedType type, {CategoryType? category}) async {
+    if (type == ReportFeedType.userBookmarks) {
+      await startRealtimeUserBookmarks();
+      return;
+    }
     final key = _feedKey(type, category: category);
 
     if (_activeRealtimeFeeds.contains(key)) return;
@@ -273,6 +359,54 @@ class ReportService extends FirestoreCollectionService<Report> with ListenableSe
       (snapshot) => _handleRealtimeChanges(snapshot, type, category),
       onError: (e) => log.e('Realtime listener error for $key', error: e),
     );
+
+    _activeRealtimeFeeds.add(key);
+  }
+
+  Future<void> startRealtimeUserBookmarks() async {
+    final key = _feedKey(ReportFeedType.userBookmarks);
+
+    if (_activeRealtimeFeeds.contains(key)) return;
+
+    final state = _stateFor(key);
+
+    // ignore: cascade_invocations
+    state.liveSubscription = FirebaseFirestore.instance
+        .collection('users')
+        .doc(_userStorageService.userId)
+        .collection('interactions')
+        .where('hasBookmarked', isEqualTo: true)
+        .snapshots()
+        .listen((snapshot) async {
+          for (final change in snapshot.docChanges) {
+            if (snapshot.metadata.isFromCache) return;
+            final reportId = change.doc.id;
+
+            switch (change.type) {
+              case DocumentChangeType.added:
+                final exists = state.items.any((r) => r.reportData.reportId == reportId);
+
+                if (exists) break;
+
+                final reportDoc = await FirebaseFirestore.instance.collection(collectionPath).doc(reportId).get();
+
+                if (!reportDoc.exists) break;
+
+                final report = convertFromJson(reportDoc.data()!);
+
+                final hydrated = await hydrateUserInteractionsBatch([report], _userStorageService.userId!);
+
+                _injectIntoFeed(type: ReportFeedType.userBookmarks, report: hydrated.first);
+
+              case DocumentChangeType.removed:
+                _removeFromFeed(type: ReportFeedType.userBookmarks, reportId: reportId);
+
+              case DocumentChangeType.modified:
+            }
+          }
+
+          _commitFeedMutation();
+        });
 
     _activeRealtimeFeeds.add(key);
   }
@@ -296,6 +430,10 @@ class ReportService extends FirestoreCollectionService<Report> with ListenableSe
 
   /// Loads the next page for a feed.
   Future<void> loadMoreFeed(ReportFeedType type, {CategoryType? category, int limit = kPageLimit}) async {
+    if (type == ReportFeedType.userBookmarks) {
+      await loadMoreUserBookmarks(limit: limit);
+      return;
+    }
     final key = _feedKey(type, category: category);
     final state = _stateFor(key);
     final userId = _userStorageService.userId!;
@@ -306,9 +444,9 @@ class ReportService extends FirestoreCollectionService<Report> with ListenableSe
     _commitFeedMutation();
 
     try {
-    final snapshot = await fetchQuerySnapshot(
+      final snapshot = await fetchQuerySnapshot(
         query: _buildFeedQuery(type, category: category, limit: limit).startAfterDocument(state.lastDocument!),
-    );
+      );
 
       final newReports = snapshot.docs.map((d) => d.data()).toList();
 
@@ -318,41 +456,102 @@ class ReportService extends FirestoreCollectionService<Report> with ListenableSe
 
       state.items.addAll(hydrated.where((r) => !existingIds.contains(r.reportData.reportId)));
 
-    state
+      state
         ..lastDocument = snapshot.docs.isNotEmpty ? snapshot.docs.last : state.lastDocument
-      ..hasMore = snapshot.docs.length == limit
-      ..isLoadingNextPage = false;
+        ..hasMore = snapshot.docs.length == limit
+        ..isLoadingNextPage = false;
 
       _commitFeedMutation();
 
-    await _reportCache.saveFeed(key, state.items);
+      await _reportCache.saveFeed(key, state.items);
     } catch (e, stack) {
       log.e('Pagination failed', error: e, stackTrace: stack);
       state.isLoadingNextPage = false;
       _commitFeedMutation();
     }
-}
+  }
+
+  Future<void> loadMoreUserBookmarks({int limit = kPageLimit}) async {
+    final key = _feedKey(ReportFeedType.userBookmarks);
+    final state = _stateFor(key);
+
+    if (state.isLoadingNextPage || !state.hasMore) return;
+
+    state.isLoadingNextPage = true;
+    _commitFeedMutation();
+
+    final interactionSnapshot = await _getBookmarkedInteractionSnapshot(
+      lastDoc: state.lastDocument as QueryDocumentSnapshot<Map<String, dynamic>>?,
+      limit: limit,
+    );
+
+    final reportIds = interactionSnapshot.docs.map((d) => d.id).toList();
+
+    final reportSnapshot = await FirebaseFirestore.instance
+        .collection(collectionPath)
+        .where(FieldPath.documentId, whereIn: reportIds)
+        .get();
+
+    final reportMap = {for (final doc in reportSnapshot.docs) doc.id: convertFromJson(doc.data())};
+
+    final orderedReports = reportIds.where(reportMap.containsKey).map((id) => reportMap[id]!).toList();
+
+    final hydrated = await hydrateUserInteractionsBatch(orderedReports, _userStorageService.userId!);
+
+    final existingIds = state.items.map((r) => r.reportData.reportId).toSet();
+
+    state.items.addAll(hydrated.where((r) => !existingIds.contains(r.reportData.reportId)));
+
+    state
+      ..isLoadingNextPage = false
+      ..hasMore = interactionSnapshot.docs.length == limit
+      ..lastDocument = interactionSnapshot.docs.isNotEmpty ? interactionSnapshot.docs.last : state.lastDocument;
+
+    _commitFeedMutation();
+
+    await _reportCache.saveFeed(key, state.items);
+  }
 
   // Refreshes the specified feed by resetting its state and loading the initial feed.
   Future<void> refreshFeed(ReportFeedType type, {CategoryType? category, int limit = kPageLimit}) async {
     final key = _feedKey(type, category: category);
-
     final wasActive = _activeRealtimeFeeds.contains(key);
 
     await stopRealtimeFeed(type, category: category);
 
-    final state = _feedStates.value[key];
-    await state?.dispose();
+    final state = _stateFor(key);
 
-    final newMap = {..._feedStates.value}..remove(key);
-    _feedStates.value = newMap;
+    // ignore: cascade_invocations
+    state
+      ..lastDocument = null
+      ..hasMore = true
+      ..isLoadingNextPage = false;
 
-    await loadInitialFeed(type, category: category, limit: limit);
+    if (state.items.isEmpty) {
+      state.isLoadingFirstPage = true;
+    }
+
+    _commitFeedMutation();
+
+    try {
+      if (type == ReportFeedType.userBookmarks) {
+        await loadInitialUserBookmarks(limit: limit);
+      } else {
+        await loadInitialFeed(type, category: category, limit: limit);
+      }
+    } finally {
+      state.isLoadingFirstPage = false;
+      _commitFeedMutation();
+    }
 
     if (wasActive) {
+      if (type == ReportFeedType.userBookmarks) {
+        await startRealtimeUserBookmarks();
+      } else {
       await startRealtimeFeed(type, category: category);
     }
   }
+}
 
   /// Inserts a report at the top of a feed without breaking pagination.
   @protected
@@ -361,11 +560,12 @@ class ReportService extends FirestoreCollectionService<Report> with ListenableSe
 
     state.items.removeWhere((r) => r.reportData.reportId == report.reportData.reportId);
 
-    state.items.add(report);
+    state.items.insert(0, report);
 
     switch (type) {
       case ReportFeedType.all:
       case ReportFeedType.category:
+      case ReportFeedType.userReports:
         state.items.sort((a, b) => b.reportData.createdAt.compareTo(a.reportData.createdAt));
 
       case ReportFeedType.trending:
@@ -376,6 +576,9 @@ class ReportService extends FirestoreCollectionService<Report> with ListenableSe
 
           return b.reportData.updatedAt.compareTo(a.reportData.updatedAt);
         });
+
+      case ReportFeedType.userBookmarks:
+        state.items.sort((a, b) => b.reportData.updatedAt.compareTo(a.reportData.updatedAt));
     }
 
     if (state.items.length > 100) {
@@ -383,7 +586,7 @@ class ReportService extends FirestoreCollectionService<Report> with ListenableSe
     }
 
     _commitFeedMutation();
-}
+  }
 
   @protected
   void _updateReportEverywhere(Report updated) {
@@ -445,6 +648,15 @@ class ReportService extends FirestoreCollectionService<Report> with ListenableSe
 
       await _reportCache.saveFeed(_feedKey(ReportFeedType.all), _stateFor(_feedKey(ReportFeedType.all)).items);
 
+      if (newReport.reportData.userId == _userStorageService.userId) {
+        _injectIntoFeed(type: ReportFeedType.userReports, report: newReport);
+
+        await _reportCache.saveFeed(
+          _feedKey(ReportFeedType.userReports),
+          _stateFor(_feedKey(ReportFeedType.userReports)).items,
+        );
+      }
+
       if (_qualifiesForTrending(newReport)) {
         _injectIntoFeed(type: ReportFeedType.trending, report: newReport);
         await _reportCache.saveFeed(
@@ -478,6 +690,16 @@ class ReportService extends FirestoreCollectionService<Report> with ListenableSe
       _updateReportEverywhere(updated);
       _reconcileTrending(updated);
       _reconcileCategories(updated);
+
+      if (updated.reportData.userId == _userStorageService.userId) {
+        final state = _stateFor(_feedKey(ReportFeedType.userReports));
+
+        final exists = state.items.any((r) => r.reportData.reportId == updated.reportData.reportId);
+
+        if (!exists) {
+          _injectIntoFeed(type: ReportFeedType.userReports, report: updated);
+        }
+      }
 
       notifyListeners();
       for (final entry in _feedStates.value.entries) {
@@ -529,7 +751,6 @@ class ReportService extends FirestoreCollectionService<Report> with ListenableSe
           'reportData.likeCount': FieldValue.increment(likeDelta),
           if (dislikeDelta != 0) 'reportData.dislikeCount': FieldValue.increment(dislikeDelta),
         })
-
         ..set(interactionRef, {
           'hasLiked': hasLiked,
           'hasDisliked': hasDisliked,
@@ -575,10 +796,9 @@ class ReportService extends FirestoreCollectionService<Report> with ListenableSe
 
       tx
         ..update(reportRef, {
-        'reportData.dislikeCount': FieldValue.increment(dislikeDelta),
-        if (likeDelta != 0) 'reportData.likeCount': FieldValue.increment(likeDelta),
+          'reportData.dislikeCount': FieldValue.increment(dislikeDelta),
+          if (likeDelta != 0) 'reportData.likeCount': FieldValue.increment(likeDelta),
         })
-
         ..set(interactionRef, {
           'hasLiked': hasLiked,
           'hasDisliked': hasDisliked,
@@ -608,7 +828,6 @@ class ReportService extends FirestoreCollectionService<Report> with ListenableSe
 
       tx
         ..update(reportRef, {'reportData.bookmarkCount': FieldValue.increment(delta)})
-
         ..set(interactionRef, {
           'hasBookmarked': !hasBookmarked,
           'updatedAt': FieldValue.serverTimestamp(),
@@ -693,6 +912,7 @@ class ReportService extends FirestoreCollectionService<Report> with ListenableSe
     final current = _findReportById(report.reportData.reportId);
     if (current == null) return;
 
+    final id = current.reportData.reportId;
     final isBookmarking = !current.hasBookmarked;
 
     final updated = current.copyWith(
@@ -701,10 +921,25 @@ class ReportService extends FirestoreCollectionService<Report> with ListenableSe
         bookmarkCount: isBookmarking
             ? current.reportData.bookmarkCount + 1
             : (current.reportData.bookmarkCount - 1).clamp(0, 2147483647),
+        updatedAt: DateTime.now().toUtc(),
       ),
     );
 
     _updateReportEverywhere(updated);
+
+    final bookmarkKey = _feedKey(ReportFeedType.userBookmarks);
+    final bookmarkState = _feedStates.value[bookmarkKey];
+
+    if (isBookmarking) {
+      final exists = bookmarkState?.items.any((r) => r.reportData.reportId == id);
+
+      if (exists != true) {
+        _injectIntoFeed(type: ReportFeedType.userBookmarks, report: updated);
+      }
+    } else {
+      bookmarkState?.items.removeWhere((r) => r.reportData.reportId == id);
+    }
+
     _commitFeedMutation();
     await _saveReportToAllFeedCaches(updated.reportData.reportId);
   }
@@ -803,6 +1038,24 @@ class ReportService extends FirestoreCollectionService<Report> with ListenableSe
         final hydratedReports = await hydrateUserInteractionsBatch(cached, userId);
         _stateFor(key).items = hydratedReports;
       }
+    }
+
+    // Load USER REPORTS
+    final userReportsKey = _feedKey(ReportFeedType.userReports);
+    final userReportsCached = _reportCache.loadFeed(userReportsKey);
+
+    if (userReportsCached != null) {
+      final hydrated = await hydrateUserInteractionsBatch(userReportsCached, userId);
+      _stateFor(userReportsKey).items = hydrated;
+    }
+
+    // Load USER BOOKMARKS
+    final userBookmarksKey = _feedKey(ReportFeedType.userBookmarks);
+    final userBookmarksCached = _reportCache.loadFeed(userBookmarksKey);
+
+    if (userBookmarksCached != null) {
+      final hydrated = await hydrateUserInteractionsBatch(userBookmarksCached, userId);
+      _stateFor(userBookmarksKey).items = hydrated;
     }
 
     notifyListeners();
