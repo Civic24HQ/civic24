@@ -7,6 +7,7 @@ export 'src/enum/appearance_mode.dart';
 export 'src/enum/asset_source.dart';
 export 'src/enum/category_type.dart';
 export 'src/enum/dialog_action_type.dart';
+export 'src/enum/interaction_type.dart';
 export 'src/enum/language_type.dart';
 export 'src/enum/report_feed_type.dart';
 export 'src/environment_constants.dart';

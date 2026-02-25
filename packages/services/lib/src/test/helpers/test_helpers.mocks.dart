@@ -286,6 +286,15 @@ class MockUserService extends _i1.Mock implements _i10.UserService {
           as _i12.Future<void>);
 
   @override
+  _i12.Future<void> syncExternalServices() =>
+      (super.noSuchMethod(
+            Invocation.method(#syncExternalServices, []),
+            returnValue: _i12.Future<void>.value(),
+            returnValueForMissingStub: _i12.Future<void>.value(),
+          )
+          as _i12.Future<void>);
+
+  @override
   _i12.Future<void> createUser({
     required String? firstName,
     required String? lastName,
@@ -1457,6 +1466,15 @@ class MockReportService extends _i1.Mock implements _i10.ReportService {
           as _i3.Report);
 
   @override
+  _i12.Future<void> syncReportList() =>
+      (super.noSuchMethod(
+            Invocation.method(#syncReportList, []),
+            returnValue: _i12.Future<void>.value(),
+            returnValueForMissingStub: _i12.Future<void>.value(),
+          )
+          as _i12.Future<void>);
+
+  @override
   List<_i3.Report> getFeedItems(
     _i13.ReportFeedType? type, {
     _i13.CategoryType? category,
@@ -1508,6 +1526,20 @@ class MockReportService extends _i1.Mock implements _i10.ReportService {
             returnValueForMissingStub: false,
           )
           as bool);
+
+  @override
+  _i12.Future<List<_i3.Report>> hydrateUserInteractionsBatch(
+    List<_i3.Report>? reports,
+    String? userId,
+  ) =>
+      (super.noSuchMethod(
+            Invocation.method(#hydrateUserInteractionsBatch, [reports, userId]),
+            returnValue: _i12.Future<List<_i3.Report>>.value(<_i3.Report>[]),
+            returnValueForMissingStub: _i12.Future<List<_i3.Report>>.value(
+              <_i3.Report>[],
+            ),
+          )
+          as _i12.Future<List<_i3.Report>>);
 
   @override
   _i12.Future<void> loadInitialFeed(
@@ -1601,6 +1633,111 @@ class MockReportService extends _i1.Mock implements _i10.ReportService {
   _i12.Future<void> updateReport(_i3.Report? report) =>
       (super.noSuchMethod(
             Invocation.method(#updateReport, [report]),
+            returnValue: _i12.Future<void>.value(),
+            returnValueForMissingStub: _i12.Future<void>.value(),
+          )
+          as _i12.Future<void>);
+
+  @override
+  _i12.Future<void> toggleLike({
+    required String? reportId,
+    required String? userId,
+  }) =>
+      (super.noSuchMethod(
+            Invocation.method(#toggleLike, [], {
+              #reportId: reportId,
+              #userId: userId,
+            }),
+            returnValue: _i12.Future<void>.value(),
+            returnValueForMissingStub: _i12.Future<void>.value(),
+          )
+          as _i12.Future<void>);
+
+  @override
+  _i12.Future<void> toggleDislike({
+    required String? reportId,
+    required String? userId,
+  }) =>
+      (super.noSuchMethod(
+            Invocation.method(#toggleDislike, [], {
+              #reportId: reportId,
+              #userId: userId,
+            }),
+            returnValue: _i12.Future<void>.value(),
+            returnValueForMissingStub: _i12.Future<void>.value(),
+          )
+          as _i12.Future<void>);
+
+  @override
+  _i12.Future<void> toggleBookmark({
+    required String? reportId,
+    required String? userId,
+  }) =>
+      (super.noSuchMethod(
+            Invocation.method(#toggleBookmark, [], {
+              #reportId: reportId,
+              #userId: userId,
+            }),
+            returnValue: _i12.Future<void>.value(),
+            returnValueForMissingStub: _i12.Future<void>.value(),
+          )
+          as _i12.Future<void>);
+
+  @override
+  _i12.Future<void> optimisticToggleLike(_i3.Report? report) =>
+      (super.noSuchMethod(
+            Invocation.method(#optimisticToggleLike, [report]),
+            returnValue: _i12.Future<void>.value(),
+            returnValueForMissingStub: _i12.Future<void>.value(),
+          )
+          as _i12.Future<void>);
+
+  @override
+  _i12.Future<void> optimisticToggleDislike(_i3.Report? report) =>
+      (super.noSuchMethod(
+            Invocation.method(#optimisticToggleDislike, [report]),
+            returnValue: _i12.Future<void>.value(),
+            returnValueForMissingStub: _i12.Future<void>.value(),
+          )
+          as _i12.Future<void>);
+
+  @override
+  _i12.Future<void> optimisticToggleBookmark(_i3.Report? report) =>
+      (super.noSuchMethod(
+            Invocation.method(#optimisticToggleBookmark, [report]),
+            returnValue: _i12.Future<void>.value(),
+            returnValueForMissingStub: _i12.Future<void>.value(),
+          )
+          as _i12.Future<void>);
+
+  @override
+  _i12.Future<void> likeReportOptimistic(_i3.Report? report, String? userId) =>
+      (super.noSuchMethod(
+            Invocation.method(#likeReportOptimistic, [report, userId]),
+            returnValue: _i12.Future<void>.value(),
+            returnValueForMissingStub: _i12.Future<void>.value(),
+          )
+          as _i12.Future<void>);
+
+  @override
+  _i12.Future<void> dislikeReportOptimistic(
+    _i3.Report? report,
+    String? userId,
+  ) =>
+      (super.noSuchMethod(
+            Invocation.method(#dislikeReportOptimistic, [report, userId]),
+            returnValue: _i12.Future<void>.value(),
+            returnValueForMissingStub: _i12.Future<void>.value(),
+          )
+          as _i12.Future<void>);
+
+  @override
+  _i12.Future<void> bookmarkReportOptimistic(
+    _i3.Report? report,
+    String? userId,
+  ) =>
+      (super.noSuchMethod(
+            Invocation.method(#bookmarkReportOptimistic, [report, userId]),
             returnValue: _i12.Future<void>.value(),
             returnValueForMissingStub: _i12.Future<void>.value(),
           )
