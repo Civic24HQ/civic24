@@ -21,6 +21,7 @@ class UserService extends FirestoreCollectionService<UserModel> with ListenableS
   final _authService = serviceLocator<AuthenticationService>();
   final _settingsStorage = serviceLocator<SettingsStorageService>();
   final _reportService = serviceLocator<ReportService>();
+  final _userStorageService = serviceLocator<UserStorageService>();
 
   @override
   String get collectionPath => FirestoreCollections.users;
@@ -106,8 +107,15 @@ class UserService extends FirestoreCollectionService<UserModel> with ListenableS
     if (userDoc != null) {
       log.i('User //${firebaseUser.uid}// document found');
       _currentUser.value = userDoc;
+      _userStorageService
+        ..setCurrentUserModel(_currentUser.value!)
+        ..setUserId(_currentUser.value?.id ?? '');
+
+      log
+        ..d('User session initialized with ID: ${_userStorageService.userId}')
+        ..d('User session data stored locally: ${_userStorageService.getCurrentUserModel}');
       unawaited(_subscribeToUserStream());
-      // unawaited(syncExternalServices());
+      unawaited(syncExternalServices());
     } else {
       log.w('User //${firebaseUser.uid}// document not found');
       _currentUser.value = null;
@@ -116,15 +124,14 @@ class UserService extends FirestoreCollectionService<UserModel> with ListenableS
     log.d('User //${firebaseUser.uid}// sync completed');
   }
 
-  // @visibleForTesting
-  // Future<void> syncExternalServices() async {
-  //   if (!hasUser) {
-  //     log.i('Cannot update other services as user is null');
-  //     return;
-  //   }
-  //   unawaited(_reportService.syncReportList());
-  //   log.i('External services synced successfully');
-  // }
+  Future<void> syncExternalServices() async {
+    if (!hasUser) {
+      log.i('Cannot update other services as user is null');
+      return;
+    }
+    unawaited(_reportService.syncReportList());
+    log.i('External services synced successfully');
+  }
 
   Future<void> _subscribeToUserStream() async {
     log.d('Subscribing to user stream');

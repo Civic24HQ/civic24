@@ -18,3 +18,4 @@ export 'src/services/feature/url_launcher_service.dart';
 export 'src/services/local_storage/local_storage_service.dart';
 export 'src/services/local_storage/src/report_cache_service.dart';
 export 'src/services/local_storage/src/settings_storage_service.dart';
+export 'src/services/local_storage/src/user_storage_service.dart';

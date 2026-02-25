@@ -9,7 +9,7 @@ class TrendingReports extends StatefulWidget {
 
 class _TrendingReportsState extends State<TrendingReports> {
   final _controller = ScrollController();
-  static const int _trendingReportsPageLimit = 12;
+  static const int _trendingReportsPageLimit = 7;
 
   late HomeViewModel _viewModel;
 
@@ -57,7 +57,7 @@ class _TrendingReportsState extends State<TrendingReports> {
     return CustomScrollView(
       controller: _controller,
       slivers: [
-        CupertinoSliverRefreshControl(onRefresh: viewModel.refreshTrending),
+        CupertinoSliverRefreshControl(onRefresh: () => viewModel.refreshTrending(limit: _trendingReportsPageLimit)),
 
         SliverList(
           delegate: SliverChildBuilderDelegate((context, index) {
