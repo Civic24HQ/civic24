@@ -1,1 +1,1 @@
-enum ReportFeedType { all, trending, category }
+enum ReportFeedType { all, trending, category, userReports, userBookmarks }
