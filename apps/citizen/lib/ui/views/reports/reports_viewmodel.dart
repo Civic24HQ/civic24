@@ -1,6 +1,7 @@
 import 'package:citizen/app/app.bottomsheets.dart';
 import 'package:citizen/app/app.locator.dart';
 import 'package:citizen/app/app.router.dart';
+import 'package:constants/constants.dart';
 import 'package:models/models.dart';
 import 'package:services/services.dart';
 import 'package:stacked/stacked.dart';
@@ -16,14 +17,41 @@ class ReportsViewModel extends ReactiveViewModel {
   List<ListenableServiceMixin> get listenableServices => [_userService, _reportService];
 
   String get user => _userService.user!.id;
-  List<Report> get reportList => [];
 
-  List<Report> get myReportList =>
-      reportList.where((r) => r.reportData.userId == user).toList()
-        ..sort((a, b) => b.reportData.createdAt.compareTo(a.reportData.createdAt));
-  List<Report> get bookmarkedReportList =>
-      reportList.where((r) => r.hasBookmarked).toList()
-        ..sort((a, b) => b.reportData.createdAt.compareTo(a.reportData.createdAt));
+  List<Report> getUserReports() => _reportService.getFeedItems(ReportFeedType.userReports);
+
+  List<Report> getUserBookmarkedReports() => _reportService.getFeedItems(ReportFeedType.userBookmarks);
+
+  Future<void> startRealTimeFeed(ReportFeedType reportTypeFeed) async {
+    await _reportService.startRealtimeFeed(reportTypeFeed);
+  }
+
+  void stopRealTimeFeed(ReportFeedType reportTypeFeed) => _reportService.stopRealtimeFeed(reportTypeFeed);
+
+  bool isUserReportsInitialLoading() => _reportService.isInitialReportLoading(ReportFeedType.userReports);
+  bool isUserBookmarksInitialLoading() => _reportService.isInitialReportLoading(ReportFeedType.userBookmarks);
+
+  bool isUserReportsPaginationLoading() => _reportService.isPaginationLoading(ReportFeedType.userReports);
+  bool isUserBookmarksPaginationLoading() => _reportService.isPaginationLoading(ReportFeedType.userBookmarks);
+
+  Future<void> loadMoreUserReports({int limit = kPageLimit}) =>
+      _reportService.loadMoreFeed(ReportFeedType.userReports, limit: limit);
+
+  Future<void> loadMoreUserBookmarks({int limit = kPageLimit}) =>
+      _reportService.loadMoreFeed(ReportFeedType.userBookmarks, limit: limit);
+
+  Future<void> refreshUserReports({int limit = kPageLimit}) =>
+      _reportService.refreshFeed(ReportFeedType.userReports, limit: limit);
+
+  Future<void> refreshUserBookmarks({int limit = kPageLimit}) =>
+      _reportService.refreshFeed(ReportFeedType.userBookmarks, limit: limit);
+
+  Future<void> initUserReportsFeed({int limit = kPageLimit}) =>
+      _reportService.loadInitialFeed(ReportFeedType.userReports, limit: limit);
+
+  Future<void> initUserBookmarksFeed({int limit = kPageLimit}) =>
+      _reportService.loadInitialFeed(ReportFeedType.userBookmarks, limit: limit);
+
 
   Future<void> viewComment() async {
     final uploadResponse = await _bottomSheetService.showCustomSheet(
@@ -35,87 +63,20 @@ class ReportsViewModel extends ReactiveViewModel {
     if (uploadResponse != null && uploadResponse.confirmed) {}
   }
 
-  Future<void> onAddReport() => _navigationService.navigateToAddReportView();
-
-  void likeReport(Report report) {
-    var likes = report.reportData.likeCount;
-    var dislikes = report.reportData.dislikeCount;
-    var liked = report.hasLiked;
-    var disliked = report.hasDisliked;
-    if (liked) {
-      likes = (likes - 1).clamp(0, 1 << 31);
-      liked = false;
-    } else {
-      likes = (likes + 1).clamp(0, 1 << 31);
-      liked = true;
-      if (disliked) {
-        dislikes = (dislikes - 1).clamp(0, 1 << 31);
-        disliked = false;
-      }
-    }
-
-    final index = fakeReportDataList.indexWhere((e) => e.reportData == report.reportData);
-    if (index < 0) return;
-
-    fakeReportDataList[index] = Report(
-      reportData: report.reportData.copyWith(likeCount: likes, dislikeCount: dislikes),
-      hasLiked: liked,
-      hasDisliked: disliked,
-      hasBookmarked: report.hasBookmarked,
-    );
-    rebuildUi();
+  Future<void> onAddReport() async {
+    await _navigationService.navigateToAddReportView();
   }
 
-  void dislikeReport(Report report) {
-    var likes = report.reportData.likeCount;
-    var dislikes = report.reportData.dislikeCount;
-    var liked = report.hasLiked;
-    var disliked = report.hasDisliked;
-    if (disliked) {
-      dislikes = (dislikes - 1).clamp(0, 1 << 31);
-      disliked = false;
-    } else {
-      dislikes = (dislikes + 1).clamp(0, 1 << 31);
-      disliked = true;
-      if (liked) {
-        likes = (likes - 1).clamp(0, 1 << 31);
-        liked = false;
-      }
-    }
-
-    final index = fakeReportDataList.indexWhere((e) => e.reportData == report.reportData);
-    if (index < 0) return;
-
-    fakeReportDataList[index] = Report(
-      reportData: report.reportData.copyWith(likeCount: likes, dislikeCount: dislikes),
-      hasLiked: liked,
-      hasDisliked: disliked,
-      hasBookmarked: report.hasBookmarked,
-    );
-    rebuildUi();
+  Future<void> likeReport(Report report) async {
+    await _reportService.likeReportOptimistic(report, user);
   }
 
-  void bookmarkReport(Report report) {
-    var bookmarks = report.reportData.bookmarkCount;
-    var bookmarked = report.hasBookmarked;
-
-    if (bookmarked) {
-      bookmarks = (bookmarks - 1).clamp(0, 1 << 31);
-      bookmarked = false;
-    } else {
-      bookmarks = (bookmarks + 1).clamp(0, 1 << 31);
-      bookmarked = true;
-    }
-
-    final index = fakeReportDataList.indexWhere((e) => e.reportData == report.reportData);
-    if (index < 0) return;
-
-    fakeReportDataList[index] = Report(
-      reportData: report.reportData.copyWith(bookmarkCount: bookmarks),
-      hasLiked: report.hasLiked,
-      hasDisliked: report.hasDisliked,
-      hasBookmarked: bookmarked,
-    );
-    rebuildUi();
+  Future<void> dislikeReport(Report report) async {
+    await _reportService.dislikeReportOptimistic(report, user);
   }
+
+  Future<void> bookmarkReport(Report report) async {
+    await _reportService.bookmarkReportOptimistic(report, user);
+  }
+
 }
