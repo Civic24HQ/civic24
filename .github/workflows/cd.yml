@@ -468,6 +468,13 @@ jobs:
       - name: 📱 Build iOS IPA (unsigned)
         working-directory: ${{ env.cwd }}
         run: |
+          # Strip large GitHub Actions env vars to avoid ARG_MAX overflow
+          # Xcode passes all env vars as args to /bin/sh script phases,
+          # and CI runners inject hundreds of vars that push past the limit.
+          for var in $(env | grep -E '^(GITHUB_|RUNNER_|ACTIONS_|JAVA_|ANDROID_|HOMEBREW_|DOTNET_|AGENT_|ImageOS|PIPX_|SELENIUM_|LEIN_|CONDA|NVM_|GOROOT_|CHROME_)' | cut -d= -f1); do
+            unset "$var"
+          done
+
           flutter build ipa \
             --no-codesign \
             --flavor development \
