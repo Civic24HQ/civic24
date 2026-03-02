@@ -447,7 +447,7 @@ jobs:
         run: |
           set -euo pipefail
           mkdir -p secrets
-          SECRET_VALUE="${{ secrets[format('ENCODED_DEVELOPMENT_JSON_{0}', matrix.app)] }}"
+          SECRET_VALUE="${{ secrets[format('ENCODED_DEVELOPMENT_JSON_CITIZEN', matrix.app)] }}"
           [ -z "$SECRET_VALUE" ] && echo "Missing Base64 secret" && exit 1
 
           printf '%s' "$SECRET_VALUE" | base64 --decode > secrets/development.json
