@@ -55,6 +55,7 @@ class _MyReportsState extends State<MyReports> {
     final userReports = viewModel.getUserReports();
 
     return CustomScrollView(
+      key: PageStorageKey(userReports),
       controller: _controller,
       slivers: [
         CupertinoSliverRefreshControl(onRefresh: () => viewModel.refreshUserReports(limit: _myReportsPageLimit)),

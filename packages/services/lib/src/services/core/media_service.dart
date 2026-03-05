@@ -72,7 +72,16 @@ class MediaService {
       if (pickedFiles.isEmpty) {
         return [];
       }
-      return pickedFiles.map((pickedFile) => File(pickedFile.path)).toList();
+      if (pickedFiles.length > 4) {
+        _alertService.showInfoAlert(
+          title: 'Image Selection Limit',
+          message: 'You have selected ${pickedFiles.length} images. Only the first 4 will be processed.',
+        );
+        _log.i('Only the first 4 images will be used.');
+        return pickedFiles.sublist(0, 4).map((pickedFile) => File(pickedFile.path)).toList();
+      } else {
+        return pickedFiles.map((pickedFile) => File(pickedFile.path)).toList();
+      }
     } on PlatformException catch (exception, stackTrace) {
       if (exception.code == 'photo_access_denied') {
         _log.w('User denied access to the photo library');

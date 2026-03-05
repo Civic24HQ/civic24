@@ -212,6 +212,13 @@ class UserService extends FirestoreCollectionService<UserModel> with ListenableS
 
     await create(documentId: firebaseUser.uid, payload: parsedUser);
     _currentUser.value = parsedUser;
+    _userStorageService
+      ..setCurrentUserModel(_currentUser.value!)
+      ..setUserId(_currentUser.value?.id ?? '');
+
+    log
+      ..d('User session initialized with ID: ${_userStorageService.userId}')
+      ..d('User session data stored locally: ${_userStorageService.getCurrentUserModel}');
     unawaited(_subscribeToUserStream());
     log.i('User //${firebaseUser.uid}// created successfully');
   }

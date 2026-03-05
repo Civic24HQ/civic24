@@ -55,6 +55,7 @@ class _BookmarkedReportsState extends State<BookmarkedReports> {
     final bookmarkedReports = viewModel.getUserBookmarkedReports();
 
     return CustomScrollView(
+      key: PageStorageKey(bookmarkedReports),
       controller: _controller,
       slivers: [
         CupertinoSliverRefreshControl(
