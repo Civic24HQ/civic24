@@ -88,7 +88,9 @@ class AppAlertToastCard extends StatelessWidget {
                               color: iconBackgroundColor,
                               borderRadius: AppBorderRadius.radius4,
                             ),
-                            child: Icon(iconData, color: iconColor, size: AppDimensions.size16),
+                            child: alert.isReport
+                                ? Text('🎉', style: context.bodyMedium)
+                                : Icon(iconData, color: iconColor, size: AppDimensions.size16),
                           ),
                           AppSpacing.medium,
                           Text(alert.title, maxLines: 1, overflow: TextOverflow.ellipsis, style: context.titleMedium),

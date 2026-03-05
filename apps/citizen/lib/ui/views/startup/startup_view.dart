@@ -20,7 +20,7 @@ class StartupView extends StackedView<StartupViewModel> {
         children: [
           AnimatedPositioned(
             curve: Curves.easeInOut,
-            duration: const Duration(milliseconds: 2000),
+            duration: const Duration(milliseconds: 1800),
             left: viewModel.isAnimate ? 0 : -width,
             top: AppDimensions.size16,
             child: Assets.svg.leftSide.svg(),
@@ -52,7 +52,7 @@ class StartupView extends StackedView<StartupViewModel> {
             left: (width / 2) - (AppDimensions.size150 / 2),
             top: viewModel.isAnimate ? (height / 2) - (AppDimensions.size200 / 2) : -height,
             child: AnimatedScale(
-              duration: const Duration(milliseconds: 5000),
+              duration: const Duration(milliseconds: 3500),
               scale: viewModel.isAnimate ? 1.0 : 0.0,
               child: Assets.png.adaptiveIcon.image(width: AppDimensions.size150, height: AppDimensions.size150),
             ),
@@ -61,7 +61,7 @@ class StartupView extends StackedView<StartupViewModel> {
             left: (width / 2) - (AppDimensions.size320 / 2),
             top: viewModel.isAnimate ? (height / 2) - (AppDimensions.size200 / 2) + AppDimensions.size24 : -height,
             child: AnimatedScale(
-              duration: const Duration(milliseconds: 5000),
+              duration: const Duration(milliseconds: 3500),
               scale: viewModel.isAnimate ? 1.0 : 0.0,
               child: Assets.png.civic24Logo2.image(
                 color: context.onSurface,
@@ -86,7 +86,7 @@ class StartupView extends StackedView<StartupViewModel> {
             ),
           ),
           AnimatedPositioned(
-            duration: const Duration(milliseconds: 2500),
+            duration: const Duration(milliseconds: 2300),
             right: viewModel.isAnimate ? 0 : -width,
             bottom: AppDimensions.size32,
             child: Assets.svg.rightSide.svg(),

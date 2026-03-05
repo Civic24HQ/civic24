@@ -78,6 +78,9 @@ class AddReportViewModel extends FormViewModel {
   void toggleCategoryType(CategoryType categoryType, {bool isSelected = false}) {
     final categoryTypes = List<CategoryType>.from(_reportData.categoryTypes);
     if (isSelected) {
+      if (categoryTypes.length >= 3) {
+        return;
+      }
       categoryTypes.add(categoryType);
     } else {
       categoryTypes.remove(categoryType);
@@ -112,6 +115,13 @@ class AddReportViewModel extends FormViewModel {
   }
 
   Future<void> pickImageWithSourceDialog() async {
+    if (_mediaFiles.length >= 4) {
+      _alertService.showErrorAlert(
+        title: 'Media Limit Reached',
+        message: 'You can only add up to 4 media files per report.',
+      );
+      return;
+    }
     final response = await _dialogService.showCustomDialog(variant: DialogType.uploadMedia, barrierDismissible: true);
 
     if (response == null || response.data == null) {
@@ -147,14 +157,21 @@ class AddReportViewModel extends FormViewModel {
     }
   }
 
-  Future<void> uploadImageToCloudinary() async {
+  /// Uploads all selected images to Cloudinary with retry.
+  ///
+  /// Returns the number of images that failed to upload after all retries.
+  Future<int> uploadImageToCloudinary() async {
+    var failedCount = 0;
     for (final file in _mediaFiles) {
-      final uploadedUrl = await _cloudinaryStorageService.uploadFile(file: file!.imageFile, folder: 'reports');
+      final uploadedUrl = await _cloudinaryStorageService.uploadFileWithRetry(file: file!.imageFile, folder: 'reports');
       _log.d('Uploaded Image URL: $uploadedUrl');
       if (uploadedUrl != null) {
         imageUrlList.add(uploadedUrl);
+      } else {
+        failedCount++;
       }
     }
+    return failedCount;
   }
 
   void removeMediaFile(int index) {
@@ -164,7 +181,11 @@ class AddReportViewModel extends FormViewModel {
   }
 
   Future<void> reportSuccessful() async {
-    _alertService.showSuccessAlert(title: 'Report Submitted', message: 'Your report has been successfully submitted.');
+    _alertService.showSuccessAlert(
+      title: 'Report Submitted',
+      message: 'Your report has been successfully submitted.',
+      isReport: true,
+    );
     await _routerService.clearStackAndShow(MainViewRoute());
   }
 
@@ -178,7 +199,17 @@ class AddReportViewModel extends FormViewModel {
 
     _analyticsService.logButtonClick(kAnalyticsButtonAddReport);
     if (_mediaFiles.isNotEmpty) {
-      await uploadImageToCloudinary();
+      final failedCount = await uploadImageToCloudinary();
+      if (failedCount > 0) {
+        _log.w('$failedCount of ${_mediaFiles.length} images failed to upload');
+        _alertService.showErrorAlert(
+          title: 'Failed to Create Report',
+          message: 'Please check your network connection and try again.',
+        );
+        imageUrlList.clear();
+        setBusy(false);
+        return;
+      }
     }
     _log.d('Image URLs: $imageUrlList');
 

@@ -5,6 +5,7 @@ sealed class AlertModel {
     this.duration = const Duration(seconds: 5),
     this.canDismiss = true,
     this.overlay = false,
+    this.isReport = false,
     this.actionButtonText,
     this.textActionText,
     this.onActionButtonPressed,
@@ -17,6 +18,7 @@ sealed class AlertModel {
   final Duration duration;
   final bool canDismiss;
   final bool overlay;
+  final bool isReport;
   final String? actionButtonText;
   final String? textActionText;
   final void Function()? onActionButtonPressed;
@@ -45,6 +47,7 @@ class SuccessAlert extends AlertModel {
     required super.message,
     super.duration,
     super.canDismiss,
+    super.isReport,
     super.overlay,
     super.actionButtonText,
     super.onActionButtonPressed,
