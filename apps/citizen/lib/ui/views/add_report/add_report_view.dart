@@ -27,7 +27,7 @@ class AddReportView extends StackedView<AddReportViewModel> with $AddReportView 
     return GestureDetector(
       onTap: () => FocusScope.of(context).unfocus(),
       child: AbsorbPointer(
-        absorbing: viewModel.anyObjectsBusy,
+        absorbing: viewModel.anyObjectsBusy || viewModel.isBusy,
         child: Scaffold(
           appBar: AppBar(
             shape: Border(bottom: BorderSide(color: context.neutralLowest)),
