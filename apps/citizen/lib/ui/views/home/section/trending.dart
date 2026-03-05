@@ -55,6 +55,7 @@ class _TrendingReportsState extends State<TrendingReports> {
     final trendingReports = viewModel.getTrendingReports();
 
     return CustomScrollView(
+      key: PageStorageKey(trendingReports),
       controller: _controller,
       slivers: [
         CupertinoSliverRefreshControl(onRefresh: () => viewModel.refreshTrending(limit: _trendingReportsPageLimit)),

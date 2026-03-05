@@ -72,6 +72,39 @@ class CloudinaryStorageService {
     }
   }
 
+  /// Uploads a file to Cloudinary with automatic retry and exponential backoff.
+  ///
+  /// Wraps [uploadFile] and retries up to [maxRetries] times if the upload
+  /// returns `null` (network failure, server error, etc.). The delay between
+  /// attempts doubles each time: 1s → 2s → 4s by default.
+  ///
+  /// Returns the secure URL on success, or `null` if all attempts fail.
+  Future<String?> uploadFileWithRetry({
+    required File file,
+    String? folder,
+    String? publicIdPrefix,
+    int maxRetries = 3,
+  }) async {
+    for (var attempt = 1; attempt <= maxRetries; attempt++) {
+      final result = await uploadFile(
+        file: file,
+        folder: folder,
+        publicIdPrefix: publicIdPrefix,
+      );
+
+      if (result != null) return result;
+
+      if (attempt < maxRetries) {
+        final delay = Duration(seconds: 1 << (attempt - 1));
+        _log.w('Upload attempt $attempt/$maxRetries failed. Retrying in ${delay.inSeconds}s...');
+        await Future<void>.delayed(delay);
+      }
+    }
+
+    _log.e('Upload failed after $maxRetries attempts for: ${file.path}');
+    return null;
+  }
+
   /// Uploads an XFile. Falls back to byte upload when needed (e.g., web).
   Future<String?> uploadXFile({required XFile xfile, String? folder, String? publicIdPrefix}) async {
     try {
