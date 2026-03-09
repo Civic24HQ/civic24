@@ -64,7 +64,10 @@ class AppAlertToastCard extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: AppDimensions.padding12, vertical: AppDimensions.padding16),
         decoration: BoxDecoration(
           boxShadow: alert.overlay ? AppElevation.high : null,
-          gradient: LinearGradient(colors: [borderColor, context.surface], stops: const [0.015, 0.015]),
+          gradient: LinearGradient(
+            colors: [if (alert.isReport) context.primaryColor else borderColor, context.surface],
+            stops: const [0.015, 0.015],
+          ),
           border: Border.all(color: context.outline),
           borderRadius: AppBorderRadius.radius12,
         ),
@@ -84,12 +87,14 @@ class AppAlertToastCard extends StatelessWidget {
                           Container(
                             width: AppDimensions.size20,
                             height: AppDimensions.size20,
-                            decoration: BoxDecoration(
+                            decoration: alert.isReport
+                                ? null
+                                : BoxDecoration(
                               color: iconBackgroundColor,
                               borderRadius: AppBorderRadius.radius4,
                             ),
                             child: alert.isReport
-                                ? Text('🎉', style: context.bodyMedium)
+                                ? Text('🎉', style: context.bodyLarge)
                                 : Icon(iconData, color: iconColor, size: AppDimensions.size16),
                           ),
                           AppSpacing.medium,
