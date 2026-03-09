@@ -1152,14 +1152,18 @@ class MockAlertService extends _i1.Mock implements _i10.AlertService {
   );
 
   @override
-  void showSuccessAlert({required String? title, required String? message}) =>
-      super.noSuchMethod(
-        Invocation.method(#showSuccessAlert, [], {
-          #title: title,
-          #message: message,
-        }),
-        returnValueForMissingStub: null,
-      );
+  void showSuccessAlert({
+    required String? title,
+    required String? message,
+    bool? isReport = false,
+  }) => super.noSuchMethod(
+    Invocation.method(#showSuccessAlert, [], {
+      #title: title,
+      #message: message,
+      #isReport: isReport,
+    }),
+    returnValueForMissingStub: null,
+  );
 
   @override
   void showInfoAlert({required String? title, required String? message}) =>
@@ -1559,6 +1563,15 @@ class MockReportService extends _i1.Mock implements _i10.ReportService {
           as _i12.Future<void>);
 
   @override
+  _i12.Future<void> loadInitialUserBookmarks({int? limit = 10}) =>
+      (super.noSuchMethod(
+            Invocation.method(#loadInitialUserBookmarks, [], {#limit: limit}),
+            returnValue: _i12.Future<void>.value(),
+            returnValueForMissingStub: _i12.Future<void>.value(),
+          )
+          as _i12.Future<void>);
+
+  @override
   _i12.Future<void> startRealtimeFeed(
     _i13.ReportFeedType? type, {
     _i13.CategoryType? category,
@@ -1569,6 +1582,15 @@ class MockReportService extends _i1.Mock implements _i10.ReportService {
               [type],
               {#category: category},
             ),
+            returnValue: _i12.Future<void>.value(),
+            returnValueForMissingStub: _i12.Future<void>.value(),
+          )
+          as _i12.Future<void>);
+
+  @override
+  _i12.Future<void> startRealtimeUserBookmarks() =>
+      (super.noSuchMethod(
+            Invocation.method(#startRealtimeUserBookmarks, []),
             returnValue: _i12.Future<void>.value(),
             returnValueForMissingStub: _i12.Future<void>.value(),
           )
@@ -1598,6 +1620,15 @@ class MockReportService extends _i1.Mock implements _i10.ReportService {
               [type],
               {#category: category, #limit: limit},
             ),
+            returnValue: _i12.Future<void>.value(),
+            returnValueForMissingStub: _i12.Future<void>.value(),
+          )
+          as _i12.Future<void>);
+
+  @override
+  _i12.Future<void> loadMoreUserBookmarks({int? limit = 10}) =>
+      (super.noSuchMethod(
+            Invocation.method(#loadMoreUserBookmarks, [], {#limit: limit}),
             returnValue: _i12.Future<void>.value(),
             returnValueForMissingStub: _i12.Future<void>.value(),
           )
@@ -2724,6 +2755,25 @@ class MockCloudinaryStorageService extends _i1.Mock
               #file: file,
               #folder: folder,
               #publicIdPrefix: publicIdPrefix,
+            }),
+            returnValue: _i12.Future<String?>.value(),
+            returnValueForMissingStub: _i12.Future<String?>.value(),
+          )
+          as _i12.Future<String?>);
+
+  @override
+  _i12.Future<String?> uploadFileWithRetry({
+    required _i16.File? file,
+    String? folder,
+    String? publicIdPrefix,
+    int? maxRetries = 3,
+  }) =>
+      (super.noSuchMethod(
+            Invocation.method(#uploadFileWithRetry, [], {
+              #file: file,
+              #folder: folder,
+              #publicIdPrefix: publicIdPrefix,
+              #maxRetries: maxRetries,
             }),
             returnValue: _i12.Future<String?>.value(),
             returnValueForMissingStub: _i12.Future<String?>.value(),
