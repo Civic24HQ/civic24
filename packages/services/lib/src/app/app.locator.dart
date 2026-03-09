@@ -19,6 +19,7 @@ import '../services/core/local_notification_service.dart';
 import '../services/core/media_service.dart';
 import '../services/core/permission_service.dart';
 import '../services/core/push_notification_service.dart';
+import '../services/core/remote_config_service.dart';
 import '../services/core/user_service.dart';
 import '../services/feature/report_service.dart';
 import '../services/feature/url_launcher_service.dart';
@@ -55,4 +56,5 @@ Future<void> setupServiceLocator({
   serviceLocator.registerLazySingleton(() => UrlLauncherService());
   serviceLocator.registerLazySingleton(() => InternetConnectivityService());
   serviceLocator.registerLazySingleton(() => UserStorageService());
+  serviceLocator.registerLazySingleton(() => RemoteConfigService());
 }

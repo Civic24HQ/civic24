@@ -22,6 +22,7 @@ class UserService extends FirestoreCollectionService<UserModel> with ListenableS
   final _settingsStorage = serviceLocator<SettingsStorageService>();
   final _reportService = serviceLocator<ReportService>();
   final _userStorageService = serviceLocator<UserStorageService>();
+  final _remoteConfigService = serviceLocator<RemoteConfigService>();
 
   @override
   String get collectionPath => FirestoreCollections.users;
@@ -240,6 +241,7 @@ class UserService extends FirestoreCollectionService<UserModel> with ListenableS
       return;
     }
     await _reportService.dispose();
+    await _remoteConfigService.dispose();
     log.i('User session data cleared successfully');
   }
 

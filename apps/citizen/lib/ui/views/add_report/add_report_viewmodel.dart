@@ -20,6 +20,7 @@ class AddReportViewModel extends FormViewModel {
   final _mediaService = locator<MediaService>();
   final _analyticsService = locator<AnalyticsService>();
   final _cloudinaryStorageService = locator<CloudinaryStorageService>();
+  final _remoteConfigService = locator<RemoteConfigService>();
 
   @override
   List<ListenableServiceMixin> get listenableServices => [_userService, _reportService];
@@ -115,10 +116,11 @@ class AddReportViewModel extends FormViewModel {
   }
 
   Future<void> pickImageWithSourceDialog() async {
-    if (_mediaFiles.length >= 4) {
+    final maxReportImageLength = _remoteConfigService.maxReportImages;
+    if (_mediaFiles.length >= maxReportImageLength) {
       _alertService.showErrorAlert(
         title: 'Media Limit Reached',
-        message: 'You can only add up to 4 media files per report.',
+        message: 'You can only add up to $maxReportImageLength media files per report.',
       );
       return;
     }

@@ -12,6 +12,7 @@ export 'src/services/core/local_notification_service.dart';
 export 'src/services/core/media_service.dart';
 export 'src/services/core/permission_service.dart';
 export 'src/services/core/push_notification_service.dart';
+export 'src/services/core/remote_config_service.dart';
 export 'src/services/core/user_service.dart';
 export 'src/services/feature/report_service.dart';
 export 'src/services/feature/url_launcher_service.dart';

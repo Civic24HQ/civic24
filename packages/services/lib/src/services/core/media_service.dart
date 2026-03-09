@@ -19,6 +19,7 @@ class MediaService {
   // final _dialogService = serviceLocator<DialogService>();
   final _alertService = serviceLocator<AlertService>();
   final _permissionService = serviceLocator<PermissionService>();
+  final _remoteConfigService = serviceLocator<RemoteConfigService>();
 
   final _imagePicker = ImagePicker();
   final _imageCropper = ImageCropper();
@@ -68,17 +69,19 @@ class MediaService {
   @visibleForTesting
   Future<List<File?>> pickMultiImage() async {
     try {
+      final maxReportImageLength = _remoteConfigService.maxReportImages;
       final pickedFiles = await _imagePicker.pickMultiImage(maxWidth: 1000, maxHeight: 1000);
       if (pickedFiles.isEmpty) {
         return [];
       }
-      if (pickedFiles.length > 4) {
+      if (pickedFiles.length > maxReportImageLength) {
         _alertService.showInfoAlert(
           title: 'Image Selection Limit',
-          message: 'You have selected ${pickedFiles.length} images. Only the first 4 will be processed.',
+          message:
+              'You have selected ${pickedFiles.length} images. Only the first $maxReportImageLength will be processed.',
         );
-        _log.i('Only the first 4 images will be used.');
-        return pickedFiles.sublist(0, 4).map((pickedFile) => File(pickedFile.path)).toList();
+        _log.i('Only the first $maxReportImageLength images will be used.');
+        return pickedFiles.sublist(0, maxReportImageLength).map((pickedFile) => File(pickedFile.path)).toList();
       } else {
         return pickedFiles.map((pickedFile) => File(pickedFile.path)).toList();
       }
