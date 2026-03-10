@@ -5,7 +5,6 @@ import 'package:country_flags/country_flags.dart';
 import 'package:flutter/material.dart';
 import 'package:localization/localization.dart';
 import 'package:models/models.dart';
-import 'package:solar_icons/solar_icons.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked/stacked_annotations.dart';
 import 'package:styles/styles.dart';
@@ -65,32 +64,6 @@ class CompleteProfileView extends StackedView<CompleteProfileViewModel> with $Co
                           autofillHints: const [AutofillHints.givenName],
                         ),
                         AppSpacing.normal,
-                        // AppDropdownButtonTextField(
-                        //   label: l10n.generalCountry,
-                        //   hintText: l10n.generalSelectCountry,
-                        //   value: viewModel.countryValue,
-                        //   items: viewModel.countryOptions.map<DropdownMenuItem<String>>((c) {
-                        //     return DropdownMenuItem<String>(
-                        //       value: c.name,
-                        //       child: Row(
-                        //         children: [
-                        //           CountryFlag.fromCountryCode(
-                        //             c.iso2,
-                        //             height: AppDimensions.size16,
-                        //             width: AppDimensions.size24,
-                        //           ),
-                        //           AppSpacing.standard,
-                        //           Text(
-                        //             c.name,
-                        //             style: context.bodyMedium?.copyWith(color: context.colorScheme.onSurface),
-                        //           ),
-                        //         ],
-                        //       ),
-                        //     );
-                        //   }).toList(),
-                        //   onChanged: viewModel.onCountryChanged,
-                        // ),
-                        // AppSpacing.normal,
                         AppSearchableDropdownTextField<CountryOption>(
                           label: l10n.generalCountry,
                           hintText: l10n.generalSelectCountry,
@@ -118,31 +91,22 @@ class CompleteProfileView extends StackedView<CompleteProfileViewModel> with $Co
                           itemLabel: (s) => s.name,
                           onChanged: (selected) => viewModel.onStateChanged(selected?.name),
                         ),
-                        // AppSpacing.normal,
-                        // AppDropdownButtonTextField(
-                        //   label: l10n.generalState,
-                        //   hintText: l10n.generalSelectState,
-                        //   value: viewModel.stateValue,
-                        //   items: viewModel.stateOptions.map<DropdownMenuItem<String>>((s) {
-                        //     return DropdownMenuItem<String>(value: s.name, child: Text(s.name));
-                        //   }).toList(),
-                        //   onChanged: viewModel.onStateChanged,
+                        // TODO(Civic24): Refactor the User Experience of the Get Accurate Location Functionality
+                        // AppSpacing.standard,
+                        // TextButton.icon(
+                        //   style: TextButton.styleFrom(
+                        //     padding: EdgeInsets.zero,
+                        //     minimumSize: Size.zero,
+                        //     tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                        //   ),
+                        //   onPressed: viewModel.getAccurateLocationData,
+                        //   iconAlignment: IconAlignment.end,
+                        //   icon: Icon(SolarIconsOutline.gps, color: context.primary, size: AppDimensions.size20),
+                        //   label: Text(
+                        //     l10n.generalUseAccurateLocation,
+                        //     style: context.bodyMedium!.copyWith(color: context.primary),
+                        //   ),
                         // ),
-                        AppSpacing.standard,
-                        TextButton.icon(
-                          style: TextButton.styleFrom(
-                            padding: EdgeInsets.zero,
-                            minimumSize: Size.zero,
-                            tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                          ),
-                          onPressed: viewModel.getAccurateLocationData,
-                          iconAlignment: IconAlignment.end,
-                          icon: Icon(SolarIconsOutline.gps, color: context.primary, size: AppDimensions.size20),
-                          label: Text(
-                            l10n.generalUseAccurateLocation,
-                            style: context.bodyMedium!.copyWith(color: context.primary),
-                          ),
-                        ),
                         AppSpacing.large,
                       ],
                     ),

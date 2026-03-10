@@ -14,6 +14,7 @@ class CompleteProfileViewModel extends FormViewModel {
   final _userService = locator<UserService>();
   final _alertService = locator<AlertService>();
   final _analyticsService = locator<AnalyticsService>();
+  final _locationService = locator<LocationService>();
 
   String? countryValue;
   String? stateValue;
@@ -109,7 +110,10 @@ class CompleteProfileViewModel extends FormViewModel {
   }
 
   Future<void> getAccurateLocationData() async {
-    // TODO(Civic24): Implement Geolocator/Geocoding to auto-select country and state
+    final locationData = await _locationService.getUserLocationData();
+    countryValue = countryOptions.where((c) => c.name == locationData['country']).firstOrNull?.name;
+    stateValue = stateOptions.where((s) => s.name == locationData['state']).firstOrNull?.name;
+    rebuildUi();
   }
 
   Future<void> onSaveData() async {

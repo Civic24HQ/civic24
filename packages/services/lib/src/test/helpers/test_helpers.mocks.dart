@@ -6,6 +6,7 @@
 import 'dart:async' as _i12;
 import 'dart:io' as _i16;
 import 'dart:math' as _i15;
+import 'dart:ui' as _i19;
 
 import 'package:cloud_firestore/cloud_firestore.dart' as _i4;
 import 'package:constants/constants.dart' as _i13;
@@ -2796,4 +2797,266 @@ class MockCloudinaryStorageService extends _i1.Mock
             returnValueForMissingStub: _i12.Future<String?>.value(),
           )
           as _i12.Future<String?>);
+}
+
+/// A class which mocks [InternetConnectivityService].
+///
+/// See the documentation for Mockito's code generation for more information.
+class MockInternetConnectivityService extends _i1.Mock
+    implements _i10.InternetConnectivityService {
+  @override
+  _i2.Logger get log =>
+      (super.noSuchMethod(
+            Invocation.getter(#log),
+            returnValue: _FakeLogger_0(this, Invocation.getter(#log)),
+            returnValueForMissingStub: _FakeLogger_0(
+              this,
+              Invocation.getter(#log),
+            ),
+          )
+          as _i2.Logger);
+
+  @override
+  bool get isConnected =>
+      (super.noSuchMethod(
+            Invocation.getter(#isConnected),
+            returnValue: false,
+            returnValueForMissingStub: false,
+          )
+          as bool);
+
+  @override
+  int get listenersCount =>
+      (super.noSuchMethod(
+            Invocation.getter(#listenersCount),
+            returnValue: 0,
+            returnValueForMissingStub: 0,
+          )
+          as int);
+
+  @override
+  _i12.Future<void> initialize() =>
+      (super.noSuchMethod(
+            Invocation.method(#initialize, []),
+            returnValue: _i12.Future<void>.value(),
+            returnValueForMissingStub: _i12.Future<void>.value(),
+          )
+          as _i12.Future<void>);
+
+  @override
+  _i12.Future<void> dispose() =>
+      (super.noSuchMethod(
+            Invocation.method(#dispose, []),
+            returnValue: _i12.Future<void>.value(),
+            returnValueForMissingStub: _i12.Future<void>.value(),
+          )
+          as _i12.Future<void>);
+
+  @override
+  void listenToReactiveValues(List<dynamic>? reactiveValues) =>
+      super.noSuchMethod(
+        Invocation.method(#listenToReactiveValues, [reactiveValues]),
+        returnValueForMissingStub: null,
+      );
+
+  @override
+  void addListener(void Function()? listener) => super.noSuchMethod(
+    Invocation.method(#addListener, [listener]),
+    returnValueForMissingStub: null,
+  );
+
+  @override
+  void removeListener(void Function()? listener) => super.noSuchMethod(
+    Invocation.method(#removeListener, [listener]),
+    returnValueForMissingStub: null,
+  );
+
+  @override
+  void notifyListeners() => super.noSuchMethod(
+    Invocation.method(#notifyListeners, []),
+    returnValueForMissingStub: null,
+  );
+}
+
+/// A class which mocks [UserStorageService].
+///
+/// See the documentation for Mockito's code generation for more information.
+class MockUserStorageService extends _i1.Mock
+    implements _i10.UserStorageService {
+  @override
+  _i3.UserModel get getCurrentUserModel =>
+      (super.noSuchMethod(
+            Invocation.getter(#getCurrentUserModel),
+            returnValue: _FakeUserModel_3(
+              this,
+              Invocation.getter(#getCurrentUserModel),
+            ),
+            returnValueForMissingStub: _FakeUserModel_3(
+              this,
+              Invocation.getter(#getCurrentUserModel),
+            ),
+          )
+          as _i3.UserModel);
+
+  @override
+  _i6.Box<dynamic> get box =>
+      (super.noSuchMethod(
+            Invocation.getter(#box),
+            returnValue: _FakeBox_6<dynamic>(this, Invocation.getter(#box)),
+            returnValueForMissingStub: _FakeBox_6<dynamic>(
+              this,
+              Invocation.getter(#box),
+            ),
+          )
+          as _i6.Box<dynamic>);
+
+  @override
+  _i2.Logger get logger =>
+      (super.noSuchMethod(
+            Invocation.getter(#logger),
+            returnValue: _FakeLogger_0(this, Invocation.getter(#logger)),
+            returnValueForMissingStub: _FakeLogger_0(
+              this,
+              Invocation.getter(#logger),
+            ),
+          )
+          as _i2.Logger);
+
+  @override
+  void setUserId(String? userId) => super.noSuchMethod(
+    Invocation.method(#setUserId, [userId]),
+    returnValueForMissingStub: null,
+  );
+
+  @override
+  void setCurrentUserModel(_i3.UserModel? user) => super.noSuchMethod(
+    Invocation.method(#setCurrentUserModel, [user]),
+    returnValueForMissingStub: null,
+  );
+
+  @override
+  void saveData(String? key, dynamic value) => super.noSuchMethod(
+    Invocation.method(#saveData, [key, value]),
+    returnValueForMissingStub: null,
+  );
+
+  @override
+  T getData<T>(String? key) =>
+      (super.noSuchMethod(
+            Invocation.method(#getData, [key]),
+            returnValue: _i11.dummyValue<T>(
+              this,
+              Invocation.method(#getData, [key]),
+            ),
+            returnValueForMissingStub: _i11.dummyValue<T>(
+              this,
+              Invocation.method(#getData, [key]),
+            ),
+          )
+          as T);
+
+  @override
+  _i12.Future<void> deleteData(String? key) =>
+      (super.noSuchMethod(
+            Invocation.method(#deleteData, [key]),
+            returnValue: _i12.Future<void>.value(),
+            returnValueForMissingStub: _i12.Future<void>.value(),
+          )
+          as _i12.Future<void>);
+
+  @override
+  void deleteAllData() => super.noSuchMethod(
+    Invocation.method(#deleteAllData, []),
+    returnValueForMissingStub: null,
+  );
+
+  @override
+  void close() => super.noSuchMethod(
+    Invocation.method(#close, []),
+    returnValueForMissingStub: null,
+  );
+
+  @override
+  _i12.Stream<T> watch<T>() =>
+      (super.noSuchMethod(
+            Invocation.method(#watch, []),
+            returnValue: _i12.Stream<T>.empty(),
+            returnValueForMissingStub: _i12.Stream<T>.empty(),
+          )
+          as _i12.Stream<T>);
+}
+
+/// A class which mocks [RemoteConfigService].
+///
+/// See the documentation for Mockito's code generation for more information.
+class MockRemoteConfigService extends _i1.Mock
+    implements _i10.RemoteConfigService {
+  @override
+  int get maxReportImages =>
+      (super.noSuchMethod(
+            Invocation.getter(#maxReportImages),
+            returnValue: 0,
+            returnValueForMissingStub: 0,
+          )
+          as int);
+
+  @override
+  String get minAppVersion =>
+      (super.noSuchMethod(
+            Invocation.getter(#minAppVersion),
+            returnValue: _i11.dummyValue<String>(
+              this,
+              Invocation.getter(#minAppVersion),
+            ),
+            returnValueForMissingStub: _i11.dummyValue<String>(
+              this,
+              Invocation.getter(#minAppVersion),
+            ),
+          )
+          as String);
+
+  @override
+  _i12.Future<void> initialize({
+    Duration? minimumFetchInterval = const Duration(minutes: 1),
+  }) =>
+      (super.noSuchMethod(
+            Invocation.method(#initialize, [], {
+              #minimumFetchInterval: minimumFetchInterval,
+            }),
+            returnValue: _i12.Future<void>.value(),
+            returnValueForMissingStub: _i12.Future<void>.value(),
+          )
+          as _i12.Future<void>);
+
+  @override
+  void addListener(_i19.VoidCallback? callback) => super.noSuchMethod(
+    Invocation.method(#addListener, [callback]),
+    returnValueForMissingStub: null,
+  );
+
+  @override
+  void removeListener(_i19.VoidCallback? callback) => super.noSuchMethod(
+    Invocation.method(#removeListener, [callback]),
+    returnValueForMissingStub: null,
+  );
+
+  @override
+  _i12.Future<void> dispose() =>
+      (super.noSuchMethod(
+            Invocation.method(#dispose, []),
+            returnValue: _i12.Future<void>.value(),
+            returnValueForMissingStub: _i12.Future<void>.value(),
+          )
+          as _i12.Future<void>);
+}
+
+/// A class which mocks [LocationService].
+///
+/// See the documentation for Mockito's code generation for more information.
+class MockLocationService extends _i1.Mock implements _i10.LocationService {
+  @override
+  void init() => super.noSuchMethod(
+    Invocation.method(#init, []),
+    returnValueForMissingStub: null,
+  );
 }
