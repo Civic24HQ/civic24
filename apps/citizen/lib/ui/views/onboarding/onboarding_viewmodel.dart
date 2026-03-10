@@ -6,6 +6,6 @@ import 'package:stacked_services/stacked_services.dart';
 class OnboardingViewModel extends BaseViewModel {
   final _navigationService = locator<RouterService>();
 
-  void handleLogin() => _navigationService.replaceWithLoginView();
+  void handleLogin() => _navigationService.replaceWithCompleteProfileView();
 
 }
