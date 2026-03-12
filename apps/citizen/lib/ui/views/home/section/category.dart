@@ -89,6 +89,7 @@ class _CategoryListViewState extends State<_CategoryListView> {
 
     return CustomScrollView(
       key: PageStorageKey(widget.category),
+      physics: const BouncingScrollPhysics(),
       controller: _controller,
       slivers: [
         CupertinoSliverRefreshControl(onRefresh: () => viewModel.refreshCategory(widget.category)),

@@ -30,7 +30,7 @@ Future<void> _preLocatorSetup() async {
 Future<void> _postLocatorSetup() async {
   setupBottomSheetUi();
   setupDialogUi();
-  await InternetConnectivityService().initialize();
+  // await InternetConnectivityService().initialize();
   await RemoteConfigService().initialize(
     minimumFetchInterval: EnvironmentConstants.isProduction ? const Duration(hours: 1) : const Duration(minutes: 1),
   );

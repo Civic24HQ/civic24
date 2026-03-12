@@ -3059,4 +3059,17 @@ class MockLocationService extends _i1.Mock implements _i10.LocationService {
     Invocation.method(#init, []),
     returnValueForMissingStub: null,
   );
+
+  @override
+  _i12.Future<Map<String, String>> getUserLocationData() =>
+      (super.noSuchMethod(
+            Invocation.method(#getUserLocationData, []),
+            returnValue: _i12.Future<Map<String, String>>.value(
+              <String, String>{},
+            ),
+            returnValueForMissingStub: _i12.Future<Map<String, String>>.value(
+              <String, String>{},
+            ),
+          )
+          as _i12.Future<Map<String, String>>);
 }

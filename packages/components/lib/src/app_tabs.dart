@@ -69,7 +69,6 @@ class _AppTabsState extends State<AppTabs> with SingleTickerProviderStateMixin {
               controller: _tabController,
               indicatorSize: TabBarIndicatorSize.tab,
               dividerColor: context.neutralLow,
-              // indicatorPadding: AppEdgeInsets.horizontalPadding24,
               indicator: UnderlineTabIndicator(
                 borderSide: BorderSide(color: context.primaryColor, width: AppDimensions.size2),
                 borderRadius: AppBorderRadius.radius16,
@@ -87,6 +86,7 @@ class _AppTabsState extends State<AppTabs> with SingleTickerProviderStateMixin {
                             color: isSelected ? context.colorScheme.onSurface : context.colorScheme.onSurfaceVariant,
                           ),
                           textAlign: TextAlign.center,
+                          textScaler: TextScaler.noScaling,
                         ),
                       ),
                       AppSpacing.small,
@@ -136,7 +136,7 @@ class _AppTabsState extends State<AppTabs> with SingleTickerProviderStateMixin {
           },
           Expanded(
             child: Padding(
-              padding: const EdgeInsets.only(top: AppDimensions.padding16),
+              padding: const EdgeInsets.only(top: AppDimensions.padding2),
               child: TabBarView(
                 controller: _tabController,
                 physics: const BouncingScrollPhysics(),

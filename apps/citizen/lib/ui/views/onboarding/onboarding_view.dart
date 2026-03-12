@@ -190,7 +190,12 @@ class _OnboardingItemState extends State<_OnboardingItem> with SingleTickerProvi
         ),
         FractionallySizedBox(
           widthFactor: 0.9,
-          child: Text(widget.builder.title, style: context.headlineLarge, textAlign: TextAlign.center),
+          child: Text(
+            widget.builder.title,
+            style: context.headlineLarge,
+            textAlign: TextAlign.center,
+            textScaler: TextScaler.noScaling,
+          ),
         ),
         AppSpacing.standard,
         FractionallySizedBox(
@@ -199,6 +204,7 @@ class _OnboardingItemState extends State<_OnboardingItem> with SingleTickerProvi
             widget.builder.subtitle,
             textAlign: TextAlign.center,
             style: context.bodyLarge?.copyWith(color: context.onSurfaceVariant),
+            textScaler: TextScaler.noScaling,
           ),
         ),
       ],
