@@ -244,16 +244,16 @@ class MediaService {
     final metadata = await extractImageMetadata(pickedFile);
     _log.d('Image metadata: $metadata');
 
-    final croppedFile = await cropImage(pickedFile);
-    if (croppedFile == null) {
-      _log.d('No cropped image file selected');
-      return null;
-    }
+    // final croppedFile = await cropImage(pickedFile);
+    // if (croppedFile == null) {
+    //   _log.d('No cropped image file selected');
+    //   return null;
+    // }
 
-    final fileSize = await croppedFile.length();
+    final fileSize = await pickedFile.length();
     _log.d('Cropped image file size: $fileSize bytes');
 
-    return ProcessedImage(imageFile: croppedFile, metadata: metadata, fileSize: fileSize);
+    return ProcessedImage(imageFile: pickedFile, metadata: metadata, fileSize: fileSize);
   }
 
   /// Handles the full process of picking multiple images from the gallery,

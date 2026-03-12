@@ -89,10 +89,7 @@ class AppAlertToastCard extends StatelessWidget {
                             height: AppDimensions.size20,
                             decoration: alert.isReport
                                 ? null
-                                : BoxDecoration(
-                              color: iconBackgroundColor,
-                              borderRadius: AppBorderRadius.radius4,
-                            ),
+                                : BoxDecoration(color: iconBackgroundColor, borderRadius: AppBorderRadius.radius4),
                             child: alert.isReport
                                 ? Text('🎉', style: context.bodyLarge)
                                 : Icon(iconData, color: iconColor, size: AppDimensions.size16),

@@ -47,6 +47,8 @@ dependencies:
   internet_connection_checker_plus: ^2.9.1+2
   google_sign_in: ^7.1.1
   sign_in_with_apple: ^7.0.1
+  geocoding: ^4.0.0
+  geolocator: ^14.0.2
 
   # Google/Firebase Dependencies
   firebase_auth: ^6.1.4

@@ -56,6 +56,7 @@ class _MyReportsState extends State<MyReports> {
 
     return CustomScrollView(
       key: PageStorageKey(userReports),
+      physics: const BouncingScrollPhysics(),
       controller: _controller,
       slivers: [
         CupertinoSliverRefreshControl(onRefresh: () => viewModel.refreshUserReports(limit: _myReportsPageLimit)),

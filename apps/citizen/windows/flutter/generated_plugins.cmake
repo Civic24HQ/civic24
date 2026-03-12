@@ -11,6 +11,7 @@ list(APPEND FLUTTER_PLUGIN_LIST
   firebase_remote_config
   firebase_storage
   flutter_timezone
+  geolocator_windows
   permission_handler_windows
   url_launcher_windows
 )

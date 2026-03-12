@@ -57,27 +57,29 @@
 		<string>http</string>
 		<string>sms</string>
 		<string>tel</string>
-		<string>mailto</string>
+<string>mailto</string>
 	</array>
 	<key>LSRequiresIPhoneOS</key>
-	<true/>
+<true/>
+
+
 	<key>NSBonjourServices</key>
 	<array>
 		<string>_dartobservatory._tcp</string>
 	</array>
 	<key>NSCameraUsageDescription</key>
-	<string>Access to the camera is required to take photos.</string>
+<string>Access to the camera is required to take photos.</string>
 	<key>NSLocalNetworkUsageDescription</key>
 	<string>This app requires access to the local network for debugging and development purposes.</string>
 	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
-	<string>Enable your location at all times to easily locate nearby fuel stations, even if AnyFuel is in the background.</string>
+<string>Enable your location at all times to easily complete your profile, even if Civic24 is in the background.</string>
 	<key>NSLocationAlwaysUsageDescription</key>
-	<string>Allow location access at all times to locate nearby fuel stations, even when AnyFuel is not actively in use.</string>
+<string>Allow location access at all times to complete your profile, even when Civic24 is not actively in use.</string>
 	<key>NSLocationUsageDescription</key>
-	<string>Location access helps display fuel stations close to you on older devices.</string>
+<string>Location access helps display your accurate location to easily complete your profile on older devices.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>Enable your location to find and display nearby fuel stations and estimate distances while using AnyFuel.</string>
-	<key>NSPhotoLibraryUsageDescription</key>
+<string>Enable your location to complete your profile while using Civic24.</string>
+<key>NSPhotoLibraryUsageDescription</key>
 	<string>Access to the photo library is required to select and upload images.</string>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
@@ -85,6 +87,7 @@
 	<array>
 		<string>fetch</string>
 		<string>remote-notification</string>
+<string>location</string>
 	</array>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>

@@ -91,6 +91,7 @@ class AppReport extends StatelessWidget {
             overflow: TextOverflow.ellipsis,
             softWrap: false,
             textAlign: TextAlign.start,
+            textScaler: TextScaler.noScaling,
           ),
           AppSpacing.normal,
 
