@@ -82,6 +82,12 @@ jobs:
         working-directory: ${{ env.cwd }}
         run: flutter pub get
 
+      # 🔥 Install FlutterFire CLI (The Fix)
+      - name: 🔥 Install FlutterFire CLI
+        run: |
+          dart pub global activate flutterfire_cli
+          echo "$HOME/.pub-cache/bin" >> $GITHUB_PATH
+
       # 📱 Build IPA
       - name: 📱 Build iOS IPA (unsigned)
         working-directory: ${{ env.cwd }}
