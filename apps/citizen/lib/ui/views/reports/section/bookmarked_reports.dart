@@ -56,6 +56,7 @@ class _BookmarkedReportsState extends State<BookmarkedReports> {
 
     return CustomScrollView(
       key: PageStorageKey(bookmarkedReports),
+      physics: const BouncingScrollPhysics(),
       controller: _controller,
       slivers: [
         CupertinoSliverRefreshControl(

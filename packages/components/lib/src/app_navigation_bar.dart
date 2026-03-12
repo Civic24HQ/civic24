@@ -114,10 +114,10 @@ List<UserDestination> adminDestinations = [
 List<UserDestination> citizenDestinations = [
   UserDestination(icon: IconsaxPlusLinear.home_2, selectedIcon: IconsaxPlusBold.home_2, label: l10n.pageHome),
   UserDestination(icon: IconsaxPlusLinear.people, selectedIcon: IconsaxPlusBold.people, label: l10n.pageReports),
-  UserDestination(
-    icon: IconsaxPlusLinear.notification,
-    selectedIcon: IconsaxPlusBold.notification,
-    label: l10n.pageNotifications,
-  ),
+  // UserDestination(
+  //   icon: IconsaxPlusLinear.notification,
+  //   selectedIcon: IconsaxPlusBold.notification,
+  //   label: l10n.pageNotifications,
+  // ),
   UserDestination(icon: IconsaxPlusLinear.setting_2, selectedIcon: IconsaxPlusBold.setting_2, label: l10n.pageSettings),
 ];

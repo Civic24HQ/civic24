@@ -878,10 +878,10 @@ class ReportService extends FirestoreCollectionService<Report> with ListenableSe
       if (type == ReportFeedType.userBookmarks) {
         await startRealtimeUserBookmarks();
       } else {
-      await startRealtimeFeed(type, category: category);
+        await startRealtimeFeed(type, category: category);
+      }
     }
   }
-}
 
   /// Inserts or updates a report in the specified feed, maintaining
   /// the feed's sort order and preventing unbounded growth.

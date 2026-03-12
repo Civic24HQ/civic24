@@ -52,7 +52,6 @@ class ReportsViewModel extends ReactiveViewModel {
   Future<void> initUserBookmarksFeed({int limit = kPageLimit}) =>
       _reportService.loadInitialFeed(ReportFeedType.userBookmarks, limit: limit);
 
-
   Future<void> viewComment() async {
     final uploadResponse = await _bottomSheetService.showCustomSheet(
       variant: BottomSheetType.comment,
@@ -78,5 +77,4 @@ class ReportsViewModel extends ReactiveViewModel {
   Future<void> bookmarkReport(Report report) async {
     await _reportService.bookmarkReportOptimistic(report, user);
   }
-
 }

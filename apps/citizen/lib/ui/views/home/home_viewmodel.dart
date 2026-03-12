@@ -98,5 +98,4 @@ class HomeViewModel extends ReactiveViewModel {
   Future<void> bookmarkReport(Report report) async {
     await _reportService.bookmarkReportOptimistic(report, user);
   }
-
 }

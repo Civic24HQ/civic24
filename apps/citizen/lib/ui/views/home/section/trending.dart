@@ -56,6 +56,7 @@ class _TrendingReportsState extends State<TrendingReports> {
 
     return CustomScrollView(
       key: PageStorageKey(trendingReports),
+      physics: const BouncingScrollPhysics(),
       controller: _controller,
       slivers: [
         CupertinoSliverRefreshControl(onRefresh: () => viewModel.refreshTrending(limit: _trendingReportsPageLimit)),

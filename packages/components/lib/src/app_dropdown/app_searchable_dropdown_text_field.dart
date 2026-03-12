@@ -93,6 +93,7 @@ class _AppSearchableDropdownTextFieldState<T> extends State<AppSearchableDropdow
   }
 
   void _open() {
+    FocusScope.of(context).unfocus();
     if (_isOpen) return;
     _searchCtrl.clear();
     _filtered = List<T>.from(widget.items);
@@ -107,6 +108,7 @@ class _AppSearchableDropdownTextFieldState<T> extends State<AppSearchableDropdow
   }
 
   void _close() {
+    FocusScope.of(context).unfocus();
     if (!_isOpen) return;
     _removeOverlay();
     setState(() => _isOpen = false);

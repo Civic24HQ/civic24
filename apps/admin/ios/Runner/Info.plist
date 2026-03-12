@@ -57,16 +57,16 @@
 		<true/>
 		<!-- Allow app to access location both in foreground and background -->
 		<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
-		<string>Enable your location at all times to easily locate nearby fuel stations, even if AnyFuel is in the background.</string>
+<string>Enable your location at all times to easily complete your profile, even if Civic24 is in the background.</string>
 		<!-- Allow app to access location even when it's not running -->
 		<key>NSLocationAlwaysUsageDescription</key>
-		<string>Allow location access at all times to locate nearby fuel stations, even when AnyFuel is not actively in use.</string>
+<string>Allow location access at all times to complete your profile, even when Civic24 is not actively in use.</string>
 		<!-- Fallback for older iOS versions requiring general location usage key -->
 		<key>NSLocationUsageDescription</key>
-		<string>Location access helps display fuel stations close to you on older devices.</string>
+<string>Location access helps display your accurate location to easily complete your profile on older devices.</string>
 		<!-- Allow app to access location only while it is being used -->
 		<key>NSLocationWhenInUseUsageDescription</key>
-		<string>Enable your location to find and display nearby fuel stations and estimate distances while using AnyFuel.</string>
+<string>Enable your location to complete your profile while using Civic24.</string>
 		<!-- Enables indirect input events like keyboard and pointer support -->
 		<key>UIApplicationSupportsIndirectInputEvents</key>
 		<true/>
@@ -77,6 +77,7 @@
 			<string>fetch</string>
 			<!-- Allows app to receive and handle remote push notifications in the background -->
 			<string>remote-notification</string>
+<string>location</string>
 		</array>
 		<key>UILaunchStoryboardName</key>
 		<string>LaunchScreen</string>
