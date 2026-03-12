@@ -7,8 +7,7 @@ class AllReports extends StatefulWidget {
   State<AllReports> createState() => _AllReportsState();
 }
 
-class _AllReportsState extends State<AllReports>
-{
+class _AllReportsState extends State<AllReports> {
   final _controller = ScrollController();
   static const int _allReportsPageLimit = 7;
 
@@ -57,6 +56,7 @@ class _AllReportsState extends State<AllReports>
 
     return CustomScrollView(
       key: PageStorageKey(reports),
+      physics: const BouncingScrollPhysics(),
       controller: _controller,
       slivers: [
         CupertinoSliverRefreshControl(onRefresh: viewModel.refreshAll),

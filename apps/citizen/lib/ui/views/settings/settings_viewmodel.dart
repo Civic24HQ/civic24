@@ -77,7 +77,7 @@ class SettingsViewModel extends ReactiveViewModel {
       await _authService.signOut();
       _log.i('Logged out successfully');
       _dialogService.completeDialog(DialogResponse(confirmed: true));
-      await _navigationService.clearStackAndShow(OnboardingViewRoute());
+      await _navigationService.clearStackAndShow(LoginViewRoute());
     }
   }
 }

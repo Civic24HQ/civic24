@@ -7,5 +7,4 @@ class OnboardingViewModel extends BaseViewModel {
   final _navigationService = locator<RouterService>();
 
   void handleLogin() => _navigationService.replaceWithLoginView();
-
 }

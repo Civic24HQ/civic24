@@ -86,11 +86,7 @@ class CloudinaryStorageService {
     int maxRetries = 3,
   }) async {
     for (var attempt = 1; attempt <= maxRetries; attempt++) {
-      final result = await uploadFile(
-        file: file,
-        folder: folder,
-        publicIdPrefix: publicIdPrefix,
-      );
+      final result = await uploadFile(file: file, folder: folder, publicIdPrefix: publicIdPrefix);
 
       if (result != null) return result;
 

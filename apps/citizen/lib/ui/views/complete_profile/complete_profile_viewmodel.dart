@@ -36,7 +36,7 @@ class CompleteProfileViewModel extends FormViewModel {
 
   Future<void> _loadCountries() async {
     try {
-      setBusy(true);
+      // setBusy(true);
       final countries = await csc.getAllCountries();
       countryOptions = countries.map((c) => CountryOption(c.name, c.isoCode)).toList()
         ..sort((a, b) => a.name.compareTo(b.name));
@@ -44,7 +44,7 @@ class CompleteProfileViewModel extends FormViewModel {
       // TODO(Civic24): Implement Alert Service Dialog to display a message that countries could not be loaded
       countryOptions = [];
     } finally {
-      setBusy(false);
+      // setBusy(false);
       rebuildUi();
     }
   }
