@@ -24,8 +24,8 @@ class AlertService with ListenableServiceMixin {
     }
   }
 
-  void showSuccessAlert({required String title, required String message}) =>
-      notifyAlertListeners(SuccessAlert(title: title, message: message));
+  void showSuccessAlert({required String title, required String message, bool isReport = false}) =>
+      notifyAlertListeners(SuccessAlert(title: title, message: message, isReport: isReport));
 
   void showInfoAlert({required String title, required String message}) =>
       notifyAlertListeners(InfoAlert(title: title, message: message));

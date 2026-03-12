@@ -91,6 +91,7 @@ class AppReport extends StatelessWidget {
             overflow: TextOverflow.ellipsis,
             softWrap: false,
             textAlign: TextAlign.start,
+            textScaler: TextScaler.noScaling,
           ),
           AppSpacing.normal,
 
@@ -99,22 +100,11 @@ class AppReport extends StatelessWidget {
               media: media,
               height: AppDimensions.size320,
               borderRadius: BorderRadius.circular(AppDimensions.size8),
-              heroTagPrefix: 'report_${report.reportData.reportId}',
+              heroTagPrefix:
+                  'report_${report.reportData.reportId}_${report.reportData.createdAt.millisecondsSinceEpoch}',
             ),
             AppSpacing.normal,
           ],
-          // if ((report.reportData.media?.length ?? 0) > 0) ...[
-          //   SizedBox(
-          //     width: double.infinity,
-          //     height: AppDimensions.size320,
-          //     child: ClipRRect(
-          //       borderRadius: BorderRadius.circular(AppDimensions.size8),
-          //       child: AppCachedImage(imageUrl: report.reportData.media?.first),
-          //     ),
-          //   ),
-          //   AppSpacing.normal,
-          // ] else
-          //   const SizedBox.shrink(),
           Container(
             width: double.infinity,
             color: context.surface,

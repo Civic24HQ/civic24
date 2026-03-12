@@ -42,7 +42,7 @@ class _CategoryListView extends StatefulWidget {
 
 class _CategoryListViewState extends State<_CategoryListView> {
   final _controller = ScrollController();
-  static const int _categoryReportsPageLimit = 12;
+  static const int _categoryReportsPageLimit = 7;
 
   late HomeViewModel _viewModel;
 
@@ -88,7 +88,8 @@ class _CategoryListViewState extends State<_CategoryListView> {
     }
 
     return CustomScrollView(
-      key: ValueKey(widget.category),
+      key: PageStorageKey(widget.category),
+      physics: const BouncingScrollPhysics(),
       controller: _controller,
       slivers: [
         CupertinoSliverRefreshControl(onRefresh: () => viewModel.refreshCategory(widget.category)),

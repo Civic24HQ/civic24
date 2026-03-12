@@ -19,6 +19,7 @@ class MediaService {
   // final _dialogService = serviceLocator<DialogService>();
   final _alertService = serviceLocator<AlertService>();
   final _permissionService = serviceLocator<PermissionService>();
+  final _remoteConfigService = serviceLocator<RemoteConfigService>();
 
   final _imagePicker = ImagePicker();
   final _imageCropper = ImageCropper();
@@ -68,11 +69,22 @@ class MediaService {
   @visibleForTesting
   Future<List<File?>> pickMultiImage() async {
     try {
+      final maxReportImageLength = _remoteConfigService.maxReportImages;
       final pickedFiles = await _imagePicker.pickMultiImage(maxWidth: 1000, maxHeight: 1000);
       if (pickedFiles.isEmpty) {
         return [];
       }
-      return pickedFiles.map((pickedFile) => File(pickedFile.path)).toList();
+      if (pickedFiles.length > maxReportImageLength) {
+        _alertService.showInfoAlert(
+          title: 'Image Selection Limit',
+          message:
+              'You have selected ${pickedFiles.length} images. Only the first $maxReportImageLength will be processed.',
+        );
+        _log.i('Only the first $maxReportImageLength images will be used.');
+        return pickedFiles.sublist(0, maxReportImageLength).map((pickedFile) => File(pickedFile.path)).toList();
+      } else {
+        return pickedFiles.map((pickedFile) => File(pickedFile.path)).toList();
+      }
     } on PlatformException catch (exception, stackTrace) {
       if (exception.code == 'photo_access_denied') {
         _log.w('User denied access to the photo library');
@@ -232,16 +244,16 @@ class MediaService {
     final metadata = await extractImageMetadata(pickedFile);
     _log.d('Image metadata: $metadata');
 
-    final croppedFile = await cropImage(pickedFile);
-    if (croppedFile == null) {
-      _log.d('No cropped image file selected');
-      return null;
-    }
+    // final croppedFile = await cropImage(pickedFile);
+    // if (croppedFile == null) {
+    //   _log.d('No cropped image file selected');
+    //   return null;
+    // }
 
-    final fileSize = await croppedFile.length();
+    final fileSize = await pickedFile.length();
     _log.d('Cropped image file size: $fileSize bytes');
 
-    return ProcessedImage(imageFile: croppedFile, metadata: metadata, fileSize: fileSize);
+    return ProcessedImage(imageFile: pickedFile, metadata: metadata, fileSize: fileSize);
   }
 
   /// Handles the full process of picking multiple images from the gallery,

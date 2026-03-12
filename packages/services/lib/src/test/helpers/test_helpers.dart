@@ -22,7 +22,10 @@ import 'package:services/src/test/helpers/test_helpers.mocks.dart';
     MockSpec<LocalNotificationService>(onMissingStub: OnMissingStub.returnDefault),
     MockSpec<CrashlyticsService>(onMissingStub: OnMissingStub.returnDefault),
     MockSpec<CloudinaryStorageService>(onMissingStub: OnMissingStub.returnDefault),
-
+    MockSpec<InternetConnectivityService>(onMissingStub: OnMissingStub.returnDefault),
+    MockSpec<UserStorageService>(onMissingStub: OnMissingStub.returnDefault),
+    MockSpec<RemoteConfigService>(onMissingStub: OnMissingStub.returnDefault),
+    MockSpec<LocationService>(onMissingStub: OnMissingStub.returnDefault),
     // @stacked-mock-spec
   ],
 )
@@ -40,6 +43,10 @@ void registerServices() {
   getAndRegisterLocalNotificationService();
   getAndRegisterCrashlyticsService();
   getAndRegisterCloudinaryStorageService();
+  getAndRegisterInternetConnectivityService();
+  getAndRegisterUserStorageService();
+  getAndRegisterRemoteConfigService();
+  getAndRegisterLocationService();
   // @stacked-mock-register
 }
 
@@ -133,6 +140,34 @@ MockCloudinaryStorageService getAndRegisterCloudinaryStorageService() {
   _removeRegistrationIfExists<CloudinaryStorageService>();
   final service = MockCloudinaryStorageService();
   serviceLocator.registerSingleton<CloudinaryStorageService>(service);
+  return service;
+}
+
+MockInternetConnectivityService getAndRegisterInternetConnectivityService() {
+  _removeRegistrationIfExists<InternetConnectivityService>();
+  final service = MockInternetConnectivityService();
+  serviceLocator.registerSingleton<InternetConnectivityService>(service);
+  return service;
+}
+
+MockUserStorageService getAndRegisterUserStorageService() {
+  _removeRegistrationIfExists<UserStorageService>();
+  final service = MockUserStorageService();
+  serviceLocator.registerSingleton<UserStorageService>(service);
+  return service;
+}
+
+MockRemoteConfigService getAndRegisterRemoteConfigService() {
+  _removeRegistrationIfExists<RemoteConfigService>();
+  final service = MockRemoteConfigService();
+  serviceLocator.registerSingleton<RemoteConfigService>(service);
+  return service;
+}
+
+MockLocationService getAndRegisterLocationService() {
+  _removeRegistrationIfExists<LocationService>();
+  final service = MockLocationService();
+  serviceLocator.registerSingleton<LocationService>(service);
   return service;
 }
 
