@@ -9,7 +9,7 @@ class AllReports extends StatefulWidget {
 
 class _AllReportsState extends State<AllReports> {
   final _controller = ScrollController();
-  static const int _allReportsPageLimit = 12;
+  static const int _allReportsPageLimit = 7;
 
   late HomeViewModel _viewModel;
 
@@ -55,6 +55,8 @@ class _AllReportsState extends State<AllReports> {
     final reports = viewModel.getAllReports();
 
     return CustomScrollView(
+      key: PageStorageKey(reports),
+      physics: const BouncingScrollPhysics(),
       controller: _controller,
       slivers: [
         CupertinoSliverRefreshControl(onRefresh: viewModel.refreshAll),

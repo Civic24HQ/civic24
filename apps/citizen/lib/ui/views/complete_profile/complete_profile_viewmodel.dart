@@ -14,6 +14,7 @@ class CompleteProfileViewModel extends FormViewModel {
   final _userService = locator<UserService>();
   final _alertService = locator<AlertService>();
   final _analyticsService = locator<AnalyticsService>();
+  final _locationService = locator<LocationService>();
 
   String? countryValue;
   String? stateValue;
@@ -35,7 +36,7 @@ class CompleteProfileViewModel extends FormViewModel {
 
   Future<void> _loadCountries() async {
     try {
-      setBusy(true);
+      // setBusy(true);
       final countries = await csc.getAllCountries();
       countryOptions = countries.map((c) => CountryOption(c.name, c.isoCode)).toList()
         ..sort((a, b) => a.name.compareTo(b.name));
@@ -43,7 +44,7 @@ class CompleteProfileViewModel extends FormViewModel {
       // TODO(Civic24): Implement Alert Service Dialog to display a message that countries could not be loaded
       countryOptions = [];
     } finally {
-      setBusy(false);
+      // setBusy(false);
       rebuildUi();
     }
   }
@@ -109,7 +110,10 @@ class CompleteProfileViewModel extends FormViewModel {
   }
 
   Future<void> getAccurateLocationData() async {
-    // TODO(Civic24): Implement Geolocator/Geocoding to auto-select country and state
+    final locationData = await _locationService.getUserLocationData();
+    countryValue = countryOptions.where((c) => c.name == locationData['country']).firstOrNull?.name;
+    stateValue = stateOptions.where((s) => s.name == locationData['state']).firstOrNull?.name;
+    rebuildUi();
   }
 
   Future<void> onSaveData() async {

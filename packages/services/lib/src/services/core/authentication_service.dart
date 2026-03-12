@@ -490,13 +490,13 @@ class AuthenticationService {
     _log.d('Signing out user');
     try {
       // Try to check if user is currently signed In
-      final isUserSignedIn = await _googleSignIn.attemptLightweightAuthentication();
+      // final isUserSignedIn = await _googleSignIn.attemptLightweightAuthentication();
 
-      if (isUserSignedIn is Future<GoogleSignInAccount?>) {
-        _log.d('Signing out Google user');
-        await _googleSignIn.disconnect();
-        await _googleSignIn.signOut();
-      }
+      // if (isUserSignedIn is Future<GoogleSignInAccount?>) {
+      _log.d('Signing out Google user');
+      await _googleSignIn.disconnect();
+      await _googleSignIn.signOut();
+      // }
 
       await Future.wait([
         _analyticsService.setUserId(null),

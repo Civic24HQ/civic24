@@ -35,7 +35,6 @@ class StartupViewModel extends BaseViewModel {
 
   void prepareUserSession() {
     _log.d('Initializing UserAuth');
-    // _authenticationService.setAuthStateToIdle();
 
     // Listen to the authentication state stream
     _authenticationService.authenticatedStream.listen((authState) {
@@ -55,7 +54,6 @@ class StartupViewModel extends BaseViewModel {
 
       _userService.userInitializedStream.distinct().listen((userInitialized) {
         if (userInitialized) {
-          _log.d('User initialized: Navigating to either MainView or CompleteProfileView');
           handleUserReady();
         }
       });
@@ -77,7 +75,7 @@ class StartupViewModel extends BaseViewModel {
     changeAnimationState();
     rotate();
     animateLight();
-    await Future.delayed(const Duration(milliseconds: 6500));
+    await Future.delayed(const Duration(milliseconds: 3800));
   }
 
   Future<void> runStartupLogic() async {

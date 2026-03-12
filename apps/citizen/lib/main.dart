@@ -4,6 +4,7 @@ import 'package:citizen/app/app.dialogs.dart';
 import 'package:citizen/app/app.locator.dart';
 import 'package:citizen/app/app.router.dart';
 import 'package:citizen/bootstrap.dart';
+import 'package:constants/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:localization/localization.dart';
 import 'package:services/services.dart';
@@ -29,6 +30,9 @@ Future<void> _preLocatorSetup() async {
 Future<void> _postLocatorSetup() async {
   setupBottomSheetUi();
   setupDialogUi();
-  await InternetConnectivityService().initialize();
+  // await InternetConnectivityService().initialize();
+  await RemoteConfigService().initialize(
+    minimumFetchInterval: EnvironmentConstants.isProduction ? const Duration(hours: 1) : const Duration(minutes: 1),
+  );
   runApp(const App());
 }
