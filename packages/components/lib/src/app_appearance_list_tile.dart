@@ -24,7 +24,8 @@ class AppAppearanceListTile extends StatelessWidget {
       color: Colors.transparent,
       margin: EdgeInsets.zero,
       shape: RoundedRectangleBorder(borderRadius: AppBorderRadius.radius8),
-      child: RadioListTile(
+      // TODO(Civic24): Implement the use of RadioGroup to manage group value instead
+      child: RadioListTile<AppearanceMode>(
         value: mode,
         groupValue: groupMode,
         controlAffinity: ListTileControlAffinity.trailing,
