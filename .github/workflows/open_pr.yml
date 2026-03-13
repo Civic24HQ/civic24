@@ -16,7 +16,7 @@ jobs:
     steps:
       # Clone the repository
       - name: 📚 Clone the repository
-        uses: actions/checkout@v4 # - This uses the actions/checkout@v4 action to clone the repository's code into the runner's workspace.
+        uses: actions/checkout@v3 # - Using actions/checkout@v3 for wider compatibility with older/self-hosted runners.
       
       # Setup Java
       - name: 🚧 Setup java
@@ -33,8 +33,15 @@ jobs:
       pull-requests: write
     runs-on: ubuntu-latest
     steps:
+      - name: Show PR author
+        run: |
+          echo "PR author: ${{ github.event.pull_request.user.login }}"
       - name: 🔗 Auto-assign PR author
-        uses: technote-space/assign-author@9558557c5c4816f38bd06176fbc324ba14bb3160 # v1.6.2
+        uses: technote-space/assign-author@v1
+        with:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
   labeler:
     name: 🏷️ Add PR Labels

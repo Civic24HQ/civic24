@@ -27,6 +27,7 @@ class AppLanguageListTile extends StatelessWidget {
       color: Colors.transparent,
       margin: EdgeInsets.zero,
       shape: RoundedRectangleBorder(borderRadius: AppBorderRadius.radius8),
+      // TODO(Civic24): Implement the use of RadioGroup to manage group value instead
       child: RadioListTile(
         value: value,
         groupValue: groupValue,
