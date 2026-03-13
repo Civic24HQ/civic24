@@ -2,9 +2,9 @@ name: Civic 24 Continuous Integration / Continuous Deployment (CI/CD)
 
 on:
   push:
-    branches: [main]
+    branches: [develop]
   pull_request:
-    branches: [main]
+    branches: [develop]
 
 env:
   FLUTTER_VERSION: "3.38.7"
@@ -139,7 +139,7 @@ jobs:
         uses: actions/setup-java@v5
         with:
           distribution: zulu
-          java-version: "25.x"
+          java-version: "21.x"
 
       - name: 🐦 Setup Flutter
         uses: subosito/flutter-action@v2
