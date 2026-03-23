@@ -16,9 +16,12 @@ const kAnalyticButtonResetPassword = 'reset_password';
 const kAnalyticButtonAuthGoogle = 'auth_continue_with_google';
 const kAnalyticButtonAuthApple = 'auth_continue_with_apple';
 const kAnalyticsButtonAddReport = 'add_report';
+const kAnalyticButtonSubmitFeedback = 'submit_feedback';
+const kAnalyticEventDeleteAccountInitiated = 'delete_account_initiated';
+const kAnalyticEventDeleteAccountCompleted = 'delete_account_completed';
 
 // Events
-const kAnalyticEventBecomeOnboardingCompleted = 'onboarding_completed';
+const kAnalyticEventOnboardingCompleted = 'onboarding_completed';
 
 // Parameters
 

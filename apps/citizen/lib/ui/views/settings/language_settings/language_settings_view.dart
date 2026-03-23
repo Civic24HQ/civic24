@@ -10,7 +10,11 @@ class LanguageSettingsView extends StackedView<LanguageSettingsViewModel> {
   const LanguageSettingsView({super.key});
 
   @override
-  Widget builder(BuildContext context, LanguageSettingsViewModel viewModel, Widget? child) {
+  Widget builder(
+    BuildContext context,
+    LanguageSettingsViewModel viewModel,
+    Widget? child,
+  ) {
     return Scaffold(
       appBar: AppBar(
         title: Text(l10n.featureSettingsLanguage),
@@ -26,7 +30,9 @@ class LanguageSettingsView extends StackedView<LanguageSettingsViewModel> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               for (final language in LanguageType.values.where(
-                (l) => appSupportedLocales.map((e) => e.languageCode).contains(l.locale),
+                (l) => appSupportedLocales
+                    .map((e) => e.languageCode)
+                    .contains(l.locale),
               ))
                 AppLanguageListTile(
                   value: language,
@@ -41,5 +47,6 @@ class LanguageSettingsView extends StackedView<LanguageSettingsViewModel> {
   }
 
   @override
-  LanguageSettingsViewModel viewModelBuilder(BuildContext context) => LanguageSettingsViewModel();
+  LanguageSettingsViewModel viewModelBuilder(BuildContext context) =>
+      LanguageSettingsViewModel();
 }

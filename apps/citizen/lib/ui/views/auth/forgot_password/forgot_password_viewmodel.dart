@@ -22,7 +22,10 @@ class ForgotPasswordViewModel extends AuthViewModel {
     analyticsService.logButtonClick(kAnalyticButtonResetPassword);
     try {
       _log.i('$emailValue');
-      await runBusyFuture(authenticationService.sendPasswordResetEmail(emailValue!), throwException: true);
+      await runBusyFuture(
+        authenticationService.sendPasswordResetEmail(emailValue!),
+        throwException: true,
+      );
 
       final response = await _dialogService.showCustomDialog(
         variant: DialogType.sendPasswordResetEmail,
@@ -31,15 +34,14 @@ class ForgotPasswordViewModel extends AuthViewModel {
 
       if (response != null && response.confirmed) {
         _log.i('Password Reset Email Sent');
-        navigateToLoginUp();
-        await _urlLauncherService.openEmailAppChooser();
-      }
-
       // _alertService.showErrorAlert(
       //   title: 'Password Reset Email Sent',
       //   message:
       //       'A password reset email has been sent to $emailValue. Please check your inbox and follow the instructions to reset your password.',
       // );
+        navigateToLoginUp();
+        await _urlLauncherService.openEmailAppChooser();
+      }
     } catch (e) {
       _log.e('Error sending password reset email, error: $e');
     }

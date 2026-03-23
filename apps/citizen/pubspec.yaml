@@ -1,12 +1,12 @@
 name: citizen
 description: Citizen app for Civic24
-version: 0.0.1+1
+version: 0.0.1+5
 publish_to: none
 
 environment:
   sdk: ">=3.10.7 <4.0.0"
   flutter: "3.38.7"
-
+ 
 dependencies:
   flutter:
     sdk: flutter

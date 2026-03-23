@@ -45,7 +45,7 @@ class StartupViewModel extends BaseViewModel {
           _log.d('User is authenticated, continuing with onboarding.');
         case AuthState.unauthenticated:
           _log.d('User is not authenticated. Redirecting to onboarding.');
-          _navigationService.clearStackAndShow(OnboardingViewRoute());
+          _navigationService.clearStackAndShow(LoginViewRoute());
           return;
         case AuthState.idle:
           _log.d('Auth state is initializing');
