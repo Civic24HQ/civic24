@@ -30,7 +30,8 @@ class _MyReportsState extends State<MyReports> {
   }
 
   void _onScroll() {
-    if (_controller.position.pixels > _controller.position.maxScrollExtent - 300) {
+    if (_controller.position.pixels >
+        _controller.position.maxScrollExtent - 300) {
       _viewModel.loadMoreUserReports(limit: _myReportsPageLimit);
     }
   }
@@ -48,7 +49,14 @@ class _MyReportsState extends State<MyReports> {
 
     if (viewModel.isUserReportsInitialLoading()) {
       return CustomScrollView(
-        slivers: [SliverList(delegate: SliverChildBuilderDelegate((_, __) => const AppReportShimmer(), childCount: 6))],
+        slivers: [
+          SliverList(
+            delegate: SliverChildBuilderDelegate(
+              (_, __) => const AppReportShimmer(),
+              childCount: 6,
+            ),
+          ),
+        ],
       );
     }
 
@@ -59,7 +67,10 @@ class _MyReportsState extends State<MyReports> {
       physics: const BouncingScrollPhysics(),
       controller: _controller,
       slivers: [
-        CupertinoSliverRefreshControl(onRefresh: () => viewModel.refreshUserReports(limit: _myReportsPageLimit)),
+        CupertinoSliverRefreshControl(
+          onRefresh: () =>
+              viewModel.refreshUserReports(limit: _myReportsPageLimit),
+        ),
 
         SliverList(
           delegate: SliverChildBuilderDelegate((context, index) {

@@ -139,6 +139,8 @@ class LoginView extends StackedView<LoginViewModel> with $LoginView {
                             onTapped: viewModel.navigateToSignUp,
                           ),
                           AppSpacing.large,
+                          AuthPrivacySection(onTapTerm: viewModel.onViewTerms, onTapPolicy: viewModel.onViewPrivacy),
+                          AppSpacing.large,
                         ],
                       ),
                     ),

@@ -45,6 +45,16 @@ class MessageLookup extends MessageLookupByLibrary {
     "featureAlreadyHaveAnAccount": MessageLookupByLibrary.simpleMessage(
       "Already have an account?",
     ),
+    "featureAuthTermAnd": MessageLookupByLibrary.simpleMessage(" and "),
+    "featureAuthTermDescription": MessageLookupByLibrary.simpleMessage(
+      "By creating an account, you agree to our ",
+    ),
+    "featureAuthTermDescriptionPrivacy": MessageLookupByLibrary.simpleMessage(
+      "Privacy Policy",
+    ),
+    "featureAuthTermDescriptionTerms": MessageLookupByLibrary.simpleMessage(
+      "Terms",
+    ),
     "featureBookmarkedReports": MessageLookupByLibrary.simpleMessage(
       "Bookmarked",
     ),
@@ -128,6 +138,55 @@ class MessageLookup extends MessageLookupByLibrary {
     "featureCompleteProfile": MessageLookupByLibrary.simpleMessage(
       "Complete Profile",
     ),
+    "featureDeleteConfirmationHint": MessageLookupByLibrary.simpleMessage(
+      "I understand that this action cannot be undone.",
+    ),
+    "featureDeleteConfirmationMessage": MessageLookupByLibrary.simpleMessage(
+      "Deleting your account will permanently remove all your data including saved preferences. This action cannot be undone.",
+    ),
+    "featureDeleteConfirmationProceed": MessageLookupByLibrary.simpleMessage(
+      "Continue to Verification",
+    ),
+    "featureDeleteConfirmationTitle": MessageLookupByLibrary.simpleMessage(
+      "Are you sure you want to delete your account?",
+    ),
+    "featureDeleteFeedbackButtonSkip": MessageLookupByLibrary.simpleMessage(
+      "Skip Feedback",
+    ),
+    "featureDeleteFeedbackButtonSubmit": MessageLookupByLibrary.simpleMessage(
+      "Submit Feedback",
+    ),
+    "featureDeleteFeedbackGoodbye": MessageLookupByLibrary.simpleMessage(
+      "Goodbye and Thank You!",
+    ),
+    "featureDeleteFeedbackHint": MessageLookupByLibrary.simpleMessage(
+      "We’d love to hear your feedback on how we can improve. Please let us know why you’re deleting your account.",
+    ),
+    "featureDeleteFeedbackOtherHint": MessageLookupByLibrary.simpleMessage(
+      "Please share more details",
+    ),
+    "featureDeleteFeedbackTitle": MessageLookupByLibrary.simpleMessage(
+      "Before You Go…",
+    ),
+    "featureDeleteVerificationContinue": MessageLookupByLibrary.simpleMessage(
+      "Verify and Continue",
+    ),
+    "featureDialogDeleteConfirmationDesc": MessageLookupByLibrary.simpleMessage(
+      "Your account has been successfully deleted. We appreciate the time you spent with us. If you ever decide to return, we will be here for you! \n\nFor security and compliance reasons, some of data may be retained for auditing purposes and will be fully erased from our systems within 30 days, but your account is now permanently deleted and cannot be recovered.",
+    ),
+    "featureDialogDeleteVerificationAuthContinue":
+        MessageLookupByLibrary.simpleMessage("Re-authenticate to Continue"),
+    "featureDialogDeleteVerificationAuthHint": MessageLookupByLibrary.simpleMessage(
+      "For security purposes, please re-authenticate to proceed with deleting your account.",
+    ),
+    "featureDialogDeleteVerificationEmptyPassword":
+        MessageLookupByLibrary.simpleMessage("Password cannot be empty"),
+    "featureDialogDeleteVerificationSecurity":
+        MessageLookupByLibrary.simpleMessage(
+          "For security reasons, please enter your password to continue.",
+        ),
+    "featureDialogDeleteVerificationVerify":
+        MessageLookupByLibrary.simpleMessage("Verify Your Identity"),
     "featureDontHaveAccount": MessageLookupByLibrary.simpleMessage(
       "Don’t have an account?",
     ),
@@ -316,6 +375,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "generalForgotPassword": MessageLookupByLibrary.simpleMessage(
       "Forgot Password?",
     ),
+    "generalGotIt": MessageLookupByLibrary.simpleMessage("Got it"),
     "generalLastname": MessageLookupByLibrary.simpleMessage("Last name"),
     "generalLogin": MessageLookupByLibrary.simpleMessage("Login"),
     "generalLogout": MessageLookupByLibrary.simpleMessage("Logout"),

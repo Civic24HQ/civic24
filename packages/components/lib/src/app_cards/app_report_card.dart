@@ -67,10 +67,16 @@ class AppReport extends StatelessWidget {
                 title: Text(
                   report.reportData.fullName,
                   style: context.headlineSmall?.copyWith(fontSize: AppDimensions.size16),
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  softWrap: true,
+                  textAlign: TextAlign.start,
                 ),
                 subtitle: Text(
-                  report.reportData.location,
+                  report.reportData.country,
                   style: context.bodyLarge?.copyWith(color: context.neutralHigh, fontSize: AppDimensions.size14),
+                  overflow: TextOverflow.ellipsis,
+                  maxLines: 1,
                 ),
                 trailing: Text(
                   report.reportData.createdAt.timeAgoInWords,
@@ -131,7 +137,8 @@ class AppReport extends StatelessWidget {
                     onTap: canDislike ? onTapDislike : null,
                   ),
                 ),
-                SocialActionButton.comment(onTap: onTapComment, count: report.reportData.commentCount),
+                // TODO(Civic24): Implement Comment Functionality on a Report Post
+                // SocialActionButton.comment(onTap: onTapComment, count: report.reportData.commentCount),
                 SocialActionButton.bookmark(
                   isActive: report.hasBookmarked,
                   count: report.reportData.bookmarkCount,

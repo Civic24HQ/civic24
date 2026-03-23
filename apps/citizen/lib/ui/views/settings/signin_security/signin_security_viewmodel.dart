@@ -35,6 +35,8 @@ class SignInSecurityViewModel extends ReactiveViewModel {
   Future<void> navigateToAppleAuth() async {}
 
   Future<void> navigateToUpdatePassword() async {
-    await _navigationService.navigateToUpdatePasswordView(isPasswordSet: isPasswordSet());
+    await _navigationService.navigateToUpdatePasswordView(
+      isPasswordSet: isPasswordSet(),
+    );
   }
 }

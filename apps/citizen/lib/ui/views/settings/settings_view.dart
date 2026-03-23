@@ -10,7 +10,11 @@ class SettingsView extends StackedView<SettingsViewModel> {
   const SettingsView({super.key});
 
   @override
-  Widget builder(BuildContext context, SettingsViewModel viewModel, Widget? child) {
+  Widget builder(
+    BuildContext context,
+    SettingsViewModel viewModel,
+    Widget? child,
+  ) {
     return Scaffold(
       backgroundColor: context.surface,
       appBar: AppBar(
@@ -57,7 +61,9 @@ class SettingsView extends StackedView<SettingsViewModel> {
               iconData: SolarIconsOutline.logout_2,
               iconColor: context.colorScheme.error,
               title: l10n.generalLogout,
-              titleStyle: context.bodyLarge?.copyWith(color: context.colorScheme.error),
+              titleStyle: context.bodyLarge?.copyWith(
+                color: context.colorScheme.error,
+              ),
               onTap: viewModel.logout,
             ),
             AppSpacing.xxLarge,
@@ -68,5 +74,6 @@ class SettingsView extends StackedView<SettingsViewModel> {
   }
 
   @override
-  SettingsViewModel viewModelBuilder(BuildContext context) => SettingsViewModel();
+  SettingsViewModel viewModelBuilder(BuildContext context) =>
+      SettingsViewModel();
 }

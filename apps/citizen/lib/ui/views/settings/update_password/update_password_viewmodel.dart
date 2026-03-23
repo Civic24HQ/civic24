@@ -20,7 +20,10 @@ class UpdatePasswordViewModel extends AuthViewModel {
     analyticsService.logButtonClick(kAnalyticButtonResetPassword);
     try {
       _log.i('$emailValue');
-      await runBusyFuture(authenticationService.sendPasswordResetEmail(emailValue!), throwException: true);
+      await runBusyFuture(
+        authenticationService.sendPasswordResetEmail(emailValue!),
+        throwException: true,
+      );
 
       final response = await _dialogService.showCustomDialog(
         variant: DialogType.sendPasswordResetEmail,
@@ -30,7 +33,8 @@ class UpdatePasswordViewModel extends AuthViewModel {
       if (response != null && response.confirmed) {
         _alertService.showSuccessAlert(
           title: 'Password Reset Email Sent',
-          message: 'We sent a link to your email. Open it to set your password.',
+          message:
+              'We sent a link to your email. Open it to set your password.',
         );
         await _urlLauncherService.openEmailAppChooser();
       }

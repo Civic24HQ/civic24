@@ -68,6 +68,10 @@
     "@generalProceed": {
         "description": "General Label for Button"
     },
+    "generalGotIt": "Got it",
+    "@generalGotIt": {
+        "description": "Got it Label for Button"
+    },
     "generalSubmit": "Submit",
     "@generalSubmit": {
         "description": "Submit Label for Button"
@@ -564,5 +568,89 @@
     "featureSettingsLoggingOutHint": "Are you sure you want to log out from your account on this device?",
     "@featureSettingsLoggingOutHint": {
         "description": "Logging out Hint Description"
+    },
+    "featureDeleteConfirmationTitle": "Are you sure you want to delete your account?",
+    "@featureDeleteConfirmationTitle": {
+        "description": "Delete Confirmation Title"
+    },
+    "featureDeleteConfirmationHint": "I understand that this action cannot be undone.",
+    "@featureDeleteConfirmationHint": {
+        "description": "Delete Confirmation Hint"
+    },
+    "featureDeleteConfirmationProceed": "Continue to Verification",
+    "@featureDeleteConfirmationProceed": {
+        "description": "Delete Confirmation Proceed Button"
+    },
+    "featureDeleteConfirmationMessage": "Deleting your account will permanently remove all your data including saved preferences. This action cannot be undone.",
+    "@featureDeleteConfirmationMessage": {
+        "description": "Delete Confirmation Message"
+    },
+    "featureDialogDeleteVerificationAuthContinue": "Re-authenticate to Continue",
+    "@featureDialogDeleteVerificationAuthContinue": {
+        "description": "Delete Verification Re-authenticate Button"
+    },
+    "featureDialogDeleteVerificationAuthHint": "For security purposes, please re-authenticate to proceed with deleting your account.",
+    "@featureDialogDeleteVerificationAuthHint": {
+        "description": "Delete Verification Re-authenticate Hint"
+    },
+    "featureDialogDeleteVerificationVerify": "Verify Your Identity",
+    "@featureDialogDeleteVerificationVerify": {
+        "description": "Delete Verification Verify Button"
+    },
+    "featureDialogDeleteVerificationSecurity": "For security reasons, please enter your password to continue.",
+    "@featureDialogDeleteVerificationSecurity": {
+        "description": "Delete Verification Security Hint"
+    },
+    "featureDeleteVerificationContinue": "Verify and Continue",
+    "@featureDeleteVerificationContinue": {
+        "description": "Delete Verification Continue Button"
+    },
+    "featureDialogDeleteVerificationEmptyPassword": "Password cannot be empty",
+    "@featureDialogDeleteVerificationEmptyPassword": {
+        "description": "Delete Verification Empty Password Error"
+    },
+    "featureDeleteFeedbackTitle": "Before You Go…",
+    "@featureDeleteFeedbackTitle": {
+        "description": "Delete Feedback Title"
+    },
+    "featureDeleteFeedbackHint": "We’d love to hear your feedback on how we can improve. Please let us know why you’re deleting your account.",
+    "@featureDeleteFeedbackHint": {
+        "description": "Delete Feedback Hint"
+    },
+    "featureDeleteFeedbackOtherHint": "Please share more details",
+    "@featureDeleteFeedbackOtherHint": {
+        "description": "Delete Feedback Other Reason Hint"
+    },
+    "featureDeleteFeedbackButtonSkip": "Skip Feedback",
+    "@featureDeleteFeedbackButtonSkip": {
+        "description": "Delete Feedback Skip Button"
+    },
+    "featureDeleteFeedbackButtonSubmit": "Submit Feedback",
+    "@featureDeleteFeedbackButtonSubmit": {
+        "description": "Delete Feedback Submit Button"
+    },
+    "featureDeleteFeedbackGoodbye": "Goodbye and Thank You!",
+    "@featureDeleteFeedbackGoodbye": {
+        "description": "Delete Feedback Goodbye Message"
+    },
+    "featureDialogDeleteConfirmationDesc": "Your account has been successfully deleted. We appreciate the time you spent with us. If you ever decide to return, we will be here for you! \n\nFor security and compliance reasons, some of data may be retained for auditing purposes and will be fully erased from our systems within 30 days, but your account is now permanently deleted and cannot be recovered.",
+    "@featureDialogDeleteConfirmationDesc": {
+        "description": "Delete Confirmation Description"
+    },
+    "featureAuthTermDescription": "By creating an account, you agree to our ",
+    "@featureAuthTermDescription": {
+        "description": "Auth Term Description"
+    },
+    "featureAuthTermDescriptionTerms": "Terms",
+    "@featureAuthTermDescriptionTerms": {
+        "description": "Auth Term Description Terms of Service"
+    },
+    "featureAuthTermAnd": " and ",
+    "@featureAuthTermAnd": {
+        "description": "Auth Term Description And"
+    },
+    "featureAuthTermDescriptionPrivacy": "Privacy Policy",
+    "@featureAuthTermDescriptionPrivacy": {
+        "description": "Auth Term Description Privacy Policy"
     }
 }
