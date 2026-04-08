@@ -7,27 +7,30 @@ class CategoryReports extends ViewModelWidget<HomeViewModel> {
   Widget build(BuildContext context, HomeViewModel viewModel) {
     CategoryType? currentCategory;
 
-    return AppTabs.buttoned(
-      onTabChanged: (i) async {
-        viewModel.onCategoryChanged(CategoryType.values[i]);
-        final newCategory = CategoryType.values[i];
+    return Padding(
+      padding: const EdgeInsets.only(top: AppDimensions.size12),
+      child: AppTabs.buttoned(
+        onTabChanged: (i) async {
+          viewModel.onCategoryChanged(CategoryType.values[i]);
+          final newCategory = CategoryType.values[i];
 
-        if (currentCategory != null) {
-          viewModel.stopRealTimeFeed(ReportFeedType.category, category: currentCategory);
-        }
+          if (currentCategory != null) {
+            viewModel.stopRealTimeFeed(ReportFeedType.category, category: currentCategory);
+          }
 
-        currentCategory = newCategory;
+          currentCategory = newCategory;
 
-        await viewModel.initCategoryFeed(newCategory);
+          await viewModel.initCategoryFeed(newCategory);
 
-        await viewModel.startRealTimeFeed(ReportFeedType.category, category: newCategory);
-      },
-      tabs: CategoryType.values.map((type) {
-        return AppTab(
-          label: type.label,
-          view: _CategoryListView(category: type),
-        );
-      }).toList(),
+          await viewModel.startRealTimeFeed(ReportFeedType.category, category: newCategory);
+        },
+        tabs: CategoryType.values.map((type) {
+          return AppTab(
+            label: type.label,
+            view: _CategoryListView(category: type),
+          );
+        }).toList(),
+      ),
     );
   }
 }
@@ -64,8 +67,12 @@ class _CategoryListViewState extends State<_CategoryListView> {
   }
 
   void _onScroll() {
-    if (_controller.position.pixels > _controller.position.maxScrollExtent - 300) {
-      _viewModel.loadMoreCategory(widget.category, limit: _categoryReportsPageLimit);
+    if (_controller.position.pixels >
+        _controller.position.maxScrollExtent - 300) {
+      _viewModel.loadMoreCategory(
+        widget.category,
+        limit: _categoryReportsPageLimit,
+      );
     }
   }
 
@@ -83,7 +90,14 @@ class _CategoryListViewState extends State<_CategoryListView> {
     if (viewModel.isCategoryInitialLoading(widget.category)) {
       return CustomScrollView(
         key: ValueKey(widget.category),
-        slivers: [SliverList(delegate: SliverChildBuilderDelegate((_, __) => const AppReportShimmer(), childCount: 6))],
+        slivers: [
+          SliverList(
+            delegate: SliverChildBuilderDelegate(
+              (_, __) => const AppReportShimmer(),
+              childCount: 6,
+            ),
+          ),
+        ],
       );
     }
 
@@ -92,7 +106,9 @@ class _CategoryListViewState extends State<_CategoryListView> {
       physics: const BouncingScrollPhysics(),
       controller: _controller,
       slivers: [
-        CupertinoSliverRefreshControl(onRefresh: () => viewModel.refreshCategory(widget.category)),
+        CupertinoSliverRefreshControl(
+          onRefresh: () => viewModel.refreshCategory(widget.category),
+        ),
         SliverList(
           delegate: SliverChildBuilderDelegate((context, index) {
             final report = categoryReports[index];

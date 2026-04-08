@@ -19,6 +19,7 @@ export 'src/app_tabs.dart';
 export 'src/app_text_field/app_text_field.dart';
 export 'src/app_text_field/auto_complete_field.dart';
 export 'src/auth/auth_button.dart';
+export 'src/auth/auth_privacy_section.dart';
 export 'src/auth/bottom_section.dart';
 export 'src/auth/password_button.dart';
 export 'src/civic24_component_showcase.dart';

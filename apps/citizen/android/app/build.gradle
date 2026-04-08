@@ -2,8 +2,9 @@ plugins {
     id("com.android.application")
     id("kotlin-android")
     id("dev.flutter.flutter-gradle-plugin")
+    id ("com.google.gms.google-services")
+    id ("com.google.firebase.crashlytics")
 }
-
 
 def localProperties = new Properties()
 def localPropertiesFile = rootProject.file('local.properties')
@@ -23,6 +24,7 @@ if (flutterVersionName == null) {
     flutterVersionName = '1.0'
 }
 
+// Load KeyStore File Properties
 def keystoreProperties = new Properties()
 def keystorePropertiesFile = rootProject.file('key.properties')
 if (keystorePropertiesFile.exists()) {
@@ -48,6 +50,15 @@ android {
         main.java.srcDirs += 'src/main/kotlin'
     }
 
+    signingConfigs {
+        release {
+            keyAlias = keystoreProperties['keyAlias']
+            keyPassword = keystoreProperties['keyPassword']
+            storeFile = keystoreProperties['storeFile'] ? file(keystoreProperties['storeFile']) : null
+            storePassword = keystoreProperties['storePassword']
+        }
+    }
+
     defaultConfig {
         applicationId "co.civic24.citizen"
         // You can update the following values to match your application needs.
@@ -65,7 +76,7 @@ android {
 
     buildTypes {
         release {
-            signingConfig signingConfigs.debug
+            signingConfig signingConfigs.release
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt')
         }
@@ -98,5 +109,7 @@ flutter {
 
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.9.20"
-    coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:2.1.4'
+    implementation "com.google.firebase:firebase-bom:34.11.0"
+    implementation "com.google.firebase:firebase-analytics"
+    coreLibraryDesugaring "com.android.tools:desugar_jdk_libs:2.1.4"
 }

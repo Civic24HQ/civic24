@@ -9,8 +9,10 @@ import 'package:stacked_services/stacked_services.dart';
 
 import 'app.locator.dart';
 import '../ui/bottom_sheets/comment/comment_sheet.dart';
+import '../ui/bottom_sheets/delete_feedback/delete_feedback_sheet.dart';
+import '../ui/bottom_sheets/delete_verification/delete_verification_sheet.dart';
 
-enum BottomSheetType { comment }
+enum BottomSheetType { comment, deleteVerification, deleteFeedback }
 
 void setupBottomSheetUi() {
   final bottomsheetService = locator<BottomSheetService>();
@@ -18,6 +20,10 @@ void setupBottomSheetUi() {
   final Map<BottomSheetType, SheetBuilder> builders = {
     BottomSheetType.comment: (context, request, completer) =>
         CommentSheet(request: request, completer: completer),
+    BottomSheetType.deleteVerification: (context, request, completer) =>
+        DeleteVerificationSheet(request: request, completer: completer),
+    BottomSheetType.deleteFeedback: (context, request, completer) =>
+        DeleteFeedbackSheet(request: request, completer: completer),
   };
 
   bottomsheetService.setCustomSheetBuilders(builders);

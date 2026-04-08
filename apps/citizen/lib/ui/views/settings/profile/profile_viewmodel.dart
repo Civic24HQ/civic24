@@ -1,14 +1,24 @@
+import 'package:citizen/app/app.bottomsheets.dart';
+import 'package:citizen/app/app.dialogs.dart';
 import 'package:citizen/app/app.locator.dart';
+import 'package:citizen/ui/views/onboarding/onboarding_view.dart';
 import 'package:citizen/ui/views/settings/profile/profile_view.form.dart';
+import 'package:constants/constants.dart';
 import 'package:country_state_city/country_state_city.dart' as csc;
 import 'package:flutter/services.dart';
 import 'package:models/models.dart';
 import 'package:services/services.dart';
 import 'package:stacked/stacked.dart';
+import 'package:stacked_services/stacked_services.dart';
 
 class ProfileViewModel extends FormViewModel {
   final _userService = locator<UserService>();
+  final _navigationService = locator<RouterService>();
   final _alertService = locator<AlertService>();
+  final _analyticsService = locator<AnalyticsService>();
+  final _dialogService = locator<DialogService>();
+  final _bottomSheetService = locator<BottomSheetService>();
+  final _authenticationService = locator<AuthenticationService>();
 
   @override
   List<ListenableServiceMixin> get listenableServices => [_userService];
@@ -43,13 +53,15 @@ class ProfileViewModel extends FormViewModel {
 
     firstNameValue = currentUser.firstName;
     lastNameValue = currentUser.lastName;
-    if (currentUser.country.isNotEmpty && currentUser.state.isNotEmpty) {
+    if (currentUser.country.isNotEmpty) {
       countryValue = countryOptions.firstWhere((c) => c.name == currentUser.country).name;
       final iso2 = countryOptions.firstWhere((c) => c.name == currentUser.country).iso2;
       final states = await csc.getStatesOfCountry(iso2);
       stateOptions = states.map((s) => StateOption(s.name, s.isoCode)).toList()
         ..sort((a, b) => a.name.compareTo(b.name));
-      stateValue = stateOptions.firstWhere((s) => s.name == currentUser.state).name;
+      if (currentUser.state.isNotEmpty) {
+        stateValue = stateOptions.firstWhere((s) => s.name == currentUser.state).name;
+      }
       rebuildUi();
     }
   }
@@ -61,7 +73,10 @@ class ProfileViewModel extends FormViewModel {
       countryOptions = countries.map((c) => CountryOption(c.name, c.isoCode)).toList()
         ..sort((a, b) => a.name.compareTo(b.name));
     } catch (e) {
-      // TODO(Civic24): Implement Alert Service Dialog to display a message that countries could not be loaded
+      // _alertService.showErrorAlert(
+      //   title: 'Failed to Load Countries',
+      //   message: 'An error occurred while loading country data. Please try again later.',
+      // );
       countryOptions = [];
     } finally {
       setBusy(false);
@@ -135,7 +150,45 @@ class ProfileViewModel extends FormViewModel {
     init();
   }
 
-  void deleteAccount() {}
+  Future<void> deleteAccount() async {
+    _analyticsService.trackEvent(kAnalyticEventDeleteAccountInitiated);
+    final response = await _dialogService.showCustomDialog(variant: DialogType.deleteConfirmation);
+    if (response != null && response.confirmed) {
+      await showDeleteAuthVerification();
+    }
+  }
+
+  Future<void> showDeleteAuthVerification() async {
+    final response = await _bottomSheetService.showCustomSheet(
+      variant: BottomSheetType.deleteVerification,
+      isScrollControlled: true,
+      ignoreSafeArea: false,
+    );
+
+    if (response != null && response.confirmed) {
+      await showDeleteFeedbackCollection();
+    }
+  }
+
+  Future<void> showDeleteFeedbackCollection() async {
+    final response = await _bottomSheetService.showCustomSheet(
+      variant: BottomSheetType.deleteFeedback,
+      isScrollControlled: true,
+    );
+
+    if (response != null && response.confirmed) {
+      await showDeleteConfirmationDialog();
+    }
+  }
+
+  Future<void> showDeleteConfirmationDialog() async {
+    _analyticsService.trackEvent(kAnalyticEventDeleteAccountCompleted);
+    final response = await _dialogService.showCustomDialog(variant: DialogType.deleteAccount);
+    if (response != null && response.confirmed) {
+      await _navigationService.clearStackAndShowView(const OnboardingView());
+      await _authenticationService.deleteAccount();
+    }
+  }
 
   Future<void> onSave() async {
     if (!isFormValid) {

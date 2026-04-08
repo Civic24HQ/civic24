@@ -1,7 +1,6 @@
 import 'package:assets/assets.dart';
 import 'package:components/components.dart';
 import 'package:flutter/material.dart';
-// import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:localization/localization.dart';
 import 'package:styles/styles.dart';
 
@@ -33,7 +32,7 @@ class AuthButton extends StatelessWidget {
             onTap: onGoogleTap,
           ),
         AppSpacing.normal,
-        // TODO(Civic24): Implement Apple Sign-In functionality
+        // TODO(Civic24): Test the Implementation of SignIn With Apple
         // if (onAppleTap != null)
         //   OutlineButton(
         //     leadingIcon: FontAwesomeIcons.apple,

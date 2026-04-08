@@ -219,6 +219,11 @@ class S {
     );
   }
 
+  /// `Got it`
+  String get generalGotIt {
+    return Intl.message('Got it', name: 'generalGotIt', desc: 'Got it Label for Button', args: []);
+  }
+
   /// `Submit`
   String get generalSubmit {
     return Intl.message(
@@ -1435,6 +1440,206 @@ class S {
       'Are you sure you want to log out from your account on this device?',
       name: 'featureSettingsLoggingOutHint',
       desc: 'Logging out Hint Description',
+      args: [],
+    );
+  }
+
+  /// `Are you sure you want to delete your account?`
+  String get featureDeleteConfirmationTitle {
+    return Intl.message(
+      'Are you sure you want to delete your account?',
+      name: 'featureDeleteConfirmationTitle',
+      desc: 'Delete Confirmation Title',
+      args: [],
+    );
+  }
+
+  /// `I understand that this action cannot be undone.`
+  String get featureDeleteConfirmationHint {
+    return Intl.message(
+      'I understand that this action cannot be undone.',
+      name: 'featureDeleteConfirmationHint',
+      desc: 'Delete Confirmation Hint',
+      args: [],
+    );
+  }
+
+  /// `Continue to Verification`
+  String get featureDeleteConfirmationProceed {
+    return Intl.message(
+      'Continue to Verification',
+      name: 'featureDeleteConfirmationProceed',
+      desc: 'Delete Confirmation Proceed Button',
+      args: [],
+    );
+  }
+
+  /// `Deleting your account will permanently remove all your data, including saved preferences, vehicle information, and fuel tracking history. This action cannot be undone.`
+  String get featureDeleteConfirmationMessage {
+    return Intl.message(
+      'Deleting your account will permanently remove all your data including saved preferences. This action cannot be undone.',
+      name: 'featureDeleteConfirmationMessage',
+      desc: 'Delete Confirmation Message',
+      args: [],
+    );
+  }
+
+  /// `Re-authenticate to Continue`
+  String get featureDialogDeleteVerificationAuthContinue {
+    return Intl.message(
+      'Re-authenticate to Continue',
+      name: 'featureDialogDeleteVerificationAuthContinue',
+      desc: 'Delete Verification Re-authenticate Button',
+      args: [],
+    );
+  }
+
+  /// `For security purposes, please re-authenticate to proceed with deleting your account.`
+  String get featureDialogDeleteVerificationAuthHint {
+    return Intl.message(
+      'For security purposes, please re-authenticate to proceed with deleting your account.',
+      name: 'featureDialogDeleteVerificationAuthHint',
+      desc: 'Delete Verification Re-authenticate Hint',
+      args: [],
+    );
+  }
+
+  /// `Verify Your Identity`
+  String get featureDialogDeleteVerificationVerify {
+    return Intl.message(
+      'Verify Your Identity',
+      name: 'featureDialogDeleteVerificationVerify',
+      desc: 'Delete Verification Verify Button',
+      args: [],
+    );
+  }
+
+  /// `For security reasons, please enter your password to continue.`
+  String get featureDialogDeleteVerificationSecurity {
+    return Intl.message(
+      'For security reasons, please enter your password to continue.',
+      name: 'featureDialogDeleteVerificationSecurity',
+      desc: 'Delete Verification Security Hint',
+      args: [],
+    );
+  }
+
+  /// `Verify and Continue`
+  String get featureDeleteVerificationContinue {
+    return Intl.message(
+      'Verify and Continue',
+      name: 'featureDeleteVerificationContinue',
+      desc: 'Delete Verification Continue Button',
+      args: [],
+    );
+  }
+
+  /// `Password cannot be empty`
+  String get featureDialogDeleteVerificationEmptyPassword {
+    return Intl.message(
+      'Password cannot be empty',
+      name: 'featureDialogDeleteVerificationEmptyPassword',
+      desc: 'Delete Verification Empty Password Error',
+      args: [],
+    );
+  }
+
+  /// `Before You Go…`
+  String get featureDeleteFeedbackTitle {
+    return Intl.message('Before You Go…', name: 'featureDeleteFeedbackTitle', desc: 'Delete Feedback Title', args: []);
+  }
+
+  /// `We’d love to hear your feedback on how we can improve. Please let us know why you’re deleting your account.`
+  String get featureDeleteFeedbackHint {
+    return Intl.message(
+      'We’d love to hear your feedback on how we can improve. Please let us know why you’re deleting your account.',
+      name: 'featureDeleteFeedbackHint',
+      desc: 'Delete Feedback Hint',
+      args: [],
+    );
+  }
+
+  /// `Please share more details`
+  String get featureDeleteFeedbackOtherHint {
+    return Intl.message(
+      'Please share more details',
+      name: 'featureDeleteFeedbackOtherHint',
+      desc: 'Delete Feedback Other Reason Hint',
+      args: [],
+    );
+  }
+
+  /// `Skip Feedback`
+  String get featureDeleteFeedbackButtonSkip {
+    return Intl.message(
+      'Skip Feedback',
+      name: 'featureDeleteFeedbackButtonSkip',
+      desc: 'Delete Feedback Skip Button',
+      args: [],
+    );
+  }
+
+  /// `Submit Feedback`
+  String get featureDeleteFeedbackButtonSubmit {
+    return Intl.message(
+      'Submit Feedback',
+      name: 'featureDeleteFeedbackButtonSubmit',
+      desc: 'Delete Feedback Submit Button',
+      args: [],
+    );
+  }
+
+  /// `Goodbye and Thank You!`
+  String get featureDeleteFeedbackGoodbye {
+    return Intl.message(
+      'Goodbye and Thank You!',
+      name: 'featureDeleteFeedbackGoodbye',
+      desc: 'Delete Feedback Goodbye Message',
+      args: [],
+    );
+  }
+
+  /// `Your account has been successfully deleted. We appreciate the time you spent with us. If you ever decide to return, we will be here for you! \n\nFor security and compliance reasons, some of data may be retained for auditing purposes and will be fully erased from our systems within 30 days, but your account is now permanently deleted and cannot be recovered.`
+  String get featureDialogDeleteConfirmationDesc {
+    return Intl.message(
+      'Your account has been successfully deleted. We appreciate the time you spent with us. If you ever decide to return, we will be here for you! \n\nFor security and compliance reasons, some of data may be retained for auditing purposes and will be fully erased from our systems within 30 days, but your account is now permanently deleted and cannot be recovered.',
+      name: 'featureDialogDeleteConfirmationDesc',
+      desc: 'Delete Confirmation Description',
+      args: [],
+    );
+  }
+
+  /// `By creating an account, you agree to our `
+  String get featureAuthTermDescription {
+    return Intl.message(
+      'By creating an account, you agree to our ',
+      name: 'featureAuthTermDescription',
+      desc: 'Auth Term Description',
+      args: [],
+    );
+  }
+
+  /// `Terms`
+  String get featureAuthTermDescriptionTerms {
+    return Intl.message(
+      'Terms',
+      name: 'featureAuthTermDescriptionTerms',
+      desc: 'Auth Term Description Terms of Service',
+      args: [],
+    );
+  }
+
+  /// ` and `
+  String get featureAuthTermAnd {
+    return Intl.message(' and ', name: 'featureAuthTermAnd', desc: 'Auth Term Description And', args: []);
+  }
+
+  /// `Privacy Policy`
+  String get featureAuthTermDescriptionPrivacy {
+    return Intl.message(
+      'Privacy Policy',
+      name: 'featureAuthTermDescriptionPrivacy',
+      desc: 'Auth Term Description Privacy Policy',
       args: [],
     );
   }

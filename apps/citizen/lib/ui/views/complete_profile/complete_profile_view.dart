@@ -17,11 +17,16 @@ import 'package:utils/utils.dart';
     FormTextField(name: 'lastName', validator: Validator.validateLastName),
   ],
 )
-class CompleteProfileView extends StackedView<CompleteProfileViewModel> with $CompleteProfileView {
+class CompleteProfileView extends StackedView<CompleteProfileViewModel>
+    with $CompleteProfileView {
   const CompleteProfileView({super.key});
 
   @override
-  Widget builder(BuildContext context, CompleteProfileViewModel viewModel, Widget? child) {
+  Widget builder(
+    BuildContext context,
+    CompleteProfileViewModel viewModel,
+    Widget? child,
+  ) {
     return GestureDetector(
       onTap: () => FocusScope.of(context).unfocus(),
       child: AbsorbPointer(
@@ -54,7 +59,10 @@ class CompleteProfileView extends StackedView<CompleteProfileViewModel> with $Co
                               hintText: l10n.generalEnterFirstname,
                               textInputAction: TextInputAction.next,
                               textCapitalization: TextCapitalization.sentences,
-                              inputFormatters: [alphabetsWithSpaceFormatter, maxLengthFormatter(40)],
+                              inputFormatters: [
+                                alphabetsWithSpaceFormatter,
+                                maxLengthFormatter(40),
+                              ],
                               autofillHints: const [AutofillHints.givenName],
                             ),
                             AppSpacing.normal,
@@ -66,7 +74,10 @@ class CompleteProfileView extends StackedView<CompleteProfileViewModel> with $Co
                               hintText: l10n.generalEnterLastname,
                               textInputAction: TextInputAction.next,
                               textCapitalization: TextCapitalization.sentences,
-                              inputFormatters: [alphabetsWithSpaceFormatter, maxLengthFormatter(40)],
+                              inputFormatters: [
+                                alphabetsWithSpaceFormatter,
+                                maxLengthFormatter(40),
+                              ],
                               autofillHints: const [AutofillHints.givenName],
                             ),
                             AppSpacing.normal,
@@ -74,7 +85,9 @@ class CompleteProfileView extends StackedView<CompleteProfileViewModel> with $Co
                               label: l10n.generalCountry,
                               hintText: l10n.generalSelectCountry,
                               value: viewModel.countryOptions
-                                  .where((c) => c.name == viewModel.countryValue)
+                                  .where(
+                                    (c) => c.name == viewModel.countryValue,
+                                  )
                                   .cast<CountryOption?>()
                                   .firstOrNull,
                               items: viewModel.countryOptions,
@@ -84,18 +97,25 @@ class CompleteProfileView extends StackedView<CompleteProfileViewModel> with $Co
                                 height: AppDimensions.size16,
                                 width: AppDimensions.size24,
                               ),
-                              onChanged: (selected) => viewModel.onCountryChanged(selected?.name),
+                              onChanged: (selected) =>
+                                  viewModel.onCountryChanged(selected?.name),
                             ),
                             AppSpacing.normal,
                             AppSearchableDropdownTextField<StateOption>(
                               label: l10n.generalState,
                               hintText: l10n.generalSelectState,
-                              value: viewModel.stateOptions.any((s) => s.name == viewModel.stateValue)
-                                  ? viewModel.stateOptions.firstWhere((s) => s.name == viewModel.stateValue)
+                              value:
+                                  viewModel.stateOptions.any(
+                                    (s) => s.name == viewModel.stateValue,
+                                  )
+                                  ? viewModel.stateOptions.firstWhere(
+                                      (s) => s.name == viewModel.stateValue,
+                                    )
                                   : null,
                               items: viewModel.stateOptions,
                               itemLabel: (s) => s.name,
-                              onChanged: (selected) => viewModel.onStateChanged(selected?.name),
+                              onChanged: (selected) =>
+                                  viewModel.onStateChanged(selected?.name),
                             ),
                             // TODO(Civic24): Refactor the User Experience of the Get Accurate Location Functionality
                             // AppSpacing.standard,
@@ -137,7 +157,8 @@ class CompleteProfileView extends StackedView<CompleteProfileViewModel> with $Co
   }
 
   @override
-  CompleteProfileViewModel viewModelBuilder(BuildContext context) => CompleteProfileViewModel();
+  CompleteProfileViewModel viewModelBuilder(BuildContext context) =>
+      CompleteProfileViewModel();
 
   @override
   void onViewModelReady(CompleteProfileViewModel viewModel) {
