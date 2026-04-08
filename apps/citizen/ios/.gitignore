@@ -19,6 +19,9 @@ Flutter/App.framework
 Flutter/Flutter.framework
 Flutter/Flutter.podspec
 Flutter/Generated.xcconfig
+Flutter/Debug.xcconfig
+Flutter/Release.xcconfig
+Flutter/Staging.xcconfig
 Flutter/ephemeral/
 Flutter/app.flx
 Flutter/app.zip
