@@ -3,6 +3,10 @@ import 'dart:ui';
 import 'package:citizen/app/app.router.dart';
 import 'package:citizen/app_builder.dart';
 import 'package:citizen/ui/bottom_sheets/comment/comment_sheet.dart';
+import 'package:citizen/ui/bottom_sheets/delete_feedback/delete_feedback_sheet.dart';
+import 'package:citizen/ui/bottom_sheets/delete_verification/delete_verification_sheet.dart';
+import 'package:citizen/ui/dialogs/delete_account/delete_account_dialog.dart';
+import 'package:citizen/ui/dialogs/delete_confirmation/delete_confirmation_dialog.dart';
 import 'package:citizen/ui/dialogs/loading/loading_dialog.dart';
 import 'package:citizen/ui/dialogs/logout/logout_dialog.dart';
 import 'package:citizen/ui/dialogs/send_password_reset_email/send_password_reset_email_dialog.dart';
@@ -25,6 +29,7 @@ import 'package:citizen/ui/views/settings/settings_view.dart';
 import 'package:citizen/ui/views/settings/signin_security/signin_security_view.dart';
 import 'package:citizen/ui/views/settings/update_password/update_password_view.dart';
 import 'package:citizen/ui/views/startup/startup_view.dart';
+import 'package:constants/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:localization/localization.dart';
 import 'package:stacked/stacked_annotations.dart';
@@ -56,6 +61,8 @@ import 'package:styles/styles.dart';
   ],
   bottomsheets: [
     StackedBottomsheet(classType: CommentSheet),
+    StackedBottomsheet(classType: DeleteVerificationSheet),
+    StackedBottomsheet(classType: DeleteFeedbackSheet),
     // @stacked-bottom-sheet
   ],
   dependencies: [
@@ -69,6 +76,8 @@ import 'package:styles/styles.dart';
     StackedDialog(classType: LoadingDialog),
     StackedDialog(classType: SendPasswordResetEmailDialog),
     StackedDialog(classType: UploadMediaDialog),
+    StackedDialog(classType: DeleteConfirmationDialog),
+    StackedDialog(classType: DeleteAccountDialog),
     // @stacked-dialog
   ],
 )
@@ -83,6 +92,7 @@ class App extends StatelessWidget {
           return MaterialApp.router(
             title: l10n.title,
             theme: AppTheme.lightThemeData,
+            debugShowCheckedModeBanner: !EnvironmentConstants.isProduction,
             darkTheme: AppTheme.darkThemeData,
             themeMode: displayPreferences.themeMode,
             scrollBehavior: const MaterialScrollBehavior().copyWith(
@@ -115,7 +125,7 @@ class CustomTextScaleClamper extends StatelessWidget {
     return Builder(
       builder: (context) {
         final mediaQueryData = MediaQuery.of(context);
-        final constrainedTextScaleFactor = mediaQueryData.textScaler.clamp(minScaleFactor: 1, maxScaleFactor: 1.3);
+        final constrainedTextScaleFactor = mediaQueryData.textScaler.clamp(minScaleFactor: 1, maxScaleFactor: 1.2);
 
         return MediaQuery(
           data: mediaQueryData.copyWith(textScaler: constrainedTextScaleFactor),

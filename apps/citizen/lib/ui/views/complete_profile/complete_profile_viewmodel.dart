@@ -27,8 +27,7 @@ class CompleteProfileViewModel extends FormViewModel {
   bool get isProceedButtonDisabled =>
       (firstNameValue?.trim().isEmpty ?? true) ||
       (lastNameValue?.trim().isEmpty ?? true) ||
-      (countryValue?.trim().isEmpty ?? true) ||
-      (stateValue?.trim().isEmpty ?? true);
+      (countryValue?.trim().isEmpty ?? true);
 
   Future<void> init() async {
     await _loadCountries();
@@ -129,12 +128,13 @@ class CompleteProfileViewModel extends FormViewModel {
               firstName: firstNameValue!,
               lastName: lastNameValue!,
               country: countryValue!,
-              state: stateValue!,
+              state: stateValue ?? '',
               city: '',
               hasCompletedOnboarding: true,
             ),
           ),
         );
+        _analyticsService.logOnboardingComplete();
         await _navigationService.clearStackAndShow(MainViewRoute());
         return;
       }
@@ -145,7 +145,7 @@ class CompleteProfileViewModel extends FormViewModel {
           firstName: firstNameValue!,
           lastName: lastNameValue!,
           country: countryValue!,
-          state: stateValue!,
+          state: stateValue ?? '',
           city: '',
           appSource: '',
         ),

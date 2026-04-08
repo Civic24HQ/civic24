@@ -30,7 +30,10 @@ class _MainViewState extends State<MainView> {
 
     // TODO(Civic24): Update citizenDestinations list to include NotificationView once it's implemented
     final screenName = citizenDestinations[index].label;
-    _analyticsService.logScreenView(screenClass: kAnalyticViewClass, screenName: '${screenName}View');
+    _analyticsService.logScreenView(
+      screenClass: kAnalyticViewClass,
+      screenName: '${screenName}View',
+    );
   }
 
   @override

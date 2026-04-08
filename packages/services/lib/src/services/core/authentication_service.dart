@@ -321,7 +321,7 @@ class AuthenticationService {
       if (googleUser == null) {
         _log.d('Google authentication aborted');
         _alertService.showToast('Continue with Google aborted');
-        return false;
+        return Future.error('Google authentication aborted');
       }
 
       // Get authorization for Firebase scopes if needed
@@ -478,8 +478,83 @@ class AuthenticationService {
   ///
   /// Returns `true` if the user was successfully authenticated.
   Future<bool> continueWithApple() async {
-    _log.d('Continue With Apple');
-    return false;
+    try {
+      UserCredential? userCredential;
+
+      if (isAndroid) {
+        _log.i('Authenticating with apple on Android');
+        final nonce = nonceString(32);
+        final hashedNonce = sha256HashNonce(nonce);
+
+        final provider = OAuthProvider('apple.com')
+          ..addScope('email')
+          ..addScope('name')
+          ..setCustomParameters({'nonce': hashedNonce});
+
+        userCredential = await _firebaseAuth.signInWithProvider(provider);
+        _log.i('Authenticated successfully via SIWA on Android');
+      } else {
+        final nonce = nonceString(32);
+        final hashedNonce = sha256HashNonce(nonce);
+
+        final appleCredential = await SignInWithApple.getAppleIDCredential(
+          nonce: hashedNonce,
+          scopes: [AppleIDAuthorizationScopes.email, AppleIDAuthorizationScopes.fullName],
+        );
+        if (appleCredential.identityToken == null) {
+          _log.w('Apple Sign In failed: No identity token received');
+          return false;
+        }
+        final givenName = appleCredential.givenName;
+        final familyName = appleCredential.familyName;
+
+        final provider = OAuthProvider('apple.com');
+
+        final authCredential = provider.credential(
+          idToken: appleCredential.identityToken,
+          // Firebase Docs:
+          // - https://firebase.google.com/docs/auth/ios/apple?authuser=0#reauthentication_and_account_linking
+          accessToken: appleCredential.authorizationCode,
+          rawNonce: nonce,
+        );
+
+        userCredential = await _firebaseAuth.signInWithCredential(authCredential);
+        await updateDisplayName('$givenName $familyName');
+        _log.i('Authenticated successfully via SIWA on iOS');
+      }
+
+      final signUp = userCredential.additionalUserInfo?.isNewUser ?? false;
+      if (signUp) {
+        _log.d('User signed up with Apple');
+        _analyticsService.logSignUp(currentUserAuthProvider);
+      } else {
+        _log.d('User logged in with Apple');
+        _analyticsService.logLogin(currentUserAuthProvider);
+      }
+      _crashlyticsService.setupUserProfile(userId: userCredential.user?.uid, email: userCredential.user?.email);
+
+      return userCredential.user != null;
+    } catch (e) {
+      _log.e('Apple Auth failed: $e');
+
+      if (e is SignInWithAppleAuthorizationException) {
+        if (e.code == AuthorizationErrorCode.canceled) {
+          _log.d('Apple Sign In canceled');
+          _alertService.showToast('Continue with Apple aborted');
+          return false;
+        }
+      }
+
+      if (e is FirebaseAuthException) {
+        if (e.code == 'web-context-canceled') {
+          _log.d('Apple Sign In canceled');
+          _alertService.showToast('Continue with Apple aborted');
+          return false;
+        }
+      }
+      _alertService.showErrorAlert(title: 'Apple Sign In Failed', message: exceptionToMessage(e));
+      return false;
+    }
   }
 
   /// Signs out the current user.
@@ -548,13 +623,96 @@ class AuthenticationService {
 
   /// Reauthenticates the user with other providers before
   /// performing sensitive actions.
-  Future<void> reauthenticateUserWithProvider() async {
-    _log.i('Reauthenticate User With Provider');
+  Future<bool> reauthenticateUserWithProvider() async {
+    try {
+      _log.d('Attempting to reauthenticate with $currentUserAuthProvider');
+
+      if (firebaseUser == null) {
+        _log.w('No authenticated user found');
+        _alertService.showToast('Session expired. Please sign in again.');
+        return false;
+      }
+
+      final providerId = currentUserAuthProvider;
+      AuthCredential? credential;
+
+      switch (providerId) {
+        case 'Google':
+          // Authenticate with Google to handle both sign-in and silent sign-in
+          final restored = await _googleSignIn.attemptLightweightAuthentication();
+
+          final googleUser = (restored is Future<GoogleSignInAccount?>)
+              ? restored
+              : await _googleSignIn.authenticate(
+                  scopeHint: _scopes, // Specify required scopes
+                );
+
+          _log.d('googleUser $googleUser');
+
+          if (googleUser == null) {
+            _log.d('Google authentication aborted');
+            _alertService.showToast('Continue with Google aborted');
+            return Future.error('Google authentication aborted');
+          }
+
+          // Get authorization for Firebase scopes if needed
+          final authClient = _googleSignIn.authorizationClient;
+
+          // Try to get existing authorization
+          var authorization = await authClient.authorizationForScopes(_scopes);
+
+          if (authorization == null) {
+            // Request authorization if not already granted
+            _log.d('Requesting additional authorization for scopes: $_scopes');
+            authorization = await authClient.authorizeScopes(_scopes);
+          }
+
+          // Update Authentication Token Access
+          final googleAuth = googleUser.authentication;
+          credential = GoogleAuthProvider.credential(
+            accessToken: authorization.accessToken,
+            idToken: googleAuth.idToken,
+          );
+          _log.d('Google authentication successful');
+        case 'Apple':
+          _log.d('Reauthenticating with Apple');
+          final appleCredential = await SignInWithApple.getAppleIDCredential(
+            scopes: [AppleIDAuthorizationScopes.email, AppleIDAuthorizationScopes.fullName],
+          );
+          if (appleCredential.identityToken == null) {
+            _log.w('Apple Sign In failed: No identity token received');
+            return false;
+          }
+          credential = OAuthProvider(
+            'apple.com',
+          ).credential(idToken: appleCredential.identityToken, accessToken: appleCredential.authorizationCode);
+        default:
+          _log.w('Unsupported provider: $providerId');
+          return false;
+      }
+
+      final result = await _firebaseAuth.currentUser!.reauthenticateWithCredential(credential);
+      return result.user != null;
+    } catch (e) {
+      _log.e('Reauthentication failed: $e');
+      _alertService.showErrorAlert(title: 'Reauthentication Failed', message: exceptionToMessage(e));
+      return false;
+    }
   }
 
   /// Deletes the current user account and signs them out.
   Future<void> deleteAccount() async {
-    _log.d('Deleting user account');
+    try {
+      _log.d('Deleting user account');
+      await firebaseUser?.delete();
+      _log.i('User account deleted successfully');
+    } catch (e) {
+      _log.e('Account deletion failed: $e');
+      _alertService.showErrorAlert(title: 'Account Deletion Failed', message: exceptionToMessage(e));
+    } finally {
+      clearLocalStorage();
+      _log.d('Local storage cleared');
+    }
   }
 
   @protected
@@ -597,28 +755,28 @@ class AuthenticationService {
     }
     return 'Something unexpected happened. Please try again.';
   }
-}
 
-@protected
-String googleSignInExceptionToMessage([dynamic exception]) {
-  if (exception is GoogleSignInException) {
-    switch (exception.code.name) {
-      case 'canceled':
-        return 'Sign-in was cancelled. Please try again if you want to continue.';
-      case 'interrupted':
-        return 'Sign-in was interrupted. Please try again.';
-      case 'clientConfigurationError':
-        return 'There is a configuration issue with Google Sign-In. Please contact support.';
-      case 'providerConfigurationError':
-        return 'Google Sign-In is currently unavailable. Please try again later or contact support.';
-      case 'uiUnavailable':
-        return 'Google Sign-In is currently unavailable. Please try again later or contact support.';
-      case 'userMismatch':
-        return 'There was an issue with your account. Please sign out and try again.';
-      case 'unknownError':
-      default:
-        return 'An unexpected error occurred during Google Sign-In. Please try again.';
+  @protected
+  String googleSignInExceptionToMessage([dynamic exception]) {
+    if (exception is GoogleSignInException) {
+      switch (exception.code.name) {
+        case 'canceled':
+          return 'Sign-in was cancelled. Please try again if you want to continue.';
+        case 'interrupted':
+          return 'Sign-in was interrupted. Please try again.';
+        case 'clientConfigurationError':
+          return 'There is a configuration issue with Google Sign-In. Please contact support.';
+        case 'providerConfigurationError':
+          return 'Google Sign-In is currently unavailable. Please try again later or contact support.';
+        case 'uiUnavailable':
+          return 'Google Sign-In is currently unavailable. Please try again later or contact support.';
+        case 'userMismatch':
+          return 'There was an issue with your account. Please sign out and try again.';
+        case 'unknownError':
+        default:
+          return 'An unexpected error occurred during Google Sign-In. Please try again.';
+      }
     }
+    return 'Something unexpected happened. Please try again.';
   }
-  return 'Something unexpected happened. Please try again.';
 }

@@ -13,12 +13,17 @@ import 'package:utils/utils.dart';
   autoTextFieldValidation: false,
   fields: [FormTextField(name: 'email', validator: Validator.validateEmail)],
 )
-class UpdatePasswordView extends StackedView<UpdatePasswordViewModel> with $UpdatePasswordView {
+class UpdatePasswordView extends StackedView<UpdatePasswordViewModel>
+    with $UpdatePasswordView {
   const UpdatePasswordView(this.isPasswordSet, {super.key});
   final bool isPasswordSet;
 
   @override
-  Widget builder(BuildContext context, UpdatePasswordViewModel viewModel, Widget? child) {
+  Widget builder(
+    BuildContext context,
+    UpdatePasswordViewModel viewModel,
+    Widget? child,
+  ) {
     return GestureDetector(
       onTap: () => FocusScope.of(context).unfocus(),
       child: AbsorbPointer(
@@ -26,7 +31,9 @@ class UpdatePasswordView extends StackedView<UpdatePasswordViewModel> with $Upda
         child: Scaffold(
           appBar: AppBar(
             title: Text(
-              isPasswordSet ? l10n.featureSettingsSecurityResetPassword : l10n.featureSettingsSecuritySetPassword,
+              isPasswordSet
+                  ? l10n.featureSettingsSecurityResetPassword
+                  : l10n.featureSettingsSecuritySetPassword,
             ),
             shape: Border(bottom: BorderSide(color: context.neutralLowest)),
           ),
@@ -36,7 +43,9 @@ class UpdatePasswordView extends StackedView<UpdatePasswordViewModel> with $Upda
                 return SingleChildScrollView(
                   padding: AppEdgeInsets.adaptiveHorizontalPadding(context),
                   child: ConstrainedBox(
-                    constraints: BoxConstraints(minHeight: constraints.maxHeight),
+                    constraints: BoxConstraints(
+                      minHeight: constraints.maxHeight,
+                    ),
                     child: IntrinsicHeight(
                       child: Column(
                         children: [
@@ -87,7 +96,8 @@ class UpdatePasswordView extends StackedView<UpdatePasswordViewModel> with $Upda
   }
 
   @override
-  UpdatePasswordViewModel viewModelBuilder(BuildContext context) => UpdatePasswordViewModel();
+  UpdatePasswordViewModel viewModelBuilder(BuildContext context) =>
+      UpdatePasswordViewModel();
 
   @override
   void onViewModelReady(UpdatePasswordViewModel viewModel) {

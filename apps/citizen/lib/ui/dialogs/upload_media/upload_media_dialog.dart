@@ -3,7 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:stacked_services/stacked_services.dart';
 
 class UploadMediaDialog extends StatelessWidget {
-  const UploadMediaDialog({required this.request, required this.completer, super.key});
+  const UploadMediaDialog({
+    required this.request,
+    required this.completer,
+    super.key,
+  });
   final DialogRequest<dynamic> request;
   final Function(DialogResponse<dynamic>) completer;
 

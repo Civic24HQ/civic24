@@ -128,6 +128,8 @@ class SignupView extends StackedView<SignupViewModel> with $SignupView {
                             onTapped: viewModel.navigateToLogin,
                           ),
                           AppSpacing.large,
+                          AuthPrivacySection(onTapTerm: viewModel.onViewTerms, onTapPolicy: viewModel.onViewPrivacy),
+                          AppSpacing.large,
                         ],
                       ),
                     ),

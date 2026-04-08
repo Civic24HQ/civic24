@@ -9,6 +9,8 @@ abstract class AuthViewModel extends FormViewModel {
   final authenticationService = locator<AuthenticationService>();
   final userService = locator<UserService>();
   final analyticsService = locator<AnalyticsService>();
+  final urlLauncherService = locator<UrlLauncherService>();
+  final remoteConfigService = locator<RemoteConfigService>();
 
   bool _showPassword = false;
   bool get showPassword => _showPassword;
@@ -19,12 +21,24 @@ abstract class AuthViewModel extends FormViewModel {
   bool get isGoogleButtonBusy => busy(AuthMethod.google);
   bool get isEmailButtonBusy => busy(AuthMethod.email);
 
+  void onViewTerms() => urlLauncherService.openUrl(remoteConfigService.termsOfServiceUrl);
+
+  void onViewPrivacy() => urlLauncherService.openUrl(remoteConfigService.privacyPolicyUrl);
+
   void toggleShowPassword() {
     _showPassword = !_showPassword;
     rebuildUi();
   }
 
-  Future<void> handleApple() async {}
+  Future<void> handleApple() async {
+    analyticsService.logButtonClick(kAnalyticButtonAuthApple);
+    setAuthBusy(AuthMethod.apple);
+    final success = await authenticationService.continueWithApple();
+    if (success) {
+      await userService.waitUntilUserIsReady();
+    }
+    setAuthNotBusy(AuthMethod.apple);
+  }
 
   Future<void> handleGoogle() async {
     analyticsService.logButtonClick(kAnalyticButtonAuthGoogle);
