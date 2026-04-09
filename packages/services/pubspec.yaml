@@ -49,6 +49,7 @@ dependencies:
   sign_in_with_apple: ^7.0.1
   geocoding: ^4.0.0
   geolocator: ^14.0.2
+  package_info_plus: ^9.0.1
 
   # Google/Firebase Dependencies
   firebase_auth: ^6.1.4

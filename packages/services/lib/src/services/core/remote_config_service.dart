@@ -82,6 +82,12 @@ class RemoteConfigService {
   /// Minimum allowed app version for forced-update prompts.
   String get minAppVersion => _remoteConfig.getString(RemoteConfigKeys.minAppVersion);
 
+  /// Minimum like count required for a report to appear in the trending feed.
+  int get trendingLikeThreshold => _remoteConfig.getInt(RemoteConfigKeys.trendingLikeThreshold);
+
+  /// Number of days after which a user session is considered expired.
+  int get sessionDurationDays => _remoteConfig.getInt(RemoteConfigKeys.sessionDurationDays);
+
   /// Cancels the real-time subscription and clears listeners.
   Future<void> dispose() async {
     await _configUpdateSubscription?.cancel();

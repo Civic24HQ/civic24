@@ -18,14 +18,14 @@ class SettingsViewModel extends ReactiveViewModel {
   final _authService = locator<AuthenticationService>();
   final _userService = locator<UserService>();
   final _analyticsService = locator<AnalyticsService>();
+  final _appInfoService = locator<AppInfoService>();
 
   @override
   List<ListenableServiceMixin> get listenableServices => [_userService];
 
   UserModel? get currentUser => _userService.user;
 
-  // TODO(Civic24): Implement functionality to get actual app version
-  final String appVersion = '0.0.1+1';
+  String get appVersion => _appInfoService.displayVersion;
 
   Future<void> navigateToProfile() async {
     await _navigationService.navigateToProfileView();

@@ -2,8 +2,10 @@
 library services;
 
 export 'src/app/app.locator.dart';
+export 'src/app/register_interface_aliases.dart';
 export 'src/services/core/alert_service.dart';
 export 'src/services/core/analytics_service.dart';
+export 'src/services/core/app_info_service.dart';
 export 'src/services/core/authentication_service.dart';
 export 'src/services/core/cloudinary_storage_service.dart';
 export 'src/services/core/crashlytics_service.dart';
@@ -14,8 +16,12 @@ export 'src/services/core/media_service.dart';
 export 'src/services/core/permission_service.dart';
 export 'src/services/core/push_notification_service.dart';
 export 'src/services/core/remote_config_service.dart';
+export 'src/services/core/session_service.dart';
 export 'src/services/core/user_service.dart';
-export 'src/services/feature/report_service.dart';
+export 'src/services/feature/report/interfaces/i_report_feed.dart';
+export 'src/services/feature/report/interfaces/i_report_interaction.dart';
+export 'src/services/feature/report/interfaces/i_report_writer.dart';
+export 'src/services/feature/report/report_service.dart';
 export 'src/services/feature/url_launcher_service.dart';
 export 'src/services/local_storage/local_storage_service.dart';
 export 'src/services/local_storage/src/report_cache_service.dart';

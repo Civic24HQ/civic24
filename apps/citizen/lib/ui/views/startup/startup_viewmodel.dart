@@ -13,6 +13,7 @@ class StartupViewModel extends BaseViewModel {
   final _authenticationService = locator<AuthenticationService>();
   final _userService = locator<UserService>();
   final _analyticsService = locator<AnalyticsService>();
+  final _sessionService = locator<SessionService>();
 
   bool isAnimate = false;
   double turns = 0;
@@ -83,6 +84,11 @@ class StartupViewModel extends BaseViewModel {
     await _authenticationService.clearFirebaseUserOnFreshInstall();
     _analyticsService.logAppOpen();
     await onViewLoading();
+    // Check session expiry before routing
+    if (_authenticationService.hasFirebaseUser && _sessionService.isSessionExpired()) {
+      _log.i('Session expired: Signing out');
+      await _authenticationService.signOut();
+    }
     prepareUserSession();
   }
 }

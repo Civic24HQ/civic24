@@ -11,12 +11,14 @@ class ReportsViewModel extends ReactiveViewModel {
   final _bottomSheetService = locator<BottomSheetService>();
   final _navigationService = locator<RouterService>();
   final _userService = locator<UserService>();
-  final _reportService = locator<ReportService>();
+  final _reportService = locator<IReportFeedService>();
+  final _interactionService = locator<IReportInteractionService>();
+  final _reportServiceNotifier = locator<ReportService>();
 
   @override
   List<ListenableServiceMixin> get listenableServices => [
     _userService,
-    _reportService,
+    _reportServiceNotifier
   ];
 
   String get user => _userService.user!.id;
@@ -77,14 +79,14 @@ class ReportsViewModel extends ReactiveViewModel {
   }
 
   Future<void> likeReport(Report report) async {
-    await _reportService.likeReportOptimistic(report, user);
+    await _interactionService.likeReportOptimistic(report, user);
   }
 
   Future<void> dislikeReport(Report report) async {
-    await _reportService.dislikeReportOptimistic(report, user);
+    await _interactionService.dislikeReportOptimistic(report, user);
   }
 
   Future<void> bookmarkReport(Report report) async {
-    await _reportService.bookmarkReportOptimistic(report, user);
+    await _interactionService.bookmarkReportOptimistic(report, user);
   }
 }

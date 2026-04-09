@@ -14,6 +14,7 @@ Future<void> main() async {
   await _preLocatorSetup();
   await setupLocator(stackedRouter: stackedRouter);
   await setupServiceLocator();
+  registerServiceInterfaces();
   await _postLocatorSetup();
 }
 
@@ -30,6 +31,7 @@ Future<void> _preLocatorSetup() async {
 Future<void> _postLocatorSetup() async {
   setupBottomSheetUi();
   setupDialogUi();
+  await AppInfoService().initialize();
   // await InternetConnectivityService().initialize();
   await RemoteConfigService().initialize(
     minimumFetchInterval: EnvironmentConstants.isProduction ? const Duration(hours: 1) : const Duration(minutes: 1),

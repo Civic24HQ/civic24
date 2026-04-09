@@ -15,7 +15,7 @@ class AddReportViewModel extends FormViewModel {
   final _routerService = locator<RouterService>();
   final _userService = locator<UserService>();
   final _alertService = locator<AlertService>();
-  final _reportService = locator<ReportService>();
+  final _reportWriterService = locator<IReportWriterService>();
   final _dialogService = locator<DialogService>();
   final _mediaService = locator<MediaService>();
   final _analyticsService = locator<AnalyticsService>();
@@ -25,7 +25,6 @@ class AddReportViewModel extends FormViewModel {
   @override
   List<ListenableServiceMixin> get listenableServices => [
     _userService,
-    _reportService,
   ];
 
   String get user => _userService.user!.id;
@@ -247,7 +246,7 @@ class AddReportViewModel extends FormViewModel {
       media: imageUrlList,
     );
     final newReport = Report(reportData: newReportData);
-    await runBusyFuture(_reportService.addReport(newReport));
+    await runBusyFuture(_reportWriterService.addReport(newReport));
 
     setBusy(false);
     await reportSuccessful();
