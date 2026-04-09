@@ -9,7 +9,10 @@ import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:models/utils/image_metadata.dart';
-import 'package:services/services.dart';
+import 'package:services/src/app/app.locator.dart';
+import 'package:services/src/services/core/alert_service.dart';
+import 'package:services/src/services/core/permission_service.dart';
+import 'package:services/src/services/core/remote_config_service.dart';
 import 'package:utils/utils.dart';
 
 /// A service for handling media-related tasks like image or video picking, cropping,

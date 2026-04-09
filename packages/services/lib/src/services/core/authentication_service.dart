@@ -10,7 +10,13 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:rxdart/rxdart.dart';
-import 'package:services/services.dart';
+import 'package:services/src/app/app.locator.dart';
+import 'package:services/src/services/core/alert_service.dart';
+import 'package:services/src/services/core/analytics_service.dart';
+import 'package:services/src/services/core/crashlytics_service.dart';
+import 'package:services/src/services/core/session_service.dart';
+import 'package:services/src/services/local_storage/local_storage_service.dart';
+import 'package:services/src/services/local_storage/src/settings_storage_service.dart';
 import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 import 'package:utils/utils.dart';
 
@@ -63,6 +69,7 @@ class AuthenticationService {
   final _settingsStorageService = serviceLocator<SettingsStorageService>();
   final _analyticsService = serviceLocator<AnalyticsService>();
   final _crashlyticsService = serviceLocator<CrashlyticsService>();
+  final _sessionService = serviceLocator<SessionService>();
 
   final Random _randomSecure = Random.secure();
 
@@ -288,6 +295,7 @@ class AuthenticationService {
       _analyticsService.logLogin(currentUserAuthProvider);
       _crashlyticsService.setupUserProfile(userId: result.user?.uid, email: result.user?.email);
       _log.i('User Details: ${result.user}');
+      _sessionService.recordSession();
       return result.user != null;
     } catch (e) {
       _log.e('Sign in failed: $e');
@@ -356,7 +364,7 @@ class AuthenticationService {
       }
 
       _crashlyticsService.setupUserProfile(userId: userCredential.user?.uid, email: userCredential.user?.email);
-
+      _sessionService.recordSession();
       return userCredential.user != null;
     } on GoogleSignInException catch (e) {
       if (isAndroid && _isNoCredentialError(e)) {
@@ -564,14 +572,9 @@ class AuthenticationService {
   Future<void> signOut() async {
     _log.d('Signing out user');
     try {
-      // Try to check if user is currently signed In
-      // final isUserSignedIn = await _googleSignIn.attemptLightweightAuthentication();
-
-      // if (isUserSignedIn is Future<GoogleSignInAccount?>) {
       _log.d('Signing out Google user');
       await _googleSignIn.disconnect();
       await _googleSignIn.signOut();
-      // }
 
       await Future.wait([
         _analyticsService.setUserId(null),
@@ -584,6 +587,7 @@ class AuthenticationService {
     } finally {
       await _firebaseAuth.signOut();
       _log.d('User signed out from Firebase');
+      _sessionService.clearSession();
       clearLocalStorage();
       _log.d('Local storage cleared');
     }

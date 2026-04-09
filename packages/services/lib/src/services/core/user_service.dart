@@ -4,8 +4,13 @@ import 'package:constants/constants.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:models/models.dart';
-import 'package:services/services.dart';
+import 'package:services/src/app/app.locator.dart';
+import 'package:services/src/services/core/authentication_service.dart';
+import 'package:services/src/services/core/remote_config_service.dart';
+import 'package:services/src/services/feature/report/report_service.dart';
 import 'package:services/src/services/firebase/firestore_collection_service.dart';
+import 'package:services/src/services/local_storage/src/settings_storage_service.dart';
+import 'package:services/src/services/local_storage/src/user_storage_service.dart';
 import 'package:stacked/stacked.dart';
 import 'package:utils/utils.dart';
 
