@@ -1,4 +1,3 @@
-
 extension StringExtension on String {
   /// Capitalizes the first letter of a string
   /// Example: 'hello world'.capitalizeFirst => 'Hello world'

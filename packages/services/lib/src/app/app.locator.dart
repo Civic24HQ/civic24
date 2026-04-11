@@ -12,6 +12,7 @@ import 'package:stacked_shared/stacked_shared.dart';
 import '../services/core/alert_service.dart';
 import '../services/core/analytics_service.dart';
 import '../services/core/app_info_service.dart';
+import '../services/core/app_update_service.dart';
 import '../services/core/authentication_service.dart';
 import '../services/core/cloudinary_storage_service.dart';
 import '../services/core/crashlytics_service.dart';
@@ -63,4 +64,5 @@ Future<void> setupServiceLocator({
   serviceLocator.registerLazySingleton(() => InternetConnectivityService());
   serviceLocator.registerLazySingleton(() => LocationService());
   serviceLocator.registerLazySingleton(() => AppInfoService());
+  serviceLocator.registerLazySingleton(() => AppUpdateService());
 }

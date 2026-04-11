@@ -221,7 +221,12 @@ class S {
 
   /// `Got it`
   String get generalGotIt {
-    return Intl.message('Got it', name: 'generalGotIt', desc: 'Got it Label for Button', args: []);
+    return Intl.message(
+      'Got it',
+      name: 'generalGotIt',
+      desc: 'Got it Label for Button',
+      args: [],
+    );
   }
 
   /// `Submit`
@@ -1474,7 +1479,7 @@ class S {
     );
   }
 
-  /// `Deleting your account will permanently remove all your data, including saved preferences, vehicle information, and fuel tracking history. This action cannot be undone.`
+  /// `Deleting your account will permanently remove all your data including saved preferences. This action cannot be undone.`
   String get featureDeleteConfirmationMessage {
     return Intl.message(
       'Deleting your account will permanently remove all your data including saved preferences. This action cannot be undone.',
@@ -1546,7 +1551,12 @@ class S {
 
   /// `Before You Go…`
   String get featureDeleteFeedbackTitle {
-    return Intl.message('Before You Go…', name: 'featureDeleteFeedbackTitle', desc: 'Delete Feedback Title', args: []);
+    return Intl.message(
+      'Before You Go…',
+      name: 'featureDeleteFeedbackTitle',
+      desc: 'Delete Feedback Title',
+      args: [],
+    );
   }
 
   /// `We’d love to hear your feedback on how we can improve. Please let us know why you’re deleting your account.`
@@ -1631,7 +1641,12 @@ class S {
 
   /// ` and `
   String get featureAuthTermAnd {
-    return Intl.message(' and ', name: 'featureAuthTermAnd', desc: 'Auth Term Description And', args: []);
+    return Intl.message(
+      ' and ',
+      name: 'featureAuthTermAnd',
+      desc: 'Auth Term Description And',
+      args: [],
+    );
   }
 
   /// `Privacy Policy`
@@ -1640,6 +1655,46 @@ class S {
       'Privacy Policy',
       name: 'featureAuthTermDescriptionPrivacy',
       desc: 'Auth Term Description Privacy Policy',
+      args: [],
+    );
+  }
+
+  /// `Civic24 Just Got Better`
+  String get featureForceUpdateTitle {
+    return Intl.message(
+      'Civic24 Just Got Better',
+      name: 'featureForceUpdateTitle',
+      desc: 'Force Update Title',
+      args: [],
+    );
+  }
+
+  /// `We've made improvements to make your civic reporting experience smoother and faster. Tap below to get the latest version..`
+  String get featureForceUpdateDescription {
+    return Intl.message(
+      'We\'ve made improvements to make your civic reporting experience smoother and faster. Tap below to get the latest version..',
+      name: 'featureForceUpdateDescription',
+      desc: 'Force Update Description',
+      args: [],
+    );
+  }
+
+  /// `Update Now`
+  String get featureForceUpdateButton {
+    return Intl.message(
+      'Update Now',
+      name: 'featureForceUpdateButton',
+      desc: 'Force Update Button',
+      args: [],
+    );
+  }
+
+  /// `Remind Me Later`
+  String get featureForceUpdateButtonLater {
+    return Intl.message(
+      'Remind Me Later',
+      name: 'featureForceUpdateButtonLater',
+      desc: 'Force Update Button Later',
       args: [],
     );
   }

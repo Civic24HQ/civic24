@@ -32,8 +32,7 @@ class LoginViewModel extends AuthViewModel {
     setAuthNotBusy(AuthMethod.email);
   }
 
-  void navigateToForgetPassword() =>
-      _navigationService.navigateToForgotPasswordView(email: emailValue ?? '');
+  void navigateToForgetPassword() => _navigationService.navigateToForgotPasswordView(email: emailValue ?? '');
 
   void navigateToSignUp() => _navigationService.replaceWithSignupView();
 }

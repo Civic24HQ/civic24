@@ -143,6 +143,10 @@ class Assets {
   static const $AssetsLottieGen lottie = $AssetsLottieGen();
   static const $AssetsPngGen png = $AssetsPngGen();
   static const $AssetsSvgGen svg = $AssetsSvgGen();
+  static const String shorebird = 'shorebird.yaml';
+
+  /// List of all assets
+  static List<String> get values => [shorebird];
 }
 
 class AssetGenImage {

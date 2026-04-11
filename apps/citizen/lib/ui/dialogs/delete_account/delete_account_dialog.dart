@@ -24,11 +24,7 @@ class DeleteAccountDialog extends StackedView<DeleteAccountDialogModel> {
         child: AlertDialog(
           iconColor: context.primary,
           icon: const Icon(SolarIconsOutline.checkCircle, size: AppDimensions.size80),
-          title: Text(
-            l10n.featureDeleteFeedbackGoodbye,
-            style: context.titleLarge,
-            textAlign: TextAlign.center,
-          ),
+          title: Text(l10n.featureDeleteFeedbackGoodbye, style: context.titleLarge, textAlign: TextAlign.center),
           content: Column(
             mainAxisSize: MainAxisSize.min,
             children: [

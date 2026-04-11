@@ -8,6 +8,7 @@ import 'package:services/src/app/app.locator.dart';
 import 'package:services/src/services/core/alert_service.dart';
 import 'package:services/src/services/core/internet_connectivity_service.dart';
 import 'package:services/src/services/core/remote_config_service.dart';
+import 'package:services/src/services/feature/notification/notification_service.dart';
 import 'package:services/src/services/feature/report/feed_query_builder.dart';
 import 'package:services/src/services/feature/report/interaction_hydrator.dart';
 import 'package:services/src/services/feature/report/interfaces/i_report_feed.dart';
@@ -57,6 +58,7 @@ class ReportService extends FirestoreCollectionService<Report>
   final _internetConnectivityService = serviceLocator<InternetConnectivityService>();
 
   final _remoteConfigService = serviceLocator<RemoteConfigService>();
+  final _notificationService = serviceLocator<NotificationService>();
 
   @override
   String get collectionPath => FirestoreCollections.reports;
@@ -94,6 +96,17 @@ class ReportService extends FirestoreCollectionService<Report>
   /// For category feeds, the key includes the category name to ensure
   /// each category maintains independent state (e.g. `"category_road"`,
   /// `"category_waste"`). All other feeds use the enum name directly
+  /// Returns the display name of the currently signed-in user,
+  /// read from the locally cached [UserModel]. Falls back to 'Someone'
+  /// if the cache is unavailable (e.g. on first launch before sync).
+  String _actorDisplayName() {
+    try {
+      return _userStorageService.getCurrentUserModel.displayName;
+    } catch (_) {
+      return 'Someone';
+    }
+  }
+
   /// (e.g. `"all"`, `"trending"`, `"userReports"`).
   @protected
   String _feedKey(ReportFeedType type, {CategoryType? category}) {
@@ -809,6 +822,9 @@ class ReportService extends FirestoreCollectionService<Report>
         final key = _feedKey(ReportFeedType.category, category: category);
         await _reportCache.saveFeed(key, _stateFor(key).items);
       }
+
+      // Notify the author their report was submitted — best-effort, never blocks
+      unawaited(_notificationService.onReportCreated(report: newReport));
     } catch (e) {
       log.e('Failed to create report, reverting', error: e);
 
@@ -1121,10 +1137,20 @@ class ReportService extends FirestoreCollectionService<Report>
 
     _pendingInteractionReportIds.add(reportId);
 
+    // Capture pre-toggle state before optimistic update mutates it
+    final isAddingLike = !report.hasLiked;
+
     await optimisticToggleLike(report);
 
     try {
       await toggleLike(reportId: reportId, userId: userId).timeout(const Duration(seconds: 10));
+
+      // Only notify the report author when ADDING a like — not when removing one.
+      // Self-like guard is inside NotificationService.onReportLiked.
+      if (isAddingLike) {
+        final actorName = _actorDisplayName();
+        unawaited(_notificationService.onReportLiked(report: report, actorUserId: userId, actorName: actorName));
+      }
     } catch (e, stack) {
       log.e('Like failed, reverting', error: e, stackTrace: stack);
       await optimisticToggleLike(report);
@@ -1143,10 +1169,20 @@ class ReportService extends FirestoreCollectionService<Report>
 
     _pendingInteractionReportIds.add(reportId);
 
+    // Capture pre-toggle state before optimistic update mutates it
+    final isAddingDislike = !report.hasDisliked;
+
     await optimisticToggleDislike(report);
 
     try {
       await toggleDislike(reportId: reportId, userId: userId).timeout(const Duration(seconds: 10));
+
+      // Only notify the report author when ADDING a dislike — not when removing one.
+      // Self-dislike guard is inside NotificationService.onReportDisliked.
+      if (isAddingDislike) {
+        final actorName = _actorDisplayName();
+        unawaited(_notificationService.onReportDisliked(report: report, actorUserId: userId, actorName: actorName));
+      }
     } catch (e, stack) {
       log.e('Dislike failed, reverting', error: e, stackTrace: stack);
       await optimisticToggleDislike(report);

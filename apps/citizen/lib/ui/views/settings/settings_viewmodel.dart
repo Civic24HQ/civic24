@@ -47,10 +47,7 @@ class SettingsViewModel extends ReactiveViewModel {
 
   Future<void> logout() async {
     Future<bool> showLogoutConfirmationDialog() async {
-      final response = await _dialogService.showCustomDialog(
-        variant: DialogType.logout,
-        barrierDismissible: true,
-      );
+      final response = await _dialogService.showCustomDialog(variant: DialogType.logout, barrierDismissible: true);
 
       if (response != null && response.confirmed) {
         return response.data == DialogActionType.main;
@@ -60,20 +57,12 @@ class SettingsViewModel extends ReactiveViewModel {
 
     _analyticsService
       ..logButtonClick(kAnalyticButtonAuthLogout)
-      ..logScreenView(
-        screenClass: kAnalyticOverlayClass,
-        screenName: kAnalyticDialogLogoutConfirmation,
-      );
+      ..logScreenView(screenClass: kAnalyticOverlayClass, screenName: kAnalyticDialogLogoutConfirmation);
 
     final shouldLogout = await showLogoutConfirmationDialog();
     if (!shouldLogout) return;
 
-    unawaited(
-      _dialogService.showCustomDialog(
-        variant: DialogType.loading,
-        title: l10n.featureSettingsLoggingOut,
-      ),
-    );
+    unawaited(_dialogService.showCustomDialog(variant: DialogType.loading, title: l10n.featureSettingsLoggingOut));
 
     try {
       await _userService.clearUserSessionData().timeout(
