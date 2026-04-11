@@ -23,8 +23,7 @@ class AppBuilder extends StatelessWidget with AlertMixin {
   }
 
   @override
-  void onAlert(AlertModel notification) =>
-      AppAlert.onNotification(notification);
+  void onAlert(AlertModel notification) => AppAlert.onNotification(notification);
 
   @override
   void onToast(String message) => AppAlert.onToast(message);
@@ -42,15 +41,11 @@ class AppBuilderViewModel extends ReactiveViewModel {
   static const _defaultAlertListener = _NoOpAlertListener();
 
   @override
-  List<ListenableServiceMixin> get listenableServices => [
-    userService,
-    alertService,
-  ];
+  List<ListenableServiceMixin> get listenableServices => [userService, alertService];
 
   DisplayPreferences get displayPreferences => userService.displayPreferences;
 
-  void registerListener(AlertMixin listener) =>
-      alertService.addAlertListener(listener);
+  void registerListener(AlertMixin listener) => alertService.addAlertListener(listener);
 }
 
 class _NoOpAlertListener with AlertMixin {

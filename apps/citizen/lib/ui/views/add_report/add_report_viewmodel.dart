@@ -23,9 +23,7 @@ class AddReportViewModel extends FormViewModel {
   final _remoteConfigService = locator<RemoteConfigService>();
 
   @override
-  List<ListenableServiceMixin> get listenableServices => [
-    _userService,
-  ];
+  List<ListenableServiceMixin> get listenableServices => [_userService];
 
   String get user => _userService.user!.id;
 
@@ -41,8 +39,7 @@ class AddReportViewModel extends FormViewModel {
   ReportData _reportData = ReportData.empty();
   ReportData get reportData => _reportData;
 
-  bool isCategoryTypeSelected(CategoryType categoryType) =>
-      _reportData.categoryTypes.contains(categoryType);
+  bool isCategoryTypeSelected(CategoryType categoryType) => _reportData.categoryTypes.contains(categoryType);
 
   List<CategoryType> get categoryTypes => _reportData.categoryTypes;
 
@@ -79,10 +76,7 @@ class AddReportViewModel extends FormViewModel {
     rebuildUi();
   }
 
-  void toggleCategoryType(
-    CategoryType categoryType, {
-    bool isSelected = false,
-  }) {
+  void toggleCategoryType(CategoryType categoryType, {bool isSelected = false}) {
     final categoryTypes = List<CategoryType>.from(_reportData.categoryTypes);
     if (isSelected) {
       if (categoryTypes.length >= 3) {
@@ -126,15 +120,11 @@ class AddReportViewModel extends FormViewModel {
     if (_mediaFiles.length >= maxReportImageLength) {
       _alertService.showErrorAlert(
         title: 'Media Limit Reached',
-        message:
-            'You can only add up to $maxReportImageLength media files per report.',
+        message: 'You can only add up to $maxReportImageLength media files per report.',
       );
       return;
     }
-    final response = await _dialogService.showCustomDialog(
-      variant: DialogType.uploadMedia,
-      barrierDismissible: true,
-    );
+    final response = await _dialogService.showCustomDialog(variant: DialogType.uploadMedia, barrierDismissible: true);
 
     if (response == null || response.data == null) {
       _log.d('No asset source selected');
@@ -175,10 +165,7 @@ class AddReportViewModel extends FormViewModel {
   Future<int> uploadImageToCloudinary() async {
     var failedCount = 0;
     for (final file in _mediaFiles) {
-      final uploadedUrl = await _cloudinaryStorageService.uploadFileWithRetry(
-        file: file!.imageFile,
-        folder: 'reports',
-      );
+      final uploadedUrl = await _cloudinaryStorageService.uploadFileWithRetry(file: file!.imageFile, folder: 'reports');
       _log.d('Uploaded Image URL: $uploadedUrl');
       if (uploadedUrl != null) {
         imageUrlList.add(uploadedUrl);

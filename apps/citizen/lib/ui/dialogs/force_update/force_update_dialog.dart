@@ -1,6 +1,6 @@
 import 'dart:ui';
 
-import 'package:citizen/ui/dialogs/logout/logout_dialog_model.dart';
+import 'package:citizen/ui/dialogs/force_update/force_update_dialog_model.dart';
 import 'package:components/components.dart';
 import 'package:constants/constants.dart';
 import 'package:flutter/material.dart';
@@ -10,13 +10,13 @@ import 'package:stacked_services/stacked_services.dart';
 import 'package:styles/styles.dart';
 import 'package:utils/utils.dart';
 
-class LogoutDialog extends StackedView<LogoutDialogModel> {
-  const LogoutDialog({required this.request, required this.completer, super.key});
+class ForceUpdateDialog extends StackedView<ForceUpdateDialogModel> {
+  const ForceUpdateDialog({required this.request, required this.completer, super.key});
   final DialogRequest<dynamic> request;
   final Function(DialogResponse<dynamic>) completer;
 
   @override
-  Widget builder(BuildContext context, LogoutDialogModel viewModel, Widget? child) {
+  Widget builder(BuildContext context, ForceUpdateDialogModel viewModel, Widget? child) {
     return BackdropFilter(
       filter: isTest ? ImageFilter.blur() : ImageFilter.blur(sigmaX: 4, sigmaY: 4),
       child: ConstrainedBox(
@@ -24,7 +24,7 @@ class LogoutDialog extends StackedView<LogoutDialogModel> {
         child: AlertDialog(
           title: Center(
             child: Text(
-              l10n.featureSettingsLoggingOut,
+              l10n.featureForceUpdateTitle,
               softWrap: true,
               style: context.titleLarge,
               textAlign: TextAlign.center,
@@ -36,16 +36,16 @@ class LogoutDialog extends StackedView<LogoutDialogModel> {
             children: [
               AppSpacing.medium,
               Text(
-                l10n.featureSettingsLoggingOutHint,
+                l10n.featureForceUpdateDescription,
                 style: context.bodyMedium?.copyWith(color: context.onSurfaceVariant),
                 textAlign: TextAlign.center,
               ),
               AppSpacing.large,
               PrimaryButton(
-                title: l10n.generalLogout,
+                title: l10n.featureForceUpdateButton,
                 backgroundColor: context.primary,
                 onTap: () async {
-                  completer(DialogResponse<DialogActionType>(data: DialogActionType.main, confirmed: true));
+                  completer(DialogResponse<DialogActionType>(confirmed: true));
                 },
               ),
               AppSpacing.medium,
@@ -53,9 +53,9 @@ class LogoutDialog extends StackedView<LogoutDialogModel> {
                 child: TextButton(
                   style: TextButton.styleFrom(textStyle: context.bodyLarge, foregroundColor: context.onSurface),
                   onPressed: () async {
-                    completer(DialogResponse<DialogActionType>(data: DialogActionType.secondary, confirmed: true));
+                    completer(DialogResponse<DialogActionType>());
                   },
-                  child: Text(l10n.generalCancel),
+                  child: Text(l10n.featureForceUpdateButtonLater),
                 ),
               ),
             ],
@@ -67,5 +67,5 @@ class LogoutDialog extends StackedView<LogoutDialogModel> {
   }
 
   @override
-  LogoutDialogModel viewModelBuilder(BuildContext context) => LogoutDialogModel();
+  ForceUpdateDialogModel viewModelBuilder(BuildContext context) => ForceUpdateDialogModel();
 }

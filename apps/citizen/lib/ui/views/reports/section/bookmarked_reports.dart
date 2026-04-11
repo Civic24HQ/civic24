@@ -24,16 +24,13 @@ class _BookmarkedReportsState extends State<BookmarkedReports> {
     super.initState();
     _controller.addListener(_onScroll);
     WidgetsBinding.instance.addPostFrameCallback((_) async {
-      await _viewModel.initUserBookmarksFeed(
-        limit: _bookmarkedReportsPageLimit,
-      );
+      await _viewModel.initUserBookmarksFeed(limit: _bookmarkedReportsPageLimit);
       await _viewModel.startRealTimeFeed(ReportFeedType.userBookmarks);
     });
   }
 
   void _onScroll() {
-    if (_controller.position.pixels >
-        _controller.position.maxScrollExtent - 300) {
+    if (_controller.position.pixels > _controller.position.maxScrollExtent - 300) {
       _viewModel.loadMoreUserBookmarks(limit: _bookmarkedReportsPageLimit);
     }
   }
@@ -51,14 +48,7 @@ class _BookmarkedReportsState extends State<BookmarkedReports> {
 
     if (viewModel.isUserBookmarksInitialLoading()) {
       return CustomScrollView(
-        slivers: [
-          SliverList(
-            delegate: SliverChildBuilderDelegate(
-              (_, __) => const AppReportShimmer(),
-              childCount: 6,
-            ),
-          ),
-        ],
+        slivers: [SliverList(delegate: SliverChildBuilderDelegate((_, __) => const AppReportShimmer(), childCount: 6))],
       );
     }
 
@@ -70,19 +60,15 @@ class _BookmarkedReportsState extends State<BookmarkedReports> {
       controller: _controller,
       slivers: [
         CupertinoSliverRefreshControl(
-          onRefresh: () => viewModel.refreshUserBookmarks(
-            limit: _bookmarkedReportsPageLimit,
-          ),
+          onRefresh: () => viewModel.refreshUserBookmarks(limit: _bookmarkedReportsPageLimit),
         ),
 
         SliverList(
           delegate: SliverChildBuilderDelegate((context, index) {
             return AppReport(
               onTapLike: () => viewModel.likeReport(bookmarkedReports[index]),
-              onTapDislike: () =>
-                  viewModel.dislikeReport(bookmarkedReports[index]),
-              onTapBookmark: () =>
-                  viewModel.bookmarkReport(bookmarkedReports[index]),
+              onTapDislike: () => viewModel.dislikeReport(bookmarkedReports[index]),
+              onTapBookmark: () => viewModel.bookmarkReport(bookmarkedReports[index]),
               onTapComment: viewModel.viewComment,
               report: bookmarkedReports[index],
             );

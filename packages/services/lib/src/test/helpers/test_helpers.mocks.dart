@@ -3261,3 +3261,35 @@ class MockAppInfoService extends _i1.Mock implements _i10.AppInfoService {
           )
           as _i12.Future<void>);
 }
+
+/// A class which mocks [AppUpdateService].
+///
+/// See the documentation for Mockito's code generation for more information.
+class MockAppUpdateService extends _i1.Mock implements _i10.AppUpdateService {
+  @override
+  _i12.Future<void> checkForPatch() =>
+      (super.noSuchMethod(
+            Invocation.method(#checkForPatch, []),
+            returnValue: _i12.Future<void>.value(),
+            returnValueForMissingStub: _i12.Future<void>.value(),
+          )
+          as _i12.Future<void>);
+
+  @override
+  _i12.Future<bool> hasPendingPatch() =>
+      (super.noSuchMethod(
+            Invocation.method(#hasPendingPatch, []),
+            returnValue: _i12.Future<bool>.value(false),
+            returnValueForMissingStub: _i12.Future<bool>.value(false),
+          )
+          as _i12.Future<bool>);
+
+  @override
+  _i12.Future<bool> isForceUpdateRequired() =>
+      (super.noSuchMethod(
+            Invocation.method(#isForceUpdateRequired, []),
+            returnValue: _i12.Future<bool>.value(false),
+            returnValueForMissingStub: _i12.Future<bool>.value(false),
+          )
+          as _i12.Future<bool>);
+}

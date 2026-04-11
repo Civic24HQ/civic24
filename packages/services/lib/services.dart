@@ -6,6 +6,7 @@ export 'src/app/register_interface_aliases.dart';
 export 'src/services/core/alert_service.dart';
 export 'src/services/core/analytics_service.dart';
 export 'src/services/core/app_info_service.dart';
+export 'src/services/core/app_update_service.dart';
 export 'src/services/core/authentication_service.dart';
 export 'src/services/core/cloudinary_storage_service.dart';
 export 'src/services/core/crashlytics_service.dart';

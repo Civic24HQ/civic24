@@ -163,6 +163,22 @@ scripts:
   citizen:macos:pods:
     run: melos exec --fail-fast --scope="citizen" -- "cd macos && pod install --repo-update"
 
+  citizen:shorebird:release:android:
+    run: melos exec --fail-fast --scope="citizen" -- "shorebird release android --flavor production --dart-define-from-file=secrets/production.json"
+    description: Shorebird release build for Android (production)
+
+  citizen:shorebird:release:ios:
+    run: melos exec --fail-fast --scope="citizen" -- "shorebird release ios --flavor production --dart-define-from-file=secrets/production.json"
+    description: Shorebird release build for iOS (production)
+
+  citizen:shorebird:patch:android:
+    run: melos exec --fail-fast --scope="citizen" -- "shorebird patch android --flavor production --dart-define-from-file=secrets/production.json"
+    description: Push Dart-only patch to Android users (no store required)
+
+  citizen:shorebird:patch:ios:
+    run: melos exec --fail-fast --scope="citizen" -- "shorebird patch ios --flavor production --dart-define-from-file=secrets/production.json"
+    description: Push Dart-only patch to iOS users (no store required)
+
 
   # ─────────────────────────────
   # 📱 Admin App-Specific Commands

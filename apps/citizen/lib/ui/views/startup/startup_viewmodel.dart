@@ -1,7 +1,10 @@
+import 'dart:async';
 import 'dart:math';
 
+import 'package:citizen/app/app.dialogs.dart';
 import 'package:citizen/app/app.locator.dart';
 import 'package:citizen/app/app.router.dart';
+import 'package:constants/constants.dart';
 import 'package:services/services.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
@@ -14,6 +17,10 @@ class StartupViewModel extends BaseViewModel {
   final _userService = locator<UserService>();
   final _analyticsService = locator<AnalyticsService>();
   final _sessionService = locator<SessionService>();
+  final _appUpdateService = locator<AppUpdateService>();
+  final _dialogService = locator<DialogService>();
+  final _urlLauncherService = locator<UrlLauncherService>();
+  final _remoteConfigService = locator<RemoteConfigService>();
 
   bool isAnimate = false;
   double turns = 0;
@@ -83,7 +90,26 @@ class StartupViewModel extends BaseViewModel {
     _log.i('Running startup logic');
     await _authenticationService.clearFirebaseUserOnFreshInstall();
     _analyticsService.logAppOpen();
+    // Trigger Shorebird patch download silently in parallel with startup animation
+    unawaited(_appUpdateService.checkForPatch());
+
     await onViewLoading();
+
+    // Check if a store update is required
+    if (await _appUpdateService.isForceUpdateRequired()) {
+      _log.i('Force update required');
+      final response = await _dialogService.showCustomDialog(variant: DialogType.forceUpdate, barrierDismissible: true);
+
+      if (response != null && response.confirmed) {
+        _analyticsService.trackEvent(kAnalyticDialogForceUpdate);
+        if (isIOS) {
+          await _urlLauncherService.openUrl(_remoteConfigService.appStoreURL, openInBrowser: true);
+        } else {
+          await _urlLauncherService.openUrl(_remoteConfigService.playStoreURL, openInBrowser: true);
+        }
+      }
+    }
+
     // Check session expiry before routing
     if (_authenticationService.hasFirebaseUser && _sessionService.isSessionExpired()) {
       _log.i('Session expired: Signing out');

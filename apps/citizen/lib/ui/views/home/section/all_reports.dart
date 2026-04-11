@@ -30,8 +30,7 @@ class _AllReportsState extends State<AllReports> {
   }
 
   void _onScroll() {
-    if (_controller.position.pixels >
-        _controller.position.maxScrollExtent - 300) {
+    if (_controller.position.pixels > _controller.position.maxScrollExtent - 300) {
       _viewModel.loadMoreAll(limit: _allReportsPageLimit);
     }
   }
@@ -49,14 +48,7 @@ class _AllReportsState extends State<AllReports> {
 
     if (viewModel.isAllInitialLoading()) {
       return CustomScrollView(
-        slivers: [
-          SliverList(
-            delegate: SliverChildBuilderDelegate(
-              (_, __) => const AppReportShimmer(),
-              childCount: 6,
-            ),
-          ),
-        ],
+        slivers: [SliverList(delegate: SliverChildBuilderDelegate((_, __) => const AppReportShimmer(), childCount: 6))],
       );
     }
 

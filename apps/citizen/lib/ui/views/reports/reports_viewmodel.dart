@@ -16,35 +16,25 @@ class ReportsViewModel extends ReactiveViewModel {
   final _reportServiceNotifier = locator<ReportService>();
 
   @override
-  List<ListenableServiceMixin> get listenableServices => [
-    _userService,
-    _reportServiceNotifier
-  ];
+  List<ListenableServiceMixin> get listenableServices => [_userService, _reportServiceNotifier];
 
   String get user => _userService.user!.id;
 
-  List<Report> getUserReports() =>
-      _reportService.getFeedItems(ReportFeedType.userReports);
+  List<Report> getUserReports() => _reportService.getFeedItems(ReportFeedType.userReports);
 
-  List<Report> getUserBookmarkedReports() =>
-      _reportService.getFeedItems(ReportFeedType.userBookmarks);
+  List<Report> getUserBookmarkedReports() => _reportService.getFeedItems(ReportFeedType.userBookmarks);
 
   Future<void> startRealTimeFeed(ReportFeedType reportTypeFeed) async {
     await _reportService.startRealtimeFeed(reportTypeFeed);
   }
 
-  void stopRealTimeFeed(ReportFeedType reportTypeFeed) =>
-      _reportService.stopRealtimeFeed(reportTypeFeed);
+  void stopRealTimeFeed(ReportFeedType reportTypeFeed) => _reportService.stopRealtimeFeed(reportTypeFeed);
 
-  bool isUserReportsInitialLoading() =>
-      _reportService.isInitialReportLoading(ReportFeedType.userReports);
-  bool isUserBookmarksInitialLoading() =>
-      _reportService.isInitialReportLoading(ReportFeedType.userBookmarks);
+  bool isUserReportsInitialLoading() => _reportService.isInitialReportLoading(ReportFeedType.userReports);
+  bool isUserBookmarksInitialLoading() => _reportService.isInitialReportLoading(ReportFeedType.userBookmarks);
 
-  bool isUserReportsPaginationLoading() =>
-      _reportService.isPaginationLoading(ReportFeedType.userReports);
-  bool isUserBookmarksPaginationLoading() =>
-      _reportService.isPaginationLoading(ReportFeedType.userBookmarks);
+  bool isUserReportsPaginationLoading() => _reportService.isPaginationLoading(ReportFeedType.userReports);
+  bool isUserBookmarksPaginationLoading() => _reportService.isPaginationLoading(ReportFeedType.userBookmarks);
 
   Future<void> loadMoreUserReports({int limit = kPageLimit}) =>
       _reportService.loadMoreFeed(ReportFeedType.userReports, limit: limit);
@@ -61,8 +51,8 @@ class ReportsViewModel extends ReactiveViewModel {
   Future<void> initUserReportsFeed({int limit = kPageLimit}) =>
       _reportService.loadInitialFeed(ReportFeedType.userReports, limit: limit);
 
-  Future<void> initUserBookmarksFeed({int limit = kPageLimit}) => _reportService
-      .loadInitialFeed(ReportFeedType.userBookmarks, limit: limit);
+  Future<void> initUserBookmarksFeed({int limit = kPageLimit}) =>
+      _reportService.loadInitialFeed(ReportFeedType.userBookmarks, limit: limit);
 
   Future<void> viewComment() async {
     final uploadResponse = await _bottomSheetService.showCustomSheet(

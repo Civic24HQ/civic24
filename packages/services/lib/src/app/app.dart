@@ -27,7 +27,7 @@ import 'package:stacked/stacked_annotations.dart';
     LazySingleton(classType: InternetConnectivityService),
     LazySingleton(classType: LocationService),
     LazySingleton(classType: AppInfoService),
-
+    LazySingleton(classType: AppUpdateService),
     // @stacked-service
   ],
   locatorName: 'serviceLocator',
