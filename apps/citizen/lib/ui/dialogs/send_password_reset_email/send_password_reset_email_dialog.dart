@@ -9,48 +9,28 @@ import 'package:stacked_services/stacked_services.dart';
 import 'package:styles/styles.dart';
 import 'package:utils/utils.dart';
 
-class SendPasswordResetEmailDialog
-    extends StackedView<SendPasswordResetEmailDialogModel> {
-  const SendPasswordResetEmailDialog({
-    required this.request,
-    required this.completer,
-    super.key,
-  });
+class SendPasswordResetEmailDialog extends StackedView<SendPasswordResetEmailDialogModel> {
+  const SendPasswordResetEmailDialog({required this.request, required this.completer, super.key});
   final DialogRequest<dynamic> request;
   final Function(DialogResponse<dynamic>) completer;
 
   @override
-  Widget builder(
-    BuildContext context,
-    SendPasswordResetEmailDialogModel viewModel,
-    Widget? child,
-  ) {
+  Widget builder(BuildContext context, SendPasswordResetEmailDialogModel viewModel, Widget? child) {
     final emailValue = request.data as String?;
     return BackdropFilter(
-      filter: isTest
-          ? ImageFilter.blur()
-          : ImageFilter.blur(sigmaX: 4, sigmaY: 4),
+      filter: isTest ? ImageFilter.blur() : ImageFilter.blur(sigmaX: 4, sigmaY: 4),
       child: ConstrainedBox(
         constraints: const BoxConstraints(maxWidth: 420),
         child: AlertDialog(
           iconColor: context.primary,
-          icon: const Icon(
-            SolarIconsOutline.lockPassword,
-            size: AppDimensions.size80,
-          ),
-          title: Text(
-            l10n.generalResetPassword,
-            style: context.titleLarge,
-            textAlign: TextAlign.center,
-          ),
+          icon: const Icon(SolarIconsOutline.lockPassword, size: AppDimensions.size80),
+          title: Text(l10n.generalResetPassword, style: context.titleLarge, textAlign: TextAlign.center),
           content: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
               Text(
                 l10n.generalResetPasswordDesc(emailValue!),
-                style: context.bodyMedium?.copyWith(
-                  color: context.onSurfaceVariant,
-                ),
+                style: context.bodyMedium?.copyWith(color: context.onSurfaceVariant),
                 textAlign: TextAlign.center,
               ),
             ],
@@ -70,6 +50,5 @@ class SendPasswordResetEmailDialog
   }
 
   @override
-  SendPasswordResetEmailDialogModel viewModelBuilder(BuildContext context) =>
-      SendPasswordResetEmailDialogModel();
+  SendPasswordResetEmailDialogModel viewModelBuilder(BuildContext context) => SendPasswordResetEmailDialogModel();
 }

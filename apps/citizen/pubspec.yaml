@@ -1,11 +1,11 @@
 name: citizen
 description: Citizen app for Civic24
-version: 0.0.1+6
+version: 0.0.1+7
 publish_to: none
 
 environment:
   sdk: ">=3.10.7 <4.0.0"
-  flutter: "3.38.7"
+  flutter: "3.41.6"
  
 dependencies:
   flutter:
@@ -24,7 +24,7 @@ dependencies:
   firebase_storage: ^13.0.6
   cloud_firestore: ^6.1.2
   firebase_performance: ^0.11.1+4
-  firebase_app_check: ^0.4.1+4
+  firebase_app_check: ^0.4.3
 
   # Internal Packages
   assets:
@@ -85,6 +85,7 @@ flutter:
     - assets/png/
     - assets/jpg/
     - assets/lottie/
+    - shorebird.yaml
 
 flutter_gen:
   output: lib/ui/shared/src

@@ -18,14 +18,15 @@ class SettingsViewModel extends ReactiveViewModel {
   final _authService = locator<AuthenticationService>();
   final _userService = locator<UserService>();
   final _analyticsService = locator<AnalyticsService>();
+  final _appInfoService = locator<AppInfoService>();
+  final _notificationService = locator<NotificationService>();
 
   @override
   List<ListenableServiceMixin> get listenableServices => [_userService];
 
   UserModel? get currentUser => _userService.user;
 
-  // TODO(Civic24): Implement functionality to get actual app version
-  final String appVersion = '0.0.1+1';
+  String get appVersion => _appInfoService.displayVersion;
 
   Future<void> navigateToProfile() async {
     await _navigationService.navigateToProfileView();
@@ -47,10 +48,7 @@ class SettingsViewModel extends ReactiveViewModel {
 
   Future<void> logout() async {
     Future<bool> showLogoutConfirmationDialog() async {
-      final response = await _dialogService.showCustomDialog(
-        variant: DialogType.logout,
-        barrierDismissible: true,
-      );
+      final response = await _dialogService.showCustomDialog(variant: DialogType.logout, barrierDismissible: true);
 
       if (response != null && response.confirmed) {
         return response.data == DialogActionType.main;
@@ -60,20 +58,12 @@ class SettingsViewModel extends ReactiveViewModel {
 
     _analyticsService
       ..logButtonClick(kAnalyticButtonAuthLogout)
-      ..logScreenView(
-        screenClass: kAnalyticOverlayClass,
-        screenName: kAnalyticDialogLogoutConfirmation,
-      );
+      ..logScreenView(screenClass: kAnalyticOverlayClass, screenName: kAnalyticDialogLogoutConfirmation);
 
     final shouldLogout = await showLogoutConfirmationDialog();
     if (!shouldLogout) return;
 
-    unawaited(
-      _dialogService.showCustomDialog(
-        variant: DialogType.loading,
-        title: l10n.featureSettingsLoggingOut,
-      ),
-    );
+    unawaited(_dialogService.showCustomDialog(variant: DialogType.loading, title: l10n.featureSettingsLoggingOut));
 
     try {
       await _userService.clearUserSessionData().timeout(
@@ -86,6 +76,7 @@ class SettingsViewModel extends ReactiveViewModel {
       _log.e('Error signing out: $e');
     } finally {
       await _authService.signOut();
+      await _notificationService.stopListening();
       _log.i('Logged out successfully');
       _dialogService.completeDialog(DialogResponse(confirmed: true));
       await _navigationService.clearStackAndShow(LoginViewRoute());

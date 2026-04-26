@@ -1,5 +1,5 @@
-// dart format width=80
 // GENERATED CODE - DO NOT MODIFY BY HAND
+// dart format width=80
 
 // **************************************************************************
 // StackedLocatorGenerator
@@ -11,18 +11,22 @@ import 'package:stacked_shared/stacked_shared.dart';
 
 import '../services/core/alert_service.dart';
 import '../services/core/analytics_service.dart';
+import '../services/core/app_info_service.dart';
+import '../services/core/app_update_service.dart';
 import '../services/core/authentication_service.dart';
 import '../services/core/cloudinary_storage_service.dart';
 import '../services/core/crashlytics_service.dart';
 import '../services/core/internet_connectivity_service.dart';
-import '../services/core/local_notification_service.dart';
 import '../services/core/location_service.dart';
 import '../services/core/media_service.dart';
 import '../services/core/permission_service.dart';
-import '../services/core/push_notification_service.dart';
 import '../services/core/remote_config_service.dart';
+import '../services/core/session_service.dart';
 import '../services/core/user_service.dart';
-import '../services/feature/report_service.dart';
+import '../services/feature/notification/local_notification_service.dart';
+import '../services/feature/notification/notification_service.dart';
+import '../services/feature/notification/push_notification_service.dart';
+import '../services/feature/report/report_service.dart';
 import '../services/feature/url_launcher_service.dart';
 import '../services/local_storage/src/report_cache_service.dart';
 import '../services/local_storage/src/settings_storage_service.dart';
@@ -42,7 +46,11 @@ Future<void> setupServiceLocator({
 
   // Register dependencies
   serviceLocator.registerLazySingleton(() => UserService());
+  serviceLocator.registerLazySingleton(() => SessionService());
+  serviceLocator.registerLazySingleton(() => RemoteConfigService());
   serviceLocator.registerLazySingleton(() => AuthenticationService());
+  serviceLocator.registerLazySingleton(() => SettingsStorageService());
+  serviceLocator.registerLazySingleton(() => UserStorageService());
   serviceLocator.registerLazySingleton(() => AlertService());
   serviceLocator.registerLazySingleton(() => ReportService());
   serviceLocator.registerLazySingleton(() => MediaService());
@@ -52,11 +60,11 @@ Future<void> setupServiceLocator({
   serviceLocator.registerLazySingleton(() => LocalNotificationService());
   serviceLocator.registerLazySingleton(() => CrashlyticsService());
   serviceLocator.registerLazySingleton(() => CloudinaryStorageService());
-  serviceLocator.registerLazySingleton(() => SettingsStorageService());
   serviceLocator.registerLazySingleton(() => ReportCacheService());
   serviceLocator.registerLazySingleton(() => UrlLauncherService());
   serviceLocator.registerLazySingleton(() => InternetConnectivityService());
-  serviceLocator.registerLazySingleton(() => UserStorageService());
-  serviceLocator.registerLazySingleton(() => RemoteConfigService());
   serviceLocator.registerLazySingleton(() => LocationService());
+  serviceLocator.registerLazySingleton(() => AppInfoService());
+  serviceLocator.registerLazySingleton(() => AppUpdateService());
+  serviceLocator.registerLazySingleton(() => NotificationService());
 }

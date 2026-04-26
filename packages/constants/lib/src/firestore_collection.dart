@@ -2,6 +2,7 @@
 class FirestoreCollections {
   static const String users = 'users';
   static const String reports = 'reports';
-  static const String userReportInteractions = 'user/{userId}/interactions/{reportId}';
   static const String uploads = 'uploads';
+  static const String interactions = 'interactions';
+  static const String notifications = 'notifications';
 }

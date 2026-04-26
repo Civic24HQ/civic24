@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:flutter/foundation.dart';
 import 'package:internet_connection_checker_plus/internet_connection_checker_plus.dart';
-import 'package:services/services.dart';
 import 'package:stacked/stacked.dart';
 import 'package:utils/utils.dart';
 
@@ -15,7 +14,7 @@ class InternetConnectivityService with ListenableServiceMixin {
 
   final InternetConnection _checker = InternetConnection();
 
-  final _alertService = serviceLocator<AlertService>();
+  // final _alertService = serviceLocator<AlertService>();
 
   StreamSubscription<InternetStatus>? _subscription;
 
@@ -25,7 +24,7 @@ class InternetConnectivityService with ListenableServiceMixin {
 
   bool _initialized = false;
 
-  bool _offlineDialogVisible = false;
+  // bool _offlineDialogVisible = false;
 
   /// Initialize connectivity monitoring and checks initial status
   Future<void> initialize() async {
@@ -56,7 +55,7 @@ class InternetConnectivityService with ListenableServiceMixin {
   /// Updates internal state and optionally shows dialogs
   @protected
   void _updateConnectionState(bool connected, {required bool showDialog}) {
-    final wasConnected = _isConnected.value;
+    // final wasConnected = _isConnected.value;
 
     _isConnected.value = connected;
 
@@ -64,41 +63,41 @@ class InternetConnectivityService with ListenableServiceMixin {
 
     if (!showDialog) return;
 
-    /// Lost connection
-    if (!connected && wasConnected) {
-      _showOfflineDialog();
-    }
+    // /// Lost connection
+    // if (!connected && wasConnected) {
+    //   _showOfflineDialog();
+    // }
 
-    /// Connection restored
-    if (connected && !wasConnected) {
-      _showOnlineDialog();
-    }
+    // /// Connection restored
+    // if (connected && !wasConnected) {
+    //   _showOnlineDialog();
+    // }
   }
 
-  @protected
-  void _showOfflineDialog() {
-    if (_offlineDialogVisible) return;
+  // @protected
+  // void _showOfflineDialog() {
+  //   if (_offlineDialogVisible) return;
 
-    log.w('Showing offline dialog');
+  //   log.w('Showing offline dialog');
 
-    _offlineDialogVisible = true;
+  //   _offlineDialogVisible = true;
 
-    _alertService.showWarningAlert(
-      title: 'No Internet Connection',
-      message: 'You are currently offline. Some features may not work.',
-    );
-  }
+  //   _alertService.showWarningAlert(
+  //     title: 'No Internet Connection',
+  //     message: 'You are currently offline. Some features may not work.',
+  //   );
+  // }
 
-  @protected
-  void _showOnlineDialog() {
-    if (!_offlineDialogVisible) return;
+  // @protected
+  // void _showOnlineDialog() {
+  //   if (!_offlineDialogVisible) return;
 
-    log.i('Showing online dialog');
+  //   log.i('Showing online dialog');
 
-    _offlineDialogVisible = false;
+  //   _offlineDialogVisible = false;
 
-    _alertService.showSuccessAlert(title: 'Connection Restored', message: 'You are back online.');
-  }
+  //   _alertService.showSuccessAlert(title: 'Connection Restored', message: 'You are back online.');
+  // }
 
   Future<void> dispose() async {
     log.i('Disposing InternetConnectivityService');

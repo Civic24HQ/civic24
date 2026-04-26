@@ -2,7 +2,8 @@ import 'dart:async';
 
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
-import 'package:services/services.dart';
+import 'package:services/src/app/app.locator.dart';
+import 'package:services/src/services/feature/notification/local_notification_service.dart';
 import 'package:utils/utils.dart';
 
 /// A service responsible for handling push notifications using Firebase Messaging.

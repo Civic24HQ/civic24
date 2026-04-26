@@ -30,8 +30,7 @@ class _TrendingReportsState extends State<TrendingReports> {
   }
 
   void _onScroll() {
-    if (_controller.position.pixels >
-        _controller.position.maxScrollExtent - 300) {
+    if (_controller.position.pixels > _controller.position.maxScrollExtent - 300) {
       _viewModel.loadMoreTrending(limit: _trendingReportsPageLimit);
     }
   }
@@ -49,14 +48,7 @@ class _TrendingReportsState extends State<TrendingReports> {
 
     if (viewModel.isTrendingInitialLoading()) {
       return CustomScrollView(
-        slivers: [
-          SliverList(
-            delegate: SliverChildBuilderDelegate(
-              (_, __) => const AppReportShimmer(),
-              childCount: 6,
-            ),
-          ),
-        ],
+        slivers: [SliverList(delegate: SliverChildBuilderDelegate((_, __) => const AppReportShimmer(), childCount: 6))],
       );
     }
 
@@ -67,19 +59,14 @@ class _TrendingReportsState extends State<TrendingReports> {
       physics: const BouncingScrollPhysics(),
       controller: _controller,
       slivers: [
-        CupertinoSliverRefreshControl(
-          onRefresh: () =>
-              viewModel.refreshTrending(limit: _trendingReportsPageLimit),
-        ),
+        CupertinoSliverRefreshControl(onRefresh: () => viewModel.refreshTrending(limit: _trendingReportsPageLimit)),
 
         SliverList(
           delegate: SliverChildBuilderDelegate((context, index) {
             return AppReport(
               onTapLike: () => viewModel.likeReport(trendingReports[index]),
-              onTapDislike: () =>
-                  viewModel.dislikeReport(trendingReports[index]),
-              onTapBookmark: () =>
-                  viewModel.bookmarkReport(trendingReports[index]),
+              onTapDislike: () => viewModel.dislikeReport(trendingReports[index]),
+              onTapBookmark: () => viewModel.bookmarkReport(trendingReports[index]),
               onTapComment: viewModel.viewComment,
               report: trendingReports[index],
             );

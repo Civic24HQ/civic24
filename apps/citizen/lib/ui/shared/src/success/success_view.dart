@@ -22,11 +22,7 @@ class SuccessView extends StackedView<SuccessViewModel> {
   final String buttonLabel;
 
   @override
-  Widget builder(
-    BuildContext context,
-    SuccessViewModel viewModel,
-    Widget? child,
-  ) {
+  Widget builder(BuildContext context, SuccessViewModel viewModel, Widget? child) {
     return Scaffold(
       body: SafeArea(
         child: LayoutBuilder(

@@ -43,8 +43,11 @@ app.*.map.json
 /android/app/debug
 /android/app/profile
 /android/app/release
+
+# Ignore Files
 /GoogleService-Info.plist
 /google-services.json
 /ios/Flutter/Debug.xcconfig
 /ios/Flutter/Release.xcconfig
 /ios/Flutter/Staging.xcconfig
+**/ios/config/

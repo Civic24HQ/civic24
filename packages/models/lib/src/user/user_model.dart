@@ -1,5 +1,6 @@
 // import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:models/src/user/notification_preferences.dart';
 import 'package:models/utils/serializable_type.dart';
 import 'package:models/utils/timestamp_converter.dart';
 
@@ -44,6 +45,15 @@ abstract class UserModel with _$UserModel, SerializeJson {
     /// And the values of each key will be the corresponding
     /// FCM token of the user's device.
     @Default({}) Map<String, dynamic> fcmTokens,
+
+    /// Tracks when each FCM token key was last active.
+    /// Key matches the fcmTokens key; value is an ISO-8601 string.
+    /// Used by the Cloud Function to skip pushes to stale devices.
+    @Default({}) Map<String, dynamic> fcmTokenLastActiveAt,
+
+    /// Controls which push + in-app notification types this user receives.
+    /// Defaults to all notifications enabled.
+    @Default(NotificationPreferences()) NotificationPreferences notificationPreferences,
 
     /// The document reference path, only be
     /// parsed when converted from Firestore
@@ -102,5 +112,5 @@ extension UserModelExtension on UserModel {
   bool get isAdmin => userType == UserType.admin;
 
   /// Returns true if the user account is disabled.
-  bool get isDisabled => account.disableReason.isNotEmpty && !account.isDisabled;
+  bool get isDisabled => account.isDisabled;
 }

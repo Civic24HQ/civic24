@@ -2,6 +2,7 @@ import 'package:components/components.dart';
 import 'package:flutter/material.dart';
 import 'package:solar_icons/solar_icons.dart';
 import 'package:styles/styles.dart';
+import 'package:utils/utils.dart';
 
 class SocialActionButton extends StatelessWidget {
   const SocialActionButton._({
@@ -164,7 +165,7 @@ class SocialActionButton extends StatelessWidget {
         if (count != null) SizedBox(width: gap),
         if (count != null)
           Text(
-            count!.toString(),
+            count!.toCompactCount,
             style: context.bodyMedium?.copyWith(color: isActive ? resolvedActive : resolvedInactive),
           ),
       ],
