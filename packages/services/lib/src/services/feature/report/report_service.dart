@@ -22,22 +22,6 @@ import 'package:stacked/stacked.dart';
 import 'package:utils/utils.dart';
 
 /// The central service responsible for all report-related data operations.
-///
-/// This service manages the full lifecycle of civic reports, including:
-///
-///  * **Feed management** — Loading, paginating and refreshing multiple
-///    concurrent feed types (all, trending, category-specific, user reports
-///    and user bookmarks).
-///  * **Real-time synchronization** — Maintaining Firestore snapshot listeners
-///    that push live updates to active feeds.
-///  * **Optimistic UI updates** — Providing instant visual feedback for user
-///    interactions (like, dislike, bookmark) with automatic rollback on failure.
-///  * **Offline caching** — Persisting feed data to local storage (Hive) for
-///    instant display on app launch and offline resilience.
-///  * **Interaction hydration** — Merging per-user interaction state
-///    (likes, dislikes, bookmarks) from the user's Firestore subcollection
-///    into the shared report documents.
-///
 class ReportService extends FirestoreCollectionService<Report>
     with ListenableServiceMixin, FirebaseStorageService
     implements IReportFeedService, IReportWriterService, IReportInteractionService {
@@ -45,18 +29,10 @@ class ReportService extends FirestoreCollectionService<Report>
   @protected
   final log = getLogger('ReportService');
 
-  /// Service for displaying user-facing error alerts and notifications.
   final _alertService = serviceLocator<AlertService>();
-
-  /// Hive-backed cache service for persisting feed data to local storage.
   final _reportCache = serviceLocator<ReportCacheService>();
-
-  /// Provides access to the current authenticated user's ID and profile.
   final _userStorageService = serviceLocator<UserStorageService>();
-
-  /// Monitors network connectivity to enable offline-first feed loading.
   final _internetConnectivityService = serviceLocator<InternetConnectivityService>();
-
   final _remoteConfigService = serviceLocator<RemoteConfigService>();
   final _notificationService = serviceLocator<NotificationService>();
 
@@ -91,14 +67,6 @@ class ReportService extends FirestoreCollectionService<Report>
     await loadFeedsFromCache();
   }
 
-  /// Builds a unique string key that identifies a specific feed.
-  ///
-  /// For category feeds, the key includes the category name to ensure
-  /// each category maintains independent state (e.g. `"category_road"`,
-  /// `"category_waste"`). All other feeds use the enum name directly
-  /// Returns the display name of the currently signed-in user,
-  /// read from the locally cached [UserModel]. Falls back to 'Someone'
-  /// if the cache is unavailable (e.g. on first launch before sync).
   String _actorDisplayName() {
     try {
       return _userStorageService.getCurrentUserModel.displayName;
@@ -107,7 +75,7 @@ class ReportService extends FirestoreCollectionService<Report>
     }
   }
 
-  /// (e.g. `"all"`, `"trending"`, `"userReports"`).
+  /// Builds a unique string key that identifies a specific feed.
   @protected
   String _feedKey(ReportFeedType type, {CategoryType? category}) {
     if (type == ReportFeedType.category) {
@@ -116,18 +84,26 @@ class ReportService extends FirestoreCollectionService<Report>
     return type.name;
   }
 
-  /// Returns the [FeedPageState] for the given [key], creating one
-  /// lazily if it does not yet exist.
-  ///
-  /// When a new state is created, a fresh map reference is assigned
-  /// to [_feedStates] to ensure the [ReactiveValue] detects the change
-  /// and triggers downstream rebuilds.
+  void _evictStaleFeedStates() {
+    const maxFeedStates = 12;
+    final map = _feedStates.value;
+    if (map.length <= maxFeedStates) return;
+
+    final evictable = map.keys.where((k) => !_activeRealtimeFeeds.contains(k)).toList();
+
+    final toRemove = evictable.take(map.length - maxFeedStates);
+    final newMap = {...map}..removeWhere((k, _) => toRemove.contains(k));
+    _feedStates.value = newMap;
+  }
+
+  /// Returns the [FeedPageState] for the given [key], and it creates one if it does not yet exist.
   @protected
   FeedPageState _stateFor(String key) {
     final map = _feedStates.value;
 
     if (!map.containsKey(key)) {
       final newMap = {...map};
+      _evictStaleFeedStates();
       newMap[key] = FeedPageState();
       _feedStates.value = newMap;
     }
@@ -136,47 +112,27 @@ class ReportService extends FirestoreCollectionService<Report>
   }
 
   /// Returns the loaded report items for the specified feed.
-  ///
-  /// Returns an empty list if the feed has not been initialized yet.
-  /// This is the primary accessor used by ViewModels to bind feed data
-  /// to the UI.
   @override
   List<Report> getFeedItems(ReportFeedType type, {CategoryType? category}) =>
       _feedStates.value[_feedKey(type, category: category)]?.items ?? [];
 
   /// Checks whether the first page of the specified feed is currently loading.
-  ///
-  /// Used by the UI to show a full-screen loading indicator or skeleton
-  /// shimmer on initial feed display.
   @override
   bool isInitialReportLoading(ReportFeedType type, {CategoryType? category}) =>
       _feedStates.value[_feedKey(type, category: category)]?.isLoadingFirstPage ?? false;
 
   /// Checks whether a subsequent page is currently being fetched for the
   /// specified feed.
-  ///
-  /// Used by the UI to show a bottom-of-list loading indicator during
-  /// infinite scroll pagination.
   @override
   bool isPaginationLoading(ReportFeedType type, {CategoryType? category}) =>
       _feedStates.value[_feedKey(type, category: category)]?.isLoadingNextPage ?? false;
 
-  /// Whether more pages are available for the specified feed.
-  ///
-  /// Returns `true` by default for feeds that have not been loaded yet.
-  /// Once a fetch returns fewer documents than the page limit, this is
-  /// set to `false`, disabling further pagination requests.
+  /// Checks whether more pages are available for the specified feed.
   @override
   bool hasMore(ReportFeedType type, {CategoryType? category}) =>
       _feedStates.value[_feedKey(type, category: category)]?.hasMore ?? true;
 
   /// Commits an in-place mutation of feed state to the reactive system.
-  ///
-  /// Because [ReactiveValue] uses reference equality to detect changes,
-  /// mutating the existing map in-place would not trigger a rebuild.
-  /// This method creates a shallow copy of the map via the spread
-  /// operator (`{...map}`) to produce a new reference, then calls
-  /// [notifyListeners] to push the update to all dependent ViewModels.
   void _commitFeedMutation() {
     _feedStates.value = {..._feedStates.value};
     notifyListeners();
@@ -184,13 +140,6 @@ class ReportService extends FirestoreCollectionService<Report>
 
   /// Fetches a paginated snapshot of the current user's bookmarked
   /// interaction documents.
-  ///
-  /// Queries the `users/{userId}/interactions` subcollection for
-  /// documents where `hasBookmarked == true`, ordered by `updatedAt`
-  /// descending. Supports cursor-based pagination via [lastDoc].
-  ///
-  /// The returned document IDs correspond to report IDs, which are
-  /// then used to fetch the actual report documents in a second query.
   @protected
   Future<QuerySnapshot<Map<String, dynamic>>> _getBookmarkedInteractionSnapshot({
     QueryDocumentSnapshot<Map<String, dynamic>>? lastDoc,
@@ -212,33 +161,22 @@ class ReportService extends FirestoreCollectionService<Report>
   }
 
   /// Loads the first page of a feed using a cache-first strategy.
-  ///
-  /// This method implements the following loading flow:
-  ///  1. If items are already loaded, returns immediately (idempotent).
-  ///  2. Attempts to load from the local Hive cache for instant display.
-  ///  3. If no cache exists, sets [FeedPageState.isLoadingFirstPage] to
-  ///     trigger a loading indicator in the UI.
-  ///  4. If the device is offline, stops and uses cached data only.
-  ///  5. Fetches fresh data from Firestore, hydrates with user
-  ///     interactions, updates state, and persists to cache.
-  ///
-  /// For [ReportFeedType.userBookmarks], delegates to
-  /// [loadInitialUserBookmarks] since bookmarks require a different
-  /// two-step fetching strategy.
-  ///
-  /// The [limit] parameter controls the page size (defaults to
-  /// [kPageLimit]).
   @override
   Future<void> loadInitialFeed(ReportFeedType type, {CategoryType? category, int limit = kPageLimit}) async {
     if (type == ReportFeedType.userBookmarks) {
       await loadInitialUserBookmarks(limit: limit);
       return;
     }
-    final userId = _userStorageService.userId!;
+    final userId = _userStorageService.userId;
+    if (userId == null) return;
     final key = _feedKey(type, category: category);
     final state = _stateFor(key);
 
-    if (state.items.isNotEmpty) return;
+    const staleDuration = Duration(minutes: 5);
+
+    final isStale = state.lastFetchedAt == null || DateTime.now().difference(state.lastFetchedAt!) > staleDuration;
+
+    if (state.items.isNotEmpty && !isStale) return;
 
     final cached = _reportCache.loadFeed(key);
 
@@ -266,7 +204,8 @@ class ReportService extends FirestoreCollectionService<Report>
         ..items = hydrated
         ..lastDocument = snapshot.docs.isNotEmpty ? snapshot.docs.last : null
         ..hasMore = snapshot.docs.length == limit
-        ..isLoadingFirstPage = false;
+        ..isLoadingFirstPage = false
+        ..lastFetchedAt = DateTime.now();
 
       _commitFeedMutation();
 
@@ -278,23 +217,15 @@ class ReportService extends FirestoreCollectionService<Report>
   }
 
   /// Loads the first page of the user's bookmarked reports.
-  ///
-  /// Unlike other feeds, bookmarks require a **two-step fetch**:
-  ///  1. Query `users/{userId}/interactions` for documents where
-  ///     `hasBookmarked == true`, ordered by `updatedAt` descending.
-  ///  2. Batch-fetch the corresponding report documents from the
-  ///     `reports` collection using `whereIn` on the document IDs.
-  ///
-  /// The results are ordered to match the interaction query order
-  /// (most recently bookmarked first), then hydrated with user
-  /// interaction state and persisted to the local cache.
-  ///
-  /// Returns early if items are already loaded (idempotent).
   Future<void> loadInitialUserBookmarks({int limit = kPageLimit}) async {
     final key = _feedKey(ReportFeedType.userBookmarks);
     final state = _stateFor(key);
 
-    if (state.items.isNotEmpty) return;
+    const staleDuration = Duration(minutes: 5);
+
+    final isStale = state.lastFetchedAt == null || DateTime.now().difference(state.lastFetchedAt!) > staleDuration;
+
+    if (state.items.isNotEmpty && !isStale) return;
 
     state.isLoadingFirstPage = true;
     _commitFeedMutation();
@@ -329,7 +260,8 @@ class ReportService extends FirestoreCollectionService<Report>
         ..items = hydrated
         ..isLoadingFirstPage = false
         ..hasMore = interactionSnapshot.docs.length == limit
-        ..lastDocument = interactionSnapshot.docs.isNotEmpty ? interactionSnapshot.docs.last : null;
+        ..lastDocument = interactionSnapshot.docs.isNotEmpty ? interactionSnapshot.docs.last : null
+        ..lastFetchedAt = DateTime.now();
 
       _commitFeedMutation();
 
@@ -341,26 +273,12 @@ class ReportService extends FirestoreCollectionService<Report>
   }
 
   /// Removes a report from the specified feed's in-memory item list.
-  ///
-  /// Used by real-time listeners when a document is removed from a
-  /// query result (e.g. a report no longer matches the category filter
-  /// or was deleted).
   void _removeFromFeed({required ReportFeedType type, required String reportId, CategoryType? category}) {
     final state = _stateFor(_feedKey(type, category: category));
     state.items.removeWhere((r) => r.reportData.reportId == reportId);
   }
 
   /// Processes incoming real-time document changes for a feed.
-  ///
-  /// This is the core handler for Firestore snapshot listener events.
-  /// For each document change in the [snapshot], it:
-  ///  * **Added** — Injects the new report into the feed via
-  ///    [_injectIntoFeed], maintaining sort order.
-  ///  * **Modified** — Updates the report across all feeds via
-  ///    [_updateReportEverywhere], then reconciles trending and
-  ///    category placement.
-  ///  * **Removed** — Removes the report from the specific feed.
-  ///
   Future<void> _handleRealtimeChanges(
     QuerySnapshot<Report> snapshot,
     ReportFeedType type,
@@ -369,7 +287,8 @@ class ReportService extends FirestoreCollectionService<Report>
     if (_stateFor(_feedKey(type, category: category)).items.isNotEmpty && snapshot.metadata.isFromCache) {
       return;
     }
-    final userId = _userStorageService.userId!;
+    final userId = _userStorageService.userId;
+    if (userId == null) return;
 
     final changedReports = snapshot.docChanges.where((c) => c.doc.data() != null).map((c) => c.doc.data()!).toList();
 
@@ -405,15 +324,6 @@ class ReportService extends FirestoreCollectionService<Report>
   }
 
   /// Starts a real-time Firestore snapshot listener for the specified feed.
-  ///
-  /// The listener monitors the feed's Firestore query for document
-  /// additions, modifications, and removals, and automatically updates
-  /// the in-memory feed state via [_handleRealtimeChanges].
-  ///
-  /// This method is **idempotent** — calling it multiple times for the
-  /// same feed will not create duplicate listeners. Active listeners
-  /// are tracked in [_activeRealtimeFeeds].
-  ///
   @override
   Future<void> startRealtimeFeed(ReportFeedType type, {CategoryType? category}) async {
     if (type == ReportFeedType.userBookmarks) {
@@ -437,16 +347,6 @@ class ReportService extends FirestoreCollectionService<Report>
   }
 
   /// Starts a real-time listener for the user's bookmarked reports.
-  ///
-  /// Listens to the `users/{userId}/interactions` subcollection filtered
-  /// by `hasBookmarked == true`. When a new bookmark is added, it fetches
-  /// the corresponding report document and injects it into the bookmarks
-  /// feed. When a bookmark is removed, the report is removed from the
-  /// feed.
-  ///
-  /// This is separate from [startRealtimeFeed] because bookmarks are
-  /// tracked in the user's subcollection rather than the reports
-  /// collection itself.
   Future<void> startRealtimeUserBookmarks() async {
     final key = _feedKey(ReportFeedType.userBookmarks);
 
@@ -462,30 +362,41 @@ class ReportService extends FirestoreCollectionService<Report>
         .where('hasBookmarked', isEqualTo: true)
         .snapshots()
         .listen((snapshot) async {
+          if (snapshot.metadata.isFromCache) return;
+
+          final addedIds = snapshot.docChanges
+              .where((c) => c.type == DocumentChangeType.added)
+              .map((c) => c.doc.id)
+              .where((id) => !state.items.any((r) => r.reportData.reportId == id))
+              .toList();
+
           for (final change in snapshot.docChanges) {
-            if (snapshot.metadata.isFromCache) return;
-            final reportId = change.doc.id;
+            if (change.type == DocumentChangeType.removed) {
+              _removeFromFeed(type: ReportFeedType.userBookmarks, reportId: change.doc.id);
+            }
+          }
 
-            switch (change.type) {
-              case DocumentChangeType.added:
-                final exists = state.items.any((r) => r.reportData.reportId == reportId);
+          if (addedIds.isNotEmpty) {
+            const chunkSize = 30;
+            final chunks = <List<String>>[];
+            for (var i = 0; i < addedIds.length; i += chunkSize) {
+              chunks.add(addedIds.sublist(i, (i + chunkSize).clamp(0, addedIds.length)));
+            }
 
-                if (exists) break;
+            final fetchedReports = <Report>[];
+            for (final chunk in chunks) {
+              final snap = await FirebaseFirestore.instance
+                  .collection(collectionPath)
+                  .where(FieldPath.documentId, whereIn: chunk)
+                  .get();
+              fetchedReports.addAll(snap.docs.map((d) => convertFromJson(d.data())));
+            }
 
-                final reportDoc = await FirebaseFirestore.instance.collection(collectionPath).doc(reportId).get();
-
-                if (!reportDoc.exists) break;
-
-                final report = convertFromJson(reportDoc.data()!);
-
-                final hydrated = await _interactionHydrator.hydrate([report], _userStorageService.userId!);
-
-                _injectIntoFeed(type: ReportFeedType.userBookmarks, report: hydrated.first);
-
-              case DocumentChangeType.removed:
-                _removeFromFeed(type: ReportFeedType.userBookmarks, reportId: reportId);
-
-              case DocumentChangeType.modified:
+            if (fetchedReports.isNotEmpty) {
+              final hydrated = await _interactionHydrator.hydrate(fetchedReports, _userStorageService.userId!);
+              for (final report in hydrated) {
+                _injectIntoFeed(type: ReportFeedType.userBookmarks, report: report);
+              }
             }
           }
 
@@ -496,13 +407,6 @@ class ReportService extends FirestoreCollectionService<Report>
   }
 
   /// Stops the real-time Firestore listener for the specified feed.
-  ///
-  /// Cancels the [StreamSubscription] and removes the feed from the
-  /// [_activeRealtimeFeeds] tracking set. This is critical for preventing
-  /// memory leaks and reducing unnecessary Firestore reads when a feed
-  /// tab is no longer visible.
-  ///
-  /// No-ops if no active listener exists for the given feed.
   @override
   Future<void> stopRealtimeFeed(ReportFeedType type, {CategoryType? category}) async {
     final key = _feedKey(type, category: category);
@@ -522,11 +426,6 @@ class ReportService extends FirestoreCollectionService<Report>
 
   /// Loads the next page of data for the specified feed using
   /// cursor-based pagination.
-  ///
-  /// Uses the [FeedPageState.lastDocument] as a Firestore cursor via
-  /// `startAfterDocument` to fetch the next batch of documents. New
-  /// reports are deduplicated against existing items before being
-  /// appended to the feed.
   @override
   Future<void> loadMoreFeed(ReportFeedType type, {CategoryType? category, int limit = kPageLimit}) async {
     if (type == ReportFeedType.userBookmarks) {
@@ -535,7 +434,8 @@ class ReportService extends FirestoreCollectionService<Report>
     }
     final key = _feedKey(type, category: category);
     final state = _stateFor(key);
-    final userId = _userStorageService.userId!;
+    final userId = _userStorageService.userId;
+    if (userId == null) return;
 
     if (state.isLoadingNextPage || !state.hasMore || state.lastDocument == null) return;
 
@@ -583,36 +483,42 @@ class ReportService extends FirestoreCollectionService<Report>
     state.isLoadingNextPage = true;
     _commitFeedMutation();
 
-    final interactionSnapshot = await _getBookmarkedInteractionSnapshot(
-      lastDoc: state.lastDocument as QueryDocumentSnapshot<Map<String, dynamic>>?,
-      limit: limit,
-    );
+    try {
+      final interactionSnapshot = await _getBookmarkedInteractionSnapshot(
+        lastDoc: state.lastDocument as QueryDocumentSnapshot<Map<String, dynamic>>?,
+        limit: limit,
+      );
 
-    final reportIds = interactionSnapshot.docs.map((d) => d.id).toList();
+      final reportIds = interactionSnapshot.docs.map((d) => d.id).toList();
 
-    final reportSnapshot = await FirebaseFirestore.instance
-        .collection(collectionPath)
-        .where(FieldPath.documentId, whereIn: reportIds)
-        .get();
+      final reportSnapshot = await FirebaseFirestore.instance
+          .collection(collectionPath)
+          .where(FieldPath.documentId, whereIn: reportIds)
+          .get();
 
-    final reportMap = {for (final doc in reportSnapshot.docs) doc.id: convertFromJson(doc.data())};
+      final reportMap = {for (final doc in reportSnapshot.docs) doc.id: convertFromJson(doc.data())};
 
-    final orderedReports = reportIds.where(reportMap.containsKey).map((id) => reportMap[id]!).toList();
+      final orderedReports = reportIds.where(reportMap.containsKey).map((id) => reportMap[id]!).toList();
 
-    final hydrated = await _interactionHydrator.hydrate(orderedReports, _userStorageService.userId!);
+      final hydrated = await _interactionHydrator.hydrate(orderedReports, _userStorageService.userId!);
 
-    final existingIds = state.items.map((r) => r.reportData.reportId).toSet();
+      final existingIds = state.items.map((r) => r.reportData.reportId).toSet();
 
-    state.items.addAll(hydrated.where((r) => !existingIds.contains(r.reportData.reportId)));
+      state.items.addAll(hydrated.where((r) => !existingIds.contains(r.reportData.reportId)));
 
-    state
-      ..isLoadingNextPage = false
-      ..hasMore = interactionSnapshot.docs.length == limit
-      ..lastDocument = interactionSnapshot.docs.isNotEmpty ? interactionSnapshot.docs.last : state.lastDocument;
+      state
+        ..isLoadingNextPage = false
+        ..hasMore = interactionSnapshot.docs.length == limit
+        ..lastDocument = interactionSnapshot.docs.isNotEmpty ? interactionSnapshot.docs.last : state.lastDocument;
 
-    _commitFeedMutation();
+      _commitFeedMutation();
 
-    await _reportCache.saveFeed(key, state.items);
+      await _reportCache.saveFeed(key, state.items);
+    } catch (e, stack) {
+      log.e('Failed to load more bookmarks', error: e, stackTrace: stack);
+      state.isLoadingNextPage = false;
+      _commitFeedMutation();
+    }
   }
 
   /// Refreshes the specified feed by resetting pagination state and
@@ -660,22 +566,6 @@ class ReportService extends FirestoreCollectionService<Report>
 
   /// Inserts or updates a report in the specified feed, maintaining
   /// the feed's sort order and preventing unbounded growth.
-  ///
-  /// This method:
-  ///  1. **Deduplicates** — Removes any existing copy of the report
-  ///     to prevent duplicates.
-  ///  2. **Inserts at position 0** — Places the report at the top
-  ///     initially.
-  ///  3. **Re-sorts** — Applies the feed-specific sort comparator to
-  ///     move the report to its correct position:
-  ///     - All/Category/UserReports: by `createdAt` descending.
-  ///     - Trending: by `likeCount` descending, then `updatedAt`.
-  ///     - Bookmarks: by `updatedAt` descending.
-  ///  4. **Caps at 100 items** — Prevents unbounded memory growth
-  ///     from real-time listener additions.
-  ///
-  /// This approach avoids O(n) insertion at a calculated index by
-  /// leveraging Dart's efficient `sort` on nearly-sorted lists.
   @protected
   void _injectIntoFeed({required ReportFeedType type, required Report report, CategoryType? category}) {
     final state = _stateFor(_feedKey(type, category: category));
@@ -712,14 +602,6 @@ class ReportService extends FirestoreCollectionService<Report>
 
   /// Replaces an existing report with [updated] across **all** active
   /// feeds.
-  ///
-  /// Iterates through every [FeedPageState] in [_feedStates] and
-  /// performs an in-place replacement wherever a report with the same
-  /// ID is found. This ensures data consistency when a report is
-  /// modified (e.g. via a real-time update or optimistic toggle).
-  ///
-  /// Does not call [_commitFeedMutation] — the caller is responsible
-  /// for committing the mutation after all updates are applied.
   @protected
   void _updateReportEverywhere(Report updated) {
     final id = updated.reportData.reportId;
@@ -732,11 +614,6 @@ class ReportService extends FirestoreCollectionService<Report>
 
   /// Checks if a report qualifies for the trending feed and injects
   /// it if it does.
-  ///
-  /// A report qualifies for trending when its [ReportData.likeCount]
-  /// meets the threshold defined by [_qualifiesForTrending] (currently
-  /// >= 5 likes). If the report qualifies but is not yet in the
-  /// trending feed, it is injected via [_injectIntoFeed].
   @protected
   void _reconcileTrending(Report report) {
     final state = _stateFor(_feedKey(ReportFeedType.trending));
@@ -751,13 +628,6 @@ class ReportService extends FirestoreCollectionService<Report>
   }
 
   /// Reconciles a report's presence across all active category feeds.
-  ///
-  /// Iterates through all feed states whose keys start with
-  /// `"category_"` and:
-  ///  * **Injects** the report if it belongs to the category but is
-  ///    not yet in the feed.
-  ///  * **Removes** the report if it no longer belongs to the category
-  ///    but is still in the feed.
   @protected
   void _reconcileCategories(Report report) {
     final id = report.reportData.reportId;
@@ -823,7 +693,7 @@ class ReportService extends FirestoreCollectionService<Report>
         await _reportCache.saveFeed(key, _stateFor(key).items);
       }
 
-      // Notify the author their report was submitted — best-effort, never blocks
+      // Notify the user their report was submitted
       unawaited(_notificationService.onReportCreated(report: newReport));
     } catch (e) {
       log.e('Failed to create report, reverting', error: e);
@@ -1127,8 +997,7 @@ class ReportService extends FirestoreCollectionService<Report>
     await _saveReportToAllFeedCaches(updated.reportData.reportId);
   }
 
-  /// Performs a full optimistic like cycle with server persistence
-  /// and automatic rollback on failure
+  /// Performs a full optimistic like cycle with server persistence and automatic rollback on failure
   @override
   Future<void> likeReportOptimistic(Report report, String userId) async {
     final reportId = report.reportData.reportId;
@@ -1137,7 +1006,6 @@ class ReportService extends FirestoreCollectionService<Report>
 
     _pendingInteractionReportIds.add(reportId);
 
-    // Capture pre-toggle state before optimistic update mutates it
     final isAddingLike = !report.hasLiked;
 
     await optimisticToggleLike(report);
@@ -1145,8 +1013,6 @@ class ReportService extends FirestoreCollectionService<Report>
     try {
       await toggleLike(reportId: reportId, userId: userId).timeout(const Duration(seconds: 10));
 
-      // Only notify the report author when ADDING a like — not when removing one.
-      // Self-like guard is inside NotificationService.onReportLiked.
       if (isAddingLike) {
         final actorName = _actorDisplayName();
         unawaited(_notificationService.onReportLiked(report: report, actorUserId: userId, actorName: actorName));
@@ -1159,8 +1025,7 @@ class ReportService extends FirestoreCollectionService<Report>
     }
   }
 
-  /// Performs a full optimistic dislike cycle with server persistence
-  /// and automatic rollback on failure.
+  /// Performs a full optimistic dislike cycle with server persistence and automatic rollback on failure.
   @override
   Future<void> dislikeReportOptimistic(Report report, String userId) async {
     final reportId = report.reportData.reportId;
@@ -1169,7 +1034,6 @@ class ReportService extends FirestoreCollectionService<Report>
 
     _pendingInteractionReportIds.add(reportId);
 
-    // Capture pre-toggle state before optimistic update mutates it
     final isAddingDislike = !report.hasDisliked;
 
     await optimisticToggleDislike(report);
@@ -1177,8 +1041,6 @@ class ReportService extends FirestoreCollectionService<Report>
     try {
       await toggleDislike(reportId: reportId, userId: userId).timeout(const Duration(seconds: 10));
 
-      // Only notify the report author when ADDING a dislike — not when removing one.
-      // Self-dislike guard is inside NotificationService.onReportDisliked.
       if (isAddingDislike) {
         final actorName = _actorDisplayName();
         unawaited(_notificationService.onReportDisliked(report: report, actorUserId: userId, actorName: actorName));
@@ -1191,8 +1053,7 @@ class ReportService extends FirestoreCollectionService<Report>
     }
   }
 
-  /// Performs a full optimistic bookmark cycle with server persistence
-  /// and automatic rollback on failure
+  /// Performs a full optimistic bookmark cycle with server persistence and automatic rollback on failure
   @override
   Future<void> bookmarkReportOptimistic(Report report, String userId) async {
     final reportId = report.reportData.reportId;
@@ -1213,12 +1074,11 @@ class ReportService extends FirestoreCollectionService<Report>
     }
   }
 
-  /// Loads all feed data from the local Hive cache and hydrates
-  /// each feed with the current user's interaction state.
+  /// Loads all feed data from the local Hive cache and hydrates each feed with the current user's interaction state.
   Future<void> loadFeedsFromCache() async {
-    // Load ALL feed
     final userId = _userStorageService.userId!;
 
+    // Load ALL feed
     final allKey = _feedKey(ReportFeedType.all);
     final allCached = _reportCache.loadFeed(allKey);
 
@@ -1271,8 +1131,7 @@ class ReportService extends FirestoreCollectionService<Report>
     notifyListeners();
   }
 
-  /// Cancels all active real-time Firestore listeners across all
-  /// feeds.
+  /// Cancels all active real-time Firestore listeners across all feeds.
   Future<void> stopAllRealtimeFeeds() async {
     for (final key in _activeRealtimeFeeds.toList()) {
       final state = _feedStates.value[key];
@@ -1282,6 +1141,9 @@ class ReportService extends FirestoreCollectionService<Report>
 
     _activeRealtimeFeeds.clear();
   }
+
+  /// Fetches a single [Report] directly from Firestore by its document ID.
+  Future<Report?> getReportById(String reportId) => super.get(reportId);
 
   Future<void> dispose() async {
     log.i('Disposing ReportService and cancelling all feed subscriptions');

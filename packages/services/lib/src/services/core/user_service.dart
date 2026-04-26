@@ -1,5 +1,7 @@
 import 'dart:async';
+import 'dart:io';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:constants/constants.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
@@ -7,6 +9,8 @@ import 'package:models/models.dart';
 import 'package:services/src/app/app.locator.dart';
 import 'package:services/src/services/core/authentication_service.dart';
 import 'package:services/src/services/core/remote_config_service.dart';
+import 'package:services/src/services/feature/notification/notification_service.dart';
+import 'package:services/src/services/feature/notification/push_notification_service.dart';
 import 'package:services/src/services/feature/report/report_service.dart';
 import 'package:services/src/services/firebase/firestore_collection_service.dart';
 import 'package:services/src/services/local_storage/src/settings_storage_service.dart';
@@ -28,6 +32,10 @@ class UserService extends FirestoreCollectionService<UserModel> with ListenableS
   final _reportService = serviceLocator<ReportService>();
   final _userStorageService = serviceLocator<UserStorageService>();
   final _remoteConfigService = serviceLocator<RemoteConfigService>();
+  final _notificationService = serviceLocator<NotificationService>();
+  final _pushNotificationService = serviceLocator<PushNotificationService>();
+
+  static const _tokenTtlDays = 90;
 
   @override
   String get collectionPath => FirestoreCollections.users;
@@ -122,6 +130,9 @@ class UserService extends FirestoreCollectionService<UserModel> with ListenableS
         ..d('User session data stored locally: ${_userStorageService.getCurrentUserModel}');
       unawaited(_subscribeToUserStream());
       unawaited(syncExternalServices());
+      unawaited(_notificationService.startListening());
+      unawaited(registerFcmToken(userDoc.id));
+      unawaited(_pruneExpiredFcmTokens(userDoc));
     } else {
       log.w('User //${firebaseUser.uid}// document not found');
       _currentUser.value = null;
@@ -158,14 +169,14 @@ class UserService extends FirestoreCollectionService<UserModel> with ListenableS
       }
 
       if (update.account.mustAuthenticate) {
-        log.w('User must authenticate');
-        // TODO(Civic24): Handle user must authenticate
+        log.w('User must reauthenticate: Signing out');
+        unawaited(_authService.signOut());
         return;
       }
 
       if (update.account.isDisabled) {
-        log.w('User account is disabled');
-        // TODO(Civic24): Handle user account disabled
+        log.w('User account is disabled: Signing out');
+        unawaited(_authService.signOut());
         return;
       }
 
@@ -248,6 +259,64 @@ class UserService extends FirestoreCollectionService<UserModel> with ListenableS
     await _reportService.dispose();
     await _remoteConfigService.dispose();
     log.i('User session data cleared successfully');
+  }
+
+  /// Saves the current device's FCM token to Firestore and stamps
+  /// `fcmTokenLastActiveAt` with the current server timestamp.
+  /// The key format is `<platform>.<deviceIdentifier>` (e.g. `android.Pixel5`).
+  Future<void> registerFcmToken(String userId) async {
+    try {
+      final token = await _pushNotificationService.getFcmToken;
+      if (token == null) return;
+
+      final platform = kIsWeb
+          ? 'web'
+          : Platform.isAndroid
+          ? 'android'
+          : 'ios';
+      // Use the token's last 8 chars as a unique-enough device key.
+      final tokenKey = '$platform.${token.substring(token.length - 8)}';
+
+      final userRef = collectionReference.doc(userId);
+      await userRef.update({
+        'fcmTokens.$tokenKey': token,
+        'fcmTokenLastActiveAt.$tokenKey': FieldValue.serverTimestamp(),
+      });
+      log.d('FCM token registered: $tokenKey');
+    } catch (e) {
+      log.w('registerFcmToken failed (best-effort): $e');
+    }
+  }
+
+  /// Removes FCM token entries that have not been active within [_tokenTtlDays].
+  /// Runs on every login as a background fire-and-forget operation.
+  Future<void> _pruneExpiredFcmTokens(UserModel userDoc) async {
+    try {
+      final cutoff = DateTime.now().subtract(const Duration(days: _tokenTtlDays));
+      final updates = <String, dynamic>{};
+
+      for (final entry in userDoc.fcmTokenLastActiveAt.entries) {
+        DateTime? lastActive;
+        // The value stored by FieldValue.serverTimestamp() deserialises
+        // as a Firestore Timestamp; we convert via toDate().
+        final raw = entry.value;
+        if (raw is Timestamp) {
+          lastActive = raw.toDate();
+        } else if (raw is String) {
+          lastActive = DateTime.tryParse(raw);
+        }
+        if (lastActive != null && lastActive.isBefore(cutoff)) {
+          updates['fcmTokens.${entry.key}'] = FieldValue.delete();
+          updates['fcmTokenLastActiveAt.${entry.key}'] = FieldValue.delete();
+        }
+      }
+
+      if (updates.isEmpty) return;
+      await collectionReference.doc(userDoc.id).update(updates);
+      log.d('Pruned ${updates.length ~/ 2} expired FCM tokens');
+    } catch (e) {
+      log.w('_pruneExpiredFcmTokens failed (best-effort): $e');
+    }
   }
 
   @visibleForTesting

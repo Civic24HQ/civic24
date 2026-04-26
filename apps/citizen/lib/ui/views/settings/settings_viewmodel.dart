@@ -19,6 +19,7 @@ class SettingsViewModel extends ReactiveViewModel {
   final _userService = locator<UserService>();
   final _analyticsService = locator<AnalyticsService>();
   final _appInfoService = locator<AppInfoService>();
+  final _notificationService = locator<NotificationService>();
 
   @override
   List<ListenableServiceMixin> get listenableServices => [_userService];
@@ -75,6 +76,7 @@ class SettingsViewModel extends ReactiveViewModel {
       _log.e('Error signing out: $e');
     } finally {
       await _authService.signOut();
+      await _notificationService.stopListening();
       _log.i('Logged out successfully');
       _dialogService.completeDialog(DialogResponse(confirmed: true));
       await _navigationService.clearStackAndShow(LoginViewRoute());

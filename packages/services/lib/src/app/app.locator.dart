@@ -1,5 +1,5 @@
-// dart format width=80
 // GENERATED CODE - DO NOT MODIFY BY HAND
+// dart format width=80
 
 // **************************************************************************
 // StackedLocatorGenerator
@@ -17,14 +17,15 @@ import '../services/core/authentication_service.dart';
 import '../services/core/cloudinary_storage_service.dart';
 import '../services/core/crashlytics_service.dart';
 import '../services/core/internet_connectivity_service.dart';
-import '../services/core/local_notification_service.dart';
 import '../services/core/location_service.dart';
 import '../services/core/media_service.dart';
 import '../services/core/permission_service.dart';
-import '../services/core/push_notification_service.dart';
 import '../services/core/remote_config_service.dart';
 import '../services/core/session_service.dart';
 import '../services/core/user_service.dart';
+import '../services/feature/notification/local_notification_service.dart';
+import '../services/feature/notification/notification_service.dart';
+import '../services/feature/notification/push_notification_service.dart';
 import '../services/feature/report/report_service.dart';
 import '../services/feature/url_launcher_service.dart';
 import '../services/local_storage/src/report_cache_service.dart';
@@ -65,4 +66,5 @@ Future<void> setupServiceLocator({
   serviceLocator.registerLazySingleton(() => LocationService());
   serviceLocator.registerLazySingleton(() => AppInfoService());
   serviceLocator.registerLazySingleton(() => AppUpdateService());
+  serviceLocator.registerLazySingleton(() => NotificationService());
 }

@@ -67,18 +67,34 @@ class NotificationView extends StackedView<NotificationViewModel> {
             Expanded(
               child: Padding(
                 padding: AppEdgeInsets.padding8,
-                child: ListView.separated(
-                  itemCount: viewModel.notificationList.length,
-                  itemBuilder: (context, index) {
-                    return AppNotificationTile(
-                      title: viewModel.notificationList[index].title,
-                      description: viewModel.notificationList[index].description,
-                      timestamp: viewModel.notificationList[index].createdAt,
-                      onTap: viewModel.markNotificationAsRead,
-                      hasBeenSeen: viewModel.notificationList[index].hasBeenSeen,
-                    );
+                child: NotificationListener<ScrollEndNotification>(
+                  // Trigger loadMore when the user reaches the bottom
+                  onNotification: (notification) {
+                    if (notification.metrics.extentAfter < 100) {
+                      viewModel.loadMore();
+                    }
+                    return false;
                   },
-                  separatorBuilder: (context, index) => AppSpacing.small,
+                  child: ListView.separated(
+                    itemCount: viewModel.notificationList.length + (viewModel.hasMore ? 1 : 0),
+                    itemBuilder: (context, index) {
+                      // Load-more indicator at the bottom of the list
+                      if (index == viewModel.notificationList.length) {
+                        return const Padding(
+                          padding: EdgeInsets.symmetric(vertical: 16),
+                          child: Center(child: AppBusyIndicator()),
+                        );
+                      }
+                      return AppNotificationTile(
+                        title: viewModel.notificationList[index].title,
+                        description: viewModel.notificationList[index].description,
+                        timestamp: viewModel.notificationList[index].createdAt,
+                        onTap: () => viewModel.markNotificationAsRead(viewModel.notificationList[index]),
+                        hasBeenSeen: viewModel.notificationList[index].hasBeenSeen,
+                      );
+                    },
+                    separatorBuilder: (context, index) => AppSpacing.tiny,
+                  ),
                 ),
               ),
             ),

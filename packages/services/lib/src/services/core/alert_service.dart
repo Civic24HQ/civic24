@@ -15,7 +15,13 @@ class AlertService with ListenableServiceMixin {
   @protected
   final alertListeners = ReactiveList<AlertMixin>();
 
-  void addAlertListener(AlertMixin listener) => alertListeners.add(listener);
+  void addAlertListener(AlertMixin listener) {
+    if (!alertListeners.contains(listener)) alertListeners.add(listener);
+  }
+
+  void removeAlertListener(AlertMixin listener) {
+    alertListeners.remove(listener);
+  }
 
   @protected
   void notifyAlertListeners(AlertModel alertmodel) {

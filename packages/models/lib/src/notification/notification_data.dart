@@ -38,6 +38,18 @@ abstract class NotificationData with _$NotificationData, SerializeJson {
     /// The document reference path, only be
     /// parsed when converted from Firestore
     String? path,
+
+    /// The type of the notification, used for determining the description text and deep linking.
+    @Default(NotificationType.unknown) NotificationType type,
+
+    /// The userId of the person who triggered the action (liker, etc.)
+    String? actorUserId,
+
+    /// Display name of the actor for the description text.
+    String? actorName,
+
+    /// The report this notification is about — used for deep linking.
+    String? reportId,
   }) = _NotificationData;
   const NotificationData._();
 
@@ -62,3 +74,5 @@ abstract class NotificationData with _$NotificationData, SerializeJson {
     updatedAt: DateTime.now(),
   );
 }
+
+enum NotificationType { unknown, reportCreated, reportLiked, reportDisliked }

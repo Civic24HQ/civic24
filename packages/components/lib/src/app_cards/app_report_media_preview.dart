@@ -228,7 +228,6 @@ class _ReportGalleryViewerState extends State<ReportGalleryViewer> {
               },
             ),
 
-            // Premium top overlay (gradient + controls)
             Positioned(
               top: 0,
               left: 0,

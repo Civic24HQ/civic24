@@ -9,6 +9,19 @@ import 'package:image_picker/image_picker.dart';
 import 'package:mime/mime.dart';
 import 'package:utils/utils.dart';
 
+class CloudinaryUploadException implements Exception {
+  const CloudinaryUploadException({required this.filePath, required this.attempts, this.cause});
+
+  final String filePath;
+  final int attempts;
+  final Object? cause;
+
+  @override
+  String toString() =>
+      'CloudinaryUploadException: Upload failed after $attempts attempts for $filePath'
+      '${cause != null ? ' (caused by: $cause)' : ''}';
+}
+
 class CloudinaryStorageService {
   final _log = getLogger('CloudinaryStorageService');
 
@@ -98,7 +111,7 @@ class CloudinaryStorageService {
     }
 
     _log.e('Upload failed after $maxRetries attempts for: ${file.path}');
-    return null;
+    throw CloudinaryUploadException(filePath: file.path, attempts: maxRetries, cause: 'All upload attempts failed');
   }
 
   /// Uploads an XFile. Falls back to byte upload when needed (e.g., web).

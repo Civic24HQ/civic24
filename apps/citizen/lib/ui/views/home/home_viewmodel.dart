@@ -13,12 +13,10 @@ class HomeViewModel extends ReactiveViewModel {
   final _bottomSheetService = locator<BottomSheetService>();
   final _navigationService = locator<RouterService>();
   final _userService = locator<UserService>();
-  final _reportService = locator<IReportFeedService>();
-  final _interactionService = locator<IReportInteractionService>();
-  final _reportServiceNotifier = locator<ReportService>();
+  final _reportService = locator<ReportService>();
 
   @override
-  List<ListenableServiceMixin> get listenableServices => [_userService, _reportServiceNotifier];
+  List<ListenableServiceMixin> get listenableServices => [_userService, _reportService];
 
   String get user => _userService.user!.id;
 
@@ -90,14 +88,14 @@ class HomeViewModel extends ReactiveViewModel {
   }
 
   Future<void> likeReport(Report report) async {
-    await _interactionService.likeReportOptimistic(report, user);
+    await _reportService.likeReportOptimistic(report, user);
   }
 
   Future<void> dislikeReport(Report report) async {
-    await _interactionService.dislikeReportOptimistic(report, user);
+    await _reportService.dislikeReportOptimistic(report, user);
   }
 
   Future<void> bookmarkReport(Report report) async {
-    await _interactionService.bookmarkReportOptimistic(report, user);
+    await _reportService.bookmarkReportOptimistic(report, user);
   }
 }

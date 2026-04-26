@@ -90,7 +90,8 @@ class StartupViewModel extends BaseViewModel {
     _log.i('Running startup logic');
     await _authenticationService.clearFirebaseUserOnFreshInstall();
     _analyticsService.logAppOpen();
-    // Trigger Shorebird patch download silently in parallel with startup animation
+
+    // Trigger Shorebird patch download silently
     unawaited(_appUpdateService.checkForPatch());
 
     await onViewLoading();
