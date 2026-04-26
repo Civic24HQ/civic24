@@ -1,0 +1,69 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // ── Helpers ─────────────────────────────────────────────────────────────
+
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+
+    function isOwner(userId) {
+      return isAuthenticated() && request.auth.uid == userId;
+    }
+
+    function isAdmin() {
+      return isAuthenticated() &&
+        get(/databases/$(database)/documents/users/$(request.auth.uid))
+          .data.account.userType == 'admin';
+    }
+
+    function incomingData() {
+      return request.resource.data;
+    }
+
+    function existingData() {
+      return resource.data;
+    }
+
+    // Block any attempt to self-promote to admin
+    function isNotChangingUserType() {
+      return !incomingData().diff(existingData()).affectedKeys()
+               .hasAny(['account.userType']);
+    }
+
+    // ── Users collection ────────────────────────────────────────────────────
+
+    match /users/{userId} {
+      allow read:   if isOwner(userId) || isAdmin();
+      allow create: if isOwner(userId);
+      allow update: if isOwner(userId) && isNotChangingUserType();
+      allow delete: if false; // soft-delete only via Cloud Function
+
+      // Notifications — read/write by owner only
+      match /notifications/{notifId} {
+        allow read:   if isOwner(userId);
+        allow create: if false; // written only by Cloud Functions
+        allow update: if isOwner(userId); // for markAsRead
+        allow delete: if false;
+      }
+
+      // Interactions — read/write by owner only
+      match /interactions/{reportId} {
+        allow read:   if isOwner(userId);
+        allow write:  if isOwner(userId);
+      }
+    }
+
+    // ── Reports collection ──────────────────────────────────────────────────
+
+    match /reports/{reportId} {
+      allow read:   if isAuthenticated();
+      allow create: if isAuthenticated()
+                    && incomingData().reportData.userId == request.auth.uid;
+      allow update: if isAuthenticated()
+                    && existingData().reportData.userId == request.auth.uid;
+      allow delete: if false; // soft-delete only
+    }
+  }
+}
