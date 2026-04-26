@@ -5,7 +5,7 @@ publish_to: none
 
 environment:
   sdk: ">=3.10.7 <4.0.0"
-  flutter: "3.38.7"
+  flutter: "3.41.6"
 
 dependencies:
   flutter:
@@ -49,6 +49,8 @@ dependencies:
   sign_in_with_apple: ^7.0.1
   geocoding: ^4.0.0
   geolocator: ^14.0.2
+  package_info_plus: ^9.0.1
+  shorebird_code_push: ^2.0.5
 
   # Google/Firebase Dependencies
   firebase_auth: ^6.1.4

@@ -8,28 +8,16 @@ import 'package:stacked_services/stacked_services.dart';
 import 'package:styles/styles.dart';
 import 'package:utils/utils.dart';
 
-class DeleteVerificationSheet
-    extends StackedView<DeleteVerificationSheetModel> {
-  const DeleteVerificationSheet({
-    required this.completer,
-    required this.request,
-    super.key,
-  });
+class DeleteVerificationSheet extends StackedView<DeleteVerificationSheetModel> {
+  const DeleteVerificationSheet({required this.completer, required this.request, super.key});
   final Function(SheetResponse<dynamic> response)? completer;
   final SheetRequest<dynamic> request;
 
   @override
-  Widget builder(
-    BuildContext context,
-    DeleteVerificationSheetModel viewModel,
-    Widget? child,
-  ) {
+  Widget builder(BuildContext context, DeleteVerificationSheetModel viewModel, Widget? child) {
     if (viewModel.isSocialAuth) {
       return Container(
-        decoration: BoxDecoration(
-          color: context.surfaceVariant,
-          borderRadius: AppBorderRadius.topRadius16,
-        ),
+        decoration: BoxDecoration(color: context.surfaceVariant, borderRadius: AppBorderRadius.topRadius16),
         padding: AppEdgeInsets.padding16,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -39,40 +27,26 @@ class DeleteVerificationSheet
               child: Container(
                 width: 64,
                 height: 5,
-                decoration: BoxDecoration(
-                  color: context.neutralLow,
-                  borderRadius: AppBorderRadius.radius12,
-                ),
+                decoration: BoxDecoration(color: context.neutralLow, borderRadius: AppBorderRadius.radius12),
               ),
             ),
             AppSpacing.normal,
-            Text(
-              l10n.featureDialogDeleteVerificationAuthContinue,
-              style: context.titleMedium,
-            ),
+            Text(l10n.featureDialogDeleteVerificationAuthContinue, style: context.titleMedium),
             AppSpacing.small,
             Text(
               l10n.featureDialogDeleteVerificationAuthHint,
-              style: context.bodyMedium?.copyWith(
-                color: context.neutralHighest,
-              ),
+              style: context.bodyMedium?.copyWith(color: context.neutralHighest),
             ),
             AppSpacing.large,
             PrimaryButton(
-              title:
-                  'Re-authenticate with ${viewModel.user.provider.toTitleCase}',
+              title: 'Re-authenticate with ${viewModel.user.provider.toTitleCase}',
               onTap: viewModel.reauthenticateWithSocialAuth,
             ),
             AppSpacing.medium,
             Align(
               child: TextButton(
                 onPressed: () => completer?.call(SheetResponse()),
-                child: Text(
-                  l10n.generalCancel,
-                  style: context.bodyMedium?.copyWith(
-                    color: context.neutralHighest,
-                  ),
-                ),
+                child: Text(l10n.generalCancel, style: context.bodyMedium?.copyWith(color: context.neutralHighest)),
               ),
             ),
             AppSpacing.medium,
@@ -92,8 +66,7 @@ class DeleteVerificationSheet
   }
 
   @override
-  DeleteVerificationSheetModel viewModelBuilder(BuildContext context) =>
-      DeleteVerificationSheetModel();
+  DeleteVerificationSheetModel viewModelBuilder(BuildContext context) => DeleteVerificationSheetModel();
 }
 
 class _DeletePasswordVerification extends StatefulWidget {
@@ -113,12 +86,10 @@ class _DeletePasswordVerification extends StatefulWidget {
   final VoidCallback onCancelled;
 
   @override
-  State<_DeletePasswordVerification> createState() =>
-      _DeletePasswordVerificationState();
+  State<_DeletePasswordVerification> createState() => _DeletePasswordVerificationState();
 }
 
-class _DeletePasswordVerificationState
-    extends State<_DeletePasswordVerification> {
+class _DeletePasswordVerificationState extends State<_DeletePasswordVerification> {
   bool _showPassword = false;
 
   void _togglePassword() {
@@ -132,10 +103,7 @@ class _DeletePasswordVerificationState
     return GestureDetector(
       onTap: () => FocusScope.of(context).unfocus(),
       child: Container(
-        decoration: BoxDecoration(
-          color: context.surfaceVariant,
-          borderRadius: AppBorderRadius.topRadius16,
-        ),
+        decoration: BoxDecoration(color: context.surfaceVariant, borderRadius: AppBorderRadius.topRadius16),
         padding: AppEdgeInsets.padding16,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -145,25 +113,15 @@ class _DeletePasswordVerificationState
               child: Container(
                 width: 64,
                 height: 5,
-                decoration: BoxDecoration(
-                  color: context.neutralLow,
-                  borderRadius: AppBorderRadius.radius12,
-                ),
+                decoration: BoxDecoration(color: context.neutralLow, borderRadius: AppBorderRadius.radius12),
               ),
             ),
             AppSpacing.normal,
-            Align(
-              child: Text(
-                l10n.featureDialogDeleteVerificationVerify,
-                style: context.titleMedium,
-              ),
-            ),
+            Align(child: Text(l10n.featureDialogDeleteVerificationVerify, style: context.titleMedium)),
             AppSpacing.medium,
             Text(
               l10n.featureDialogDeleteVerificationSecurity,
-              style: context.bodyMedium?.copyWith(
-                color: context.neutralHighest,
-              ),
+              style: context.bodyMedium?.copyWith(color: context.neutralHighest),
             ),
             AppSpacing.large,
             AppTextField(
@@ -178,11 +136,7 @@ class _DeletePasswordVerificationState
                       onPressed: _togglePassword,
                       iconSize: AppDimensions.size16,
                       splashRadius: AppDimensions.size24,
-                      icon: Icon(
-                        _showPassword
-                            ? SolarIconsOutline.eye
-                            : SolarIconsOutline.eyeClosed,
-                      ),
+                      icon: Icon(_showPassword ? SolarIconsOutline.eye : SolarIconsOutline.eyeClosed),
                     )
                   : null,
               onChanged: widget.onUpdatePassword,
@@ -190,40 +144,26 @@ class _DeletePasswordVerificationState
                 FocusScope.of(context).unfocus();
                 widget.onVerified.call();
               },
-              keyboardType: _showPassword
-                  ? TextInputType.visiblePassword
-                  : TextInputType.text,
+              keyboardType: _showPassword ? TextInputType.visiblePassword : TextInputType.text,
               autofillHints: const [AutofillHints.password],
               textInputAction: TextInputAction.done,
             ),
             AppSpacing.medium,
-            if (widget.passwordError != null &&
-                widget.passwordError!.isNotEmpty)
+            if (widget.passwordError != null && widget.passwordError!.isNotEmpty)
               Align(
                 alignment: Alignment.topLeft,
                 child: InkWell(
                   onTap: widget.onForgetPassword,
-                  child: Text(
-                    l10n.generalForgotPassword,
-                    style: context.bodyMedium?.copyWith(color: context.primary),
-                  ),
+                  child: Text(l10n.generalForgotPassword, style: context.bodyMedium?.copyWith(color: context.primary)),
                 ),
               ),
             AppSpacing.xxLarge,
-            PrimaryButton(
-              title: l10n.featureDeleteVerificationContinue,
-              onTap: widget.onVerified,
-            ),
+            PrimaryButton(title: l10n.featureDeleteVerificationContinue, onTap: widget.onVerified),
             AppSpacing.medium,
             Align(
               child: TextButton(
                 onPressed: widget.onCancelled,
-                child: Text(
-                  l10n.generalCancel,
-                  style: context.bodyMedium?.copyWith(
-                    color: context.neutralHighest,
-                  ),
-                ),
+                child: Text(l10n.generalCancel, style: context.bodyMedium?.copyWith(color: context.neutralHighest)),
               ),
             ),
             AppSpacing.medium,

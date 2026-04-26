@@ -9,7 +9,10 @@ import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:models/utils/image_metadata.dart';
-import 'package:services/services.dart';
+import 'package:services/src/app/app.locator.dart';
+import 'package:services/src/services/core/alert_service.dart';
+import 'package:services/src/services/core/permission_service.dart';
+import 'package:services/src/services/core/remote_config_service.dart';
 import 'package:utils/utils.dart';
 
 /// A service for handling media-related tasks like image or video picking, cropping,
@@ -228,13 +231,7 @@ class MediaService {
 
   /// Handles the full process of picking, extracting metadata, cropping,
   /// and returning the result as a [ProcessedImage].
-  ///
-  /// Returns null if any step is cancelled or fails.
   Future<ProcessedImage?> pickImageFromCamera() async {
-    // if (kDebugMode) {
-    //   _log.d('Picking image from source: $source');
-    //   return ProcessedImage(imageFile: File('path/to/image.jpg'), metadata: ImageMetadata(), fileSize: 123456);
-    // }
     final pickedFile = await pickImage(source: AssetSource.camera);
     if (pickedFile == null) {
       _log.d('No image file selected');
@@ -259,16 +256,7 @@ class MediaService {
   /// Handles the full process of picking multiple images from the gallery,
   /// extracting metadata, cropping and returning the results as a list of
   /// [ProcessedImage]s.
-  ///
-  /// Returns an empty list if no images are selected or an error occurs.
   Future<List<ProcessedImage?>> pickImagesFromGallery() async {
-    // if (kDebugMode) {
-    //   _log.d('Picking multiple images from gallery');
-    //   return [
-    //     ProcessedImage(imageFile: File('path/to/image1.jpg'), metadata: ImageMetadata(), fileSize: 123456),
-    //     ProcessedImage(imageFile: File('path/to/image2.jpg'), metadata: ImageMetadata(), fileSize: 234567),
-    //   ];
-    // }
     final pickedFiles = await pickMultiImage();
     if (pickedFiles.isEmpty) {
       _log.d('No image file selected');
@@ -301,31 +289,13 @@ class MediaService {
     return processedImages;
   }
 
-  /// Opens a dialog for the user to choose between camera and gallery,
-  /// and then processes the image via [pickImage].
-  ///
-  /// Returns null if the user cancels the dialog or an error occurs.
-  // Future<ProcessedImage?> pickImageWithSourceDialog() async {
-  //   final response = await _dialogService.showCustomDialog(variant: DialogType.uploadFile, barrierDismissible: true);
-
-  //   if (response == null || response.data == null) {
-  //     _log.d('No asset source selected');
-  //     return null;
-  //   }
-
-  //   if (response.data is AssetSource) {
-  //     return pickImageFromSource(response.data as AssetSource);
-  //   } else {
-  //     _log.d('Invalid asset source type: ${response.data.runtimeType}');
-  //     return null;
-  //   }
-  // }
-
   /// Compresses an image file to reduce its size to below 512KB if possible.
-  ///
-  /// If the image is already under the limit, it is returned as-is.
-  /// If compression fails or the file is invalid, returns null.
-  Future<File?> compressImage(File imageFile) async {
+  Future<File?> compressImage(File imageFile, {int depth = 0}) async {
+    if (depth >= 3) {
+      _log.w('Max compression depth reached');
+      return imageFile;
+    }
+
     if (!imageFile.existsSync()) {
       _log.e('Image file does not exist: ${imageFile.path}');
       return null;

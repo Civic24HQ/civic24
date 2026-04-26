@@ -10,10 +10,15 @@ import 'package:localization/localization.dart';
 import 'package:services/services.dart';
 import 'package:utils/utils.dart';
 
+final _appInfoService = serviceLocator<AppInfoService>();
+final _remoteConfigService = serviceLocator<RemoteConfigService>();
+final _internetConnectivityService = serviceLocator<InternetConnectivityService>();
+
 Future<void> main() async {
   await _preLocatorSetup();
   await setupLocator(stackedRouter: stackedRouter);
   await setupServiceLocator();
+  registerServiceInterfaces();
   await _postLocatorSetup();
 }
 
@@ -30,8 +35,9 @@ Future<void> _preLocatorSetup() async {
 Future<void> _postLocatorSetup() async {
   setupBottomSheetUi();
   setupDialogUi();
-  // await InternetConnectivityService().initialize();
-  await RemoteConfigService().initialize(
+  await _appInfoService.initialize();
+  await _internetConnectivityService.initialize();
+  await _remoteConfigService.initialize(
     minimumFetchInterval: EnvironmentConstants.isProduction ? const Duration(hours: 1) : const Duration(minutes: 1),
   );
   runApp(const App());

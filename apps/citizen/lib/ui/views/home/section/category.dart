@@ -67,12 +67,8 @@ class _CategoryListViewState extends State<_CategoryListView> {
   }
 
   void _onScroll() {
-    if (_controller.position.pixels >
-        _controller.position.maxScrollExtent - 300) {
-      _viewModel.loadMoreCategory(
-        widget.category,
-        limit: _categoryReportsPageLimit,
-      );
+    if (_controller.position.pixels > _controller.position.maxScrollExtent - 300) {
+      _viewModel.loadMoreCategory(widget.category, limit: _categoryReportsPageLimit);
     }
   }
 
@@ -90,14 +86,7 @@ class _CategoryListViewState extends State<_CategoryListView> {
     if (viewModel.isCategoryInitialLoading(widget.category)) {
       return CustomScrollView(
         key: ValueKey(widget.category),
-        slivers: [
-          SliverList(
-            delegate: SliverChildBuilderDelegate(
-              (_, __) => const AppReportShimmer(),
-              childCount: 6,
-            ),
-          ),
-        ],
+        slivers: [SliverList(delegate: SliverChildBuilderDelegate((_, __) => const AppReportShimmer(), childCount: 6))],
       );
     }
 
@@ -106,9 +95,7 @@ class _CategoryListViewState extends State<_CategoryListView> {
       physics: const BouncingScrollPhysics(),
       controller: _controller,
       slivers: [
-        CupertinoSliverRefreshControl(
-          onRefresh: () => viewModel.refreshCategory(widget.category),
-        ),
+        CupertinoSliverRefreshControl(onRefresh: () => viewModel.refreshCategory(widget.category)),
         SliverList(
           delegate: SliverChildBuilderDelegate((context, index) {
             final report = categoryReports[index];

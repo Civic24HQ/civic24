@@ -29,3 +29,5 @@ const kAnalyticEventOnboardingCompleted = 'onboarding_completed';
 
 // Dialogs Name
 const kAnalyticDialogLogoutConfirmation = 'LogoutConfirmationDialog';
+const kAnalyticDialogDeleteAccountConfirmation = 'DeleteAccountConfirmationDialog';
+const kAnalyticDialogForceUpdate = 'ForceUpdateDialog';

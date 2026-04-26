@@ -40,12 +40,7 @@ class DeleteVerificationSheetModel extends FormViewModel {
       return;
     }
 
-    unawaited(
-      _dialogService.showCustomDialog(
-        variant: DialogType.loading,
-        title: 'Reauthenticating...',
-      ),
-    );
+    unawaited(_dialogService.showCustomDialog(variant: DialogType.loading, title: 'Reauthenticating...'));
 
     final result = await _authService.reauthenticateUser(password: _password);
     _dialogService.completeDialog(DialogResponse());
@@ -59,12 +54,7 @@ class DeleteVerificationSheetModel extends FormViewModel {
   }
 
   Future<void> reauthenticateWithSocialAuth() async {
-    unawaited(
-      _dialogService.showCustomDialog(
-        variant: DialogType.loading,
-        title: 'Reauthenticating...',
-      ),
-    );
+    unawaited(_dialogService.showCustomDialog(variant: DialogType.loading, title: 'Reauthenticating...'));
     final result = await _authService.reauthenticateUserWithProvider();
     _dialogService.completeDialog(DialogResponse());
 

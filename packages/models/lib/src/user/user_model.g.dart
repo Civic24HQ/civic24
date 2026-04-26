@@ -15,6 +15,13 @@ _UserModel _$UserModelFromJson(Map<String, dynamic> json) => _UserModel(
     (k, e) => MapEntry(k, UserDeviceModel.fromJson(e as Map<String, dynamic>)),
   ),
   fcmTokens: json['fcmTokens'] as Map<String, dynamic>? ?? const {},
+  fcmTokenLastActiveAt:
+      json['fcmTokenLastActiveAt'] as Map<String, dynamic>? ?? const {},
+  notificationPreferences: json['notificationPreferences'] == null
+      ? const NotificationPreferences()
+      : NotificationPreferences.fromJson(
+          json['notificationPreferences'] as Map<String, dynamic>,
+        ),
   path: json['path'] as String?,
 );
 
@@ -26,6 +33,8 @@ Map<String, dynamic> _$UserModelToJson(_UserModel instance) =>
       'account': instance.account.toJson(),
       'devices': instance.devices.map((k, e) => MapEntry(k, e.toJson())),
       'fcmTokens': instance.fcmTokens,
+      'fcmTokenLastActiveAt': instance.fcmTokenLastActiveAt,
+      'notificationPreferences': instance.notificationPreferences.toJson(),
       'path': ?instance.path,
     };
 

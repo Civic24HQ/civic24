@@ -190,6 +190,18 @@ class MessageLookup extends MessageLookupByLibrary {
     "featureDontHaveAccount": MessageLookupByLibrary.simpleMessage(
       "Don’t have an account?",
     ),
+    "featureForceUpdateButton": MessageLookupByLibrary.simpleMessage(
+      "Update Now",
+    ),
+    "featureForceUpdateButtonLater": MessageLookupByLibrary.simpleMessage(
+      "Remind Me Later",
+    ),
+    "featureForceUpdateDescription": MessageLookupByLibrary.simpleMessage(
+      "We\'ve made improvements to make your civic reporting experience smoother and faster. Tap below to get the latest version..",
+    ),
+    "featureForceUpdateTitle": MessageLookupByLibrary.simpleMessage(
+      "Civic24 Just Got Better",
+    ),
     "featureForgotPassword": MessageLookupByLibrary.simpleMessage(
       "Forgot Password?",
     ),

@@ -11,11 +11,7 @@ class NotificationView extends StackedView<NotificationViewModel> {
   const NotificationView({super.key});
 
   @override
-  Widget builder(
-    BuildContext context,
-    NotificationViewModel viewModel,
-    Widget? child,
-  ) {
+  Widget builder(BuildContext context, NotificationViewModel viewModel, Widget? child) {
     return Scaffold(
       backgroundColor: context.surface,
       appBar: AppBar(
@@ -42,9 +38,7 @@ class NotificationView extends StackedView<NotificationViewModel> {
                         child: Text(
                           l10n.featureNotificationInstruction,
                           style: context.bodySmall?.copyWith(
-                            color: viewModel.hasUnreadNotifications
-                                ? context.onPrimaryContainer
-                                : context.neutralHigh,
+                            color: viewModel.hasUnreadNotifications ? context.onPrimaryContainer : context.neutralHigh,
                             decoration: TextDecoration.underline,
                             decorationColor: viewModel.hasUnreadNotifications
                                 ? context.onPrimaryContainer
@@ -60,22 +54,12 @@ class NotificationView extends StackedView<NotificationViewModel> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  const Icon(
-                        SolarIconsOutline.notificationRemove,
-                        size: AppDimensions.size96,
-                      )
-                      .animate(
-                        onPlay: (controller) =>
-                            controller.repeat(reverse: true),
-                      )
+                  const Icon(SolarIconsOutline.notificationRemove, size: AppDimensions.size96)
+                      .animate(onPlay: (controller) => controller.repeat(reverse: true))
                       .shake(duration: 1.seconds, hz: 2)
                       .fade(duration: 1.seconds, begin: 0, end: 1),
                   AppSpacing.large,
-                  Text(
-                    l10n.featureNotificationEmpty,
-                    textAlign: TextAlign.center,
-                    style: context.bodyLarge,
-                  ),
+                  Text(l10n.featureNotificationEmpty, textAlign: TextAlign.center, style: context.bodyLarge),
                 ],
               ),
             )
@@ -83,20 +67,34 @@ class NotificationView extends StackedView<NotificationViewModel> {
             Expanded(
               child: Padding(
                 padding: AppEdgeInsets.padding8,
-                child: ListView.separated(
-                  itemCount: viewModel.notificationList.length,
-                  itemBuilder: (context, index) {
-                    return AppNotificationTile(
-                      title: viewModel.notificationList[index].title,
-                      description:
-                          viewModel.notificationList[index].description,
-                      timestamp: viewModel.notificationList[index].createdAt,
-                      onTap: viewModel.markNotificationAsRead,
-                      hasBeenSeen:
-                          viewModel.notificationList[index].hasBeenSeen,
-                    );
+                child: NotificationListener<ScrollEndNotification>(
+                  // Trigger loadMore when the user reaches the bottom
+                  onNotification: (notification) {
+                    if (notification.metrics.extentAfter < 100) {
+                      viewModel.loadMore();
+                    }
+                    return false;
                   },
-                  separatorBuilder: (context, index) => AppSpacing.small,
+                  child: ListView.separated(
+                    itemCount: viewModel.notificationList.length + (viewModel.hasMore ? 1 : 0),
+                    itemBuilder: (context, index) {
+                      // Load-more indicator at the bottom of the list
+                      if (index == viewModel.notificationList.length) {
+                        return const Padding(
+                          padding: EdgeInsets.symmetric(vertical: 16),
+                          child: Center(child: AppBusyIndicator()),
+                        );
+                      }
+                      return AppNotificationTile(
+                        title: viewModel.notificationList[index].title,
+                        description: viewModel.notificationList[index].description,
+                        timestamp: viewModel.notificationList[index].createdAt,
+                        onTap: () => viewModel.markNotificationAsRead(viewModel.notificationList[index]),
+                        hasBeenSeen: viewModel.notificationList[index].hasBeenSeen,
+                      );
+                    },
+                    separatorBuilder: (context, index) => AppSpacing.tiny,
+                  ),
                 ),
               ),
             ),
@@ -106,6 +104,5 @@ class NotificationView extends StackedView<NotificationViewModel> {
   }
 
   @override
-  NotificationViewModel viewModelBuilder(BuildContext context) =>
-      NotificationViewModel();
+  NotificationViewModel viewModelBuilder(BuildContext context) => NotificationViewModel();
 }

@@ -42,7 +42,6 @@ class AppTheme {
         onSurface: AppColors.black,
         onSurfaceVariant: AppColors.neutral.shade600,
         outline: AppColors.neutral.shade100,
-
         outlineVariant: AppColors.neutral.shade300,
       ),
       extensions: <ThemeExtension<dynamic>>{_lightCustomColorsTheme},

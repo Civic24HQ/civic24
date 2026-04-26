@@ -17,6 +17,12 @@ _NotificationData _$NotificationDataFromJson(Map<String, dynamic> json) =>
       userId: json['userId'] as String?,
       notificationIconData: json['notificationIconData'] as String?,
       path: json['path'] as String?,
+      type:
+          $enumDecodeNullable(_$NotificationTypeEnumMap, json['type']) ??
+          NotificationType.unknown,
+      actorUserId: json['actorUserId'] as String?,
+      actorName: json['actorName'] as String?,
+      reportId: json['reportId'] as String?,
     );
 
 Map<String, dynamic> _$NotificationDataToJson(_NotificationData instance) =>
@@ -30,4 +36,15 @@ Map<String, dynamic> _$NotificationDataToJson(_NotificationData instance) =>
       'userId': ?instance.userId,
       'notificationIconData': ?instance.notificationIconData,
       'path': ?instance.path,
+      'type': _$NotificationTypeEnumMap[instance.type]!,
+      'actorUserId': ?instance.actorUserId,
+      'actorName': ?instance.actorName,
+      'reportId': ?instance.reportId,
     };
+
+const _$NotificationTypeEnumMap = {
+  NotificationType.unknown: 'unknown',
+  NotificationType.reportCreated: 'reportCreated',
+  NotificationType.reportLiked: 'reportLiked',
+  NotificationType.reportDisliked: 'reportDisliked',
+};

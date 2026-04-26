@@ -13,9 +13,9 @@ class AppCachedImage extends StatelessWidget {
       fit: BoxFit.cover,
       imageUrl: imageUrl!,
       progressIndicatorBuilder: (context, url, progress) {
-        return Padding(
-          padding: const EdgeInsetsGeometry.all(AppDimensions.size120),
-          child: CircularProgressIndicator(value: progress.progress, color: context.primary),
+        return Transform.scale(
+          scale: 0.3,
+          child: CircularProgressIndicator(value: progress.progress, color: context.primary, strokeWidth: 12),
         );
       },
       errorWidget: (context, url, error) => const SizedBox.shrink(),

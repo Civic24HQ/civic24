@@ -652,5 +652,21 @@
     "featureAuthTermDescriptionPrivacy": "Privacy Policy",
     "@featureAuthTermDescriptionPrivacy": {
         "description": "Auth Term Description Privacy Policy"
+    },
+    "featureForceUpdateTitle": "Civic24 Just Got Better",
+    "@featureForceUpdateTitle": {
+        "description": "Force Update Title"
+    },
+    "featureForceUpdateDescription": "We've made improvements to make your civic reporting experience smoother and faster. Tap below to get the latest version..",
+    "@featureForceUpdateDescription": {
+        "description": "Force Update Description"
+    },
+    "featureForceUpdateButton": "Update Now",
+    "@featureForceUpdateButton": {
+        "description": "Force Update Button"
+    },
+    "featureForceUpdateButtonLater": "Remind Me Later",
+    "@featureForceUpdateButtonLater": {
+        "description": "Force Update Button Later"
     }
 }

@@ -28,7 +28,12 @@ mixin _$UserModel {
 ///
 /// And the values of each key will be the corresponding
 /// FCM token of the user's device.
- Map<String, dynamic> get fcmTokens;/// The document reference path, only be
+ Map<String, dynamic> get fcmTokens;/// Tracks when each FCM token key was last active.
+/// Key matches the fcmTokens key; value is an ISO-8601 string.
+/// Used by the Cloud Function to skip pushes to stale devices.
+ Map<String, dynamic> get fcmTokenLastActiveAt;/// Controls which push + in-app notification types this user receives.
+/// Defaults to all notifications enabled.
+ NotificationPreferences get notificationPreferences;/// The document reference path, only be
 /// parsed when converted from Firestore
  String? get path;
 /// Create a copy of UserModel
@@ -43,16 +48,16 @@ $UserModelCopyWith<UserModel> get copyWith => _$UserModelCopyWithImpl<UserModel>
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is UserModel&&(identical(other.id, id) || other.id == id)&&(identical(other.provider, provider) || other.provider == provider)&&(identical(other.email, email) || other.email == email)&&(identical(other.account, account) || other.account == account)&&const DeepCollectionEquality().equals(other.devices, devices)&&const DeepCollectionEquality().equals(other.fcmTokens, fcmTokens)&&(identical(other.path, path) || other.path == path));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is UserModel&&(identical(other.id, id) || other.id == id)&&(identical(other.provider, provider) || other.provider == provider)&&(identical(other.email, email) || other.email == email)&&(identical(other.account, account) || other.account == account)&&const DeepCollectionEquality().equals(other.devices, devices)&&const DeepCollectionEquality().equals(other.fcmTokens, fcmTokens)&&const DeepCollectionEquality().equals(other.fcmTokenLastActiveAt, fcmTokenLastActiveAt)&&(identical(other.notificationPreferences, notificationPreferences) || other.notificationPreferences == notificationPreferences)&&(identical(other.path, path) || other.path == path));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,provider,email,account,const DeepCollectionEquality().hash(devices),const DeepCollectionEquality().hash(fcmTokens),path);
+int get hashCode => Object.hash(runtimeType,id,provider,email,account,const DeepCollectionEquality().hash(devices),const DeepCollectionEquality().hash(fcmTokens),const DeepCollectionEquality().hash(fcmTokenLastActiveAt),notificationPreferences,path);
 
 @override
 String toString() {
-  return 'UserModel(id: $id, provider: $provider, email: $email, account: $account, devices: $devices, fcmTokens: $fcmTokens, path: $path)';
+  return 'UserModel(id: $id, provider: $provider, email: $email, account: $account, devices: $devices, fcmTokens: $fcmTokens, fcmTokenLastActiveAt: $fcmTokenLastActiveAt, notificationPreferences: $notificationPreferences, path: $path)';
 }
 
 
@@ -63,11 +68,11 @@ abstract mixin class $UserModelCopyWith<$Res>  {
   factory $UserModelCopyWith(UserModel value, $Res Function(UserModel) _then) = _$UserModelCopyWithImpl;
 @useResult
 $Res call({
- String id, String provider, String email, UserAccount account, Map<String, UserDeviceModel> devices, Map<String, dynamic> fcmTokens, String? path
+ String id, String provider, String email, UserAccount account, Map<String, UserDeviceModel> devices, Map<String, dynamic> fcmTokens, Map<String, dynamic> fcmTokenLastActiveAt, NotificationPreferences notificationPreferences, String? path
 });
 
 
-$UserAccountCopyWith<$Res> get account;
+$UserAccountCopyWith<$Res> get account;$NotificationPreferencesCopyWith<$Res> get notificationPreferences;
 
 }
 /// @nodoc
@@ -80,7 +85,7 @@ class _$UserModelCopyWithImpl<$Res>
 
 /// Create a copy of UserModel
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? provider = null,Object? email = null,Object? account = null,Object? devices = null,Object? fcmTokens = null,Object? path = freezed,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? provider = null,Object? email = null,Object? account = null,Object? devices = null,Object? fcmTokens = null,Object? fcmTokenLastActiveAt = null,Object? notificationPreferences = null,Object? path = freezed,}) {
   return _then(_self.copyWith(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,provider: null == provider ? _self.provider : provider // ignore: cast_nullable_to_non_nullable
@@ -88,7 +93,9 @@ as String,email: null == email ? _self.email : email // ignore: cast_nullable_to
 as String,account: null == account ? _self.account : account // ignore: cast_nullable_to_non_nullable
 as UserAccount,devices: null == devices ? _self.devices : devices // ignore: cast_nullable_to_non_nullable
 as Map<String, UserDeviceModel>,fcmTokens: null == fcmTokens ? _self.fcmTokens : fcmTokens // ignore: cast_nullable_to_non_nullable
-as Map<String, dynamic>,path: freezed == path ? _self.path : path // ignore: cast_nullable_to_non_nullable
+as Map<String, dynamic>,fcmTokenLastActiveAt: null == fcmTokenLastActiveAt ? _self.fcmTokenLastActiveAt : fcmTokenLastActiveAt // ignore: cast_nullable_to_non_nullable
+as Map<String, dynamic>,notificationPreferences: null == notificationPreferences ? _self.notificationPreferences : notificationPreferences // ignore: cast_nullable_to_non_nullable
+as NotificationPreferences,path: freezed == path ? _self.path : path // ignore: cast_nullable_to_non_nullable
 as String?,
   ));
 }
@@ -100,6 +107,15 @@ $UserAccountCopyWith<$Res> get account {
   
   return $UserAccountCopyWith<$Res>(_self.account, (value) {
     return _then(_self.copyWith(account: value));
+  });
+}/// Create a copy of UserModel
+/// with the given fields replaced by the non-null parameter values.
+@override
+@pragma('vm:prefer-inline')
+$NotificationPreferencesCopyWith<$Res> get notificationPreferences {
+  
+  return $NotificationPreferencesCopyWith<$Res>(_self.notificationPreferences, (value) {
+    return _then(_self.copyWith(notificationPreferences: value));
   });
 }
 }
@@ -183,10 +199,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String provider,  String email,  UserAccount account,  Map<String, UserDeviceModel> devices,  Map<String, dynamic> fcmTokens,  String? path)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String provider,  String email,  UserAccount account,  Map<String, UserDeviceModel> devices,  Map<String, dynamic> fcmTokens,  Map<String, dynamic> fcmTokenLastActiveAt,  NotificationPreferences notificationPreferences,  String? path)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _UserModel() when $default != null:
-return $default(_that.id,_that.provider,_that.email,_that.account,_that.devices,_that.fcmTokens,_that.path);case _:
+return $default(_that.id,_that.provider,_that.email,_that.account,_that.devices,_that.fcmTokens,_that.fcmTokenLastActiveAt,_that.notificationPreferences,_that.path);case _:
   return orElse();
 
 }
@@ -204,10 +220,10 @@ return $default(_that.id,_that.provider,_that.email,_that.account,_that.devices,
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String provider,  String email,  UserAccount account,  Map<String, UserDeviceModel> devices,  Map<String, dynamic> fcmTokens,  String? path)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String provider,  String email,  UserAccount account,  Map<String, UserDeviceModel> devices,  Map<String, dynamic> fcmTokens,  Map<String, dynamic> fcmTokenLastActiveAt,  NotificationPreferences notificationPreferences,  String? path)  $default,) {final _that = this;
 switch (_that) {
 case _UserModel():
-return $default(_that.id,_that.provider,_that.email,_that.account,_that.devices,_that.fcmTokens,_that.path);case _:
+return $default(_that.id,_that.provider,_that.email,_that.account,_that.devices,_that.fcmTokens,_that.fcmTokenLastActiveAt,_that.notificationPreferences,_that.path);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -224,10 +240,10 @@ return $default(_that.id,_that.provider,_that.email,_that.account,_that.devices,
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String provider,  String email,  UserAccount account,  Map<String, UserDeviceModel> devices,  Map<String, dynamic> fcmTokens,  String? path)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String provider,  String email,  UserAccount account,  Map<String, UserDeviceModel> devices,  Map<String, dynamic> fcmTokens,  Map<String, dynamic> fcmTokenLastActiveAt,  NotificationPreferences notificationPreferences,  String? path)?  $default,) {final _that = this;
 switch (_that) {
 case _UserModel() when $default != null:
-return $default(_that.id,_that.provider,_that.email,_that.account,_that.devices,_that.fcmTokens,_that.path);case _:
+return $default(_that.id,_that.provider,_that.email,_that.account,_that.devices,_that.fcmTokens,_that.fcmTokenLastActiveAt,_that.notificationPreferences,_that.path);case _:
   return null;
 
 }
@@ -239,7 +255,7 @@ return $default(_that.id,_that.provider,_that.email,_that.account,_that.devices,
 
 @JsonSerializable()
 class _UserModel extends UserModel {
-  const _UserModel({required this.id, required this.provider, required this.email, required this.account, required final  Map<String, UserDeviceModel> devices, final  Map<String, dynamic> fcmTokens = const {}, this.path}): _devices = devices,_fcmTokens = fcmTokens,super._();
+  const _UserModel({required this.id, required this.provider, required this.email, required this.account, required final  Map<String, UserDeviceModel> devices, final  Map<String, dynamic> fcmTokens = const {}, final  Map<String, dynamic> fcmTokenLastActiveAt = const {}, this.notificationPreferences = const NotificationPreferences(), this.path}): _devices = devices,_fcmTokens = fcmTokens,_fcmTokenLastActiveAt = fcmTokenLastActiveAt,super._();
   factory _UserModel.fromJson(Map<String, dynamic> json) => _$UserModelFromJson(json);
 
 /// The user's unique id.
@@ -281,6 +297,22 @@ class _UserModel extends UserModel {
   return EqualUnmodifiableMapView(_fcmTokens);
 }
 
+/// Tracks when each FCM token key was last active.
+/// Key matches the fcmTokens key; value is an ISO-8601 string.
+/// Used by the Cloud Function to skip pushes to stale devices.
+ final  Map<String, dynamic> _fcmTokenLastActiveAt;
+/// Tracks when each FCM token key was last active.
+/// Key matches the fcmTokens key; value is an ISO-8601 string.
+/// Used by the Cloud Function to skip pushes to stale devices.
+@override@JsonKey() Map<String, dynamic> get fcmTokenLastActiveAt {
+  if (_fcmTokenLastActiveAt is EqualUnmodifiableMapView) return _fcmTokenLastActiveAt;
+  // ignore: implicit_dynamic_type
+  return EqualUnmodifiableMapView(_fcmTokenLastActiveAt);
+}
+
+/// Controls which push + in-app notification types this user receives.
+/// Defaults to all notifications enabled.
+@override@JsonKey() final  NotificationPreferences notificationPreferences;
 /// The document reference path, only be
 /// parsed when converted from Firestore
 @override final  String? path;
@@ -298,16 +330,16 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _UserModel&&(identical(other.id, id) || other.id == id)&&(identical(other.provider, provider) || other.provider == provider)&&(identical(other.email, email) || other.email == email)&&(identical(other.account, account) || other.account == account)&&const DeepCollectionEquality().equals(other._devices, _devices)&&const DeepCollectionEquality().equals(other._fcmTokens, _fcmTokens)&&(identical(other.path, path) || other.path == path));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _UserModel&&(identical(other.id, id) || other.id == id)&&(identical(other.provider, provider) || other.provider == provider)&&(identical(other.email, email) || other.email == email)&&(identical(other.account, account) || other.account == account)&&const DeepCollectionEquality().equals(other._devices, _devices)&&const DeepCollectionEquality().equals(other._fcmTokens, _fcmTokens)&&const DeepCollectionEquality().equals(other._fcmTokenLastActiveAt, _fcmTokenLastActiveAt)&&(identical(other.notificationPreferences, notificationPreferences) || other.notificationPreferences == notificationPreferences)&&(identical(other.path, path) || other.path == path));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,provider,email,account,const DeepCollectionEquality().hash(_devices),const DeepCollectionEquality().hash(_fcmTokens),path);
+int get hashCode => Object.hash(runtimeType,id,provider,email,account,const DeepCollectionEquality().hash(_devices),const DeepCollectionEquality().hash(_fcmTokens),const DeepCollectionEquality().hash(_fcmTokenLastActiveAt),notificationPreferences,path);
 
 @override
 String toString() {
-  return 'UserModel(id: $id, provider: $provider, email: $email, account: $account, devices: $devices, fcmTokens: $fcmTokens, path: $path)';
+  return 'UserModel(id: $id, provider: $provider, email: $email, account: $account, devices: $devices, fcmTokens: $fcmTokens, fcmTokenLastActiveAt: $fcmTokenLastActiveAt, notificationPreferences: $notificationPreferences, path: $path)';
 }
 
 
@@ -318,11 +350,11 @@ abstract mixin class _$UserModelCopyWith<$Res> implements $UserModelCopyWith<$Re
   factory _$UserModelCopyWith(_UserModel value, $Res Function(_UserModel) _then) = __$UserModelCopyWithImpl;
 @override @useResult
 $Res call({
- String id, String provider, String email, UserAccount account, Map<String, UserDeviceModel> devices, Map<String, dynamic> fcmTokens, String? path
+ String id, String provider, String email, UserAccount account, Map<String, UserDeviceModel> devices, Map<String, dynamic> fcmTokens, Map<String, dynamic> fcmTokenLastActiveAt, NotificationPreferences notificationPreferences, String? path
 });
 
 
-@override $UserAccountCopyWith<$Res> get account;
+@override $UserAccountCopyWith<$Res> get account;@override $NotificationPreferencesCopyWith<$Res> get notificationPreferences;
 
 }
 /// @nodoc
@@ -335,7 +367,7 @@ class __$UserModelCopyWithImpl<$Res>
 
 /// Create a copy of UserModel
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? provider = null,Object? email = null,Object? account = null,Object? devices = null,Object? fcmTokens = null,Object? path = freezed,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? provider = null,Object? email = null,Object? account = null,Object? devices = null,Object? fcmTokens = null,Object? fcmTokenLastActiveAt = null,Object? notificationPreferences = null,Object? path = freezed,}) {
   return _then(_UserModel(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,provider: null == provider ? _self.provider : provider // ignore: cast_nullable_to_non_nullable
@@ -343,7 +375,9 @@ as String,email: null == email ? _self.email : email // ignore: cast_nullable_to
 as String,account: null == account ? _self.account : account // ignore: cast_nullable_to_non_nullable
 as UserAccount,devices: null == devices ? _self._devices : devices // ignore: cast_nullable_to_non_nullable
 as Map<String, UserDeviceModel>,fcmTokens: null == fcmTokens ? _self._fcmTokens : fcmTokens // ignore: cast_nullable_to_non_nullable
-as Map<String, dynamic>,path: freezed == path ? _self.path : path // ignore: cast_nullable_to_non_nullable
+as Map<String, dynamic>,fcmTokenLastActiveAt: null == fcmTokenLastActiveAt ? _self._fcmTokenLastActiveAt : fcmTokenLastActiveAt // ignore: cast_nullable_to_non_nullable
+as Map<String, dynamic>,notificationPreferences: null == notificationPreferences ? _self.notificationPreferences : notificationPreferences // ignore: cast_nullable_to_non_nullable
+as NotificationPreferences,path: freezed == path ? _self.path : path // ignore: cast_nullable_to_non_nullable
 as String?,
   ));
 }
@@ -356,6 +390,15 @@ $UserAccountCopyWith<$Res> get account {
   
   return $UserAccountCopyWith<$Res>(_self.account, (value) {
     return _then(_self.copyWith(account: value));
+  });
+}/// Create a copy of UserModel
+/// with the given fields replaced by the non-null parameter values.
+@override
+@pragma('vm:prefer-inline')
+$NotificationPreferencesCopyWith<$Res> get notificationPreferences {
+  
+  return $NotificationPreferencesCopyWith<$Res>(_self.notificationPreferences, (value) {
+    return _then(_self.copyWith(notificationPreferences: value));
   });
 }
 }

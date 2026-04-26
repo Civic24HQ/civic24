@@ -10,7 +10,13 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:rxdart/rxdart.dart';
-import 'package:services/services.dart';
+import 'package:services/src/app/app.locator.dart';
+import 'package:services/src/services/core/alert_service.dart';
+import 'package:services/src/services/core/analytics_service.dart';
+import 'package:services/src/services/core/crashlytics_service.dart';
+import 'package:services/src/services/core/session_service.dart';
+import 'package:services/src/services/local_storage/local_storage_service.dart';
+import 'package:services/src/services/local_storage/src/settings_storage_service.dart';
 import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 import 'package:utils/utils.dart';
 
@@ -63,6 +69,7 @@ class AuthenticationService {
   final _settingsStorageService = serviceLocator<SettingsStorageService>();
   final _analyticsService = serviceLocator<AnalyticsService>();
   final _crashlyticsService = serviceLocator<CrashlyticsService>();
+  final _sessionService = serviceLocator<SessionService>();
 
   final Random _randomSecure = Random.secure();
 
@@ -117,7 +124,9 @@ class AuthenticationService {
 
   final List<AuthObserver> _observers = [];
 
-  final List<String> _scopes = ['email', 'profile', 'https://www.googleapis.com/auth/drive.file'];
+  final List<String> _scopes = ['email', 'profile'];
+
+  StreamSubscription<User?>? _authSubscription;
 
   String get currentUserAuthProvider {
     final providerInfo = _firebaseAuth.currentUser?.providerData;
@@ -150,7 +159,7 @@ class AuthenticationService {
     _isAppleSignInAvailable = await canSignInWithApple;
     _log.d('Sign in with Apple available: $_isAppleSignInAvailable');
 
-    _firebaseAuth.authStateChanges().listen((firebaseUser) {
+    _authSubscription = _firebaseAuth.authStateChanges().listen((firebaseUser) {
       _log.d('Authentication state changed: \\${firebaseUser?.uid}');
 
       if (firebaseUser == null) {
@@ -267,7 +276,7 @@ class AuthenticationService {
       _log.d('Creating user account');
       final result = await _firebaseAuth.createUserWithEmailAndPassword(email: email, password: password);
       _analyticsService.logSignUp(currentUserAuthProvider);
-      _crashlyticsService.setupUserProfile(userId: result.user?.uid, email: result.user?.email);
+      _crashlyticsService.setupUserProfile(userId: result.user?.uid);
       _log.i('User Details: ${result.user}');
       // _alertService.showSuccessAlert(title: l10n.featureSignUpSuccess, message: l10n.featureSignUpSuccessHint);
       return result.user != null;
@@ -286,8 +295,9 @@ class AuthenticationService {
       _log.d('Signing in with email and password');
       final result = await _firebaseAuth.signInWithEmailAndPassword(email: email, password: password);
       _analyticsService.logLogin(currentUserAuthProvider);
-      _crashlyticsService.setupUserProfile(userId: result.user?.uid, email: result.user?.email);
+      _crashlyticsService.setupUserProfile(userId: result.user?.uid);
       _log.i('User Details: ${result.user}');
+      _sessionService.recordSession();
       return result.user != null;
     } catch (e) {
       _log.e('Sign in failed: $e');
@@ -309,20 +319,9 @@ class AuthenticationService {
 
       // Authenticate with Google to handle both sign-in and silent sign-in
       final restored = await _googleSignIn.attemptLightweightAuthentication();
-
-      final googleUser = (restored is Future<GoogleSignInAccount?>)
-          ? restored
-          : await _googleSignIn.authenticate(
-              scopeHint: _scopes, // Specify required scopes
-            );
+      final googleUser = restored ?? await _googleSignIn.authenticate(scopeHint: _scopes);
 
       _log.d('googleUser $googleUser');
-
-      if (googleUser == null) {
-        _log.d('Google authentication aborted');
-        _alertService.showToast('Continue with Google aborted');
-        return Future.error('Google authentication aborted');
-      }
 
       // Get authorization for Firebase scopes if needed
       final authClient = _googleSignIn.authorizationClient;
@@ -355,8 +354,8 @@ class AuthenticationService {
         _analyticsService.logLogin(currentUserAuthProvider);
       }
 
-      _crashlyticsService.setupUserProfile(userId: userCredential.user?.uid, email: userCredential.user?.email);
-
+      _crashlyticsService.setupUserProfile(userId: userCredential.user?.uid);
+      _sessionService.recordSession();
       return userCredential.user != null;
     } on GoogleSignInException catch (e) {
       if (isAndroid && _isNoCredentialError(e)) {
@@ -531,7 +530,7 @@ class AuthenticationService {
         _log.d('User logged in with Apple');
         _analyticsService.logLogin(currentUserAuthProvider);
       }
-      _crashlyticsService.setupUserProfile(userId: userCredential.user?.uid, email: userCredential.user?.email);
+      _crashlyticsService.setupUserProfile(userId: userCredential.user?.uid);
 
       return userCredential.user != null;
     } catch (e) {
@@ -564,14 +563,9 @@ class AuthenticationService {
   Future<void> signOut() async {
     _log.d('Signing out user');
     try {
-      // Try to check if user is currently signed In
-      // final isUserSignedIn = await _googleSignIn.attemptLightweightAuthentication();
-
-      // if (isUserSignedIn is Future<GoogleSignInAccount?>) {
       _log.d('Signing out Google user');
       await _googleSignIn.disconnect();
       await _googleSignIn.signOut();
-      // }
 
       await Future.wait([
         _analyticsService.setUserId(null),
@@ -584,6 +578,7 @@ class AuthenticationService {
     } finally {
       await _firebaseAuth.signOut();
       _log.d('User signed out from Firebase');
+      _sessionService.clearSession();
       clearLocalStorage();
       _log.d('Local storage cleared');
     }
@@ -596,8 +591,11 @@ class AuthenticationService {
       await _firebaseAuth.sendPasswordResetEmail(email: email);
     } catch (e) {
       _log.e('Password reset email failed: $e');
-      _alertService.showErrorAlert(title: 'Password Reset Failed', message: exceptionToMessage(e));
     }
+    _alertService.showSuccessAlert(
+      title: 'Password Reset Email Sent',
+      message: 'If an account with that email exists, a reset link has been sent.',
+    );
   }
 
   /// Reauthenticates the user with email and password before
@@ -640,20 +638,9 @@ class AuthenticationService {
         case 'Google':
           // Authenticate with Google to handle both sign-in and silent sign-in
           final restored = await _googleSignIn.attemptLightweightAuthentication();
-
-          final googleUser = (restored is Future<GoogleSignInAccount?>)
-              ? restored
-              : await _googleSignIn.authenticate(
-                  scopeHint: _scopes, // Specify required scopes
-                );
+          final googleUser = restored ?? await _googleSignIn.authenticate(scopeHint: _scopes);
 
           _log.d('googleUser $googleUser');
-
-          if (googleUser == null) {
-            _log.d('Google authentication aborted');
-            _alertService.showToast('Continue with Google aborted');
-            return Future.error('Google authentication aborted');
-          }
 
           // Get authorization for Firebase scopes if needed
           final authClient = _googleSignIn.authorizationClient;
@@ -676,7 +663,10 @@ class AuthenticationService {
           _log.d('Google authentication successful');
         case 'Apple':
           _log.d('Reauthenticating with Apple');
+          final nonce = nonceString(32);
+          final hashedNonce = sha256HashNonce(nonce);
           final appleCredential = await SignInWithApple.getAppleIDCredential(
+            nonce: hashedNonce,
             scopes: [AppleIDAuthorizationScopes.email, AppleIDAuthorizationScopes.fullName],
           );
           if (appleCredential.identityToken == null) {
@@ -685,7 +675,11 @@ class AuthenticationService {
           }
           credential = OAuthProvider(
             'apple.com',
-          ).credential(idToken: appleCredential.identityToken, accessToken: appleCredential.authorizationCode);
+          ).credential(
+            idToken: appleCredential.identityToken,
+            accessToken: appleCredential.authorizationCode,
+            rawNonce: nonce,
+          );
         default:
           _log.w('Unsupported provider: $providerId');
           return false;
@@ -713,6 +707,11 @@ class AuthenticationService {
       clearLocalStorage();
       _log.d('Local storage cleared');
     }
+  }
+
+  Future<void> dispose() async {
+    await _authSubscription?.cancel();
+    _authSubscription = null;
   }
 
   @protected

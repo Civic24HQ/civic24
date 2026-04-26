@@ -26,6 +26,10 @@ import 'package:services/src/test/helpers/test_helpers.mocks.dart';
     MockSpec<UserStorageService>(onMissingStub: OnMissingStub.returnDefault),
     MockSpec<RemoteConfigService>(onMissingStub: OnMissingStub.returnDefault),
     MockSpec<LocationService>(onMissingStub: OnMissingStub.returnDefault),
+    MockSpec<SessionService>(onMissingStub: OnMissingStub.returnDefault),
+    MockSpec<AppInfoService>(onMissingStub: OnMissingStub.returnDefault),
+    MockSpec<AppUpdateService>(onMissingStub: OnMissingStub.returnDefault),
+    MockSpec<NotificationService>(onMissingStub: OnMissingStub.returnDefault),
     // @stacked-mock-spec
   ],
 )
@@ -47,6 +51,10 @@ void registerServices() {
   getAndRegisterUserStorageService();
   getAndRegisterRemoteConfigService();
   getAndRegisterLocationService();
+  getAndRegisterSessionService();
+  getAndRegisterAppInfoService();
+  getAndRegisterAppUpdateService();
+  getAndRegisterNotificationService();
   // @stacked-mock-register
 }
 
@@ -168,6 +176,34 @@ MockLocationService getAndRegisterLocationService() {
   _removeRegistrationIfExists<LocationService>();
   final service = MockLocationService();
   serviceLocator.registerSingleton<LocationService>(service);
+  return service;
+}
+
+MockSessionService getAndRegisterSessionService() {
+  _removeRegistrationIfExists<SessionService>();
+  final service = MockSessionService();
+  serviceLocator.registerSingleton<SessionService>(service);
+  return service;
+}
+
+MockAppInfoService getAndRegisterAppInfoService() {
+  _removeRegistrationIfExists<AppInfoService>();
+  final service = MockAppInfoService();
+  serviceLocator.registerSingleton<AppInfoService>(service);
+  return service;
+}
+
+MockAppUpdateService getAndRegisterAppUpdateService() {
+  _removeRegistrationIfExists<AppUpdateService>();
+  final service = MockAppUpdateService();
+  serviceLocator.registerSingleton<AppUpdateService>(service);
+  return service;
+}
+
+MockNotificationService getAndRegisterNotificationService() {
+  _removeRegistrationIfExists<NotificationService>();
+  final service = MockNotificationService();
+  serviceLocator.registerSingleton<NotificationService>(service);
   return service;
 }
 

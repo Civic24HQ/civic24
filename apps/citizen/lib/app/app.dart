@@ -7,6 +7,7 @@ import 'package:citizen/ui/bottom_sheets/delete_feedback/delete_feedback_sheet.d
 import 'package:citizen/ui/bottom_sheets/delete_verification/delete_verification_sheet.dart';
 import 'package:citizen/ui/dialogs/delete_account/delete_account_dialog.dart';
 import 'package:citizen/ui/dialogs/delete_confirmation/delete_confirmation_dialog.dart';
+import 'package:citizen/ui/dialogs/force_update/force_update_dialog.dart';
 import 'package:citizen/ui/dialogs/loading/loading_dialog.dart';
 import 'package:citizen/ui/dialogs/logout/logout_dialog.dart';
 import 'package:citizen/ui/dialogs/send_password_reset_email/send_password_reset_email_dialog.dart';
@@ -78,6 +79,7 @@ import 'package:styles/styles.dart';
     StackedDialog(classType: UploadMediaDialog),
     StackedDialog(classType: DeleteConfirmationDialog),
     StackedDialog(classType: DeleteAccountDialog),
+    StackedDialog(classType: ForceUpdateDialog),
     // @stacked-dialog
   ],
 )
