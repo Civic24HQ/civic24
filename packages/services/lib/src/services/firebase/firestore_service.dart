@@ -237,7 +237,8 @@ abstract mixin class FirestoreService<T> {
   @protected
   Stream<List<T>> subscribeToListWithQuery({required Query<T> query, int? limit}) {
     log.d('subscribeToListWithQuery() -> limit: $limit');
-    return query.limit(limit ?? 9999).snapshots().map((snapshot) => snapshot.docs.map((e) => e.data()).toList());
+    final q = limit != null ? query.limit(limit) : query;
+    return q.snapshots().map((snapshot) => snapshot.docs.map((e) => e.data()).toList());
   }
 
   /// Subscribes to real-time updates for an entire collection with a custom [Query]

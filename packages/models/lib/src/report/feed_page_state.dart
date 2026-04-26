@@ -14,6 +14,7 @@ class FeedPageState {
   bool hasMore = true;
   bool isLoadingFirstPage = false;
   bool isLoadingNextPage = false;
+  DateTime? lastFetchedAt;
 
   Future<void> dispose() async {
     await liveSubscription?.cancel();

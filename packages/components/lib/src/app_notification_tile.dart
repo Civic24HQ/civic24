@@ -26,7 +26,7 @@ class AppNotificationTile extends StatelessWidget {
         child: Ink(
           padding: AppEdgeInsets.padding12,
           decoration: BoxDecoration(
-            color: context.surface,
+            color: hasBeenSeen ? context.surface : context.primaryFixedDim,
             borderRadius: AppBorderRadius.radius4,
             border: Border.all(color: context.neutralLowest),
           ),

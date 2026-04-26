@@ -21,8 +21,8 @@ class AppInfoService {
   /// Platform build number e.g. "42"
   String get buildNumber => _packageInfo?.buildNumber ?? '—';
 
-  /// Formatted for display in the UI e.g. "1.2.3 (42)"
-  String get displayVersion => '$version ($buildNumber)';
+  /// Formatted for display in the UI e.g. "1.2.3+7"
+  String get displayVersion => '$version+$buildNumber';
 
   /// App name as declared in pubspec.yaml
   String get appName => _packageInfo?.appName ?? '—';

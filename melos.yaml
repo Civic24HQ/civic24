@@ -400,3 +400,15 @@ scripts:
 
   utils:test:
     run: melos exec --fail-fast --scope="utils" --dir-exists="test" -- "flutter test --no-pub"
+
+# ─────────────────────────────
+# 🔧 Backend (Cloud Functions)
+# ─────────────────────────────
+
+  backend:build:
+    run: npm --prefix functions run build
+    description: Compile Cloud Functions TypeScript
+
+  backend:deploy:
+    run: firebase deploy --only functions
+    description: Deploy Cloud Functions to production
