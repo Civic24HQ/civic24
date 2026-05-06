@@ -1129,6 +1129,15 @@ class MockAuthenticationService extends _i1.Mock
           as _i12.Future<void>);
 
   @override
+  _i12.Future<void> dispose() =>
+      (super.noSuchMethod(
+            Invocation.method(#dispose, []),
+            returnValue: _i12.Future<void>.value(),
+            returnValueForMissingStub: _i12.Future<void>.value(),
+          )
+          as _i12.Future<void>);
+
+  @override
   String exceptionToMessage([dynamic exception]) =>
       (super.noSuchMethod(
             Invocation.method(#exceptionToMessage, [exception]),
@@ -1190,6 +1199,12 @@ class MockAlertService extends _i1.Mock implements _i17.AlertService {
   @override
   void addAlertListener(_i17.AlertMixin? listener) => super.noSuchMethod(
     Invocation.method(#addAlertListener, [listener]),
+    returnValueForMissingStub: null,
+  );
+
+  @override
+  void removeAlertListener(_i17.AlertMixin? listener) => super.noSuchMethod(
+    Invocation.method(#removeAlertListener, [listener]),
     returnValueForMissingStub: null,
   );
 
@@ -1839,6 +1854,15 @@ class MockReportService extends _i1.Mock implements _i19.ReportService {
           as _i12.Future<void>);
 
   @override
+  _i12.Future<_i3.Report?> getReportById(String? reportId) =>
+      (super.noSuchMethod(
+            Invocation.method(#getReportById, [reportId]),
+            returnValue: _i12.Future<_i3.Report?>.value(),
+            returnValueForMissingStub: _i12.Future<_i3.Report?>.value(),
+          )
+          as _i12.Future<_i3.Report?>);
+
+  @override
   _i12.Future<void> dispose() =>
       (super.noSuchMethod(
             Invocation.method(#dispose, []),
@@ -2371,9 +2395,12 @@ class MockMediaService extends _i1.Mock implements _i10.MediaService {
           as _i12.Future<List<_i3.ProcessedImage?>>);
 
   @override
-  _i12.Future<_i20.File?> compressImage(_i20.File? imageFile) =>
+  _i12.Future<_i20.File?> compressImage(
+    _i20.File? imageFile, {
+    int? depth = 0,
+  }) =>
       (super.noSuchMethod(
-            Invocation.method(#compressImage, [imageFile]),
+            Invocation.method(#compressImage, [imageFile], {#depth: depth}),
             returnValue: _i12.Future<_i20.File?>.value(),
             returnValueForMissingStub: _i12.Future<_i20.File?>.value(),
           )
