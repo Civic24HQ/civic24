@@ -47,6 +47,7 @@ class CompleteProfileView extends StackedView<CompleteProfileViewModel> with $Co
                           children: [
                             AppSpacing.large,
                             AppTextField(
+                              showRequiredIndicator: true,
                               controller: firstNameController,
                               focusNode: firstNameFocusNode,
                               errorText: viewModel.firstNameValidationMessage,
@@ -59,6 +60,7 @@ class CompleteProfileView extends StackedView<CompleteProfileViewModel> with $Co
                             ),
                             AppSpacing.normal,
                             AppTextField(
+                              showRequiredIndicator: true,
                               controller: lastNameController,
                               focusNode: lastNameFocusNode,
                               errorText: viewModel.lastNameValidationMessage,
@@ -71,6 +73,7 @@ class CompleteProfileView extends StackedView<CompleteProfileViewModel> with $Co
                             ),
                             AppSpacing.normal,
                             AppSearchableDropdownTextField<CountryOption>(
+                              showRequiredIndicator: true,
                               label: l10n.generalCountry,
                               hintText: l10n.generalSelectCountry,
                               value: viewModel.countryOptions
