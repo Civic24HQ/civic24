@@ -19,6 +19,7 @@ class AppSearchableDropdownTextField<T> extends StatefulWidget {
     this.fillColor,
     this.errorText,
     this.isEnabled = true,
+    this.showRequiredIndicator = false,
     this.isDense = true,
   });
 
@@ -28,6 +29,7 @@ class AppSearchableDropdownTextField<T> extends StatefulWidget {
   final List<T> items;
   final String Function(T) itemLabel;
   final ValueChanged<T?> onChanged;
+  final bool showRequiredIndicator;
 
   final Widget Function(T)? leading;
 
@@ -322,13 +324,25 @@ class _AppSearchableDropdownTextFieldState<T> extends State<AppSearchableDropdow
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisSize: MainAxisSize.min,
       children: [
-        Text(
-          widget.label,
-          style: context.bodyMedium?.copyWith(color: context.colorScheme.onSurfaceVariant),
-          maxLines: 3,
-          overflow: TextOverflow.ellipsis,
-          softWrap: false,
-        ),
+        if (widget.label.isNotEmpty) ...[
+          Text.rich(
+            style: context.bodyMedium?.copyWith(color: context.colorScheme.onSurfaceVariant),
+            overflow: TextOverflow.ellipsis,
+            softWrap: false,
+            maxLines: 3,
+            TextSpan(
+              text: widget.label,
+              children: [
+                if (widget.showRequiredIndicator)
+                  TextSpan(
+                    text: ' *',
+                    style: context.bodyMedium?.copyWith(color: context.error),
+                  ),
+              ],
+            ),
+          ),
+          AppSpacing.small,
+        ],
         AppSpacing.small,
         CompositedTransformTarget(
           link: _layerLink,

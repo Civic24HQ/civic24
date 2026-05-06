@@ -22,7 +22,7 @@ class NotificationViewModel extends ReactiveViewModel {
   Future<void> markNotificationAsRead(NotificationData notification) async {
     await _notificationService.markAsRead(notification);
 
-    // TODO: Implement Navigating to Individual Report Detail when it exists
+    // TODO(Civic24): Implement Navigating to Individual Report Detail when it exists
     //   final reportId = notification.reportId;
     //   if (reportId == null || reportId.isEmpty) return;
 

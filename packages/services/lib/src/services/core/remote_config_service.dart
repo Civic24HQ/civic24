@@ -78,7 +78,6 @@ class RemoteConfigService {
   /// URL for the product's Privacy Policy.
   String get privacyPolicyUrl => _remoteConfig.getString(RemoteConfigKeys.productPrivacyUrl);
 
-  // TODO(Civic24): Implement feature to check if user is on latest app version and force update prompt
   /// Minimum allowed app version for forced-update prompts.
   String get minAppVersion => _remoteConfig.getString(RemoteConfigKeys.minAppVersion);
 
