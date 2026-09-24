@@ -4,6 +4,100 @@ Running log for the refactor described in `docs/CIVIC24_REFACTOR_PROMPT.md` (mas
 
 ---
 
+## Phase 1: Toolchain, workspaces and Melos (24 Sept 2026)
+
+Branch `chore/pin-flutter-and-migrate-to-pub-workspaces` (PR 1 of 2). PR 2, the CI repair (`ci/repair-workflows-and-unify-versions`), starts after PR 1 is merged.
+
+**Evidence level reached: L2 (local analysis, generation, format check and tests on macOS). No L3.**
+
+### 1.1 What changed and why
+
+| Change | Why |
+|---|---|
+| `.fvmrc` pins Flutter **3.47.5**; `.gitignore` now ignores only `.fvm/` | One version for developers and CI. The old `**.fvmrc` pattern hid the file |
+| Every pubspec: `sdk >=3.13.0 <4.0.0`, `flutter >=3.47.0` (was exact `3.41.6`) | The exact pin blocked `pub get` on any other Flutter. The range is a minimum; `.fvmrc` is the exact version |
+| Pub workspace: `workspace:` in the root pubspec, `resolution: workspace` in the 11 members | Replaces Melos 6 plus `pubspec_overrides.yaml` |
+| Melos 6.3.3 to **8.9.0**, config moved from `melos.yaml` into the root pubspec | Owner approved Melos 8 (latest; 7.x superseded). `melos.yaml`, 10 `pubspec_overrides.yaml` and the two app lockfiles deleted; one root `pubspec.lock`, seeded from the old citizen lock so only 70 packages moved |
+| Melos scripts repaired | `flutter:pod:install` called scripts that did not exist; `admin:macos:pods` used the citizen scope; `backend:build` and `backend:deploy` used the wrong path; `flutter:check` mixed `run` and `exec` (invalid in Melos 8) |
+| New scripts `flutter:test`, `citizen:run:development/staging/production` | Master plan expects them |
+| Aggregate scripts chain with `&&` | Before, `melos run flutter:analyze` returned 0 even when a package failed |
+| Golden scripts no longer pass `--update-goldens` | They overwrote baselines by default. Only `components:update:golden` updates them |
+| `bin/test.sh` plus `config/test_env.json` | Tests need compile-time environment values; placeholders are non-secret. `flutter test` exit code 79 ("no tests") is treated as success |
+| Removed lints that no longer exist from `packages/rules` | Applied by `dart fix` on the owner's machine; analyzer no longer knows them |
+
+**Dependency changes pulled forward from Phase 2 (owner decision, so the app compiles and tests run on Flutter 3.47.5).** Kept in their own commits so Phase 2 can review them.
+
+| Package | Change | Reason |
+|---|---|---|
+| `solar_icons` | ^0.0.5 to ^0.1.0 | Flutter 3.44 made `IconData` a final class; 0.0.5 subclassed it and no longer compiles |
+| `font_awesome_flutter` | ^10.4.0 to ^11.0.0 | Same reason. 11 icons are `FaIconData`, so `SecurityListTile` now uses `FaIcon` |
+| `freezed` | ^3.1.0 to ^4.0.1 | Generated model code did not compile on Dart 3.13 |
+| `json_serializable`, `json_annotation`, `build_runner`, `mockito` (transitive `analyzer` 10.2 to 13.3) | upgraded to the latest compatible | Needed by freezed 4 and current Dart |
+| `flutter_launcher_icons` | removed from `apps/citizen` and `apps/admin` | Latest 0.14.4 (June 2025) needs `cli_util` ^0.4, Melos 8 needs `cli_util` >=0.5. A root `cli_util` override worked but hid the conflict. Now a global tool (see `AGENTS.md`). The global-tool run is untested by the agent |
+
+Everything else stays on the locked versions; the full upgrade is Phase 2.
+
+### 1.2 Verification (24 Sept 2026, Flutter 3.47.5, macOS)
+
+| Command | Result |
+|---|---|
+| `melos bootstrap` | OK, 11 packages |
+| `melos run flutter:build` | exit 0. The citizen router and locator generate (the Phase 0 `stackedRouterGenerator` crash is gone) |
+| `melos run flutter:analyze` | exit 0, no issues in all apps and packages |
+| `CI=true melos run flutter:format` | exit 0 |
+| Tests (`components`, `constants`, `localization`, `models`, `services`, `styles`, `utils`) | pass. `citizen` and `admin` have no test cases (see 1.4) |
+| App build or launch | **Not run.** Needs the secrets and Firebase files (owner supplies) |
+
+### 1.3 Findings during Phase 1
+
+- **Golden mismatch was not caused by Flutter 3.47.** 19 component golden cases failed with text about 17% wider. The baselines date from 2025-07-25; on 2025-08-29 `AppFilterChip` moved from `bodySmall` (12) to `bodyMedium` (14), and `BaseTextField` changed the same way. CI never ran the tests, so the baselines were stale before this refactor. They were regenerated in their own commit with `components:update:golden` (owner approved investigating first; the investigation showed intentional source changes). Two other candidate causes were checked: Flutter 3.47 draws text with SDF on macOS (affects edge pixels, not width) and Flutter 3.41 makes `FontWeight` control variable-font weight (Poppins is bundled as static files). Neither explains the width change.
+- **Material and Cupertino decoupling (Flutter 3.47) is real but non-breaking now.** They are published as `material_ui` and `cupertino_ui` 1.0. The old `package:flutter/material.dart` imports still work; formal deprecation is planned for the November 2026 stable. It is not what changed the goldens. Migration belongs to a later phase (Phase 8 or its own PR).
+- **Review of `return await` in `CloudinaryStorageService.uploadXFile` (owner edit).** Correct. Both `uploadFile` and `_uploadBytes` catch every exception themselves and return `null`, so awaiting them changes no behavior on those paths; it only makes the outer `catch` effective for anything else that throws in that block. It also clears the `unawaited_return_in_try_block` warning. `uploadXFile` is not called anywhere in the app (only `uploadFileWithRetry` is, from `add_report_viewmodel.dart`); a candidate for removal in Phase 8.
+- **Latent question in `bootstrap.dart`.** It compares `EnvironmentConstants.environment == Environment.production.name` (`production`) while `kEnvProduction` is `Production`. Whether App Check uses the production providers depends on the exact string in `secrets/production.json`. To be checked in Phase 5 when the real secrets are available.
+- **Tool side effects on `pub get`:** Flutter 3.47 adds an `analyzer.exclude` block to `analysis_options.yaml` in the apps, and regenerates `apps/admin` Linux and Windows plugin lists. Both are committed.
+- **Untracked icon changes.** After the commits, launcher icon images and `apps/citizen/ios/Runner.xcodeproj/project.pbxproj` changed in the working tree without an agent command. They look like a run of the launcher-icons tool. Not committed; owner to confirm whether to keep them.
+
+### 1.4 Test cases to add in Phase 8 (backlog)
+
+The workspace has about 27 real test cases: 21 component goldens (10 components) plus 6 single placeholder tests (`constants`, `localization`, `models`, `services`, `styles`, `utils`). Nothing else:
+
+- `apps/citizen`: 0 cases. 27 files under `test/viewmodels/` and 1 golden stub are empty groups with `registerServices` and `locator.reset` only. Viewmodels to cover: add_report, appearance_settings, comment_sheet, complete_profile, delete_confirmation_dialog, delete_feedback_sheet, delete_verification_sheet, force_update_dialog, forgot_password, home, language_settings, loading_dialog, login, logout_dialog, main, notification, onboarding, profile, reports, send_password_reset_email_dialog, settings, signin_security, signup, success, update_password, upload_media_dialog.
+- `apps/admin`: 0 cases (home viewmodel and a golden stub).
+- `packages/services` (18 test files, effectively 1 case): authentication, alert, analytics, app_update, cloudinary_storage (upload success, non-200, retry, `uploadXFile`), firebase storage, media, notification, remote config, report and user services.
+- `packages/models`: JSON round trips for the freezed models (user, report, comment, notification).
+- `packages/utils`, `constants`, `localization`, `styles`: real assertions instead of the placeholder.
+- Integration test: launch, sign in, create a report with a mocked location, see it in the feed.
+- Replace `golden_toolkit` (discontinued) and add goldens for more components.
+
+### 1.5 Tools: what is needed and when
+
+| Tool | State | Needed in |
+|---|---|---|
+| FVM 4.3.1 | Installed. Flutter 3.47.5 is downloaded (`fvm list` shows "Need setup"); the owner has not run setup yet | **Now** (Phase 1): `.fvmrc` and CI read it. Every later phase on a developer machine |
+| Shorebird CLI | **Not installed**; the download did not complete | **Now**, once, to confirm 3.47.5 is supported before the pin is final (docs list 3.47.1). Later in Phase 7 for `shorebird release` base builds, and Phase 3 and 4 checks that native changes need a fresh base release |
+| Firebase CLI, FlutterFire CLI | Not installed | Phase 5 (`flutterfire configure`) and Phase 6 (functions, emulator) |
+| fastlane | Not installed | Phase 7 |
+
+### 1.6 Decision log (Phase 1)
+
+| Decision | Choice | Why |
+|---|---|---|
+| Flutter in Phase 1 | Stay on 3.47.5, fix what breaks now | Owner decision; rejected falling back to 3.41.6 |
+| Phase 2 items done early | Only what 3.47.5 needs to compile, pass analysis and run tests (list in 1.1) | Owner decision; Phase 2 still reviews everything |
+| Melos exit codes and analyzer findings | Fixed in Phase 1 | Owner decision |
+| Golden baselines | Investigated first, then regenerated in a separate commit | Owner decision |
+| `flutter_launcher_icons` | Global tool instead of an override | Owner asked for a real fix, not a workaround |
+| Developers without FVM | Supported: install the Flutter version in `.fvmrc` by other means; pubspec minimum blocks older Flutter | Owner question |
+
+### 1.7 Still open
+
+- Shorebird CLI install and a check that 3.47.5 is supported.
+- FVM setup on the owner machine (`fvm install` in the repo).
+- Confirm or discard the untracked launcher icon and `project.pbxproj` changes.
+- PR 2: CI repair.
+
+---
+
 ## Phase 0: Baseline and audit (24 Sept 2026)
 
 No product code changed. Branch `docs/add-refactor-plan-and-baseline-audit` adds only `AGENTS.md`, `CLAUDE.md`, `docs/*` and this file. All experiments ran in a throwaway copy of the repo outside the working tree.
