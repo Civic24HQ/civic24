@@ -22,7 +22,7 @@ Branch `chore/pin-flutter-and-migrate-to-pub-workspaces` (PR 1 of 2). PR 2, the 
 | New scripts `flutter:test`, `citizen:run:development/staging/production` | Master plan expects them |
 | Aggregate scripts chain with `&&` | Before, `melos run flutter:analyze` returned 0 even when a package failed |
 | Golden scripts no longer pass `--update-goldens` | They overwrote baselines by default. Only `components:update:golden` updates them |
-| `bin/test.sh` plus `config/test_env.json` | Tests need compile-time environment values; placeholders are non-secret. `flutter test` exit code 79 ("no tests") is treated as success |
+| `bin/test.sh`, using the placeholder values now in `apps/citizen/secrets/env.example.json` | Tests need compile-time environment values; placeholders are non-secret. The example file doubles as the test environment (a separate `config/test_env.json` was removed as a duplicate). `flutter test` exit code 79 ("no tests") is treated as success |
 | Removed lints that no longer exist from `packages/rules` | Applied by `dart fix` on the owner's machine; analyzer no longer knows them |
 
 **Dependency changes pulled forward from Phase 2 (owner decision, so the app compiles and tests run on Flutter 3.47.5).** Kept in their own commits so Phase 2 can review them.

@@ -53,7 +53,7 @@ Civic24 is an open-source civic reporting app where citizens report community is
    * The citizen app entry point is `apps/citizen/lib/main.dart`.
    * *Ignore old references in README files to `main_development.dart`—they do not exist.*
 4. **Tests Need Environment Values:**
-   * `EnvironmentConstants` asserts on `String.fromEnvironment` at compile time, so tests only load when compile-time values are supplied. Run tests with `melos run flutter:test` (or `bin/test.sh` inside a package): it passes the non-secret placeholders in `config/test_env.json` and treats "no tests found" (exit 79) as success.
+   * `EnvironmentConstants` asserts on `String.fromEnvironment` at compile time, so tests only load when compile-time values are supplied. Run tests with `melos run flutter:test` (or `bin/test.sh` inside a package): it passes the non-secret placeholders in `apps/citizen/secrets/env.example.json` (it holds placeholder values, so it is both the template for the real flavor files and the test environment; keep it in sync with `EnvironmentConstants`) and treats "no tests found" (exit 79) as success.
 5. **Very Few Real Tests:**
    * `apps/citizen` and `apps/admin` have zero test cases (their test files are empty groups). The workspace has about 27 real cases, 21 of them component goldens. Broader coverage is Phase 8 work.
 6. **Golden Tests Caution:**

@@ -95,7 +95,6 @@ civic24/
 │   ├── styles/           # Design System and Typography
 │   └── utils/            # Utility Methods
 │
-├── config/               # Placeholder (non-secret) environment values for tests
 ├── bin/                  # Helper scripts (format, test)
 ├── .fvmrc                # Pinned Flutter version
 ├── pubspec.yaml          # Workspace definition and Melos scripts

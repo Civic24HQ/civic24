@@ -1,6 +1,7 @@
 #!/bin/sh
-# Runs `flutter test` for the current package with placeholder (non-secret)
-# environment values so EnvironmentConstants assertions pass.
+# Runs `flutter test` for the current package with the placeholder (non-secret)
+# values in apps/citizen/secrets/env.example.json so EnvironmentConstants
+# assertions pass. Real values go in the gitignored secrets/<flavor>.json files.
 #
 # `flutter test` exits with 79 when nothing was run. For an unfiltered run that
 # only means the package has no test cases, so it is reported and treated as
@@ -11,7 +12,7 @@ set -u
 
 ROOT="${MELOS_ROOT_PATH:-$(cd "$(dirname "$0")/.." && pwd)}"
 
-flutter test --no-pub --dart-define-from-file="$ROOT/config/test_env.json" "$@"
+flutter test --no-pub --dart-define-from-file="$ROOT/apps/citizen/secrets/env.example.json" "$@"
 code=$?
 
 if [ "$code" -eq 79 ] && [ "$#" -eq 0 ]; then

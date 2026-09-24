@@ -307,7 +307,7 @@ melos:
       run: melos exec --fail-fast --scope="components" --dir-exists="test" -- "$MELOS_ROOT_PATH/bin/test.sh --tags golden"
 
     components:update:golden:
-      run: melos exec --fail-fast --scope="components" --dir-exists="test" -- "flutter test --tags golden --update-goldens --no-pub --dart-define-from-file=$MELOS_ROOT_PATH/config/test_env.json"
+      run: melos exec --fail-fast --scope="components" --dir-exists="test" -- "flutter test --tags golden --update-goldens --no-pub --dart-define-from-file=$MELOS_ROOT_PATH/apps/citizen/secrets/env.example.json"
 
     # ─────────────────────────────
     # 📦 Constants Package-Specific Commands
