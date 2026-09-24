@@ -184,7 +184,7 @@ The owner will add these manually when a step needs them. The first step that ne
 - Every flavor uses `applicationIdSuffix`. Development and staging inherit main's label placeholder "Civic24" (same app name on device for all flavors).
 
 **Firebase and App Check**
-- `apps/citizen/firebase.json` and `backend/.firebaserc` reference only `civic24-sdg11`. Owner confirmed: `civic24-sdg11` is **production**; a second project serves development and staging (name not yet given). Stated as "three environments, two Firebase projects" unless the owner corrects this.
+- `apps/citizen/firebase.json` and `backend/.firebaserc` reference only `civic24-sdg11`. Owner confirmed: production = `civic24-sdg11` (ID `civic24-sdg11`); development and staging = `civic24test` (ID `civic24test-f9352`). Three environments, two Firebase projects. Whether development and staging are separate apps inside `civic24test-f9352` (they need separate Android/iOS apps per flavor id) is to be confirmed in Phase 5.
 - `bootstrap.dart` (`connectToFirebase`) activates App Check with `AndroidPlayIntegrityProvider` and `AppleDeviceCheckProvider` when `environment == production`, and the debug providers otherwise. iOS production uses DeviceCheck, not App Attest (the master plan's Phase 5 asks to prepare App Attest with DeviceCheck fallback).
 
 **Firestore rules and backend**
@@ -249,7 +249,7 @@ The owner will add these manually when a step needs them. The first step that ne
 ### 0.13 Owner requests (nothing is needed before Phase 1 starts, except confirmations)
 
 1. Confirm **Melos 8.x** (latest is 8.9.0; the master plan's 7.x is superseded) and **Flutter 3.47.x** as the pin.
-2. Log in to the Firebase console and clear the inactivity notice. Give the name and ID of the development and staging project and say if development and staging share it.
+2. Log in to the Firebase console and clear the inactivity notice. Done: project IDs recorded in 0.10.
 3. For Phase 1 verification (build and test runs): the three `secrets/*.json` files. Placeholders are enough for tests. Real ones are needed to launch the app.
 4. Later: the three `google-services.json` and `GoogleService-Info.plist` files, xcconfigs, keystore and `key.properties`, Play App Signing SHA-1/SHA-256, Apple Developer and App Store Connect access, APNs key, test accounts, reviewer account.
 5. Install FVM SDKs if the background install did not finish (0.9). Install the Firebase CLI, FlutterFire CLI, Shorebird CLI and fastlane when their phases start.
