@@ -79,11 +79,13 @@ With FVM (recommended). `MELOS_SDK_PATH` makes Melos scripts use the FVM Flutter
 fvm install                            # installs the Flutter version pinned in .fvmrc
 export MELOS_SDK_PATH=.fvm/flutter_sdk
 fvm dart pub global activate melos
+export PATH="$PATH:$HOME/.pub-cache/bin"   # add to ~/.zshrc too, or `melos` is "command not found"
 melos bootstrap           # workspace: one root pubspec.lock, no pubspec_overrides.yaml
 ```
 Without FVM (the Flutter on your PATH must match `.fvmrc`):
 ```bash
 dart pub global activate melos
+export PATH="$PATH:$HOME/.pub-cache/bin"   # add to ~/.zshrc too, or `melos` is "command not found"
 melos bootstrap
 ```
 Melos scripts call each other through the `melos` command, so Melos must be activated globally (not only run with `dart run`). All `melos ...` commands below are the same with or without FVM.

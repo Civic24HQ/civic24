@@ -59,6 +59,7 @@ fvm install
 fvm flutter --version                  # should match .fvmrc
 export MELOS_SDK_PATH=.fvm/flutter_sdk # makes Melos scripts use the FVM SDK
 fvm dart pub global activate melos
+export PATH="$PATH:$HOME/.pub-cache/bin"   # add to ~/.zshrc too, or `melos` is "command not found"
 melos bootstrap
 ```
 
@@ -67,6 +68,7 @@ melos bootstrap
 # (the SDK on your PATH must match it), then:
 flutter --version
 dart pub global activate melos
+export PATH="$PATH:$HOME/.pub-cache/bin"   # add to ~/.zshrc too, or `melos` is "command not found"
 melos bootstrap
 ```
 

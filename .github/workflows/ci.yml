@@ -63,25 +63,14 @@ jobs:
       - name: Bootstrap the workspace
         run: melos bootstrap
 
-      - name: Generate code
-        run: melos run flutter:build
+      # Generates code and fails if that changed any committed file, meaning
+      # someone forgot to run `melos run flutter:build` and commit the result.
+      - name: Generate code and check it is committed
+        run: bin/check_generated.sh
 
       # CI=true makes the format script fail instead of rewriting files.
       - name: Check formatting
         run: melos run flutter:format
-
-      # Generated files are committed. If generating changed anything, someone
-      # forgot to run `melos run flutter:build` and commit the result.
-      # Platform plugin registrants are written by `flutter pub get` and differ
-      # between operating systems, so they are excluded from this check.
-      - name: Check generated files are up to date
-        run: |
-          changes="$(git status --porcelain -- . ':(exclude)**/GeneratedPluginRegistrant.*' ':(exclude)**/generated_plugin*')"
-          if [ -n "$changes" ]; then
-            echo "::error::Generated files are out of date. Run 'melos run flutter:build' and commit the changes."
-            echo "$changes"
-            exit 1
-          fi
 
       - name: Analyze
         run: melos run flutter:analyze
