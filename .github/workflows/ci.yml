@@ -72,12 +72,14 @@ jobs:
 
       # Generated files are committed. If generating changed anything, someone
       # forgot to run `melos run flutter:build` and commit the result.
+      # Platform plugin registrants are written by `flutter pub get` and differ
+      # between operating systems, so they are excluded from this check.
       - name: Check generated files are up to date
         run: |
-          if [ -n "$(git status --porcelain)" ]; then
+          changes="$(git status --porcelain -- . ':(exclude)**/GeneratedPluginRegistrant.*' ':(exclude)**/generated_plugin*')"
+          if [ -n "$changes" ]; then
             echo "::error::Generated files are out of date. Run 'melos run flutter:build' and commit the changes."
-            git status --short
-            git diff --stat
+            echo "$changes"
             exit 1
           fi
 
