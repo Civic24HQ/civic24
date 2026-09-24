@@ -68,7 +68,7 @@ class Tappable extends StatelessWidget {
   /// {@macro tappable.raw}
   const Tappable.raw({
     required this.child,
-    required TappableVariant variant,
+    required this._variant,
     super.key,
     this.onTap,
     this.onDoubleTap,
@@ -88,7 +88,7 @@ class Tappable extends StatelessWidget {
     this.scaleAlignment = Alignment.center,
     this.boxShadow,
     this.enableFeedback = true,
-  }) : _variant = variant;
+  });
 
   /// {@macro tappable.faded}
   const Tappable.faded({

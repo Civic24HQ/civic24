@@ -29,7 +29,7 @@ class SecurityListTile extends StatelessWidget {
   Widget build(BuildContext context) {
     final leadingWidget = switch (alert) {
       SecurityAlertType.google => Assets.svg.googleLogo.svg(width: AppDimensions.size24, height: AppDimensions.size24),
-      SecurityAlertType.apple => const Icon(FontAwesomeIcons.apple, size: AppDimensions.size24),
+      SecurityAlertType.apple => const FaIcon(FontAwesomeIcons.apple, size: AppDimensions.size24),
       SecurityAlertType.other => Icon(
         SolarIconsOutline.lockPassword,
         color: context.onPrimaryContainer,

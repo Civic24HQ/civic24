@@ -37,9 +37,9 @@ This monorepo is managed using **Melos** to handle interdependencies between pac
 
 Make sure the following tools are installed:
 
-- [Flutter SDK](https://flutter.dev/docs/get-started/install)
-- [Dart SDK](https://dart.dev/get-dart)
-- [Melos](https://melos.invertase.dev/)
+- [Flutter SDK](https://flutter.dev/docs/get-started/install), the exact version is pinned in [`.fvmrc`](.fvmrc) (currently 3.47.5). The easiest way to get it is [FVM](https://fvm.app/) (`brew install fvm`), but FVM is optional: any install of that Flutter version works
+- Dart SDK (comes with Flutter)
+- [Melos](https://melos.invertase.dev/) 8 (`dart pub global activate melos`)
 - [Firebase CLI](https://firebase.google.com/docs/cli)
 - [Supabase CLI](https://supabase.com/docs/guides/cli)
 - [Git](https://git-scm.com/)
@@ -52,12 +52,27 @@ Make sure the following tools are installed:
 ```bash
 git clone https://github.com/Civic24HQ/civic24
 cd civic24
+
+# With FVM (recommended): installs the Flutter version in .fvmrc,
+# then runs the workspace's own Melos through FVM's Flutter and Dart.
+fvm install
+fvm flutter --version                  # should match .fvmrc
+export MELOS_SDK_PATH=.fvm/flutter_sdk # makes Melos scripts use the FVM SDK
+fvm flutter pub get
+fvm dart run melos bootstrap
+```
+
+```bash
+# Without FVM: install the Flutter version in .fvmrc yourself
+# (the SDK on your PATH must match it), then:
+flutter --version
 dart pub global activate melos
-melos clean
 melos bootstrap
 ```
 
-This will link all workspace dependencies across apps and packages.
+The rest of this README writes `melos ...`. With FVM, run the same command as `fvm dart run melos ...` (with `MELOS_SDK_PATH` exported). The pubspecs require `flutter >= 3.47.0`, so `pub get` stops with a clear message on an older Flutter.
+
+The repository is a Dart pub workspace: there is a single `pubspec.lock` at the root and no `pubspec_overrides.yaml` files. Melos scripts live in the root `pubspec.yaml` under `melos:`.
 
 ---
 
@@ -80,8 +95,9 @@ civic24/
 │   ├── styles/           # Design System and Typography
 │   └── utils/            # Utility Methods
 │
-├── melos.yaml
-├── pubspec.yaml
+├── bin/                  # Helper scripts (format, test)
+├── .fvmrc                # Pinned Flutter version
+├── pubspec.yaml          # Workspace definition and Melos scripts
 └── README.md
 ```
 
@@ -94,10 +110,21 @@ civic24/
 ```bash
 melos bootstrap            # Link and install all packages
 melos clean                # Clean all builds
-melos flutter:format       # Run custom format script for apps and packages
-melos localization:intl    # Generate localization files
-melos flutter:build        # Runs build for all apps and packages
-melos flutter:analyze      # Static code analysis for apps and packages
+melos run flutter:format   # Run custom format script for apps and packages
+melos run localization:intl    # Generate localization files
+melos run flutter:build    # Runs build for all apps and packages
+melos run flutter:analyze  # Static code analysis for apps and packages
+melos run flutter:test     # Runs tests (placeholder env values, never updates goldens)
+melos run citizen:run:development  # Run the citizen app (needs apps/citizen/secrets/development.json)
+```
+
+Golden baselines are only updated on purpose, with `melos run components:update:golden`.
+
+Launcher icons are generated with a global tool, not a workspace dependency:
+
+```bash
+dart pub global activate flutter_launcher_icons
+cd apps/citizen && dart pub global run flutter_launcher_icons -f flutter_launcher_icons-development.yaml
 ```
 
 ---

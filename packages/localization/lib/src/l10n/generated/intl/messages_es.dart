@@ -53,9 +53,10 @@ class MessageLookup extends MessageLookupByLibrary {
     "featureCategoryTypeAbandoned": MessageLookupByLibrary.simpleMessage(
       "Proyectos abandonados",
     ),
-    "featureCategoryTypeAbandonedDescription": MessageLookupByLibrary.simpleMessage(
-      "Informa sobre proyectos gubernamentales o comunitarios incompletos o abandonados en tu localidad.",
-    ),
+    "featureCategoryTypeAbandonedDescription":
+        MessageLookupByLibrary.simpleMessage(
+          "Informa sobre proyectos gubernamentales o comunitarios incompletos o abandonados en tu localidad.",
+        ),
     "featureCategoryTypeDetailedAbandoned":
         MessageLookupByLibrary.simpleMessage(
           "Proyectos abandonados e incompletos",
@@ -87,9 +88,10 @@ class MessageLookup extends MessageLookupByLibrary {
     "featureCategoryTypeEducation": MessageLookupByLibrary.simpleMessage(
       "Educación",
     ),
-    "featureCategoryTypeEducationDescription": MessageLookupByLibrary.simpleMessage(
-      "Informa sobre edificios escolares deteriorados, salas comunitarias cerradas o bibliotecas descuidadas.",
-    ),
+    "featureCategoryTypeEducationDescription":
+        MessageLookupByLibrary.simpleMessage(
+          "Informa sobre edificios escolares deteriorados, salas comunitarias cerradas o bibliotecas descuidadas.",
+        ),
     "featureCategoryTypeGovernance": MessageLookupByLibrary.simpleMessage(
       "Gobernanza",
     ),
@@ -100,9 +102,10 @@ class MessageLookup extends MessageLookupByLibrary {
     "featureCategoryTypeHealth": MessageLookupByLibrary.simpleMessage(
       "Salud y saneamiento",
     ),
-    "featureCategoryTypeHealthDescription": MessageLookupByLibrary.simpleMessage(
-      "Informa sobre servicios sanitarios públicos sucios, mala higiene en clínicas, aguas residuales abiertas o condiciones de salud inseguras.",
-    ),
+    "featureCategoryTypeHealthDescription":
+        MessageLookupByLibrary.simpleMessage(
+          "Informa sobre servicios sanitarios públicos sucios, mala higiene en clínicas, aguas residuales abiertas o condiciones de salud inseguras.",
+        ),
     "featureCategoryTypeLight": MessageLookupByLibrary.simpleMessage(
       "Iluminación y electricidad",
     ),
@@ -118,9 +121,10 @@ class MessageLookup extends MessageLookupByLibrary {
     "featureCategoryTypeSecurity": MessageLookupByLibrary.simpleMessage(
       "Seguridad",
     ),
-    "featureCategoryTypeSecurityDescription": MessageLookupByLibrary.simpleMessage(
-      "Informa sobre zonas inseguras, infraestructuras de seguridad dañadas, acoso en la calle o lugares de aglomeración.",
-    ),
+    "featureCategoryTypeSecurityDescription":
+        MessageLookupByLibrary.simpleMessage(
+          "Informa sobre zonas inseguras, infraestructuras de seguridad dañadas, acoso en la calle o lugares de aglomeración.",
+        ),
     "featureCategoryTypeUrban": MessageLookupByLibrary.simpleMessage(
       "Infracciones de zonificación",
     ),

@@ -96,9 +96,10 @@ class MessageLookup extends MessageLookupByLibrary {
     "featureCategoryTypeHealth": MessageLookupByLibrary.simpleMessage(
       "الصحة والصرف الصحي",
     ),
-    "featureCategoryTypeHealthDescription": MessageLookupByLibrary.simpleMessage(
-      "أبلغ عن دورات مياه عامة قذرة، سوء النظافة في العيادات، مجاري مياه مكشوفة أو ظروف صحية غير آمنة.",
-    ),
+    "featureCategoryTypeHealthDescription":
+        MessageLookupByLibrary.simpleMessage(
+          "أبلغ عن دورات مياه عامة قذرة، سوء النظافة في العيادات، مجاري مياه مكشوفة أو ظروف صحية غير آمنة.",
+        ),
     "featureCategoryTypeLight": MessageLookupByLibrary.simpleMessage(
       "الإضاءة والكهرباء",
     ),
@@ -114,9 +115,10 @@ class MessageLookup extends MessageLookupByLibrary {
     "featureCategoryTypeSecurity": MessageLookupByLibrary.simpleMessage(
       "الأمن",
     ),
-    "featureCategoryTypeSecurityDescription": MessageLookupByLibrary.simpleMessage(
-      "أبلغ عن مناطق غير آمنة، بنية أمنية مكسورة، تحرّش في الشوارع أو أماكن تجمع.",
-    ),
+    "featureCategoryTypeSecurityDescription":
+        MessageLookupByLibrary.simpleMessage(
+          "أبلغ عن مناطق غير آمنة، بنية أمنية مكسورة، تحرّش في الشوارع أو أماكن تجمع.",
+        ),
     "featureCategoryTypeUrban": MessageLookupByLibrary.simpleMessage(
       "انتهاكات التخطيط العمراني",
     ),

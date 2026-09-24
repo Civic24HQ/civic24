@@ -34,9 +34,10 @@ class MessageLookup extends MessageLookupByLibrary {
     "featureCategoryTypeAbandoned": MessageLookupByLibrary.simpleMessage(
       "Verlassene Projekte",
     ),
-    "featureCategoryTypeAbandonedDescription": MessageLookupByLibrary.simpleMessage(
-      "Melden Sie unvollständige oder verlassene Regierungs-/Gemeinschaftsprojekte in Ihrer Nähe.",
-    ),
+    "featureCategoryTypeAbandonedDescription":
+        MessageLookupByLibrary.simpleMessage(
+          "Melden Sie unvollständige oder verlassene Regierungs-/Gemeinschaftsprojekte in Ihrer Nähe.",
+        ),
     "featureCategoryTypeDetailedAbandoned":
         MessageLookupByLibrary.simpleMessage(
           "Verlassene & unvollständige Projekte",
@@ -68,9 +69,10 @@ class MessageLookup extends MessageLookupByLibrary {
     "featureCategoryTypeEducation": MessageLookupByLibrary.simpleMessage(
       "Bildung",
     ),
-    "featureCategoryTypeEducationDescription": MessageLookupByLibrary.simpleMessage(
-      "Melden Sie verfallene Schulgebäude, verschlossene Gemeinschaftsräume oder vernachlässigte Bibliotheken.",
-    ),
+    "featureCategoryTypeEducationDescription":
+        MessageLookupByLibrary.simpleMessage(
+          "Melden Sie verfallene Schulgebäude, verschlossene Gemeinschaftsräume oder vernachlässigte Bibliotheken.",
+        ),
     "featureCategoryTypeGovernance": MessageLookupByLibrary.simpleMessage(
       "Verwaltung",
     ),
@@ -81,9 +83,10 @@ class MessageLookup extends MessageLookupByLibrary {
     "featureCategoryTypeHealth": MessageLookupByLibrary.simpleMessage(
       "Gesundheit & Sanitär",
     ),
-    "featureCategoryTypeHealthDescription": MessageLookupByLibrary.simpleMessage(
-      "Melden Sie schmutzige öffentliche Toiletten, schlechte Hygiene in Kliniken, offene Abwässer oder unsichere Gesundheitsbedingungen.",
-    ),
+    "featureCategoryTypeHealthDescription":
+        MessageLookupByLibrary.simpleMessage(
+          "Melden Sie schmutzige öffentliche Toiletten, schlechte Hygiene in Kliniken, offene Abwässer oder unsichere Gesundheitsbedingungen.",
+        ),
     "featureCategoryTypeLight": MessageLookupByLibrary.simpleMessage(
       "Beleuchtung & Strom",
     ),
@@ -99,9 +102,10 @@ class MessageLookup extends MessageLookupByLibrary {
     "featureCategoryTypeSecurity": MessageLookupByLibrary.simpleMessage(
       "Sicherheit",
     ),
-    "featureCategoryTypeSecurityDescription": MessageLookupByLibrary.simpleMessage(
-      "Melden Sie unsichere Gebiete, beschädigte Sicherheitsinfrastruktur, Belästigung auf der Straße oder Orte mit hoher Kriminalität.",
-    ),
+    "featureCategoryTypeSecurityDescription":
+        MessageLookupByLibrary.simpleMessage(
+          "Melden Sie unsichere Gebiete, beschädigte Sicherheitsinfrastruktur, Belästigung auf der Straße oder Orte mit hoher Kriminalität.",
+        ),
     "featureCategoryTypeUrban": MessageLookupByLibrary.simpleMessage(
       "Zonierungsverstöße",
     ),

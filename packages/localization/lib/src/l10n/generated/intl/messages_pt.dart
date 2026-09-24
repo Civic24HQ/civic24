@@ -34,9 +34,10 @@ class MessageLookup extends MessageLookupByLibrary {
     "featureCategoryTypeAbandoned": MessageLookupByLibrary.simpleMessage(
       "Projetos abandonados",
     ),
-    "featureCategoryTypeAbandonedDescription": MessageLookupByLibrary.simpleMessage(
-      "Reporte projetos governamentais ou comunitários incompletos ou abandonados em sua localidade.",
-    ),
+    "featureCategoryTypeAbandonedDescription":
+        MessageLookupByLibrary.simpleMessage(
+          "Reporte projetos governamentais ou comunitários incompletos ou abandonados em sua localidade.",
+        ),
     "featureCategoryTypeDetailedAbandoned":
         MessageLookupByLibrary.simpleMessage(
           "Projetos abandonados e incompletos",
@@ -66,9 +67,10 @@ class MessageLookup extends MessageLookupByLibrary {
     "featureCategoryTypeEducation": MessageLookupByLibrary.simpleMessage(
       "Educação",
     ),
-    "featureCategoryTypeEducationDescription": MessageLookupByLibrary.simpleMessage(
-      "Reporte prédios escolares em ruínas, centros comunitários fechados ou bibliotecas negligenciadas.",
-    ),
+    "featureCategoryTypeEducationDescription":
+        MessageLookupByLibrary.simpleMessage(
+          "Reporte prédios escolares em ruínas, centros comunitários fechados ou bibliotecas negligenciadas.",
+        ),
     "featureCategoryTypeGovernance": MessageLookupByLibrary.simpleMessage(
       "Governança",
     ),
@@ -79,9 +81,10 @@ class MessageLookup extends MessageLookupByLibrary {
     "featureCategoryTypeHealth": MessageLookupByLibrary.simpleMessage(
       "Saúde e saneamento",
     ),
-    "featureCategoryTypeHealthDescription": MessageLookupByLibrary.simpleMessage(
-      "Reporte banheiros públicos sujos, higiene inadequada em clínicas, esgoto a céu aberto ou condições de saúde inseguras.",
-    ),
+    "featureCategoryTypeHealthDescription":
+        MessageLookupByLibrary.simpleMessage(
+          "Reporte banheiros públicos sujos, higiene inadequada em clínicas, esgoto a céu aberto ou condições de saúde inseguras.",
+        ),
     "featureCategoryTypeLight": MessageLookupByLibrary.simpleMessage(
       "Iluminação e eletricidade",
     ),
@@ -97,9 +100,10 @@ class MessageLookup extends MessageLookupByLibrary {
     "featureCategoryTypeSecurity": MessageLookupByLibrary.simpleMessage(
       "Segurança",
     ),
-    "featureCategoryTypeSecurityDescription": MessageLookupByLibrary.simpleMessage(
-      "Reporte áreas inseguras, infraestrutura de segurança danificada, assédio na rua ou zonas de aglomeração.",
-    ),
+    "featureCategoryTypeSecurityDescription":
+        MessageLookupByLibrary.simpleMessage(
+          "Reporte áreas inseguras, infraestrutura de segurança danificada, assédio na rua ou zonas de aglomeração.",
+        ),
     "featureCategoryTypeUrban": MessageLookupByLibrary.simpleMessage(
       "Violações de zoneamento",
     ),

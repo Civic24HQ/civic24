@@ -42,25 +42,27 @@ Civic24 is an open-source civic reporting app where citizens report community is
 > [!NOTE]  
 > These are temporary observations to recheck, not permanent design rules. When you resolve an issue during a phase, remove or update it here.
 
-1. **Flutter Version Differences:**
-   * Package manifests specify Flutter `3.41.6` and Dart `>=3.10.7 <4.0.0`.
-   * CI workflows are currently inconsistent: `.github/workflows/ci` uses Flutter `3.32.6`, while `.github/workflows/cd.yml` uses `3.38.7`.
-   * Standardize the version using `.fvmrc` and workspace pubspec files.
-   * Latest stable Flutter is 3.47.5 (Dart 3.13.4) as of 24 Sept 2026. The exact `flutter: 3.41.6` pin in every pubspec blocks `pub get` on any other Flutter.
-   * `.gitignore` currently ignores `.fvmrc`; un-ignore it when `.fvmrc` is added (Phase 1).
+1. **Flutter Version:**
+   * `.fvmrc` pins Flutter `3.47.5` (Dart 3.13.4). Pubspecs require `flutter >=3.47.0` and `sdk >=3.13.0 <4.0.0`. Change the version in `.fvmrc` only, then bump the pubspec minimum when needed.
+   * CI workflows are still inconsistent until the CI repair PR merges: `.github/workflows/ci` uses Flutter `3.32.6`, while `.github/workflows/cd.yml` uses `3.38.7`. They should read `.fvmrc`.
+   * FVM is optional for developers; the pinned version is what matters.
+   * Flutter 3.47 starts decoupling Material and Cupertino into `material_ui` and `cupertino_ui`. The old `package:flutter/material.dart` imports still work; formal deprecation is planned for the November 2026 stable. Plan the migration for a later phase.
 2. **CI File Missing Extension:**
    * The file `.github/workflows/ci` has no `.yml` extension, so GitHub Actions ignores it until renamed to `ci.yml`.
 3. **Single Entry Point:**
    * The citizen app entry point is `apps/citizen/lib/main.dart`.
    * *Ignore old references in README files to `main_development.dart`—they do not exist.*
 4. **Tests Need Environment Values:**
-   * `EnvironmentConstants` asserts on `String.fromEnvironment` at compile time, so `services`, `components` and `citizen` tests only load when the compile-time values are supplied. Use `--dart-define-from-file=<file>` or repeated `--dart-define=KEY=value` options; CI must provide non-secret placeholder values one way or the other. Placeholder values are enough for tests.
-5. **Stale Generator Stack:**
-   * The locked `analyzer` 7.7.1 cannot read Dart 3.10+ syntax, so `stackedRouterGenerator` fails on Flutter 3.47. A dependency upgrade (Phase 2) is required.
+   * `EnvironmentConstants` asserts on `String.fromEnvironment` at compile time, so tests only load when compile-time values are supplied. Run tests with `melos run flutter:test` (or `bin/test.sh` inside a package): it passes the non-secret placeholders in `apps/citizen/secrets/env.example.json` (it holds placeholder values, so it is both the template for the real flavor files and the test environment; keep it in sync with `EnvironmentConstants`) and treats "no tests found" (exit 79) as success.
+5. **Very Few Real Tests:**
+   * `apps/citizen` and `apps/admin` have zero test cases (their test files are empty groups). The workspace has about 27 real cases, 21 of them component goldens. Broader coverage is Phase 8 work.
 6. **Golden Tests Caution:**
-   * `melos run test:golden` includes `--update-goldens`.
-   * **Do not** run this during regular testing, or it will overwrite golden test images without meaning to.
-7. **Secrets are Not in Git:**
+   * `test:golden` and the `*:golden` scripts run goldens without changing baselines. Only `melos run components:update:golden` overwrites them, and only for an intentional visual change.
+   * Golden assertions run on macOS and Windows only (`flutter_test_config.dart`), so Linux CI skips them.
+   * `golden_toolkit` is discontinued; replacing it is Phase 2 work.
+7. **Launcher Icons:**
+   * `flutter_launcher_icons` is not a workspace dependency (it needs `cli_util` 0.4 while Melos 8 needs 0.5). Run it as a global tool: `dart pub global activate flutter_launcher_icons`, then `dart pub global run flutter_launcher_icons -f <config>` from the app folder.
+8. **Secrets are Not in Git:**
    * Flavor JSON files, Google service files, and keystores are gitignored.
    * Real citizen Firebase and OAuth configs are absent on fresh checkouts; environment-specific auth cannot be verified without credentials and project access. Never claim tests passed if real credentials or active Firebase settings are missing.
 
@@ -71,11 +73,20 @@ Civic24 is an open-source civic reporting app where citizens report community is
 Run all commands from the **repository root** unless stated otherwise.
 
 ### 3.1 Bootstrap & Setup
+With FVM (recommended). The workspace's own Melos runs through FVM's Dart, and `MELOS_SDK_PATH` makes Melos scripts use the FVM Flutter:
+```bash
+fvm install                            # installs the Flutter version pinned in .fvmrc
+export MELOS_SDK_PATH=.fvm/flutter_sdk
+fvm flutter pub get
+fvm dart run melos bootstrap           # workspace: one root pubspec.lock, no pubspec_overrides.yaml
+```
+Without FVM (the Flutter on your PATH must match `.fvmrc`):
 ```bash
 dart pub global activate melos
-melos clean
 melos bootstrap
 ```
+Every `melos ...` command in this file is `fvm dart run melos ...` on the FVM path.
+Melos 8 config and every script live in the root `pubspec.yaml` under `melos:` (there is no `melos.yaml`). Aggregate scripts stop at the first failing step.
 
 ### 3.2 Code Generation & Localization
 Run generation after editing Stacked views, Freezed models, assets, or localization:
@@ -117,6 +128,9 @@ melos run citizen:analyze
 
 ### 3.5 Testing
 ```bash
+# Run all tests (placeholder env values, goldens never updated)
+melos run flutter:test
+
 # Run citizen app unit and widget tests
 melos run citizen:test
 
@@ -126,7 +140,7 @@ melos run <package>:test
 # Run all package tests
 melos exec --dir-exists="test" -- "flutter test --no-pub"
 
-# NOTE: Do NOT run 'melos run test:golden' unless you intentionally want to update images!
+# NOTE: only 'melos run components:update:golden' updates golden images. Use it only for an intentional visual change.
 ```
 
 ### 3.6 Running the App

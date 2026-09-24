@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // coverage:ignore-file
-// ignore_for_file: type=lint
+// ignore_for_file: type=lint, type=warning, deprecated_member_use, deprecated_member_use_from_same_package
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'report_data.dart';
@@ -9,6 +9,7 @@ part of 'report_data.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
 // dart format off
 T _$identity<T>(T value) => value;
 
@@ -47,16 +48,21 @@ $ReportDataCopyWith<ReportData> get copyWith => _$ReportDataCopyWithImpl<ReportD
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is ReportData&&(identical(other.reportId, reportId) || other.reportId == reportId)&&(identical(other.firstName, firstName) || other.firstName == firstName)&&(identical(other.lastName, lastName) || other.lastName == lastName)&&(identical(other.country, country) || other.country == country)&&(identical(other.state, state) || other.state == state)&&(identical(other.content, content) || other.content == content)&&(identical(other.likeCount, likeCount) || other.likeCount == likeCount)&&(identical(other.dislikeCount, dislikeCount) || other.dislikeCount == dislikeCount)&&(identical(other.commentCount, commentCount) || other.commentCount == commentCount)&&(identical(other.bookmarkCount, bookmarkCount) || other.bookmarkCount == bookmarkCount)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt)&&const DeepCollectionEquality().equals(other.media, media)&&(identical(other.userId, userId) || other.userId == userId)&&(identical(other.userImageUrl, userImageUrl) || other.userImageUrl == userImageUrl)&&const DeepCollectionEquality().equals(other.categoryTypes, categoryTypes)&&(identical(other.path, path) || other.path == path));
+  final _this = this as ReportData;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is ReportData&&(identical(other.reportId, _this.reportId) || other.reportId == _this.reportId)&&(identical(other.firstName, _this.firstName) || other.firstName == _this.firstName)&&(identical(other.lastName, _this.lastName) || other.lastName == _this.lastName)&&(identical(other.country, _this.country) || other.country == _this.country)&&(identical(other.state, _this.state) || other.state == _this.state)&&(identical(other.content, _this.content) || other.content == _this.content)&&(identical(other.likeCount, _this.likeCount) || other.likeCount == _this.likeCount)&&(identical(other.dislikeCount, _this.dislikeCount) || other.dislikeCount == _this.dislikeCount)&&(identical(other.commentCount, _this.commentCount) || other.commentCount == _this.commentCount)&&(identical(other.bookmarkCount, _this.bookmarkCount) || other.bookmarkCount == _this.bookmarkCount)&&(identical(other.createdAt, _this.createdAt) || other.createdAt == _this.createdAt)&&(identical(other.updatedAt, _this.updatedAt) || other.updatedAt == _this.updatedAt)&&const DeepCollectionEquality().equals(other.media, _this.media)&&(identical(other.userId, _this.userId) || other.userId == _this.userId)&&(identical(other.userImageUrl, _this.userImageUrl) || other.userImageUrl == _this.userImageUrl)&&const DeepCollectionEquality().equals(other.categoryTypes, _this.categoryTypes)&&(identical(other.path, _this.path) || other.path == _this.path));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,reportId,firstName,lastName,country,state,content,likeCount,dislikeCount,commentCount,bookmarkCount,createdAt,updatedAt,const DeepCollectionEquality().hash(media),userId,userImageUrl,const DeepCollectionEquality().hash(categoryTypes),path);
+int get hashCode {
+  final _this = this as ReportData;
+  return Object.hash(runtimeType,_this.reportId,_this.firstName,_this.lastName,_this.country,_this.state,_this.content,_this.likeCount,_this.dislikeCount,_this.commentCount,_this.bookmarkCount,_this.createdAt,_this.updatedAt,const DeepCollectionEquality().hash(_this.media),_this.userId,_this.userImageUrl,const DeepCollectionEquality().hash(_this.categoryTypes),_this.path);
+}
 
 @override
 String toString() {
-  return 'ReportData(reportId: $reportId, firstName: $firstName, lastName: $lastName, country: $country, state: $state, content: $content, likeCount: $likeCount, dislikeCount: $dislikeCount, commentCount: $commentCount, bookmarkCount: $bookmarkCount, createdAt: $createdAt, updatedAt: $updatedAt, media: $media, userId: $userId, userImageUrl: $userImageUrl, categoryTypes: $categoryTypes, path: $path)';
+  final _this = this as ReportData;
+  return 'ReportData(reportId: ${_this.reportId}, firstName: ${_this.firstName}, lastName: ${_this.lastName}, country: ${_this.country}, state: ${_this.state}, content: ${_this.content}, likeCount: ${_this.likeCount}, dislikeCount: ${_this.dislikeCount}, commentCount: ${_this.commentCount}, bookmarkCount: ${_this.bookmarkCount}, createdAt: ${_this.createdAt}, updatedAt: ${_this.updatedAt}, media: ${_this.media}, userId: ${_this.userId}, userImageUrl: ${_this.userImageUrl}, categoryTypes: ${_this.categoryTypes}, path: ${_this.path})';
 }
 
 
@@ -85,7 +91,7 @@ class _$ReportDataCopyWithImpl<$Res>
 /// Create a copy of ReportData
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') @override $Res call({Object? reportId = null,Object? firstName = null,Object? lastName = null,Object? country = null,Object? state = null,Object? content = null,Object? likeCount = null,Object? dislikeCount = null,Object? commentCount = null,Object? bookmarkCount = null,Object? createdAt = null,Object? updatedAt = null,Object? media = freezed,Object? userId = freezed,Object? userImageUrl = freezed,Object? categoryTypes = null,Object? path = freezed,}) {
-  return _then(_self.copyWith(
+  return _then(ReportData(
 reportId: null == reportId ? _self.reportId : reportId // ignore: cast_nullable_to_non_nullable
 as String,firstName: null == firstName ? _self.firstName : firstName // ignore: cast_nullable_to_non_nullable
 as String,lastName: null == lastName ? _self.lastName : lastName // ignore: cast_nullable_to_non_nullable
@@ -244,7 +250,7 @@ return $default(_that.reportId,_that.firstName,_that.lastName,_that.country,_tha
 
 @JsonSerializable()
 class _ReportData extends ReportData {
-  const _ReportData({required this.reportId, required this.firstName, required this.lastName, required this.country, required this.state, required this.content, required this.likeCount, required this.dislikeCount, required this.commentCount, required this.bookmarkCount, @TimestampConverter() required this.createdAt, @TimestampConverter() required this.updatedAt, final  List<String>? media = const [], this.userId, this.userImageUrl, final  List<CategoryType> categoryTypes = const [], this.path}): _media = media,_categoryTypes = categoryTypes,super._();
+  const _ReportData({required this.reportId, required this.firstName, required this.lastName, required this.country, required this.state, required this.content, required this.likeCount, required this.dislikeCount, required this.commentCount, required this.bookmarkCount, @TimestampConverter() required this.createdAt, @TimestampConverter() required this.updatedAt,  List<String>? media = const [], this.userId, this.userImageUrl,  List<CategoryType> categoryTypes = const [], this.path}): _media = media,_categoryTypes = categoryTypes,super._();
   factory _ReportData.fromJson(Map<String, dynamic> json) => _$ReportDataFromJson(json);
 
 /// Unique identifier for the report.
@@ -314,16 +320,18 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _ReportData&&(identical(other.reportId, reportId) || other.reportId == reportId)&&(identical(other.firstName, firstName) || other.firstName == firstName)&&(identical(other.lastName, lastName) || other.lastName == lastName)&&(identical(other.country, country) || other.country == country)&&(identical(other.state, state) || other.state == state)&&(identical(other.content, content) || other.content == content)&&(identical(other.likeCount, likeCount) || other.likeCount == likeCount)&&(identical(other.dislikeCount, dislikeCount) || other.dislikeCount == dislikeCount)&&(identical(other.commentCount, commentCount) || other.commentCount == commentCount)&&(identical(other.bookmarkCount, bookmarkCount) || other.bookmarkCount == bookmarkCount)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt)&&const DeepCollectionEquality().equals(other._media, _media)&&(identical(other.userId, userId) || other.userId == userId)&&(identical(other.userImageUrl, userImageUrl) || other.userImageUrl == userImageUrl)&&const DeepCollectionEquality().equals(other._categoryTypes, _categoryTypes)&&(identical(other.path, path) || other.path == path));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _ReportData&&(identical(other.reportId, reportId) || other.reportId == reportId)&&(identical(other.firstName, firstName) || other.firstName == firstName)&&(identical(other.lastName, lastName) || other.lastName == lastName)&&(identical(other.country, country) || other.country == country)&&(identical(other.state, state) || other.state == state)&&(identical(other.content, content) || other.content == content)&&(identical(other.likeCount, likeCount) || other.likeCount == likeCount)&&(identical(other.dislikeCount, dislikeCount) || other.dislikeCount == dislikeCount)&&(identical(other.commentCount, commentCount) || other.commentCount == commentCount)&&(identical(other.bookmarkCount, bookmarkCount) || other.bookmarkCount == bookmarkCount)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt)&&const DeepCollectionEquality().equals(other.media, _media)&&(identical(other.userId, userId) || other.userId == userId)&&(identical(other.userImageUrl, userImageUrl) || other.userImageUrl == userImageUrl)&&const DeepCollectionEquality().equals(other.categoryTypes, _categoryTypes)&&(identical(other.path, path) || other.path == path));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,reportId,firstName,lastName,country,state,content,likeCount,dislikeCount,commentCount,bookmarkCount,createdAt,updatedAt,const DeepCollectionEquality().hash(_media),userId,userImageUrl,const DeepCollectionEquality().hash(_categoryTypes),path);
+int get hashCode {
+    return Object.hash(runtimeType,reportId,firstName,lastName,country,state,content,likeCount,dislikeCount,commentCount,bookmarkCount,createdAt,updatedAt,const DeepCollectionEquality().hash(_media),userId,userImageUrl,const DeepCollectionEquality().hash(_categoryTypes),path);
+}
 
 @override
 String toString() {
-  return 'ReportData(reportId: $reportId, firstName: $firstName, lastName: $lastName, country: $country, state: $state, content: $content, likeCount: $likeCount, dislikeCount: $dislikeCount, commentCount: $commentCount, bookmarkCount: $bookmarkCount, createdAt: $createdAt, updatedAt: $updatedAt, media: $media, userId: $userId, userImageUrl: $userImageUrl, categoryTypes: $categoryTypes, path: $path)';
+    return 'ReportData(reportId: $reportId, firstName: $firstName, lastName: $lastName, country: $country, state: $state, content: $content, likeCount: $likeCount, dislikeCount: $dislikeCount, commentCount: $commentCount, bookmarkCount: $bookmarkCount, createdAt: $createdAt, updatedAt: $updatedAt, media: $media, userId: $userId, userImageUrl: $userImageUrl, categoryTypes: $categoryTypes, path: $path)';
 }
 
 
@@ -400,16 +408,21 @@ $ReportCopyWith<Report> get copyWith => _$ReportCopyWithImpl<Report>(this as Rep
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is Report&&(identical(other.reportData, reportData) || other.reportData == reportData)&&(identical(other.hasLiked, hasLiked) || other.hasLiked == hasLiked)&&(identical(other.hasDisliked, hasDisliked) || other.hasDisliked == hasDisliked)&&(identical(other.hasBookmarked, hasBookmarked) || other.hasBookmarked == hasBookmarked)&&(identical(other.path, path) || other.path == path));
+  final _this = this as Report;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is Report&&(identical(other.reportData, _this.reportData) || other.reportData == _this.reportData)&&(identical(other.hasLiked, _this.hasLiked) || other.hasLiked == _this.hasLiked)&&(identical(other.hasDisliked, _this.hasDisliked) || other.hasDisliked == _this.hasDisliked)&&(identical(other.hasBookmarked, _this.hasBookmarked) || other.hasBookmarked == _this.hasBookmarked)&&(identical(other.path, _this.path) || other.path == _this.path));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,reportData,hasLiked,hasDisliked,hasBookmarked,path);
+int get hashCode {
+  final _this = this as Report;
+  return Object.hash(runtimeType,_this.reportData,_this.hasLiked,_this.hasDisliked,_this.hasBookmarked,_this.path);
+}
 
 @override
 String toString() {
-  return 'Report(reportData: $reportData, hasLiked: $hasLiked, hasDisliked: $hasDisliked, hasBookmarked: $hasBookmarked, path: $path)';
+  final _this = this as Report;
+  return 'Report(reportData: ${_this.reportData}, hasLiked: ${_this.hasLiked}, hasDisliked: ${_this.hasDisliked}, hasBookmarked: ${_this.hasBookmarked}, path: ${_this.path})';
 }
 
 
@@ -438,7 +451,7 @@ class _$ReportCopyWithImpl<$Res>
 /// Create a copy of Report
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') @override $Res call({Object? reportData = null,Object? hasLiked = null,Object? hasDisliked = null,Object? hasBookmarked = null,Object? path = freezed,}) {
-  return _then(_self.copyWith(
+  return _then(Report(
 reportData: null == reportData ? _self.reportData : reportData // ignore: cast_nullable_to_non_nullable
 as ReportData,hasLiked: null == hasLiked ? _self.hasLiked : hasLiked // ignore: cast_nullable_to_non_nullable
 as bool,hasDisliked: null == hasDisliked ? _self.hasDisliked : hasDisliked // ignore: cast_nullable_to_non_nullable
@@ -622,16 +635,18 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Report&&(identical(other.reportData, reportData) || other.reportData == reportData)&&(identical(other.hasLiked, hasLiked) || other.hasLiked == hasLiked)&&(identical(other.hasDisliked, hasDisliked) || other.hasDisliked == hasDisliked)&&(identical(other.hasBookmarked, hasBookmarked) || other.hasBookmarked == hasBookmarked)&&(identical(other.path, path) || other.path == path));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _Report&&(identical(other.reportData, reportData) || other.reportData == reportData)&&(identical(other.hasLiked, hasLiked) || other.hasLiked == hasLiked)&&(identical(other.hasDisliked, hasDisliked) || other.hasDisliked == hasDisliked)&&(identical(other.hasBookmarked, hasBookmarked) || other.hasBookmarked == hasBookmarked)&&(identical(other.path, path) || other.path == path));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,reportData,hasLiked,hasDisliked,hasBookmarked,path);
+int get hashCode {
+    return Object.hash(runtimeType,reportData,hasLiked,hasDisliked,hasBookmarked,path);
+}
 
 @override
 String toString() {
-  return 'Report(reportData: $reportData, hasLiked: $hasLiked, hasDisliked: $hasDisliked, hasBookmarked: $hasBookmarked, path: $path)';
+    return 'Report(reportData: $reportData, hasLiked: $hasLiked, hasDisliked: $hasDisliked, hasBookmarked: $hasBookmarked, path: $path)';
 }
 
 
