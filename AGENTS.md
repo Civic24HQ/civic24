@@ -73,11 +73,19 @@ Civic24 is an open-source civic reporting app where citizens report community is
 Run all commands from the **repository root** unless stated otherwise.
 
 ### 3.1 Bootstrap & Setup
+With FVM (recommended). The workspace's own Melos runs through FVM's Dart, and `MELOS_SDK_PATH` makes Melos scripts use the FVM Flutter:
 ```bash
-fvm install                 # optional: installs the Flutter version pinned in .fvmrc
-dart pub global activate melos
-melos bootstrap             # workspace: one root pubspec.lock, no pubspec_overrides.yaml
+fvm install                            # installs the Flutter version pinned in .fvmrc
+export MELOS_SDK_PATH=.fvm/flutter_sdk
+fvm flutter pub get
+fvm dart run melos bootstrap           # workspace: one root pubspec.lock, no pubspec_overrides.yaml
 ```
+Without FVM (the Flutter on your PATH must match `.fvmrc`):
+```bash
+dart pub global activate melos
+melos bootstrap
+```
+Every `melos ...` command in this file is `fvm dart run melos ...` on the FVM path.
 Melos 8 config and every script live in the root `pubspec.yaml` under `melos:` (there is no `melos.yaml`). Aggregate scripts stop at the first failing step.
 
 ### 3.2 Code Generation & Localization
