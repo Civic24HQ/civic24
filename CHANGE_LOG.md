@@ -268,6 +268,8 @@ The owner will add these manually when a step needs them. The first step that ne
 
 ### 0.15 Still open
 
+- Revisit before the first App Store release: development and staging currently share one Firebase project (`civic24test-f9352`), so their Firestore data, Auth users and rules deploys are shared. Consider a separate staging project once staging is used for release-candidate testing.
+- Phase 7: add Dependabot (pub, npm, GitHub Actions; monthly; Firebase packages grouped).
 - Firebase inactivity notice and project layout (owner).
 - FVM SDK installs (0.9).
 - Everything in 0.11 "Unknowns".
