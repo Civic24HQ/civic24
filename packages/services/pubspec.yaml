@@ -4,8 +4,10 @@ version: 0.1.0+1
 publish_to: none
 
 environment:
-  sdk: ">=3.10.7 <4.0.0"
-  flutter: "3.41.6"
+  sdk: ">=3.13.0 <4.0.0"
+  flutter: ">=3.47.0"
+
+resolution: workspace
 
 dependencies:
   flutter:
@@ -60,10 +62,6 @@ dependencies:
   firebase_storage: ^13.0.6
   firebase_remote_config: ^6.2.0
   cloud_firestore: ^6.1.2
-
-dependency_overrides:
-  # This is a temporary fix pending the release of the next version of the stacked_generator package
-  logger: ^2.5.0
 
 dev_dependencies:
   flutter_test:

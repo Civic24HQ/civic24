@@ -1,6 +1,0 @@
-# melos_managed_dependency_overrides: localization,rules
-dependency_overrides:
-  localization:
-    path: ../localization
-  rules:
-    path: ../rules

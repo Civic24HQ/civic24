@@ -2,6 +2,7 @@ enum LanguageType {
   english,
   french,
   spanish;
+
   // arabic,
   // hausa,
   // igbo,

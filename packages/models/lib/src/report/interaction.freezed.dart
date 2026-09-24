@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // coverage:ignore-file
-// ignore_for_file: type=lint
+// ignore_for_file: type=lint, type=warning, deprecated_member_use, deprecated_member_use_from_same_package
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'interaction.dart';
@@ -9,6 +9,7 @@ part of 'interaction.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
 // dart format off
 T _$identity<T>(T value) => value;
 
@@ -28,16 +29,21 @@ $InteractionCopyWith<Interaction> get copyWith => _$InteractionCopyWithImpl<Inte
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is Interaction&&(identical(other.hasLiked, hasLiked) || other.hasLiked == hasLiked)&&(identical(other.hasDisliked, hasDisliked) || other.hasDisliked == hasDisliked)&&(identical(other.hasBookmarked, hasBookmarked) || other.hasBookmarked == hasBookmarked)&&(identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt));
+  final _this = this as Interaction;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is Interaction&&(identical(other.hasLiked, _this.hasLiked) || other.hasLiked == _this.hasLiked)&&(identical(other.hasDisliked, _this.hasDisliked) || other.hasDisliked == _this.hasDisliked)&&(identical(other.hasBookmarked, _this.hasBookmarked) || other.hasBookmarked == _this.hasBookmarked)&&(identical(other.updatedAt, _this.updatedAt) || other.updatedAt == _this.updatedAt));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,hasLiked,hasDisliked,hasBookmarked,updatedAt);
+int get hashCode {
+  final _this = this as Interaction;
+  return Object.hash(runtimeType,_this.hasLiked,_this.hasDisliked,_this.hasBookmarked,_this.updatedAt);
+}
 
 @override
 String toString() {
-  return 'Interaction(hasLiked: $hasLiked, hasDisliked: $hasDisliked, hasBookmarked: $hasBookmarked, updatedAt: $updatedAt)';
+  final _this = this as Interaction;
+  return 'Interaction(hasLiked: ${_this.hasLiked}, hasDisliked: ${_this.hasDisliked}, hasBookmarked: ${_this.hasBookmarked}, updatedAt: ${_this.updatedAt})';
 }
 
 
@@ -66,7 +72,7 @@ class _$InteractionCopyWithImpl<$Res>
 /// Create a copy of Interaction
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') @override $Res call({Object? hasLiked = null,Object? hasDisliked = null,Object? hasBookmarked = null,Object? updatedAt = freezed,}) {
-  return _then(_self.copyWith(
+  return _then(Interaction(
 hasLiked: null == hasLiked ? _self.hasLiked : hasLiked // ignore: cast_nullable_to_non_nullable
 as bool,hasDisliked: null == hasDisliked ? _self.hasDisliked : hasDisliked // ignore: cast_nullable_to_non_nullable
 as bool,hasBookmarked: null == hasBookmarked ? _self.hasBookmarked : hasBookmarked // ignore: cast_nullable_to_non_nullable
@@ -233,16 +239,18 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Interaction&&(identical(other.hasLiked, hasLiked) || other.hasLiked == hasLiked)&&(identical(other.hasDisliked, hasDisliked) || other.hasDisliked == hasDisliked)&&(identical(other.hasBookmarked, hasBookmarked) || other.hasBookmarked == hasBookmarked)&&(identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _Interaction&&(identical(other.hasLiked, hasLiked) || other.hasLiked == hasLiked)&&(identical(other.hasDisliked, hasDisliked) || other.hasDisliked == hasDisliked)&&(identical(other.hasBookmarked, hasBookmarked) || other.hasBookmarked == hasBookmarked)&&(identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,hasLiked,hasDisliked,hasBookmarked,updatedAt);
+int get hashCode {
+    return Object.hash(runtimeType,hasLiked,hasDisliked,hasBookmarked,updatedAt);
+}
 
 @override
 String toString() {
-  return 'Interaction(hasLiked: $hasLiked, hasDisliked: $hasDisliked, hasBookmarked: $hasBookmarked, updatedAt: $updatedAt)';
+    return 'Interaction(hasLiked: $hasLiked, hasDisliked: $hasDisliked, hasBookmarked: $hasBookmarked, updatedAt: $updatedAt)';
 }
 
 

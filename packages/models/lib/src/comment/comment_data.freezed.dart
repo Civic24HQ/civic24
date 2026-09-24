@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // coverage:ignore-file
-// ignore_for_file: type=lint
+// ignore_for_file: type=lint, type=warning, deprecated_member_use, deprecated_member_use_from_same_package
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'comment_data.dart';
@@ -9,6 +9,7 @@ part of 'comment_data.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
 // dart format off
 T _$identity<T>(T value) => value;
 
@@ -40,16 +41,21 @@ $CommentDataCopyWith<CommentData> get copyWith => _$CommentDataCopyWithImpl<Comm
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is CommentData&&(identical(other.commentId, commentId) || other.commentId == commentId)&&(identical(other.reportId, reportId) || other.reportId == reportId)&&(identical(other.firstName, firstName) || other.firstName == firstName)&&(identical(other.lastName, lastName) || other.lastName == lastName)&&(identical(other.comment, comment) || other.comment == comment)&&(identical(other.likeCount, likeCount) || other.likeCount == likeCount)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt)&&(identical(other.userId, userId) || other.userId == userId)&&(identical(other.userImageUrl, userImageUrl) || other.userImageUrl == userImageUrl)&&(identical(other.path, path) || other.path == path));
+  final _this = this as CommentData;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is CommentData&&(identical(other.commentId, _this.commentId) || other.commentId == _this.commentId)&&(identical(other.reportId, _this.reportId) || other.reportId == _this.reportId)&&(identical(other.firstName, _this.firstName) || other.firstName == _this.firstName)&&(identical(other.lastName, _this.lastName) || other.lastName == _this.lastName)&&(identical(other.comment, _this.comment) || other.comment == _this.comment)&&(identical(other.likeCount, _this.likeCount) || other.likeCount == _this.likeCount)&&(identical(other.createdAt, _this.createdAt) || other.createdAt == _this.createdAt)&&(identical(other.updatedAt, _this.updatedAt) || other.updatedAt == _this.updatedAt)&&(identical(other.userId, _this.userId) || other.userId == _this.userId)&&(identical(other.userImageUrl, _this.userImageUrl) || other.userImageUrl == _this.userImageUrl)&&(identical(other.path, _this.path) || other.path == _this.path));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,commentId,reportId,firstName,lastName,comment,likeCount,createdAt,updatedAt,userId,userImageUrl,path);
+int get hashCode {
+  final _this = this as CommentData;
+  return Object.hash(runtimeType,_this.commentId,_this.reportId,_this.firstName,_this.lastName,_this.comment,_this.likeCount,_this.createdAt,_this.updatedAt,_this.userId,_this.userImageUrl,_this.path);
+}
 
 @override
 String toString() {
-  return 'CommentData(commentId: $commentId, reportId: $reportId, firstName: $firstName, lastName: $lastName, comment: $comment, likeCount: $likeCount, createdAt: $createdAt, updatedAt: $updatedAt, userId: $userId, userImageUrl: $userImageUrl, path: $path)';
+  final _this = this as CommentData;
+  return 'CommentData(commentId: ${_this.commentId}, reportId: ${_this.reportId}, firstName: ${_this.firstName}, lastName: ${_this.lastName}, comment: ${_this.comment}, likeCount: ${_this.likeCount}, createdAt: ${_this.createdAt}, updatedAt: ${_this.updatedAt}, userId: ${_this.userId}, userImageUrl: ${_this.userImageUrl}, path: ${_this.path})';
 }
 
 
@@ -78,7 +84,7 @@ class _$CommentDataCopyWithImpl<$Res>
 /// Create a copy of CommentData
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') @override $Res call({Object? commentId = null,Object? reportId = null,Object? firstName = null,Object? lastName = null,Object? comment = null,Object? likeCount = null,Object? createdAt = null,Object? updatedAt = null,Object? userId = freezed,Object? userImageUrl = freezed,Object? path = freezed,}) {
-  return _then(_self.copyWith(
+  return _then(CommentData(
 commentId: null == commentId ? _self.commentId : commentId // ignore: cast_nullable_to_non_nullable
 as String,reportId: null == reportId ? _self.reportId : reportId // ignore: cast_nullable_to_non_nullable
 as String,firstName: null == firstName ? _self.firstName : firstName // ignore: cast_nullable_to_non_nullable
@@ -271,16 +277,18 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _CommentData&&(identical(other.commentId, commentId) || other.commentId == commentId)&&(identical(other.reportId, reportId) || other.reportId == reportId)&&(identical(other.firstName, firstName) || other.firstName == firstName)&&(identical(other.lastName, lastName) || other.lastName == lastName)&&(identical(other.comment, comment) || other.comment == comment)&&(identical(other.likeCount, likeCount) || other.likeCount == likeCount)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt)&&(identical(other.userId, userId) || other.userId == userId)&&(identical(other.userImageUrl, userImageUrl) || other.userImageUrl == userImageUrl)&&(identical(other.path, path) || other.path == path));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _CommentData&&(identical(other.commentId, commentId) || other.commentId == commentId)&&(identical(other.reportId, reportId) || other.reportId == reportId)&&(identical(other.firstName, firstName) || other.firstName == firstName)&&(identical(other.lastName, lastName) || other.lastName == lastName)&&(identical(other.comment, comment) || other.comment == comment)&&(identical(other.likeCount, likeCount) || other.likeCount == likeCount)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt)&&(identical(other.userId, userId) || other.userId == userId)&&(identical(other.userImageUrl, userImageUrl) || other.userImageUrl == userImageUrl)&&(identical(other.path, path) || other.path == path));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,commentId,reportId,firstName,lastName,comment,likeCount,createdAt,updatedAt,userId,userImageUrl,path);
+int get hashCode {
+    return Object.hash(runtimeType,commentId,reportId,firstName,lastName,comment,likeCount,createdAt,updatedAt,userId,userImageUrl,path);
+}
 
 @override
 String toString() {
-  return 'CommentData(commentId: $commentId, reportId: $reportId, firstName: $firstName, lastName: $lastName, comment: $comment, likeCount: $likeCount, createdAt: $createdAt, updatedAt: $updatedAt, userId: $userId, userImageUrl: $userImageUrl, path: $path)';
+    return 'CommentData(commentId: $commentId, reportId: $reportId, firstName: $firstName, lastName: $lastName, comment: $comment, likeCount: $likeCount, createdAt: $createdAt, updatedAt: $updatedAt, userId: $userId, userImageUrl: $userImageUrl, path: $path)';
 }
 
 

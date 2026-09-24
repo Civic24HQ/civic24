@@ -1,4 +1,5 @@
 import 'dart:ui';
+
 import 'package:citizen/ui/dialogs/send_password_reset_email/send_password_reset_email_dialog_model.dart';
 import 'package:components/components.dart';
 import 'package:flutter/material.dart';

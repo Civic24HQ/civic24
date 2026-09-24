@@ -121,13 +121,13 @@ class CloudinaryStorageService {
 
       if (path.isNotEmpty &&
           (Platform.isAndroid || Platform.isIOS || Platform.isMacOS || Platform.isWindows || Platform.isLinux)) {
-        return uploadFile(file: File(path), folder: folder, publicIdPrefix: publicIdPrefix);
+        return await uploadFile(file: File(path), folder: folder, publicIdPrefix: publicIdPrefix);
       }
 
       final bytes = await xfile.readAsBytes();
       final filename = _generatePublicId(xfile.name, prefix: publicIdPrefix);
 
-      return _uploadBytes(
+      return await _uploadBytes(
         bytes: bytes,
         filename: filename,
         mimeType: lookupMimeType(xfile.name) ?? 'application/octet-stream',

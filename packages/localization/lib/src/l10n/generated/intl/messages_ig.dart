@@ -51,9 +51,10 @@ class MessageLookup extends MessageLookupByLibrary {
     "featureCategoryTypeAbandoned": MessageLookupByLibrary.simpleMessage(
       "Orụ ọrụ hapụrụ",
     ),
-    "featureCategoryTypeAbandonedDescription": MessageLookupByLibrary.simpleMessage(
-      "Kpọtụrụ gbasara ọrụ gọọmenti/obodo ndị a hapụrụ ma ọ bụ a naghị emecha ya n\'ógbè gị.",
-    ),
+    "featureCategoryTypeAbandonedDescription":
+        MessageLookupByLibrary.simpleMessage(
+          "Kpọtụrụ gbasara ọrụ gọọmenti/obodo ndị a hapụrụ ma ọ bụ a naghị emecha ya n\'ógbè gị.",
+        ),
     "featureCategoryTypeDetailedAbandoned":
         MessageLookupByLibrary.simpleMessage(
           "Orụ ọrụ hapụrụ & ndị a dịghị emechaa",
@@ -83,9 +84,10 @@ class MessageLookup extends MessageLookupByLibrary {
     "featureCategoryTypeEducation": MessageLookupByLibrary.simpleMessage(
       "Agụmakwụkwọ",
     ),
-    "featureCategoryTypeEducationDescription": MessageLookupByLibrary.simpleMessage(
-      "Kpọtụrụ gbasara ụlọ akwụkwọ mebiri emebi, ụlọ obodo emechiri, ma ọ bụ akwụkwọ ụlọ akwụkwọ na-ezere.",
-    ),
+    "featureCategoryTypeEducationDescription":
+        MessageLookupByLibrary.simpleMessage(
+          "Kpọtụrụ gbasara ụlọ akwụkwọ mebiri emebi, ụlọ obodo emechiri, ma ọ bụ akwụkwọ ụlọ akwụkwọ na-ezere.",
+        ),
     "featureCategoryTypeGovernance": MessageLookupByLibrary.simpleMessage(
       "Nchịkwa",
     ),
@@ -96,9 +98,10 @@ class MessageLookup extends MessageLookupByLibrary {
     "featureCategoryTypeHealth": MessageLookupByLibrary.simpleMessage(
       "Ahụike & nnọchi",
     ),
-    "featureCategoryTypeHealthDescription": MessageLookupByLibrary.simpleMessage(
-      "Kpọtụrụ gbasara ụlọ mposi ọha jọgburu onwe ha, enweghị nhicha n\'ụlọ ọgwụ, mmiri mkpofu emere ogwe, ma ọ bụ ọnọdụ ahụike na-adịghị nchebe.",
-    ),
+    "featureCategoryTypeHealthDescription":
+        MessageLookupByLibrary.simpleMessage(
+          "Kpọtụrụ gbasara ụlọ mposi ọha jọgburu onwe ha, enweghị nhicha n\'ụlọ ọgwụ, mmiri mkpofu emere ogwe, ma ọ bụ ọnọdụ ahụike na-adịghị nchebe.",
+        ),
     "featureCategoryTypeLight": MessageLookupByLibrary.simpleMessage(
       "Ihu ọkụ & Ịkụ ọkụ",
     ),
@@ -114,9 +117,10 @@ class MessageLookup extends MessageLookupByLibrary {
     "featureCategoryTypeSecurity": MessageLookupByLibrary.simpleMessage(
       "Nchekwa",
     ),
-    "featureCategoryTypeSecurityDescription": MessageLookupByLibrary.simpleMessage(
-      "Kpọtụrụ gbasara ebe ndị na-adịghị nchebe, akụrụngwa nchekwa mebiri emebi, mmegbu n\'okporo ụzọ, ma ọ bụ ebe ikpokọta.",
-    ),
+    "featureCategoryTypeSecurityDescription":
+        MessageLookupByLibrary.simpleMessage(
+          "Kpọtụrụ gbasara ebe ndị na-adịghị nchebe, akụrụngwa nchekwa mebiri emebi, mmegbu n\'okporo ụzọ, ma ọ bụ ebe ikpokọta.",
+        ),
     "featureCategoryTypeUrban": MessageLookupByLibrary.simpleMessage(
       "Mmebi iwu nhazi ala",
     ),

@@ -49,9 +49,10 @@ class MessageLookup extends MessageLookupByLibrary {
     "featureCategoryTypeAbandoned": MessageLookupByLibrary.simpleMessage(
       "Awọn iṣẹ ti a fọn silẹ",
     ),
-    "featureCategoryTypeAbandonedDescription": MessageLookupByLibrary.simpleMessage(
-      "Jabo awọn iṣẹ ijọba/tabi agbegbe ti a fi silẹ tabi ti a ko pari ni agbegbe rẹ.",
-    ),
+    "featureCategoryTypeAbandonedDescription":
+        MessageLookupByLibrary.simpleMessage(
+          "Jabo awọn iṣẹ ijọba/tabi agbegbe ti a fi silẹ tabi ti a ko pari ni agbegbe rẹ.",
+        ),
     "featureCategoryTypeDetailedAbandoned":
         MessageLookupByLibrary.simpleMessage(
           "Awọn iṣẹ ti a fọn silẹ ati ti ko pari",
@@ -79,9 +80,10 @@ class MessageLookup extends MessageLookupByLibrary {
       "Egbin & ewu ayika",
     ),
     "featureCategoryTypeEducation": MessageLookupByLibrary.simpleMessage("Ẹkọ"),
-    "featureCategoryTypeEducationDescription": MessageLookupByLibrary.simpleMessage(
-      "Jabo awọn ile-iwe ti o bajẹ, awọn yara agbegbe ti o ti dina, tabi awọn ile-ikawe ti a foju kọ.",
-    ),
+    "featureCategoryTypeEducationDescription":
+        MessageLookupByLibrary.simpleMessage(
+          "Jabo awọn ile-iwe ti o bajẹ, awọn yara agbegbe ti o ti dina, tabi awọn ile-ikawe ti a foju kọ.",
+        ),
     "featureCategoryTypeGovernance": MessageLookupByLibrary.simpleMessage(
       "Iṣakoso",
     ),
@@ -92,9 +94,10 @@ class MessageLookup extends MessageLookupByLibrary {
     "featureCategoryTypeHealth": MessageLookupByLibrary.simpleMessage(
       "Ilera & Imototo",
     ),
-    "featureCategoryTypeHealthDescription": MessageLookupByLibrary.simpleMessage(
-      "Jabo awọn ile-igbọnsẹ gbogbogbo ti o nira, aiṣedeede ilera ni awọn ile-iwosan, awọn omi idọti ti o han, tabi awọn ipo ilera ti ko ni aabo.",
-    ),
+    "featureCategoryTypeHealthDescription":
+        MessageLookupByLibrary.simpleMessage(
+          "Jabo awọn ile-igbọnsẹ gbogbogbo ti o nira, aiṣedeede ilera ni awọn ile-iwosan, awọn omi idọti ti o han, tabi awọn ipo ilera ti ko ni aabo.",
+        ),
     "featureCategoryTypeLight": MessageLookupByLibrary.simpleMessage(
       "Imọlẹ & Ina",
     ),
@@ -108,9 +111,10 @@ class MessageLookup extends MessageLookupByLibrary {
       "Jabo awọn iho-ọna, awọn ọna abawọle ti bajẹ, awọn ọna ẹsẹ ti bajẹ, awọn atupa ijabọ ti ko ṣiṣẹ, tabi awakọ alailagbara ni agbegbe rẹ.",
     ),
     "featureCategoryTypeSecurity": MessageLookupByLibrary.simpleMessage("Abo"),
-    "featureCategoryTypeSecurityDescription": MessageLookupByLibrary.simpleMessage(
-      "Jabo awọn agbegbe ti ko ni aabo, awọn amayederun aabo ti o bajẹ, iwa-ipa opopona, tabi awọn agbegbe ibi ipade.",
-    ),
+    "featureCategoryTypeSecurityDescription":
+        MessageLookupByLibrary.simpleMessage(
+          "Jabo awọn agbegbe ti ko ni aabo, awọn amayederun aabo ti o bajẹ, iwa-ipa opopona, tabi awọn agbegbe ibi ipade.",
+        ),
     "featureCategoryTypeUrban": MessageLookupByLibrary.simpleMessage(
       "Ihakoko Ilẹ",
     ),

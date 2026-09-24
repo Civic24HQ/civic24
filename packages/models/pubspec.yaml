@@ -4,8 +4,10 @@ version: 0.1.0+1
 publish_to: none
 
 environment:
-  sdk: ">=3.10.7 <4.0.0"
-  flutter: "3.41.6"
+  sdk: ">=3.13.0 <4.0.0"
+  flutter: ">=3.47.0"
+
+resolution: workspace
 
 dependencies:
   flutter:
@@ -16,7 +18,7 @@ dependencies:
   json_annotation: ^4.9.0
   uuid: ^4.5.0
   faker: ^2.2.0
-  solar_icons: ^0.0.5
+  solar_icons: ^0.1.0
   cloud_firestore: ^6.1.2
   meta: ^1.15.0
 
@@ -37,7 +39,7 @@ dev_dependencies:
     path: ../rules
 
   # Utility Packages
-  freezed: ^3.1.0
+  freezed: ^4.0.1
   json_serializable: ^6.9.5
   build_runner: ^2.10.5
 

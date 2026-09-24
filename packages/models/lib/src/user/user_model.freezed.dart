@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // coverage:ignore-file
-// ignore_for_file: type=lint
+// ignore_for_file: type=lint, type=warning, deprecated_member_use, deprecated_member_use_from_same_package
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'user_model.dart';
@@ -9,6 +9,7 @@ part of 'user_model.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
 // dart format off
 T _$identity<T>(T value) => value;
 
@@ -48,16 +49,21 @@ $UserModelCopyWith<UserModel> get copyWith => _$UserModelCopyWithImpl<UserModel>
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is UserModel&&(identical(other.id, id) || other.id == id)&&(identical(other.provider, provider) || other.provider == provider)&&(identical(other.email, email) || other.email == email)&&(identical(other.account, account) || other.account == account)&&const DeepCollectionEquality().equals(other.devices, devices)&&const DeepCollectionEquality().equals(other.fcmTokens, fcmTokens)&&const DeepCollectionEquality().equals(other.fcmTokenLastActiveAt, fcmTokenLastActiveAt)&&(identical(other.notificationPreferences, notificationPreferences) || other.notificationPreferences == notificationPreferences)&&(identical(other.path, path) || other.path == path));
+  final _this = this as UserModel;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is UserModel&&(identical(other.id, _this.id) || other.id == _this.id)&&(identical(other.provider, _this.provider) || other.provider == _this.provider)&&(identical(other.email, _this.email) || other.email == _this.email)&&(identical(other.account, _this.account) || other.account == _this.account)&&const DeepCollectionEquality().equals(other.devices, _this.devices)&&const DeepCollectionEquality().equals(other.fcmTokens, _this.fcmTokens)&&const DeepCollectionEquality().equals(other.fcmTokenLastActiveAt, _this.fcmTokenLastActiveAt)&&(identical(other.notificationPreferences, _this.notificationPreferences) || other.notificationPreferences == _this.notificationPreferences)&&(identical(other.path, _this.path) || other.path == _this.path));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,provider,email,account,const DeepCollectionEquality().hash(devices),const DeepCollectionEquality().hash(fcmTokens),const DeepCollectionEquality().hash(fcmTokenLastActiveAt),notificationPreferences,path);
+int get hashCode {
+  final _this = this as UserModel;
+  return Object.hash(runtimeType,_this.id,_this.provider,_this.email,_this.account,const DeepCollectionEquality().hash(_this.devices),const DeepCollectionEquality().hash(_this.fcmTokens),const DeepCollectionEquality().hash(_this.fcmTokenLastActiveAt),_this.notificationPreferences,_this.path);
+}
 
 @override
 String toString() {
-  return 'UserModel(id: $id, provider: $provider, email: $email, account: $account, devices: $devices, fcmTokens: $fcmTokens, fcmTokenLastActiveAt: $fcmTokenLastActiveAt, notificationPreferences: $notificationPreferences, path: $path)';
+  final _this = this as UserModel;
+  return 'UserModel(id: ${_this.id}, provider: ${_this.provider}, email: ${_this.email}, account: ${_this.account}, devices: ${_this.devices}, fcmTokens: ${_this.fcmTokens}, fcmTokenLastActiveAt: ${_this.fcmTokenLastActiveAt}, notificationPreferences: ${_this.notificationPreferences}, path: ${_this.path})';
 }
 
 
@@ -86,7 +92,7 @@ class _$UserModelCopyWithImpl<$Res>
 /// Create a copy of UserModel
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? provider = null,Object? email = null,Object? account = null,Object? devices = null,Object? fcmTokens = null,Object? fcmTokenLastActiveAt = null,Object? notificationPreferences = null,Object? path = freezed,}) {
-  return _then(_self.copyWith(
+  return _then(UserModel(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,provider: null == provider ? _self.provider : provider // ignore: cast_nullable_to_non_nullable
 as String,email: null == email ? _self.email : email // ignore: cast_nullable_to_non_nullable
@@ -255,7 +261,7 @@ return $default(_that.id,_that.provider,_that.email,_that.account,_that.devices,
 
 @JsonSerializable()
 class _UserModel extends UserModel {
-  const _UserModel({required this.id, required this.provider, required this.email, required this.account, required final  Map<String, UserDeviceModel> devices, final  Map<String, dynamic> fcmTokens = const {}, final  Map<String, dynamic> fcmTokenLastActiveAt = const {}, this.notificationPreferences = const NotificationPreferences(), this.path}): _devices = devices,_fcmTokens = fcmTokens,_fcmTokenLastActiveAt = fcmTokenLastActiveAt,super._();
+  const _UserModel({required this.id, required this.provider, required this.email, required this.account, required  Map<String, UserDeviceModel> devices,  Map<String, dynamic> fcmTokens = const {},  Map<String, dynamic> fcmTokenLastActiveAt = const {}, this.notificationPreferences = const NotificationPreferences(), this.path}): _devices = devices,_fcmTokens = fcmTokens,_fcmTokenLastActiveAt = fcmTokenLastActiveAt,super._();
   factory _UserModel.fromJson(Map<String, dynamic> json) => _$UserModelFromJson(json);
 
 /// The user's unique id.
@@ -330,16 +336,18 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _UserModel&&(identical(other.id, id) || other.id == id)&&(identical(other.provider, provider) || other.provider == provider)&&(identical(other.email, email) || other.email == email)&&(identical(other.account, account) || other.account == account)&&const DeepCollectionEquality().equals(other._devices, _devices)&&const DeepCollectionEquality().equals(other._fcmTokens, _fcmTokens)&&const DeepCollectionEquality().equals(other._fcmTokenLastActiveAt, _fcmTokenLastActiveAt)&&(identical(other.notificationPreferences, notificationPreferences) || other.notificationPreferences == notificationPreferences)&&(identical(other.path, path) || other.path == path));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _UserModel&&(identical(other.id, id) || other.id == id)&&(identical(other.provider, provider) || other.provider == provider)&&(identical(other.email, email) || other.email == email)&&(identical(other.account, account) || other.account == account)&&const DeepCollectionEquality().equals(other.devices, _devices)&&const DeepCollectionEquality().equals(other.fcmTokens, _fcmTokens)&&const DeepCollectionEquality().equals(other.fcmTokenLastActiveAt, _fcmTokenLastActiveAt)&&(identical(other.notificationPreferences, notificationPreferences) || other.notificationPreferences == notificationPreferences)&&(identical(other.path, path) || other.path == path));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,provider,email,account,const DeepCollectionEquality().hash(_devices),const DeepCollectionEquality().hash(_fcmTokens),const DeepCollectionEquality().hash(_fcmTokenLastActiveAt),notificationPreferences,path);
+int get hashCode {
+    return Object.hash(runtimeType,id,provider,email,account,const DeepCollectionEquality().hash(_devices),const DeepCollectionEquality().hash(_fcmTokens),const DeepCollectionEquality().hash(_fcmTokenLastActiveAt),notificationPreferences,path);
+}
 
 @override
 String toString() {
-  return 'UserModel(id: $id, provider: $provider, email: $email, account: $account, devices: $devices, fcmTokens: $fcmTokens, fcmTokenLastActiveAt: $fcmTokenLastActiveAt, notificationPreferences: $notificationPreferences, path: $path)';
+    return 'UserModel(id: $id, provider: $provider, email: $email, account: $account, devices: $devices, fcmTokens: $fcmTokens, fcmTokenLastActiveAt: $fcmTokenLastActiveAt, notificationPreferences: $notificationPreferences, path: $path)';
 }
 
 
@@ -452,16 +460,21 @@ $UserAccountCopyWith<UserAccount> get copyWith => _$UserAccountCopyWithImpl<User
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is UserAccount&&(identical(other.firstName, firstName) || other.firstName == firstName)&&(identical(other.lastName, lastName) || other.lastName == lastName)&&(identical(other.email, email) || other.email == email)&&(identical(other.country, country) || other.country == country)&&(identical(other.state, state) || other.state == state)&&(identical(other.city, city) || other.city == city)&&(identical(other.address, address) || other.address == address)&&(identical(other.postalCode, postalCode) || other.postalCode == postalCode)&&(identical(other.registrationDate, registrationDate) || other.registrationDate == registrationDate)&&(identical(other.userType, userType) || other.userType == userType)&&(identical(other.phoneNumber, phoneNumber) || other.phoneNumber == phoneNumber)&&(identical(other.profilePicture, profilePicture) || other.profilePicture == profilePicture)&&(identical(other.gender, gender) || other.gender == gender)&&(identical(other.dateOfBirth, dateOfBirth) || other.dateOfBirth == dateOfBirth)&&(identical(other.hasCompletedOnboarding, hasCompletedOnboarding) || other.hasCompletedOnboarding == hasCompletedOnboarding)&&(identical(other.mustAuthenticate, mustAuthenticate) || other.mustAuthenticate == mustAuthenticate)&&(identical(other.deletedAt, deletedAt) || other.deletedAt == deletedAt)&&(identical(other.isDeleted, isDeleted) || other.isDeleted == isDeleted)&&(identical(other.deleteReason, deleteReason) || other.deleteReason == deleteReason)&&(identical(other.isDisabled, isDisabled) || other.isDisabled == isDisabled)&&(identical(other.disabledAt, disabledAt) || other.disabledAt == disabledAt)&&(identical(other.disableReason, disableReason) || other.disableReason == disableReason)&&(identical(other.lastUpdated, lastUpdated) || other.lastUpdated == lastUpdated));
+  final _this = this as UserAccount;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is UserAccount&&(identical(other.firstName, _this.firstName) || other.firstName == _this.firstName)&&(identical(other.lastName, _this.lastName) || other.lastName == _this.lastName)&&(identical(other.email, _this.email) || other.email == _this.email)&&(identical(other.country, _this.country) || other.country == _this.country)&&(identical(other.state, _this.state) || other.state == _this.state)&&(identical(other.city, _this.city) || other.city == _this.city)&&(identical(other.address, _this.address) || other.address == _this.address)&&(identical(other.postalCode, _this.postalCode) || other.postalCode == _this.postalCode)&&(identical(other.registrationDate, _this.registrationDate) || other.registrationDate == _this.registrationDate)&&(identical(other.userType, _this.userType) || other.userType == _this.userType)&&(identical(other.phoneNumber, _this.phoneNumber) || other.phoneNumber == _this.phoneNumber)&&(identical(other.profilePicture, _this.profilePicture) || other.profilePicture == _this.profilePicture)&&(identical(other.gender, _this.gender) || other.gender == _this.gender)&&(identical(other.dateOfBirth, _this.dateOfBirth) || other.dateOfBirth == _this.dateOfBirth)&&(identical(other.hasCompletedOnboarding, _this.hasCompletedOnboarding) || other.hasCompletedOnboarding == _this.hasCompletedOnboarding)&&(identical(other.mustAuthenticate, _this.mustAuthenticate) || other.mustAuthenticate == _this.mustAuthenticate)&&(identical(other.deletedAt, _this.deletedAt) || other.deletedAt == _this.deletedAt)&&(identical(other.isDeleted, _this.isDeleted) || other.isDeleted == _this.isDeleted)&&(identical(other.deleteReason, _this.deleteReason) || other.deleteReason == _this.deleteReason)&&(identical(other.isDisabled, _this.isDisabled) || other.isDisabled == _this.isDisabled)&&(identical(other.disabledAt, _this.disabledAt) || other.disabledAt == _this.disabledAt)&&(identical(other.disableReason, _this.disableReason) || other.disableReason == _this.disableReason)&&(identical(other.lastUpdated, _this.lastUpdated) || other.lastUpdated == _this.lastUpdated));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hashAll([runtimeType,firstName,lastName,email,country,state,city,address,postalCode,registrationDate,userType,phoneNumber,profilePicture,gender,dateOfBirth,hasCompletedOnboarding,mustAuthenticate,deletedAt,isDeleted,deleteReason,isDisabled,disabledAt,disableReason,lastUpdated]);
+int get hashCode {
+  final _this = this as UserAccount;
+  return Object.hashAll([runtimeType,_this.firstName,_this.lastName,_this.email,_this.country,_this.state,_this.city,_this.address,_this.postalCode,_this.registrationDate,_this.userType,_this.phoneNumber,_this.profilePicture,_this.gender,_this.dateOfBirth,_this.hasCompletedOnboarding,_this.mustAuthenticate,_this.deletedAt,_this.isDeleted,_this.deleteReason,_this.isDisabled,_this.disabledAt,_this.disableReason,_this.lastUpdated]);
+}
 
 @override
 String toString() {
-  return 'UserAccount(firstName: $firstName, lastName: $lastName, email: $email, country: $country, state: $state, city: $city, address: $address, postalCode: $postalCode, registrationDate: $registrationDate, userType: $userType, phoneNumber: $phoneNumber, profilePicture: $profilePicture, gender: $gender, dateOfBirth: $dateOfBirth, hasCompletedOnboarding: $hasCompletedOnboarding, mustAuthenticate: $mustAuthenticate, deletedAt: $deletedAt, isDeleted: $isDeleted, deleteReason: $deleteReason, isDisabled: $isDisabled, disabledAt: $disabledAt, disableReason: $disableReason, lastUpdated: $lastUpdated)';
+  final _this = this as UserAccount;
+  return 'UserAccount(firstName: ${_this.firstName}, lastName: ${_this.lastName}, email: ${_this.email}, country: ${_this.country}, state: ${_this.state}, city: ${_this.city}, address: ${_this.address}, postalCode: ${_this.postalCode}, registrationDate: ${_this.registrationDate}, userType: ${_this.userType}, phoneNumber: ${_this.phoneNumber}, profilePicture: ${_this.profilePicture}, gender: ${_this.gender}, dateOfBirth: ${_this.dateOfBirth}, hasCompletedOnboarding: ${_this.hasCompletedOnboarding}, mustAuthenticate: ${_this.mustAuthenticate}, deletedAt: ${_this.deletedAt}, isDeleted: ${_this.isDeleted}, deleteReason: ${_this.deleteReason}, isDisabled: ${_this.isDisabled}, disabledAt: ${_this.disabledAt}, disableReason: ${_this.disableReason}, lastUpdated: ${_this.lastUpdated})';
 }
 
 
@@ -490,7 +503,7 @@ class _$UserAccountCopyWithImpl<$Res>
 /// Create a copy of UserAccount
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') @override $Res call({Object? firstName = null,Object? lastName = null,Object? email = null,Object? country = null,Object? state = null,Object? city = null,Object? address = null,Object? postalCode = null,Object? registrationDate = null,Object? userType = null,Object? phoneNumber = freezed,Object? profilePicture = freezed,Object? gender = freezed,Object? dateOfBirth = freezed,Object? hasCompletedOnboarding = null,Object? mustAuthenticate = null,Object? deletedAt = freezed,Object? isDeleted = null,Object? deleteReason = null,Object? isDisabled = null,Object? disabledAt = freezed,Object? disableReason = null,Object? lastUpdated = freezed,}) {
-  return _then(_self.copyWith(
+  return _then(UserAccount(
 firstName: null == firstName ? _self.firstName : firstName // ignore: cast_nullable_to_non_nullable
 as String,lastName: null == lastName ? _self.lastName : lastName // ignore: cast_nullable_to_non_nullable
 as String,email: null == email ? _self.email : email // ignore: cast_nullable_to_non_nullable
@@ -727,16 +740,18 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _UserAccount&&(identical(other.firstName, firstName) || other.firstName == firstName)&&(identical(other.lastName, lastName) || other.lastName == lastName)&&(identical(other.email, email) || other.email == email)&&(identical(other.country, country) || other.country == country)&&(identical(other.state, state) || other.state == state)&&(identical(other.city, city) || other.city == city)&&(identical(other.address, address) || other.address == address)&&(identical(other.postalCode, postalCode) || other.postalCode == postalCode)&&(identical(other.registrationDate, registrationDate) || other.registrationDate == registrationDate)&&(identical(other.userType, userType) || other.userType == userType)&&(identical(other.phoneNumber, phoneNumber) || other.phoneNumber == phoneNumber)&&(identical(other.profilePicture, profilePicture) || other.profilePicture == profilePicture)&&(identical(other.gender, gender) || other.gender == gender)&&(identical(other.dateOfBirth, dateOfBirth) || other.dateOfBirth == dateOfBirth)&&(identical(other.hasCompletedOnboarding, hasCompletedOnboarding) || other.hasCompletedOnboarding == hasCompletedOnboarding)&&(identical(other.mustAuthenticate, mustAuthenticate) || other.mustAuthenticate == mustAuthenticate)&&(identical(other.deletedAt, deletedAt) || other.deletedAt == deletedAt)&&(identical(other.isDeleted, isDeleted) || other.isDeleted == isDeleted)&&(identical(other.deleteReason, deleteReason) || other.deleteReason == deleteReason)&&(identical(other.isDisabled, isDisabled) || other.isDisabled == isDisabled)&&(identical(other.disabledAt, disabledAt) || other.disabledAt == disabledAt)&&(identical(other.disableReason, disableReason) || other.disableReason == disableReason)&&(identical(other.lastUpdated, lastUpdated) || other.lastUpdated == lastUpdated));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _UserAccount&&(identical(other.firstName, firstName) || other.firstName == firstName)&&(identical(other.lastName, lastName) || other.lastName == lastName)&&(identical(other.email, email) || other.email == email)&&(identical(other.country, country) || other.country == country)&&(identical(other.state, state) || other.state == state)&&(identical(other.city, city) || other.city == city)&&(identical(other.address, address) || other.address == address)&&(identical(other.postalCode, postalCode) || other.postalCode == postalCode)&&(identical(other.registrationDate, registrationDate) || other.registrationDate == registrationDate)&&(identical(other.userType, userType) || other.userType == userType)&&(identical(other.phoneNumber, phoneNumber) || other.phoneNumber == phoneNumber)&&(identical(other.profilePicture, profilePicture) || other.profilePicture == profilePicture)&&(identical(other.gender, gender) || other.gender == gender)&&(identical(other.dateOfBirth, dateOfBirth) || other.dateOfBirth == dateOfBirth)&&(identical(other.hasCompletedOnboarding, hasCompletedOnboarding) || other.hasCompletedOnboarding == hasCompletedOnboarding)&&(identical(other.mustAuthenticate, mustAuthenticate) || other.mustAuthenticate == mustAuthenticate)&&(identical(other.deletedAt, deletedAt) || other.deletedAt == deletedAt)&&(identical(other.isDeleted, isDeleted) || other.isDeleted == isDeleted)&&(identical(other.deleteReason, deleteReason) || other.deleteReason == deleteReason)&&(identical(other.isDisabled, isDisabled) || other.isDisabled == isDisabled)&&(identical(other.disabledAt, disabledAt) || other.disabledAt == disabledAt)&&(identical(other.disableReason, disableReason) || other.disableReason == disableReason)&&(identical(other.lastUpdated, lastUpdated) || other.lastUpdated == lastUpdated));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hashAll([runtimeType,firstName,lastName,email,country,state,city,address,postalCode,registrationDate,userType,phoneNumber,profilePicture,gender,dateOfBirth,hasCompletedOnboarding,mustAuthenticate,deletedAt,isDeleted,deleteReason,isDisabled,disabledAt,disableReason,lastUpdated]);
+int get hashCode {
+    return Object.hashAll([runtimeType,firstName,lastName,email,country,state,city,address,postalCode,registrationDate,userType,phoneNumber,profilePicture,gender,dateOfBirth,hasCompletedOnboarding,mustAuthenticate,deletedAt,isDeleted,deleteReason,isDisabled,disabledAt,disableReason,lastUpdated]);
+}
 
 @override
 String toString() {
-  return 'UserAccount(firstName: $firstName, lastName: $lastName, email: $email, country: $country, state: $state, city: $city, address: $address, postalCode: $postalCode, registrationDate: $registrationDate, userType: $userType, phoneNumber: $phoneNumber, profilePicture: $profilePicture, gender: $gender, dateOfBirth: $dateOfBirth, hasCompletedOnboarding: $hasCompletedOnboarding, mustAuthenticate: $mustAuthenticate, deletedAt: $deletedAt, isDeleted: $isDeleted, deleteReason: $deleteReason, isDisabled: $isDisabled, disabledAt: $disabledAt, disableReason: $disableReason, lastUpdated: $lastUpdated)';
+    return 'UserAccount(firstName: $firstName, lastName: $lastName, email: $email, country: $country, state: $state, city: $city, address: $address, postalCode: $postalCode, registrationDate: $registrationDate, userType: $userType, phoneNumber: $phoneNumber, profilePicture: $profilePicture, gender: $gender, dateOfBirth: $dateOfBirth, hasCompletedOnboarding: $hasCompletedOnboarding, mustAuthenticate: $mustAuthenticate, deletedAt: $deletedAt, isDeleted: $isDeleted, deleteReason: $deleteReason, isDisabled: $isDisabled, disabledAt: $disabledAt, disableReason: $disableReason, lastUpdated: $lastUpdated)';
 }
 
 
@@ -817,16 +832,21 @@ $UserDeviceModelCopyWith<UserDeviceModel> get copyWith => _$UserDeviceModelCopyW
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is UserDeviceModel&&(identical(other.deviceModel, deviceModel) || other.deviceModel == deviceModel)&&(identical(other.currentTimeZone, currentTimeZone) || other.currentTimeZone == currentTimeZone)&&(identical(other.lastUsed, lastUsed) || other.lastUsed == lastUsed));
+  final _this = this as UserDeviceModel;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is UserDeviceModel&&(identical(other.deviceModel, _this.deviceModel) || other.deviceModel == _this.deviceModel)&&(identical(other.currentTimeZone, _this.currentTimeZone) || other.currentTimeZone == _this.currentTimeZone)&&(identical(other.lastUsed, _this.lastUsed) || other.lastUsed == _this.lastUsed));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,deviceModel,currentTimeZone,lastUsed);
+int get hashCode {
+  final _this = this as UserDeviceModel;
+  return Object.hash(runtimeType,_this.deviceModel,_this.currentTimeZone,_this.lastUsed);
+}
 
 @override
 String toString() {
-  return 'UserDeviceModel(deviceModel: $deviceModel, currentTimeZone: $currentTimeZone, lastUsed: $lastUsed)';
+  final _this = this as UserDeviceModel;
+  return 'UserDeviceModel(deviceModel: ${_this.deviceModel}, currentTimeZone: ${_this.currentTimeZone}, lastUsed: ${_this.lastUsed})';
 }
 
 
@@ -855,7 +875,7 @@ class _$UserDeviceModelCopyWithImpl<$Res>
 /// Create a copy of UserDeviceModel
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') @override $Res call({Object? deviceModel = null,Object? currentTimeZone = null,Object? lastUsed = freezed,}) {
-  return _then(_self.copyWith(
+  return _then(UserDeviceModel(
 deviceModel: null == deviceModel ? _self.deviceModel : deviceModel // ignore: cast_nullable_to_non_nullable
 as String,currentTimeZone: null == currentTimeZone ? _self.currentTimeZone : currentTimeZone // ignore: cast_nullable_to_non_nullable
 as TimeZone,lastUsed: freezed == lastUsed ? _self.lastUsed : lastUsed // ignore: cast_nullable_to_non_nullable
@@ -1033,16 +1053,18 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _UserDeviceModel&&(identical(other.deviceModel, deviceModel) || other.deviceModel == deviceModel)&&(identical(other.currentTimeZone, currentTimeZone) || other.currentTimeZone == currentTimeZone)&&(identical(other.lastUsed, lastUsed) || other.lastUsed == lastUsed));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _UserDeviceModel&&(identical(other.deviceModel, deviceModel) || other.deviceModel == deviceModel)&&(identical(other.currentTimeZone, currentTimeZone) || other.currentTimeZone == currentTimeZone)&&(identical(other.lastUsed, lastUsed) || other.lastUsed == lastUsed));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,deviceModel,currentTimeZone,lastUsed);
+int get hashCode {
+    return Object.hash(runtimeType,deviceModel,currentTimeZone,lastUsed);
+}
 
 @override
 String toString() {
-  return 'UserDeviceModel(deviceModel: $deviceModel, currentTimeZone: $currentTimeZone, lastUsed: $lastUsed)';
+    return 'UserDeviceModel(deviceModel: $deviceModel, currentTimeZone: $currentTimeZone, lastUsed: $lastUsed)';
 }
 
 
@@ -1112,16 +1134,21 @@ $TimeZoneCopyWith<TimeZone> get copyWith => _$TimeZoneCopyWithImpl<TimeZone>(thi
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is TimeZone&&(identical(other.name, name) || other.name == name)&&(identical(other.abbreviation, abbreviation) || other.abbreviation == abbreviation)&&(identical(other.offset, offset) || other.offset == offset)&&(identical(other.offsetDisplay, offsetDisplay) || other.offsetDisplay == offsetDisplay));
+  final _this = this as TimeZone;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is TimeZone&&(identical(other.name, _this.name) || other.name == _this.name)&&(identical(other.abbreviation, _this.abbreviation) || other.abbreviation == _this.abbreviation)&&(identical(other.offset, _this.offset) || other.offset == _this.offset)&&(identical(other.offsetDisplay, _this.offsetDisplay) || other.offsetDisplay == _this.offsetDisplay));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,name,abbreviation,offset,offsetDisplay);
+int get hashCode {
+  final _this = this as TimeZone;
+  return Object.hash(runtimeType,_this.name,_this.abbreviation,_this.offset,_this.offsetDisplay);
+}
 
 @override
 String toString() {
-  return 'TimeZone(name: $name, abbreviation: $abbreviation, offset: $offset, offsetDisplay: $offsetDisplay)';
+  final _this = this as TimeZone;
+  return 'TimeZone(name: ${_this.name}, abbreviation: ${_this.abbreviation}, offset: ${_this.offset}, offsetDisplay: ${_this.offsetDisplay})';
 }
 
 
@@ -1150,7 +1177,7 @@ class _$TimeZoneCopyWithImpl<$Res>
 /// Create a copy of TimeZone
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') @override $Res call({Object? name = null,Object? abbreviation = null,Object? offset = null,Object? offsetDisplay = null,}) {
-  return _then(_self.copyWith(
+  return _then(TimeZone(
 name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
 as String,abbreviation: null == abbreviation ? _self.abbreviation : abbreviation // ignore: cast_nullable_to_non_nullable
 as String,offset: null == offset ? _self.offset : offset // ignore: cast_nullable_to_non_nullable
@@ -1321,16 +1348,18 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _TimeZone&&(identical(other.name, name) || other.name == name)&&(identical(other.abbreviation, abbreviation) || other.abbreviation == abbreviation)&&(identical(other.offset, offset) || other.offset == offset)&&(identical(other.offsetDisplay, offsetDisplay) || other.offsetDisplay == offsetDisplay));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _TimeZone&&(identical(other.name, name) || other.name == name)&&(identical(other.abbreviation, abbreviation) || other.abbreviation == abbreviation)&&(identical(other.offset, offset) || other.offset == offset)&&(identical(other.offsetDisplay, offsetDisplay) || other.offsetDisplay == offsetDisplay));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,name,abbreviation,offset,offsetDisplay);
+int get hashCode {
+    return Object.hash(runtimeType,name,abbreviation,offset,offsetDisplay);
+}
 
 @override
 String toString() {
-  return 'TimeZone(name: $name, abbreviation: $abbreviation, offset: $offset, offsetDisplay: $offsetDisplay)';
+    return 'TimeZone(name: $name, abbreviation: $abbreviation, offset: $offset, offsetDisplay: $offsetDisplay)';
 }
 
 

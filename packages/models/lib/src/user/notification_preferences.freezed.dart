@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // coverage:ignore-file
-// ignore_for_file: type=lint
+// ignore_for_file: type=lint, type=warning, deprecated_member_use, deprecated_member_use_from_same_package
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'notification_preferences.dart';
@@ -9,6 +9,7 @@ part of 'notification_preferences.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
 // dart format off
 T _$identity<T>(T value) => value;
 
@@ -32,16 +33,21 @@ $NotificationPreferencesCopyWith<NotificationPreferences> get copyWith => _$Noti
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is NotificationPreferences&&(identical(other.pushEnabled, pushEnabled) || other.pushEnabled == pushEnabled)&&(identical(other.likesEnabled, likesEnabled) || other.likesEnabled == likesEnabled)&&(identical(other.dislikesEnabled, dislikesEnabled) || other.dislikesEnabled == dislikesEnabled)&&(identical(other.reportCreatedEnabled, reportCreatedEnabled) || other.reportCreatedEnabled == reportCreatedEnabled));
+  final _this = this as NotificationPreferences;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is NotificationPreferences&&(identical(other.pushEnabled, _this.pushEnabled) || other.pushEnabled == _this.pushEnabled)&&(identical(other.likesEnabled, _this.likesEnabled) || other.likesEnabled == _this.likesEnabled)&&(identical(other.dislikesEnabled, _this.dislikesEnabled) || other.dislikesEnabled == _this.dislikesEnabled)&&(identical(other.reportCreatedEnabled, _this.reportCreatedEnabled) || other.reportCreatedEnabled == _this.reportCreatedEnabled));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,pushEnabled,likesEnabled,dislikesEnabled,reportCreatedEnabled);
+int get hashCode {
+  final _this = this as NotificationPreferences;
+  return Object.hash(runtimeType,_this.pushEnabled,_this.likesEnabled,_this.dislikesEnabled,_this.reportCreatedEnabled);
+}
 
 @override
 String toString() {
-  return 'NotificationPreferences(pushEnabled: $pushEnabled, likesEnabled: $likesEnabled, dislikesEnabled: $dislikesEnabled, reportCreatedEnabled: $reportCreatedEnabled)';
+  final _this = this as NotificationPreferences;
+  return 'NotificationPreferences(pushEnabled: ${_this.pushEnabled}, likesEnabled: ${_this.likesEnabled}, dislikesEnabled: ${_this.dislikesEnabled}, reportCreatedEnabled: ${_this.reportCreatedEnabled})';
 }
 
 
@@ -70,7 +76,7 @@ class _$NotificationPreferencesCopyWithImpl<$Res>
 /// Create a copy of NotificationPreferences
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') @override $Res call({Object? pushEnabled = null,Object? likesEnabled = null,Object? dislikesEnabled = null,Object? reportCreatedEnabled = null,}) {
-  return _then(_self.copyWith(
+  return _then(NotificationPreferences(
 pushEnabled: null == pushEnabled ? _self.pushEnabled : pushEnabled // ignore: cast_nullable_to_non_nullable
 as bool,likesEnabled: null == likesEnabled ? _self.likesEnabled : likesEnabled // ignore: cast_nullable_to_non_nullable
 as bool,dislikesEnabled: null == dislikesEnabled ? _self.dislikesEnabled : dislikesEnabled // ignore: cast_nullable_to_non_nullable
@@ -241,16 +247,18 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _NotificationPreferences&&(identical(other.pushEnabled, pushEnabled) || other.pushEnabled == pushEnabled)&&(identical(other.likesEnabled, likesEnabled) || other.likesEnabled == likesEnabled)&&(identical(other.dislikesEnabled, dislikesEnabled) || other.dislikesEnabled == dislikesEnabled)&&(identical(other.reportCreatedEnabled, reportCreatedEnabled) || other.reportCreatedEnabled == reportCreatedEnabled));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _NotificationPreferences&&(identical(other.pushEnabled, pushEnabled) || other.pushEnabled == pushEnabled)&&(identical(other.likesEnabled, likesEnabled) || other.likesEnabled == likesEnabled)&&(identical(other.dislikesEnabled, dislikesEnabled) || other.dislikesEnabled == dislikesEnabled)&&(identical(other.reportCreatedEnabled, reportCreatedEnabled) || other.reportCreatedEnabled == reportCreatedEnabled));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,pushEnabled,likesEnabled,dislikesEnabled,reportCreatedEnabled);
+int get hashCode {
+    return Object.hash(runtimeType,pushEnabled,likesEnabled,dislikesEnabled,reportCreatedEnabled);
+}
 
 @override
 String toString() {
-  return 'NotificationPreferences(pushEnabled: $pushEnabled, likesEnabled: $likesEnabled, dislikesEnabled: $dislikesEnabled, reportCreatedEnabled: $reportCreatedEnabled)';
+    return 'NotificationPreferences(pushEnabled: $pushEnabled, likesEnabled: $likesEnabled, dislikesEnabled: $dislikesEnabled, reportCreatedEnabled: $reportCreatedEnabled)';
 }
 
 
