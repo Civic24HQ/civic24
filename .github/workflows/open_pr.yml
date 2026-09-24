@@ -6,8 +6,8 @@ name: 🏷️ Pull Request Labeling
 # and from Dependabot, whose normal token is read-only. That trigger runs with a
 # write token, so this workflow must NEVER check out or run code from the pull
 # request, and must never put pull request text into a script. It only calls the
-# GitHub API. It runs the version of this file that is on the base branch, so
-# changes to it take effect after they are merged.
+# GitHub API. It runs the version of this file that is on the default branch
+# (develop), so changes to it take effect after they are merged into develop.
 
 on:
   pull_request_target:

@@ -40,7 +40,7 @@ It formats files, so commit whatever it changes.
 Labeling uses `pull_request_target` so it also works for pull requests from forks and from Dependabot, whose normal token is read-only. That trigger runs with a write token, so:
 - never add a checkout of the pull request, or run anything from it, to that workflow;
 - never put pull request text (title, branch name, body) directly into a script; pass it through `env`;
-- it runs the file from the base branch, so a change to it only takes effect after merge.
+- it runs the file, and reads `.github/labeler.yml`, from the default branch (`develop`), even for pull requests into `main`, so a change to it only takes effect after it is merged into `develop`.
 
 Labels are configured in `.github/labeler.yml` (branch name patterns and changed-file globs). Branch labels follow our `type/description` names (`feat/`, `fix/`, `chore/`, `docs/`, `ci/`, `test/`, `build/`).
 
