@@ -7,7 +7,6 @@
   "STORAGE_BUCKET": "test-project.appspot.com",
   "LOGGING_IDENTIFIER": "test-logging",
   "LOGGING_CLIENT_EMAIL": "test@example.invalid",
-  "API_KEY": "test-api-key",
   "ANDROID_API_KEY": "test-android-api-key",
   "ANDROID_APP_ID": "1:000000000000:android:0000000000000000",
   "IOS_API_KEY": "test-ios-api-key",
