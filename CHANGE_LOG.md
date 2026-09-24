@@ -89,6 +89,31 @@ The workspace has about 27 real test cases: 21 component goldens (10 components)
 | `flutter_launcher_icons` | Global tool instead of an override | Owner asked for a real fix, not a workaround |
 | Developers without FVM | Supported: install the Flutter version in `.fvmrc` by other means; pubspec minimum blocks older Flutter | Owner question |
 
+### 1.8 PR 2: CI repair (`ci/repair-workflows-and-unify-versions`)
+
+| Change | Why |
+|---|---|
+| `.github/workflows/ci` renamed to `ci.yml` and rewritten | It had no `.yml` extension and never ran. Now one job (was a citizen/admin matrix repeating workspace-wide commands): generate, format check, generated-files check, analyze, test. Runs on PRs into `develop` and `main` |
+| Flutter from `.fvmrc`, Java 21 zulu, everywhere | Was Flutter 3.32.6 / 3.38.7 / pubspec 3.41.6 and Java 18 / 21 / 25 |
+| Every action pinned to a full commit SHA with a version comment | GitHub's recommended way to get an immutable action. `checkout` v7.0.1, `setup-java` v6.0.1, `flutter-action` v2.23.0, `labeler` v7.0.0, `release-action` v1.21.0, `assign-author` v1.6.2, `pr-labeler-action` v5.0.0 |
+| `cd.yml` runs on pushes to `develop` only; no releases from PRs; secrets via `env`, not pasted into scripts; releases use `GITHUB_TOKEN` with `contents: write` on the build jobs only | The old one built and published a release on every PR run. Store delivery stays Phase 7 |
+| `open_pr.yml`: removed the job that only installed Java, uses `GITHUB_TOKEN` instead of the `TOKEN` personal token, also runs for PRs into `main`; branch labels for `docs/`, `ci/`, `test/`, `build/` | Least privilege, less noise |
+| `.github/dependabot.yml` for `github-actions` (monthly, one grouped PR) | Pinned SHAs go stale without it. `pub` and `npm` entries remain Phase 7 |
+| `melos run ci:check` | One command that does what CI does, to run before a PR |
+| Melos activated globally in CI and CD (`melos` version taken from `pubspec.lock`) | Melos scripts call each other through the `melos` command, which `dart run melos` does not provide. Found while simulating CI locally. `README.md` and `AGENTS.md` FVM instructions corrected for the same reason |
+
+**Verification:** `actionlint` clean. Every CI step run locally in CI mode: bootstrap, generate, format check, generated-files check (no files changed), analyze, test all exit 0; `melos run ci:check` exits 0. **Live CI (24 Sept 2026, Ubuntu, Flutter 3.47.5 from `.fvmrc`, Java 21): green after one fix.** The first live run failed the generated-files check because `flutter pub get` writes `apps/admin/macos/Flutter/GeneratedPluginRegistrant.swift` differently on Linux; OS-dependent plugin registrants are now excluded from that check. Labeling workflow green. GitHub Actions was disabled for the repository (`actions/permissions` `enabled: false`), which is why PRs #37 to #39 had no runs; it is enabled when this PR is ready.
+
+**Done with this PR:** GitHub Actions enabled (`enabled: true`, default token read-only); branch protection on `develop` requires the check `Format, analyze and test` (admins can bypass, force pushes and deletion blocked, no review requirement).
+
+**Review decisions on PR #40 (CodeRabbit):**
+- Accepted and fixed: document the PATH step for a globally activated Melos; `melos run ci:check` runs the same generated-files check as CI (`bin/check_generated.sh`).
+- **Deferred to Phase 7:** the iOS and Android jobs in `cd.yml` both upload to the same release tag with `allowUpdates: true`, so they can race when creating the release. Fix in Phase 7 with the rest of CD: one `release` job with `needs: [build-ios, build-android]` that downloads both build artifacts and publishes once (or use one tag per platform). Serializing both build jobs, as suggested, would double the CD time.
+- **Declined:** adding `edited` to the `ci.yml` pull request trigger. It also fires on title and description edits, which with cancel-in-progress would cancel running CI for a rare benefit (a retargeted PR). Push a commit or re-run the check instead.
+- **Follow-up PR** (`ci/label-pull-requests-from-forks`): switch `open_pr.yml` to `pull_request_target` so PRs from forks and Dependabot can be labeled. Nothing is checked out and no PR text reaches a script, which keeps it safe.
+
+**Open after this PR:** goldens are not asserted in CI (Ubuntu) until Phase 2; repository secrets `TOKEN` and `CITIZEN_*_SECRETS` are now unused and can be deleted by the owner; Dependabot `pub` and `npm` entries (Phase 7; Dependabot's docs do not mention pub workspaces, so test before relying on it).
+
 ### 1.7 Still open
 
 - Shorebird CLI install and a check that 3.47.5 is supported.

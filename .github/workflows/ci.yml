@@ -1,0 +1,81 @@
+name: CI
+
+# Quality gate for every pull request into develop or main:
+# format check, code generation is up to date, analysis and tests.
+# Run the same steps locally with: melos run ci:check
+
+on:
+  pull_request:
+    branches: [develop, main]
+    types: [opened, synchronize, reopened, ready_for_review]
+  workflow_dispatch:
+
+# Only the newest run for a pull request is useful, so a new push cancels the
+# older run for that PR. Runs outside pull requests are never cancelled.
+concurrency:
+  group: ci-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+# The default token gets read-only access to the repository contents.
+permissions:
+  contents: read
+
+jobs:
+  quality:
+    name: Format, analyze and test
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    steps:
+      - name: Check out the repository
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Set up Java
+        uses: actions/setup-java@de7274f081f381c8f8158605e0321c36c376e2e6 # v6.0.1
+        with:
+          distribution: zulu
+          java-version: "21"
+
+      # The Flutter version comes from .fvmrc, the single source of truth.
+      - name: Set up Flutter
+        uses: subosito/flutter-action@1a449444c387b1966244ae4d4f8c696479add0b2 # v2.23.0
+        with:
+          flutter-version-file: .fvmrc
+          channel: stable
+          cache: true
+
+      - name: Show tool versions
+        run: |
+          flutter --version
+          java -version
+
+      # Resolves the whole pub workspace. Melos scripts call each other through
+      # the `melos` command, so the exact version from the lockfile is activated
+      # globally and put on the PATH.
+      - name: Install dependencies and Melos
+        run: |
+          flutter pub get
+          dart pub global activate melos "$(dart run melos --version)"
+          echo "$HOME/.pub-cache/bin" >> "$GITHUB_PATH"
+
+      - name: Bootstrap the workspace
+        run: melos bootstrap
+
+      # Generates code and fails if that changed any committed file, meaning
+      # someone forgot to run `melos run flutter:build` and commit the result.
+      - name: Generate code and check it is committed
+        run: bin/check_generated.sh
+
+      # CI=true makes the format script fail instead of rewriting files.
+      - name: Check formatting
+        run: melos run flutter:format
+
+      - name: Analyze
+        run: melos run flutter:analyze
+
+      # Uses the placeholder values in apps/citizen/secrets/env.example.json.
+      # Golden assertions only run on macOS and Windows, so they are skipped here.
+      - name: Run tests
+        run: melos run flutter:test

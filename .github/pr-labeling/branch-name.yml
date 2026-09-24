@@ -8,3 +8,15 @@ fix: fix/*
 
 # For minor maintenance or non-functional changes
 chore: ["chore/*", "refactor/*"]
+
+# Documentation only changes
+docs: docs/*
+
+# Workflow and pipeline changes
+ci: ci/*
+
+# Test changes
+test: test/*
+
+# Build system changes (Gradle, Xcode, tooling)
+build: build/*
