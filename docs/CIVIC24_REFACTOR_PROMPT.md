@@ -80,7 +80,7 @@ The Phase 0 audit in `CHANGE_LOG.md` confirmed the list above and changed or add
 - **Phase 4:** `minifyEnabled` is already true but `proguard-rules.pro` does not exist. `usesCleartextTraffic="true"` is set in the main manifest for all flavors; remove it unless a flavor needs it. Location permissions in the manifest are commented out; confirm what the plugins merge in.
 - **Phase 5:** production App Check uses `AndroidPlayIntegrityProvider` and `AppleDeviceCheckProvider`; prepare App Attest per step 5.
 - **Phase 6:** add the role self-promotion defect to the rules review (D16): `users/{userId}` create does not limit `account.userType`, and `isNotChangingUserType()` compares the top-level key set, so it never matches the nested role. Also check that other users' profiles can be read where "block user" needs it, and how Delete Account removes user data (rules forbid client deletes). Rule changes are proposed to the owner first.
-- **Phase 7:** Android fastlane has no `Fastfile` (only `Appfile`, `Pluginfile`, README) and iOS has no fastlane folder, so both are written from scratch. Add GitHub Dependabot for pub, npm and GitHub Actions (monthly, Firebase packages grouped).
+- **Phase 7:** fix the release race in `cd.yml`: the iOS and Android build jobs both create the same release tag, so add one `release` job that waits for both builds (`needs`), downloads their artifacts and publishes once. `cd.yml` has not been run since the Phase 1 CI repair, so test it end to end. Android fastlane has no `Fastfile` (only `Appfile`, `Pluginfile`, README) and iOS has no fastlane folder, so both are written from scratch. Add GitHub Dependabot for pub, npm and GitHub Actions (monthly, Firebase packages grouped).
 
 ---
 

@@ -106,6 +106,12 @@ The workspace has about 27 real test cases: 21 component goldens (10 components)
 
 **Done with this PR:** GitHub Actions enabled (`enabled: true`, default token read-only); branch protection on `develop` requires the check `Format, analyze and test` (admins can bypass, force pushes and deletion blocked, no review requirement).
 
+**Review decisions on PR #40 (CodeRabbit):**
+- Accepted and fixed: document the PATH step for a globally activated Melos; `melos run ci:check` runs the same generated-files check as CI (`bin/check_generated.sh`).
+- **Deferred to Phase 7:** the iOS and Android jobs in `cd.yml` both upload to the same release tag with `allowUpdates: true`, so they can race when creating the release. Fix in Phase 7 with the rest of CD: one `release` job with `needs: [build-ios, build-android]` that downloads both build artifacts and publishes once (or use one tag per platform). Serializing both build jobs, as suggested, would double the CD time.
+- **Declined:** adding `edited` to the `ci.yml` pull request trigger. It also fires on title and description edits, which with cancel-in-progress would cancel running CI for a rare benefit (a retargeted PR). Push a commit or re-run the check instead.
+- **Follow-up PR** (`ci/label-pull-requests-from-forks`): switch `open_pr.yml` to `pull_request_target` so PRs from forks and Dependabot can be labeled. Nothing is checked out and no PR text reaches a script, which keeps it safe.
+
 **Open after this PR:** goldens are not asserted in CI (Ubuntu) until Phase 2; repository secrets `TOKEN` and `CITIZEN_*_SECRETS` are now unused and can be deleted by the owner; Dependabot `pub` and `npm` entries (Phase 7; Dependabot's docs do not mention pub workspaces, so test before relying on it).
 
 ### 1.7 Still open
