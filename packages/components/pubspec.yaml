@@ -4,17 +4,19 @@ version: 0.1.0+1
 publish_to: none
 
 environment:
-  sdk: ">=3.10.7 <4.0.0"
-  flutter: "3.41.6"
+  sdk: ">=3.13.0 <4.0.0"
+  flutter: ">=3.47.0"
+
+resolution: workspace
 
 dependencies:
   flutter:
     sdk: flutter
   # General Dependencies
   smooth_page_indicator: ^1.2.1
-  solar_icons: ^0.0.5
+  solar_icons: ^0.1.0
   iconsax_plus: ^1.0.0
-  font_awesome_flutter: ^10.4.0
+  font_awesome_flutter: ^11.0.0
   dotted_border: ^2.1.0
   flutter_animate: ^4.5.2
   shimmer: ^2.0.0

@@ -4,8 +4,10 @@ version: 0.0.1+1
 publish_to: none
 
 environment:
-  sdk: ">=3.10.7 <4.0.0"
-  flutter: "3.41.6"
+  sdk: ">=3.13.0 <4.0.0"
+  flutter: ">=3.47.0"
+
+resolution: workspace
 
 dependencies:
   flutter:
@@ -47,7 +49,7 @@ dependencies:
   # Utility Packages
 
   # UI Components
-  solar_icons: ^0.0.5
+  solar_icons: ^0.1.0
   overlay_support: ^2.1.0
   flutter_animate: ^4.5.2
 
@@ -66,7 +68,6 @@ dev_dependencies:
   mockito: ^5.4.4
   golden_toolkit: ^0.15.0
   flutter_gen_runner: ^5.10.0
-  flutter_launcher_icons: ^0.14.4
   flutter_native_splash: ^2.4.6
   # change_app_package_name: ^1.5.0
   # rename: ^3.1.0

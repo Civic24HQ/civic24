@@ -9,7 +9,6 @@
 **.history
 **.svn/
 **migrate_working_dir/
-**.fvm
 **/failures/*.png
 
 # IntelliJ related
@@ -37,8 +36,7 @@
 **linked_*.ds
 **unlinked.ds
 **unlinked_spec.ds
-**.fvm/
-**.fvmrc
+.fvm/
 
 # don't check in golden failure output
 **/failures/*.png
@@ -155,3 +153,5 @@
 **/goldens/macos
 **/goldens/linux
 **/goldens/windows
+# Leftover Melos 6 files (workspaces replace them)
+**/pubspec_overrides.yaml
