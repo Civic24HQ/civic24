@@ -46,15 +46,21 @@ Civic24 is an open-source civic reporting app where citizens report community is
    * Package manifests specify Flutter `3.41.6` and Dart `>=3.10.7 <4.0.0`.
    * CI workflows are currently inconsistent: `.github/workflows/ci` uses Flutter `3.32.6`, while `.github/workflows/cd.yml` uses `3.38.7`.
    * Standardize the version using `.fvmrc` and workspace pubspec files.
+   * Latest stable Flutter is 3.47.5 (Dart 3.13.4) as of 24 Sept 2026. The exact `flutter: 3.41.6` pin in every pubspec blocks `pub get` on any other Flutter.
+   * `.gitignore` currently ignores `.fvmrc`; un-ignore it when `.fvmrc` is added (Phase 1).
 2. **CI File Missing Extension:**
    * The file `.github/workflows/ci` has no `.yml` extension, so GitHub Actions ignores it until renamed to `ci.yml`.
 3. **Single Entry Point:**
    * The citizen app entry point is `apps/citizen/lib/main.dart`.
    * *Ignore old references in README files to `main_development.dart`—they do not exist.*
-4. **Golden Tests Caution:**
+4. **Tests Need Environment Values:**
+   * `EnvironmentConstants` asserts on `String.fromEnvironment` at compile time, so `services`, `components` and `citizen` tests only load with `--dart-define-from-file=<file>`. Placeholder (non-secret) values are enough for tests.
+5. **Stale Generator Stack:**
+   * The locked `analyzer` 7.7.1 cannot read Dart 3.10+ syntax, so `stackedRouterGenerator` fails on Flutter 3.47. A dependency upgrade (Phase 2) is required.
+6. **Golden Tests Caution:**
    * `melos run test:golden` includes `--update-goldens`.
    * **Do not** run this during regular testing, or it will overwrite golden test images without meaning to.
-5. **Secrets are Not in Git:**
+7. **Secrets are Not in Git:**
    * Flavor JSON files, Google service files, and keystores are gitignored.
    * Real citizen Firebase and OAuth configs are absent on fresh checkouts; environment-specific auth cannot be verified without credentials and project access. Never claim tests passed if real credentials or active Firebase settings are missing.
 
@@ -244,7 +250,7 @@ These files are gitignored and must stay out of git:
 * Set `compileSdk = 36` and `targetSdk = 36`.
 * Use Kotlin DSL (`build.gradle.kts`).
 * Use platform notation for Firebase BOM: `implementation(platform("com.google.firebase:firebase-bom:34.x.x"))`.
-* Keep ProGuard rules for Freezed models in `proguard-rules.pro` so release builds don't crash with R8 minification.
+* Do not add Gson or Freezed ProGuard keep rules. Freezed models are Dart, so R8 never touches them. Add a keep rule to `proguard-rules.pro` only when a real release build crash or a plugin's docs require it, and log why in `CHANGE_LOG.md`.
 
 ### 6.4 Shorebird Code Push
 * Shorebird cannot patch changes that touch native code (Gradle, Kotlin, Xcode, Podfile, SPM, or new native plugins).
