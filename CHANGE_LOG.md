@@ -251,10 +251,10 @@ The owner will add these manually when a step needs them. The first step that ne
 | 7 | **Phase 7** CI/CD, store compliance features, fastlane, release | 6 | 4 to 5 days | Apple, Play, APNs, reviewer account |
 | 8 | **Phase 8, 9** architecture, quality, features | 7 | ongoing | Proposals approved one by one |
 
-### 0.13 Owner requests (nothing is needed before Phase 1 starts, except confirmations)
+### 0.13 Owner requests
 
-1. Confirm **Melos 8.x** (latest is 8.9.0; the master plan's 7.x is superseded) and **Flutter 3.47.x** as the pin.
-2. Log in to the Firebase console and clear the inactivity notice. Done: project IDs recorded in 0.10.
+1. ~~Confirm Melos 8.x and Flutter 3.47.x as the pin.~~ Confirmed by the owner (24 Sept 2026).
+2. Log in to the Firebase console and clear the inactivity notice. **Still pending** (owner). Project IDs are recorded in 0.10.
 3. For Phase 1 verification (build and test runs): the three `secrets/*.json` files. Placeholders are enough for tests. Real ones are needed to launch the app.
 4. Later: the three `google-services.json` and `GoogleService-Info.plist` files, xcconfigs, keystore and `key.properties`, Play App Signing SHA-1/SHA-256, Apple Developer and App Store Connect access, APNs key, test accounts, reviewer account.
 5. Install FVM SDKs if the background install did not finish (0.9). Install the Firebase CLI, FlutterFire CLI, Shorebird CLI and fastlane when their phases start.
@@ -264,17 +264,25 @@ The owner will add these manually when a step needs them. The first step that ne
 | Decision | Choice | Why |
 |---|---|---|
 | Flutter version for the baseline | Latest stable (3.47.5), not 3.41.6 | Owner instruction. The existing 3.41.6 pin is treated as a defect |
-| Flutter version for the repo | Decided in Phase 1 | Needs Shorebird 3.47.5 check |
+| Flutter version for the repo | 3.47.x (exact version fixed in Phase 1) | Owner approved. Needs a Shorebird CLI check of 3.47.5. `.fvmrc` holds the exact version, pubspecs get a minimum range |
 | Baseline method | Scratch copy outside the repo with the Flutter pin loosened | Phase 0 forbids code changes and the exact pin blocks any newer Flutter |
-| Melos version | Recommend 8.x | Latest on pub.dev, same workspace model as 7 |
+| Melos version | 8.x (8.9.0) | Owner approved. Latest on pub.dev, same workspace model as 7. The master plan was updated from 7 to 8 |
 | Branch and commit names | `type/kebab-description`, Conventional Commits with optional scope | Owner instruction |
 | ProGuard | No Gson or Freezed keep rules. Add only for a real crash | Decided by owner. `AGENTS.md` §6.3 corrected |
 | Java | AGP minimum (17) or 21, zulu, one version everywhere. Decided in Phase 1 | Decided by owner |
+| Firebase projects | Production `civic24-sdg11`; development and staging share `civic24test-f9352` | Owner decision. Staging is barely used. Revisit before the first App Store release (0.15) |
+| Committing Firebase project IDs | Allowed | Firebase documents project IDs and app config as public. Protection comes from security rules and App Check |
+| Commit trailer | Keep `Co-Authored-By: Claude` on commits and PR descriptions | Owner decision. Commits made so far keep the trailer, except `48b7333` |
+| PR opened as draft, then marked ready | Followed the PR template's draft rule, owner then marked it ready | Owner preference for future PRs still to be confirmed |
+| Firestore role self-promotion (D16) | Recorded now, reviewed and fixed in Phase 6 | Owner decision. No rule change or deploy before that |
+| Plan alignment | Added a "Phase 0 audit updates" section to the master plan, marked V2 as reference only and superseded where it conflicts | Keeps the plans consistent with the audit. V2's Java 17 and Gson items are covered by the note, not rewritten |
+| Dependabot | Add in Phase 7 for pub, npm and GitHub Actions, monthly, Firebase packages grouped | Owner approved |
+| PR #37 review comments | All six valid and fixed (EULA bullet split, BOM placeholder, CI test values method-agnostic, D16 added, Flutter 3.47 in the plans, Gemini model rule in V2) | Reviewer was CodeRabbit (bot). Each finding verified against the repo before changing |
 
 ### 0.15 Still open
 
 - Revisit before the first App Store release: development and staging currently share one Firebase project (`civic24test-f9352`), so their Firestore data, Auth users and rules deploys are shared. Consider a separate staging project once staging is used for release-candidate testing.
 - Phase 7: add Dependabot (pub, npm, GitHub Actions; monthly; Firebase packages grouped).
-- Firebase inactivity notice and project layout (owner).
+- Firebase inactivity notice (owner). Project layout is settled (see 0.14).
 - FVM SDK installs (0.9).
 - Everything in 0.11 "Unknowns".
