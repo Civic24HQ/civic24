@@ -1,4 +1,5 @@
 import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:localization/localization.dart';
 import 'package:solar_icons/solar_icons.dart';

@@ -51,9 +51,10 @@ class MessageLookup extends MessageLookupByLibrary {
     "featureCategoryTypeAbandoned": MessageLookupByLibrary.simpleMessage(
       "Projets abandonnés",
     ),
-    "featureCategoryTypeAbandonedDescription": MessageLookupByLibrary.simpleMessage(
-      "Signalez des projets gouvernementaux ou communautaires inachevés ou abandonnés dans votre localité.",
-    ),
+    "featureCategoryTypeAbandonedDescription":
+        MessageLookupByLibrary.simpleMessage(
+          "Signalez des projets gouvernementaux ou communautaires inachevés ou abandonnés dans votre localité.",
+        ),
     "featureCategoryTypeDetailedAbandoned":
         MessageLookupByLibrary.simpleMessage("Projets abandonnés & inachevés"),
     "featureCategoryTypeDetailedEducation":
@@ -81,9 +82,10 @@ class MessageLookup extends MessageLookupByLibrary {
     "featureCategoryTypeEducation": MessageLookupByLibrary.simpleMessage(
       "Éducation",
     ),
-    "featureCategoryTypeEducationDescription": MessageLookupByLibrary.simpleMessage(
-      "Signalez des bâtiments scolaires délabrés, des salles communautaires fermées ou des bibliothèques négligées.",
-    ),
+    "featureCategoryTypeEducationDescription":
+        MessageLookupByLibrary.simpleMessage(
+          "Signalez des bâtiments scolaires délabrés, des salles communautaires fermées ou des bibliothèques négligées.",
+        ),
     "featureCategoryTypeGovernance": MessageLookupByLibrary.simpleMessage(
       "Gouvernance",
     ),
@@ -94,9 +96,10 @@ class MessageLookup extends MessageLookupByLibrary {
     "featureCategoryTypeHealth": MessageLookupByLibrary.simpleMessage(
       "Santé & assainissement",
     ),
-    "featureCategoryTypeHealthDescription": MessageLookupByLibrary.simpleMessage(
-      "Signalez des toilettes publiques sales, une mauvaise hygiène dans les cliniques, des eaux usées à ciel ouvert ou des conditions sanitaires dangereuses.",
-    ),
+    "featureCategoryTypeHealthDescription":
+        MessageLookupByLibrary.simpleMessage(
+          "Signalez des toilettes publiques sales, une mauvaise hygiène dans les cliniques, des eaux usées à ciel ouvert ou des conditions sanitaires dangereuses.",
+        ),
     "featureCategoryTypeLight": MessageLookupByLibrary.simpleMessage(
       "Éclairage & électricité",
     ),
@@ -112,9 +115,10 @@ class MessageLookup extends MessageLookupByLibrary {
     "featureCategoryTypeSecurity": MessageLookupByLibrary.simpleMessage(
       "Sécurité",
     ),
-    "featureCategoryTypeSecurityDescription": MessageLookupByLibrary.simpleMessage(
-      "Signalez des zones dangereuses, des infrastructures de sécurité endommagées, du harcèlement de rue ou des zones de regroupement.",
-    ),
+    "featureCategoryTypeSecurityDescription":
+        MessageLookupByLibrary.simpleMessage(
+          "Signalez des zones dangereuses, des infrastructures de sécurité endommagées, du harcèlement de rue ou des zones de regroupement.",
+        ),
     "featureCategoryTypeUrban": MessageLookupByLibrary.simpleMessage(
       "Violations de zonage",
     ),

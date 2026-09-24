@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // coverage:ignore-file
-// ignore_for_file: type=lint
+// ignore_for_file: type=lint, type=warning, deprecated_member_use, deprecated_member_use_from_same_package
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'notification_data.dart';
@@ -9,6 +9,7 @@ part of 'notification_data.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
 // dart format off
 T _$identity<T>(T value) => value;
 
@@ -42,16 +43,21 @@ $NotificationDataCopyWith<NotificationData> get copyWith => _$NotificationDataCo
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is NotificationData&&(identical(other.notificationId, notificationId) || other.notificationId == notificationId)&&(identical(other.title, title) || other.title == title)&&(identical(other.description, description) || other.description == description)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt)&&(identical(other.hasBeenSeen, hasBeenSeen) || other.hasBeenSeen == hasBeenSeen)&&(identical(other.userId, userId) || other.userId == userId)&&(identical(other.notificationIconData, notificationIconData) || other.notificationIconData == notificationIconData)&&(identical(other.path, path) || other.path == path)&&(identical(other.type, type) || other.type == type)&&(identical(other.actorUserId, actorUserId) || other.actorUserId == actorUserId)&&(identical(other.actorName, actorName) || other.actorName == actorName)&&(identical(other.reportId, reportId) || other.reportId == reportId));
+  final _this = this as NotificationData;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is NotificationData&&(identical(other.notificationId, _this.notificationId) || other.notificationId == _this.notificationId)&&(identical(other.title, _this.title) || other.title == _this.title)&&(identical(other.description, _this.description) || other.description == _this.description)&&(identical(other.createdAt, _this.createdAt) || other.createdAt == _this.createdAt)&&(identical(other.updatedAt, _this.updatedAt) || other.updatedAt == _this.updatedAt)&&(identical(other.hasBeenSeen, _this.hasBeenSeen) || other.hasBeenSeen == _this.hasBeenSeen)&&(identical(other.userId, _this.userId) || other.userId == _this.userId)&&(identical(other.notificationIconData, _this.notificationIconData) || other.notificationIconData == _this.notificationIconData)&&(identical(other.path, _this.path) || other.path == _this.path)&&(identical(other.type, _this.type) || other.type == _this.type)&&(identical(other.actorUserId, _this.actorUserId) || other.actorUserId == _this.actorUserId)&&(identical(other.actorName, _this.actorName) || other.actorName == _this.actorName)&&(identical(other.reportId, _this.reportId) || other.reportId == _this.reportId));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,notificationId,title,description,createdAt,updatedAt,hasBeenSeen,userId,notificationIconData,path,type,actorUserId,actorName,reportId);
+int get hashCode {
+  final _this = this as NotificationData;
+  return Object.hash(runtimeType,_this.notificationId,_this.title,_this.description,_this.createdAt,_this.updatedAt,_this.hasBeenSeen,_this.userId,_this.notificationIconData,_this.path,_this.type,_this.actorUserId,_this.actorName,_this.reportId);
+}
 
 @override
 String toString() {
-  return 'NotificationData(notificationId: $notificationId, title: $title, description: $description, createdAt: $createdAt, updatedAt: $updatedAt, hasBeenSeen: $hasBeenSeen, userId: $userId, notificationIconData: $notificationIconData, path: $path, type: $type, actorUserId: $actorUserId, actorName: $actorName, reportId: $reportId)';
+  final _this = this as NotificationData;
+  return 'NotificationData(notificationId: ${_this.notificationId}, title: ${_this.title}, description: ${_this.description}, createdAt: ${_this.createdAt}, updatedAt: ${_this.updatedAt}, hasBeenSeen: ${_this.hasBeenSeen}, userId: ${_this.userId}, notificationIconData: ${_this.notificationIconData}, path: ${_this.path}, type: ${_this.type}, actorUserId: ${_this.actorUserId}, actorName: ${_this.actorName}, reportId: ${_this.reportId})';
 }
 
 
@@ -80,7 +86,7 @@ class _$NotificationDataCopyWithImpl<$Res>
 /// Create a copy of NotificationData
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') @override $Res call({Object? notificationId = null,Object? title = null,Object? description = null,Object? createdAt = null,Object? updatedAt = null,Object? hasBeenSeen = null,Object? userId = freezed,Object? notificationIconData = freezed,Object? path = freezed,Object? type = null,Object? actorUserId = freezed,Object? actorName = freezed,Object? reportId = freezed,}) {
-  return _then(_self.copyWith(
+  return _then(NotificationData(
 notificationId: null == notificationId ? _self.notificationId : notificationId // ignore: cast_nullable_to_non_nullable
 as String,title: null == title ? _self.title : title // ignore: cast_nullable_to_non_nullable
 as String,description: null == description ? _self.description : description // ignore: cast_nullable_to_non_nullable
@@ -279,16 +285,18 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _NotificationData&&(identical(other.notificationId, notificationId) || other.notificationId == notificationId)&&(identical(other.title, title) || other.title == title)&&(identical(other.description, description) || other.description == description)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt)&&(identical(other.hasBeenSeen, hasBeenSeen) || other.hasBeenSeen == hasBeenSeen)&&(identical(other.userId, userId) || other.userId == userId)&&(identical(other.notificationIconData, notificationIconData) || other.notificationIconData == notificationIconData)&&(identical(other.path, path) || other.path == path)&&(identical(other.type, type) || other.type == type)&&(identical(other.actorUserId, actorUserId) || other.actorUserId == actorUserId)&&(identical(other.actorName, actorName) || other.actorName == actorName)&&(identical(other.reportId, reportId) || other.reportId == reportId));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _NotificationData&&(identical(other.notificationId, notificationId) || other.notificationId == notificationId)&&(identical(other.title, title) || other.title == title)&&(identical(other.description, description) || other.description == description)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt)&&(identical(other.hasBeenSeen, hasBeenSeen) || other.hasBeenSeen == hasBeenSeen)&&(identical(other.userId, userId) || other.userId == userId)&&(identical(other.notificationIconData, notificationIconData) || other.notificationIconData == notificationIconData)&&(identical(other.path, path) || other.path == path)&&(identical(other.type, type) || other.type == type)&&(identical(other.actorUserId, actorUserId) || other.actorUserId == actorUserId)&&(identical(other.actorName, actorName) || other.actorName == actorName)&&(identical(other.reportId, reportId) || other.reportId == reportId));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,notificationId,title,description,createdAt,updatedAt,hasBeenSeen,userId,notificationIconData,path,type,actorUserId,actorName,reportId);
+int get hashCode {
+    return Object.hash(runtimeType,notificationId,title,description,createdAt,updatedAt,hasBeenSeen,userId,notificationIconData,path,type,actorUserId,actorName,reportId);
+}
 
 @override
 String toString() {
-  return 'NotificationData(notificationId: $notificationId, title: $title, description: $description, createdAt: $createdAt, updatedAt: $updatedAt, hasBeenSeen: $hasBeenSeen, userId: $userId, notificationIconData: $notificationIconData, path: $path, type: $type, actorUserId: $actorUserId, actorName: $actorName, reportId: $reportId)';
+    return 'NotificationData(notificationId: $notificationId, title: $title, description: $description, createdAt: $createdAt, updatedAt: $updatedAt, hasBeenSeen: $hasBeenSeen, userId: $userId, notificationIconData: $notificationIconData, path: $path, type: $type, actorUserId: $actorUserId, actorName: $actorName, reportId: $reportId)';
 }
 
 

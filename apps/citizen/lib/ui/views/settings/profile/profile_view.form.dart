@@ -1,5 +1,5 @@
-// dart format width=80
 // GENERATED CODE - DO NOT MODIFY BY HAND
+// dart format width=80
 
 // **************************************************************************
 // StackedFormGenerator
@@ -189,7 +189,7 @@ String? getValidationMessage(String key) {
   if (validatorForKey == null) return null;
 
   String? validationMessageForKey = validatorForKey(
-    _ProfileViewTextEditingControllers[key]!.text,
+    _ProfileViewTextEditingControllers[key]?.text,
   );
 
   return validationMessageForKey;

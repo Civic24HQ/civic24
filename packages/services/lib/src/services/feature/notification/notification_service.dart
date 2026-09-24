@@ -61,9 +61,10 @@ class NotificationService extends FirestoreSubCollectionService<NotificationData
     // Seed _lastReadAt from the user document so previously marked
     // notifications show as read immediately on app launch.
     try {
-      final userSnap = await collectionReference(
-        rootDocumentId: userId,
-      ).firestore.collection(FirestoreCollections.users).doc(userId).get();
+      final userSnap = await collectionReference(rootDocumentId: userId).firestore
+          .collection(FirestoreCollections.users)
+          .doc(userId)
+          .get();
       final raw = userSnap.data()?['lastReadAt'];
       if (raw is Timestamp) {
         _lastReadAt = raw.toDate();
@@ -205,9 +206,9 @@ class NotificationService extends FirestoreSubCollectionService<NotificationData
     notifyListeners();
 
     try {
-      final userRef = collectionReference(
-        rootDocumentId: userId,
-      ).firestore.collection(FirestoreCollections.users).doc(userId);
+      final userRef = collectionReference(rootDocumentId: userId).firestore
+          .collection(FirestoreCollections.users)
+          .doc(userId);
       await userRef.update({'lastReadAt': FieldValue.serverTimestamp()});
       log.d('markAllAsRead: lastReadAt updated for $userId');
     } catch (e) {

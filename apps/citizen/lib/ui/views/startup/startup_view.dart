@@ -1,4 +1,5 @@
 import 'dart:math';
+
 import 'package:citizen/ui/shared/src/assets.gen.dart';
 import 'package:citizen/ui/views/startup/startup_viewmodel.dart';
 import 'package:flutter/material.dart';

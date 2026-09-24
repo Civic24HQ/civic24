@@ -49,9 +49,10 @@ class MessageLookup extends MessageLookupByLibrary {
     "featureCategoryTypeAbandoned": MessageLookupByLibrary.simpleMessage(
       "Ayyuka da aka bar",
     ),
-    "featureCategoryTypeAbandonedDescription": MessageLookupByLibrary.simpleMessage(
-      "Rahoto ayyukan gwamnati/al\'umma da aka barsu ba a gama ba ko aka yi watsi da su a yankinku.",
-    ),
+    "featureCategoryTypeAbandonedDescription":
+        MessageLookupByLibrary.simpleMessage(
+          "Rahoto ayyukan gwamnati/al\'umma da aka barsu ba a gama ba ko aka yi watsi da su a yankinku.",
+        ),
     "featureCategoryTypeDetailedAbandoned":
         MessageLookupByLibrary.simpleMessage(
           "Ayyuka da aka bar & waɗanda ba a kammala ba",
@@ -81,9 +82,10 @@ class MessageLookup extends MessageLookupByLibrary {
     "featureCategoryTypeEducation": MessageLookupByLibrary.simpleMessage(
       "Ilmi",
     ),
-    "featureCategoryTypeEducationDescription": MessageLookupByLibrary.simpleMessage(
-      "Rahoto gine-ginen makarantun da suka lalace, dakunan taro na al\'umma da aka kulle, ko dakunan karatu da aka yi watsi da su.",
-    ),
+    "featureCategoryTypeEducationDescription":
+        MessageLookupByLibrary.simpleMessage(
+          "Rahoto gine-ginen makarantun da suka lalace, dakunan taro na al\'umma da aka kulle, ko dakunan karatu da aka yi watsi da su.",
+        ),
     "featureCategoryTypeGovernance": MessageLookupByLibrary.simpleMessage(
       "Gwamnati",
     ),
@@ -94,9 +96,10 @@ class MessageLookup extends MessageLookupByLibrary {
     "featureCategoryTypeHealth": MessageLookupByLibrary.simpleMessage(
       "Lafiya & Tsabtace",
     ),
-    "featureCategoryTypeHealthDescription": MessageLookupByLibrary.simpleMessage(
-      "Rahoto banɗaki na jama\'a da ba su da tsabta, rashin tsafta a asibitoci, kwarara, ko yanayin lafiya da ba su da aminci.",
-    ),
+    "featureCategoryTypeHealthDescription":
+        MessageLookupByLibrary.simpleMessage(
+          "Rahoto banɗaki na jama\'a da ba su da tsabta, rashin tsafta a asibitoci, kwarara, ko yanayin lafiya da ba su da aminci.",
+        ),
     "featureCategoryTypeLight": MessageLookupByLibrary.simpleMessage(
       "Haske & Wutar Lantarki",
     ),
@@ -112,9 +115,10 @@ class MessageLookup extends MessageLookupByLibrary {
     "featureCategoryTypeSecurity": MessageLookupByLibrary.simpleMessage(
       "Tsaro",
     ),
-    "featureCategoryTypeSecurityDescription": MessageLookupByLibrary.simpleMessage(
-      "Rahoto yankuna marasa aminci, kayan tsaro da suka lalace, cin zarafi a titi, ko wuraren taruwa.",
-    ),
+    "featureCategoryTypeSecurityDescription":
+        MessageLookupByLibrary.simpleMessage(
+          "Rahoto yankuna marasa aminci, kayan tsaro da suka lalace, cin zarafi a titi, ko wuraren taruwa.",
+        ),
     "featureCategoryTypeUrban": MessageLookupByLibrary.simpleMessage(
       "Keta dokar garuruwa",
     ),

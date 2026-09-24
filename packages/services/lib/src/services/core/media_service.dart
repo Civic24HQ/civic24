@@ -49,8 +49,7 @@ class MediaService {
       _log.e('Error picking image', error: exception, stackTrace: stackTrace);
       _alertService.showErrorAlert(
         title: 'Image Selection Failed',
-        message:
-            'We could not access the image. This may be due to permission issues, file corruption, or the selected image being unsupported. Please try again or choose a different image.',
+        message: 'We could not access the image. This may be due to permission issues, file corruption, or the selected image being unsupported. Please try again or choose a different image.',
       );
 
       return null;
@@ -58,8 +57,7 @@ class MediaService {
       _log.e('Error picking image: $e');
       _alertService.showErrorAlert(
         title: 'Image Selection Failed',
-        message:
-            'We could not access the image. This may be due to permission issues, file corruption, or the selected image being unsupported. Please try again or choose a different image.',
+        message: 'We could not access the image. This may be due to permission issues, file corruption, or the selected image being unsupported. Please try again or choose a different image.',
       );
       return null;
     }
@@ -97,16 +95,14 @@ class MediaService {
       _log.e('Error picking images from gallery', error: exception, stackTrace: stackTrace);
       _alertService.showErrorAlert(
         title: 'Image Selection Failed',
-        message:
-            'We could not access the images. This may be due to permission issues, file corruption, or the selected images being unsupported. Please try again or choose different images.',
+        message: 'We could not access the images. This may be due to permission issues, file corruption, or the selected images being unsupported. Please try again or choose different images.',
       );
       return [];
     } catch (e) {
       _log.e('Error picking images from gallery: $e');
       _alertService.showErrorAlert(
         title: 'Image Selection Failed',
-        message:
-            'We could not access the images. This may be due to permission issues, file corruption, or the selected images being unsupported. Please try again or choose different images.',
+        message: 'We could not access the images. This may be due to permission issues, file corruption, or the selected images being unsupported. Please try again or choose different images.',
       );
       return [];
     }

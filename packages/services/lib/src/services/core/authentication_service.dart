@@ -673,9 +673,7 @@ class AuthenticationService {
             _log.w('Apple Sign In failed: No identity token received');
             return false;
           }
-          credential = OAuthProvider(
-            'apple.com',
-          ).credential(
+          credential = OAuthProvider('apple.com').credential(
             idToken: appleCredential.identityToken,
             accessToken: appleCredential.authorizationCode,
             rawNonce: nonce,

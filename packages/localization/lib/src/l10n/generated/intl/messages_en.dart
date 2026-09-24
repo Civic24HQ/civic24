@@ -61,9 +61,10 @@ class MessageLookup extends MessageLookupByLibrary {
     "featureCategoryTypeAbandoned": MessageLookupByLibrary.simpleMessage(
       "Abandoned Projects",
     ),
-    "featureCategoryTypeAbandonedDescription": MessageLookupByLibrary.simpleMessage(
-      "Report incomplete or abandoned government/community projects left unattended in your locality. ",
-    ),
+    "featureCategoryTypeAbandonedDescription":
+        MessageLookupByLibrary.simpleMessage(
+          "Report incomplete or abandoned government/community projects left unattended in your locality. ",
+        ),
     "featureCategoryTypeDetailedAbandoned":
         MessageLookupByLibrary.simpleMessage("Abandoned & Incomplete Projects"),
     "featureCategoryTypeDetailedEducation":
@@ -91,9 +92,10 @@ class MessageLookup extends MessageLookupByLibrary {
     "featureCategoryTypeEducation": MessageLookupByLibrary.simpleMessage(
       "Education",
     ),
-    "featureCategoryTypeEducationDescription": MessageLookupByLibrary.simpleMessage(
-      "Report rundown school buildings, locked community halls, or neglected libraries.",
-    ),
+    "featureCategoryTypeEducationDescription":
+        MessageLookupByLibrary.simpleMessage(
+          "Report rundown school buildings, locked community halls, or neglected libraries.",
+        ),
     "featureCategoryTypeGovernance": MessageLookupByLibrary.simpleMessage(
       "Governance",
     ),
@@ -104,9 +106,10 @@ class MessageLookup extends MessageLookupByLibrary {
     "featureCategoryTypeHealth": MessageLookupByLibrary.simpleMessage(
       "Health & Sanitation",
     ),
-    "featureCategoryTypeHealthDescription": MessageLookupByLibrary.simpleMessage(
-      "Report filthy public toilets, poor sanitation at clinics, open sewage, or unsafe health conditions.",
-    ),
+    "featureCategoryTypeHealthDescription":
+        MessageLookupByLibrary.simpleMessage(
+          "Report filthy public toilets, poor sanitation at clinics, open sewage, or unsafe health conditions.",
+        ),
     "featureCategoryTypeLight": MessageLookupByLibrary.simpleMessage(
       "Light & Electricity",
     ),
@@ -122,9 +125,10 @@ class MessageLookup extends MessageLookupByLibrary {
     "featureCategoryTypeSecurity": MessageLookupByLibrary.simpleMessage(
       "Security",
     ),
-    "featureCategoryTypeSecurityDescription": MessageLookupByLibrary.simpleMessage(
-      "Report unsafe areas, broken security infrastructure, street harassment, or loitering zones.",
-    ),
+    "featureCategoryTypeSecurityDescription":
+        MessageLookupByLibrary.simpleMessage(
+          "Report unsafe areas, broken security infrastructure, street harassment, or loitering zones.",
+        ),
     "featureCategoryTypeUrban": MessageLookupByLibrary.simpleMessage(
       "Zoning Violations",
     ),
@@ -176,9 +180,10 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "featureDialogDeleteVerificationAuthContinue":
         MessageLookupByLibrary.simpleMessage("Re-authenticate to Continue"),
-    "featureDialogDeleteVerificationAuthHint": MessageLookupByLibrary.simpleMessage(
-      "For security purposes, please re-authenticate to proceed with deleting your account.",
-    ),
+    "featureDialogDeleteVerificationAuthHint":
+        MessageLookupByLibrary.simpleMessage(
+          "For security purposes, please re-authenticate to proceed with deleting your account.",
+        ),
     "featureDialogDeleteVerificationEmptyPassword":
         MessageLookupByLibrary.simpleMessage("Password cannot be empty"),
     "featureDialogDeleteVerificationSecurity":
