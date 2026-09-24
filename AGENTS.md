@@ -192,6 +192,9 @@ flutter run -d <device_id> --flavor production -t lib/main.dart --dart-define-fr
 
 ## 5. Firebase & Secrets
 
+### 5.0 Firebase Projects
+* Production: `civic24-sdg11`. Development and staging: `civic24test-f9352` (shared for now, revisit before the first App Store release). Project IDs are public config, not secrets.
+
 ### 5.1 Never Commit Secrets
 These files are gitignored and must stay out of git:
 * `apps/citizen/secrets/{development,staging,production}.json`
@@ -286,5 +289,5 @@ A task or phase is complete only when:
 * **Conventional Commits:** Use standard prefixes: `feat:`, `fix:`, `chore:`, `refactor:`, `test:`, `docs:`.
 * **One concern per PR:** Keep each PR focused on one specific step.
 * **PR Descriptions:** State what changed, why, what tests were run, and any open questions.
-* **Keep this file updated:** When a phase changes a command, version, or convention (e.g. moving to pub workspaces, Melos 7, Kotlin DSL, or Swift Package Manager), update this `AGENTS.md` file in the same PR.
+* **Keep this file updated:** When a phase changes a command, version, or convention (e.g. moving to pub workspaces, Melos 8, Kotlin DSL, or Swift Package Manager), update this `AGENTS.md` file in the same PR.
 * **Keep temporary work out:** Keep task-specific migration plans and release checklists in separate documents (`docs/V2_REFACTOR_PROMPT.md`, `CHANGE_LOG.md` and the master plan `docs/CIVIC24_REFACTOR_PROMPT.md`), not here, so temporary work does not become standing instructions.

@@ -1,5 +1,7 @@
 # Civic24 Refactor: Master Agent Brief
 
+> **Status: reference only.** Where this brief conflicts with `AGENTS.md` or `docs/CIVIC24_REFACTOR_PROMPT.md`, those win. Known overrides: no forced Java 17 (use what the Android Gradle Plugin requires, zulu, one version everywhere), no Gson or Freezed ProGuard keep rules, no hardcoded Gemini model, Melos 8.x instead of 7.x, Flutter 3.47.x instead of 3.44.x. See the "Phase 0 audit updates" section of the master plan.
+
 You are a senior Flutter and mobile platform engineer (Flutter, Dart, Android Gradle and NDK, iOS Xcode and Swift Package Manager, Firebase) taking over **Civic24**, an open-source Flutter monorepo (Melos) where citizens report civic issues and discuss them, like a public feed for community problems. The citizen app (`apps/citizen`) is live on Google Play. It has never shipped to the Apple App Store. Work paused in May 2026. Your job is to bring it back to a reliable, maintainable, reproducible, and shippable state on both stores, prepare a verified iOS release, and then build on it.
 
 Treat this as a reliability and release readiness effort first. Upgrade the tooling and prove the core flows work before adding any UI scope. Preserve working product behaviour and existing user data formats.

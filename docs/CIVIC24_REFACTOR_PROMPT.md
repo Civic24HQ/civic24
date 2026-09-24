@@ -64,6 +64,24 @@ Do not assume the dependencies or implementation are untouched or that this list
 11. **Discontinued test tooling.** `golden_toolkit` is discontinued. Also, `melos run test:golden` includes `--update-goldens`, so it overwrites baselines.
 12. **Melos 6 plus `pubspec_overrides.yaml`** instead of native pub workspaces.
 
+### Phase 0 audit updates (24 Sept 2026, owner approved)
+
+The Phase 0 audit in `CHANGE_LOG.md` confirmed the list above and changed or added the following. Where this section and a phase below differ, this section wins.
+
+- **Versions:** latest stable Flutter is 3.47.5 (Dart 3.13.4) and latest Melos is 8.9.0 (needs pub workspaces). Pin Flutter 3.47.x if the Shorebird CLI supports it. Shorebird's docs list 3.47.1; check 3.47.5 with the CLI.
+- **Firebase layout:** production is `civic24-sdg11`; development and staging share `civic24test-f9352` for now. Revisit a separate staging project before the first App Store release.
+- **Phase 1:**
+  - Replace the exact `flutter: 3.41.6` pin with a minimum range (for example `>=3.47.0`) in every pubspec, and make `.fvmrc` the exact version. Un-ignore `.fvmrc` in `.gitignore` (it is currently ignored).
+  - Repair the broken Melos scripts: `flutter:pod:install` (calls scripts that do not exist), `admin:macos:pods` (wrong scope), `backend:build` and `backend:deploy` (wrong path, should use `backend/functions`). Add the missing `flutter:test` and `citizen:run:*` scripts. Make the golden scripts stop using `--update-goldens` by default.
+  - CI must supply non-secret placeholder compile-time values (a file or repeated `--dart-define`) so tests can load. Split this from real secrets.
+  - Expect Flutter 3.47 to rewrite `analysis_options.yaml` in members.
+- **Phase 2:** the locked `analyzer` 7.7.1 breaks `stackedRouterGenerator` on current Dart; the dependency upgrade must fix it (a dry run resolves `analyzer` 14.x, build_runner 2.16). Upgrade `sign_in_with_apple`, `permission_handler` and `flutter_image_compress` early because their iOS plugins only get Swift Package Manager support in newer versions (Phase 3 depends on it). `golden_toolkit` is confirmed discontinued.
+- **Phase 3:** the Podfile also sets `PERMISSION_LOCATION=1` and `PERMISSION_LOCATION_WHENINUSE=0`, which compiles in "always" location; fix it with the Info.plist work. `ITSAppUsesNonExemptEncryption` is the string `NO` and should be boolean false. No `PrivacyInfo.xcprivacy` and no `*.entitlements` file exist; check Push Notifications and Sign in with Apple capabilities in Xcode. `NSLocalNetworkUsageDescription` refers to debugging and ships in release.
+- **Phase 4:** `minifyEnabled` is already true but `proguard-rules.pro` does not exist. `usesCleartextTraffic="true"` is set in the main manifest for all flavors; remove it unless a flavor needs it. Location permissions in the manifest are commented out; confirm what the plugins merge in.
+- **Phase 5:** production App Check uses `AndroidPlayIntegrityProvider` and `AppleDeviceCheckProvider`; prepare App Attest per step 5.
+- **Phase 6:** add the role self-promotion defect to the rules review (D16): `users/{userId}` create does not limit `account.userType`, and `isNotChangingUserType()` compares the top-level key set, so it never matches the nested role. Also check that other users' profiles can be read where "block user" needs it, and how Delete Account removes user data (rules forbid client deletes). Rule changes are proposed to the owner first.
+- **Phase 7:** Android fastlane has no `Fastfile` (only `Appfile`, `Pluginfile`, README) and iOS has no fastlane folder, so both are written from scratch. Add GitHub Dependabot for pub, npm and GitHub Actions (monthly, Firebase packages grouped).
+
 ---
 
 ## 2. Rules of engagement
@@ -130,16 +148,16 @@ When a phase changes a command, a version or a convention, also update `AGENTS.m
    { "flutter": "3.47.5" }
    ```
    Then update `environment` (Flutter and the matching Dart SDK range) in the root pubspec and every `apps/*` and `packages/*` pubspec so they all agree with `.fvmrc`.
-2. Migrate to **Dart pub workspaces plus Melos 7**:
+2. Migrate to **Dart pub workspaces plus Melos 8**:
    ```yaml
    # root pubspec.yaml
    workspace:
      - apps/*
      - packages/*
    dev_dependencies:
-     melos: ^7.x   # confirm latest on pub.dev
+     melos: ^8.9.0   # latest on 24 Sept 2026; confirm on pub.dev
    ```
-   Add `resolution: workspace` to every member, move the Melos config into the root pubspec as Melos 7 expects, and delete every `pubspec_overrides.yaml`. Keep every existing Melos script working under the same names (including `flutter:clean`, `flutter:build`, `flutter:analyze`, `flutter:test`, `citizen:build`, `citizen:test`, `citizen:run:*`, `citizen:shorebird:*`).
+   Add `resolution: workspace` to every member, move the Melos config into the root pubspec as Melos 8 expects, and delete every `pubspec_overrides.yaml`. Keep every existing Melos script working under the same names (including `flutter:clean`, `flutter:build`, `flutter:analyze`, `flutter:test`, `citizen:build`, `citizen:test`, `citizen:run:*`, `citizen:shorebird:*`).
 3. Minimal CI repair, so CI guards every PR from here on:
    - Rename `.github/workflows/ci` to `ci.yml` and confirm it triggers on PR branches.
    - Make **one** source of truth for the Flutter version:
@@ -288,7 +306,7 @@ Write a one page proposal for each and wait for approval before building. Tie ea
 
 ## 4. Definition of done for the refactor
 
-- Latest stable Flutter and Dart (that Shorebird supports), one version pinned everywhere via `.fvmrc`; native pub workspaces resolve cleanly through Melos 7.
+- Latest stable Flutter and Dart (that Shorebird supports), one version pinned everywhere via `.fvmrc`; native pub workspaces resolve cleanly through Melos 8.
 - All packages on current compatible versions, no discontinued packages, zero analyzer errors and warnings (`melos run flutter:analyze`).
 - All tests passing (`melos exec -- flutter test`).
 - iOS builds with Swift Package Manager and no CocoaPods dependency for Firebase.
