@@ -54,7 +54,7 @@ Civic24 is an open-source civic reporting app where citizens report community is
    * The citizen app entry point is `apps/citizen/lib/main.dart`.
    * *Ignore old references in README files to `main_development.dart`—they do not exist.*
 4. **Tests Need Environment Values:**
-   * `EnvironmentConstants` asserts on `String.fromEnvironment` at compile time, so `services`, `components` and `citizen` tests only load with `--dart-define-from-file=<file>`. Placeholder (non-secret) values are enough for tests.
+   * `EnvironmentConstants` asserts on `String.fromEnvironment` at compile time, so `services`, `components` and `citizen` tests only load when the compile-time values are supplied. Use `--dart-define-from-file=<file>` or repeated `--dart-define=KEY=value` options; CI must provide non-secret placeholder values one way or the other. Placeholder values are enough for tests.
 5. **Stale Generator Stack:**
    * The locked `analyzer` 7.7.1 cannot read Dart 3.10+ syntax, so `stackedRouterGenerator` fails on Flutter 3.47. A dependency upgrade (Phase 2) is required.
 6. **Golden Tests Caution:**
@@ -239,7 +239,8 @@ These files are gitignored and must stay out of git:
 * **User-Generated Content (Guideline 1.2):**  
   * Feed cards must have a "Report / Flag" button.
   * User profiles and issue details must have a "Block User" option.
-  * Sign-up must include Terms of Use (EULA) acceptance.
+* **Terms of Use (Civic24 submission requirement):**
+  Sign-up must include Terms of Use (EULA) acceptance before a user can post. This is a Civic24 requirement for the first App Store submission, tracked separately from Guideline 1.2.
 * **Account Deletion (Guideline 5.1.1):**  
   The "Delete Account" button in `ProfileViewModel` must work properly.
 * **Privacy Manifest:**  
@@ -249,7 +250,7 @@ These files are gitignored and must stay out of git:
 * Support **16 KB page sizes** as required for Android 15+ (Google Play 2026 rule).
 * Set `compileSdk = 36` and `targetSdk = 36`.
 * Use Kotlin DSL (`build.gradle.kts`).
-* Use platform notation for Firebase BOM: `implementation(platform("com.google.firebase:firebase-bom:34.x.x"))`.
+* Use platform notation for the Firebase BOM: `implementation(platform("com.google.firebase:firebase-bom:<version>"))`. `<version>` is a placeholder, not a copyable value: replace it with the latest published BOM version from the Firebase Android release notes when you make the change (the repo currently uses 34.11.0).
 * Do not add Gson or Freezed ProGuard keep rules. Freezed models are Dart, so R8 never touches them. Add a keep rule to `proguard-rules.pro` only when a real release build crash or a plugin's docs require it, and log why in `CHANGE_LOG.md`.
 
 ### 6.4 Shorebird Code Push

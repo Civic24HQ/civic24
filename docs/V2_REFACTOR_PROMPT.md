@@ -135,11 +135,11 @@ flowchart TD
 **Goal:** Establish a single source of truth for the Flutter SDK and migrate the monorepo to native Dart pub workspaces.
 
 1. **Pin Flutter with FVM:**
-   - Confirm Shorebird supports the chosen stable Flutter version (target latest active stable, e.g., `3.44.x` / Dart `3.12.x` or validated equivalent).
+   - Confirm Shorebird supports the chosen stable Flutter version (target latest active stable, e.g., `3.47.x` / Dart `3.13.x` as of 24 Sept 2026, or validated equivalent).
    - Create `.fvmrc` at the repo root:
      ```json
      {
-       "flutter": "3.44.0"
+       "flutter": "3.47.5"
      }
      ```
    - Update `environment` constraints across root `pubspec.yaml`, `apps/**/pubspec.yaml`, and `packages/**/pubspec.yaml`:
@@ -408,9 +408,9 @@ flutter build appbundle --flavor production -t lib/main.dart --dart-define-from-
 ### PHASE 9: AI Feature Additions (Propose First, Then Build)
 **Goal:** Transform Civic24 into an intelligent civic assistant using Google Gemini. *(Require written proposal approval prior to implementation).*
 
-1. **Server-Side AI Moderation & Enrichment (Cloud Functions + Gemini 2.0 Flash):**
+1. **Server-Side AI Moderation & Enrichment (Cloud Functions + current Gemini Flash model):**
    - Create a Cloud Function `onReportCreated`:
-     - Call Gemini 2.0 Flash (keep API credentials strictly server-side).
+     - Call the current Gemini Flash model from the live model list, not a hardcoded old model (keep API credentials strictly server-side).
      - **Validation:** Verify photo depicts a genuine civic issue (pothole, burst pipe, illegal dumping, road hazard) and reject inappropriate, abusive, or sensitive PII content.
      - **Auto-Category & Urgency:** Suggest category and severity (Low, Medium, High, Critical).
      - **Executive Synopsis:** Generate a 1-sentence synopsis formatted for municipal dashboard ingestion.

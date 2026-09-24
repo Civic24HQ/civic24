@@ -51,7 +51,7 @@ Do not assume the dependencies or implementation are untouched or that this list
 - `apps/citizen/android/key.properties` and the upload keystore
 
 **Problems already found**
-1. **Three different Flutter versions.** pubspec says 3.41.6, `cd.yml` says 3.38.7, `.github/workflows/ci` says 3.32.6. Current stable at the time of writing is 3.44.x (Dart 3.12). Confirm on docs.flutter.dev.
+1. **Three different Flutter versions.** pubspec says 3.41.6, `cd.yml` says 3.38.7, `.github/workflows/ci` says 3.32.6. Current stable on 24 Sept 2026 is 3.47.5 (Dart 3.13.4); confirm on docs.flutter.dev.
 2. **CI file is not running.** `.github/workflows/ci` has no `.yml` extension, so GitHub ignores it. `cd.yml` runs Java 25 for iOS and 21 for Android; `ci` and `open_pr.yml` use Java 18.
 3. **iOS Podfile contradicts itself.** `platform :ios, '15.0'` but `post_install` forces every pod to `IPHONEOS_DEPLOYMENT_TARGET = 13.0`, and it silences all warnings.
 4. **Crashlytics dSYM upload script depends on CocoaPods** (`$PODS_ROOT/FirebaseCrashlytics`). It will break the moment Firebase moves to Swift Package Manager.
@@ -125,9 +125,9 @@ When a phase changes a command, a version or a convention, also update `AGENTS.m
 **Deliverables:** `CHANGE_LOG.md` started with the toolchain, the baseline build errors and the Swift Package Manager compatibility list, plus a short, prioritized baseline and risk report and work plan. Separate confirmed defects from recommendations and unknowns, and list dependencies, effort and the external access you will need.
 
 ### Phase 1: Toolchain, monorepo foundation and minimal CI repair
-1. Pin the latest stable Flutter (3.44.x at the time of writing, confirm on docs.flutter.dev) with FVM via `.fvmrc` at the repo root. Check that Shorebird supports it first; if not, pick the newest version Shorebird supports and note it. Example:
+1. Pin the latest stable Flutter that Shorebird supports (3.47.x as of 24 Sept 2026; confirm on docs.flutter.dev and with the Shorebird CLI) with FVM via `.fvmrc` at the repo root. Check that Shorebird supports it first; if not, pick the newest version Shorebird supports and note it. Example:
    ```json
-   { "flutter": "3.44.x" }
+   { "flutter": "3.47.5" }
    ```
    Then update `environment` (Flutter and the matching Dart SDK range) in the root pubspec and every `apps/*` and `packages/*` pubspec so they all agree with `.fvmrc`.
 2. Migrate to **Dart pub workspaces plus Melos 7**:

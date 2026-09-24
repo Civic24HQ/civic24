@@ -44,7 +44,7 @@ Built exactly as committed, with the latest Flutter (3.47.5), as agreed. Secrets
 | Code generation, scratch copy | `intl_utils`, `assets`, `models`, `services`, `admin`: OK. **`apps/citizen`: `stackedRouterGenerator` crashes** with `Exception: Missing implementation of visitDotShorthandPropertyAccess`. Locked `analyzer` 7.7.1 (language version 3.9) cannot read Dart 3.10+ syntax. `app.locator.dart` and `app.router.dart` are therefore not generated |
 | `flutter analyze`, scratch copy | `rules`, `localization`, `constants`, `assets`, `styles`, `models`, `components`, `admin`: 0 issues. `utils`: 1 info (`LocalPlatform` deprecated). `services`: 2 warnings (`unawaited_return_in_try_block`, `cloudinary_storage_service.dart:124,130`). **`citizen`: 350 errors**, all downstream of the missing generated locator and router |
 | Tests, scratch copy | Pass: `utils`, `localization`, `constants`, `styles`, `models`. **Fail:** `services` (17 files fail to load), `components` (10), `citizen` (28 plus golden), `admin` (`setupLocator` needs `stackedRouter`) |
-| Why `services` and `components` tests fail | `packages/constants/lib/src/environment_constants.dart` evaluates `String.fromEnvironment(...)` with compile-time assertions. Tests only load with `--dart-define-from-file`. **Tests need environment values, so CI cannot run them without a file of (non-secret) placeholder values** |
+| Why `services` and `components` tests fail | `packages/constants/lib/src/environment_constants.dart` evaluates `String.fromEnvironment(...)` with compile-time assertions. Tests only load when the compile-time values are supplied, either with `--dart-define-from-file` or with repeated `--dart-define=KEY=value` options. **Tests need environment values, so CI must provide non-secret placeholder values (by either method) before it can run them** |
 | `flutter pub upgrade --major-versions --dry-run` on citizen | Resolves cleanly. `analyzer` 14.4.0, `build_runner` 2.16.1, `build` 4.0.11. So the generator failure is fixable by Phase 2 dependency upgrades. **Not yet proven** that `stacked_generator` 2.0.4 generates the router on that set |
 | Observed Flutter 3.47 tool side effect | `flutter pub get` rewrote `analysis_options.yaml` in some members ("Upgrading analysis_options.yaml to exclude build and platform directories"). Expect these diffs in Phase 1 or 2 |
 
@@ -194,6 +194,10 @@ The owner will add these manually when a step needs them. The first step that ne
   - `users` cannot be read by other users. This will block profile views for "block user" (Phase 7).
   - Users can never be deleted from the client (`allow delete: if false`). Whether "Delete Account" (`ProfileViewModel.deleteAccount`) deletes through a Cloud Function is unverified.
   - The report `update` rule does not stop the owner rewriting `reportData.userId`.
+  - **Role self-promotion (found in PR review, verified against the rules text and `user_account.dart`; not tested against a live project):**
+    - `users/{userId}` `create` only checks `isOwner(userId)` and puts no limit on `account.userType`. A signed-in user creating their own document can set `account.userType` to `admin`, and `isAdmin()` then lets them read every user document.
+    - `isNotChangingUserType()` diffs the top-level map and tests `affectedKeys().hasAny(['account.userType'])`. `affectedKeys()` returns top-level keys, so `account.userType` never matches. Changing the nested role changes the top-level key `account` and is not blocked, so an owner can also promote themselves on update.
+    - Fix direction: make the role server-controlled on create and update (force `citizen` on create, compare `account.userType` on the nested map on update, or set roles only via a Cloud Function or custom claim). Proposed to the owner in Phase 6 and, because it is a security defect in production rules, raised for an earlier decision. Nothing is deployed without authorization.
 - `backend/functions`: `index.ts` (9 lines) and `notification.ts` (215 lines). ESLint 8 with the legacy `--ext` flag and `eslint-config-google`. `firebase-functions` ^7.2.5, `firebase-admin` ^13.8.0, TypeScript ~5.7, Node engine 24. Not built or run in Phase 0.
 
 ### 0.11 Baseline and risk report
@@ -206,12 +210,13 @@ The owner will add these manually when a step needs them. The first step that ne
 | D2 | Router and locator generation breaks on current Dart because `analyzer` is locked at 7.7.1 | High | 0.2 |
 | D3 | `ci` has no `.yml`, never runs. The workflow that does run (`cd.yml`) has no tests or format check and publishes a release on PRs | High | 0.6 |
 | D4 | Three Flutter versions, three Java versions across workflows | Medium | 0.6 |
-| D5 | Tests cannot run without `--dart-define-from-file` values | High | 0.2 |
+| D5 | Tests cannot run without compile-time environment values (`--dart-define-from-file` or `--dart-define`) | High | 0.2 |
 | D6 | iOS: background `location` mode, "always" permission strings, `PERMISSION_LOCATION=1`, no privacy manifest: App Review rejection risks (Guideline 2.5.4, privacy manifest) | High for store release | 0.10 |
 | D7 | iOS deployment target inconsistent (15.0 / 13.0) and warnings silenced | Medium | 0.10 |
 | D8 | `minifyEnabled true` with no `proguard-rules.pro`, no `shrinkResources`, `proguard-android.txt` | Medium, needs a release build to know if it crashes | 0.10 |
 | D9 | `usesCleartextTraffic="true"` shipped in production manifest | Medium | 0.10 |
 | D10 | Firestore rules missing `uploads`, comments and subcollections | High if features rely on them | 0.10 |
+| D16 | Firestore rules allow role self-promotion to `admin` on user create and update (CWE-863) | **High (security)**, prioritize in Phase 6 or sooner | 0.10 |
 | D11 | Melos scripts that reference nonexistent scripts or wrong paths; `--update-goldens` in three scripts | Medium | 0.6 |
 | D12 | README describes Supabase and Gemini validation that do not exist | Low for build, medium for trust | 0.8 |
 | D13 | `.gitignore` ignores `.fvmrc` | Low, blocks Phase 1 | 0.6 |
@@ -221,7 +226,7 @@ The owner will add these manually when a step needs them. The first step that ne
 **Recommendations (not defects)**
 - Pin the newest Flutter that Shorebird supports (3.47.x). Check 3.47.5 with the Shorebird CLI.
 - Use Melos 8.x (the master plan says 7.x, which is superseded).
-- Provide non-secret placeholder dart-defines for tests so CI can run them.
+- Have CI supply non-secret placeholder dart-defines (a file or repeated `--dart-define` options) so tests can run.
 - Split `melos` scripts from `flutter:*` naming as-is, but repair the broken ones in Phase 1.
 
 **Unknowns (need owner access, a device or a build)**
