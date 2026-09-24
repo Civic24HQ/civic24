@@ -1,0 +1,23 @@
+# Dependabot keeps the GitHub Actions used by our workflows up to date.
+# Every action is pinned to a full commit SHA with the version in a comment,
+# and Dependabot updates both together in one pull request.
+#
+# Docs: https://docs.github.com/code-security/dependabot/working-with-dependabot/dependabot-options-reference
+version: 2
+
+updates:
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: monthly
+    open-pull-requests-limit: 5
+    # One pull request for all action updates instead of one per action.
+    groups:
+      github-actions:
+        patterns:
+          - "*"
+    commit-message:
+      prefix: "ci(deps)"
+    labels:
+      - ci
+      - dependencies

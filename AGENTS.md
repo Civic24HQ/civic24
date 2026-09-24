@@ -44,11 +44,12 @@ Civic24 is an open-source civic reporting app where citizens report community is
 
 1. **Flutter Version:**
    * `.fvmrc` pins Flutter `3.47.5` (Dart 3.13.4). Pubspecs require `flutter >=3.47.0` and `sdk >=3.13.0 <4.0.0`. Change the version in `.fvmrc` only, then bump the pubspec minimum when needed.
-   * CI workflows are still inconsistent until the CI repair PR merges: `.github/workflows/ci` uses Flutter `3.32.6`, while `.github/workflows/cd.yml` uses `3.38.7`. They should read `.fvmrc`.
+   * `ci.yml` and `cd.yml` read the Flutter version from `.fvmrc`, and use Java 21 (zulu).
    * FVM is optional for developers; the pinned version is what matters.
    * Flutter 3.47 starts decoupling Material and Cupertino into `material_ui` and `cupertino_ui`. The old `package:flutter/material.dart` imports still work; formal deprecation is planned for the November 2026 stable. Plan the migration for a later phase.
-2. **CI File Missing Extension:**
-   * The file `.github/workflows/ci` has no `.yml` extension, so GitHub Actions ignores it until renamed to `ci.yml`.
+2. **CI Limits:**
+   * `ci.yml` runs on Ubuntu, so golden assertions are skipped there (they only assert on macOS and Windows). Run `melos run components:golden` on a Mac before merging UI changes. Temporary until `golden_toolkit` is replaced (Phase 2).
+   * Run `melos run ci:check` before opening a PR: it does what CI does. See `.github/workflows/README.md`.
 3. **Single Entry Point:**
    * The citizen app entry point is `apps/citizen/lib/main.dart`.
    * *Ignore old references in README files to `main_development.dart`—they do not exist.*
@@ -73,19 +74,19 @@ Civic24 is an open-source civic reporting app where citizens report community is
 Run all commands from the **repository root** unless stated otherwise.
 
 ### 3.1 Bootstrap & Setup
-With FVM (recommended). The workspace's own Melos runs through FVM's Dart, and `MELOS_SDK_PATH` makes Melos scripts use the FVM Flutter:
+With FVM (recommended). `MELOS_SDK_PATH` makes Melos scripts use the FVM Flutter:
 ```bash
 fvm install                            # installs the Flutter version pinned in .fvmrc
 export MELOS_SDK_PATH=.fvm/flutter_sdk
-fvm flutter pub get
-fvm dart run melos bootstrap           # workspace: one root pubspec.lock, no pubspec_overrides.yaml
+fvm dart pub global activate melos
+melos bootstrap           # workspace: one root pubspec.lock, no pubspec_overrides.yaml
 ```
 Without FVM (the Flutter on your PATH must match `.fvmrc`):
 ```bash
 dart pub global activate melos
 melos bootstrap
 ```
-Every `melos ...` command in this file is `fvm dart run melos ...` on the FVM path.
+Melos scripts call each other through the `melos` command, so Melos must be activated globally (not only run with `dart run`). All `melos ...` commands below are the same with or without FVM.
 Melos 8 config and every script live in the root `pubspec.yaml` under `melos:` (there is no `melos.yaml`). Aggregate scripts stop at the first failing step.
 
 ### 3.2 Code Generation & Localization
@@ -302,6 +303,8 @@ A task or phase is complete only when:
 * **Branch from `develop`:** (e.g. `chore/2026-refactor-phase1`). Never push directly to `develop` or `main`.
 * **Conventional Commits:** Use standard prefixes: `feat:`, `fix:`, `chore:`, `refactor:`, `test:`, `docs:`.
 * **One concern per PR:** Keep each PR focused on one specific step.
+* **Before opening a PR:** run `melos run ci:check` (bootstrap, generate, format, analyze, test). CI runs the same steps on every PR into `develop` or `main`, and it must be green before merge.
+* **Workflows:** pin every action to a full commit SHA with the version in a comment. Dependabot keeps them current (`.github/dependabot.yml`).
 * **PR Descriptions:** State what changed, why, what tests were run, and any open questions.
 * **Keep this file updated:** When a phase changes a command, version, or convention (e.g. moving to pub workspaces, Melos 8, Kotlin DSL, or Swift Package Manager), update this `AGENTS.md` file in the same PR.
 * **Keep temporary work out:** Keep task-specific migration plans and release checklists in separate documents (`docs/V2_REFACTOR_PROMPT.md`, `CHANGE_LOG.md` and the master plan `docs/CIVIC24_REFACTOR_PROMPT.md`), not here, so temporary work does not become standing instructions.

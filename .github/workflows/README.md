@@ -1,51 +1,56 @@
-# CI / CD Workflows for Civic24 🔧
+# CI / CD workflows for Civic24
 
-This repo uses GitHub Actions + Melos to build, test, and publish Android and iOS artifacts.
+All workflows pin every action to a full commit SHA with the version in a
+comment (GitHub's recommended way to get an immutable action). Dependabot
+updates the SHA and the comment together (see `.github/dependabot.yml`).
 
-## Workflows
+| File | Runs on | What it does |
+|---|---|---|
+| `ci.yml` | Pull requests into `develop` or `main`, and manually | Format check, generated files up to date, analysis, tests |
+| `cd.yml` | Pushes to `develop` | Builds the citizen app (development flavor) for Android and iOS and attaches the builds to a GitHub Release |
+| `open_pr.yml` | Pull requests into `develop` or `main` | Assigns the author and adds labels from the branch name and changed files |
 
-- `cd.yml` — Runs on pushes to `develop`, on tags `v*`, and on PRs targeting `develop`.
-  - Jobs:
-    - `test` — Runs unit and widget tests across packages and apps, then runs analyzer.
-    - `build-ios` — Builds iOS artifacts per-app and per-flavor. For `citizen` we build `development`, `staging`, and `production` flavors (injects secrets). For `admin` we use the normal, single-target flow.
-    - `build-android` — Builds Android artifacts per-app and per-flavor. For `citizen` we build the three flavors and pass in dart-defines via secrets.
+## Versions come from one place
+- **Flutter:** `.fvmrc`. Both `ci.yml` and `cd.yml` read it with `flutter-version-file`, so changing the version is a one-line edit there.
+- **Java:** 21, `zulu` distribution, in every workflow.
+- **Melos:** the exact version in `pubspec.lock`. The workflows activate it globally because Melos scripts call each other through the `melos` command.
 
-- `open_pr.yml` — PR labeler and basic checks when a PR is opened/synced.
+## `ci.yml` steps
+1. Set up Java and Flutter (with caching).
+2. `flutter pub get`, then activate Melos and `melos bootstrap`.
+3. `melos run flutter:build` (code generation).
+4. `melos run flutter:format` (in CI it fails instead of rewriting files).
+5. Fail if generation changed any committed file (someone forgot to run it).
+6. `melos run flutter:analyze` (must have no issues).
+7. `melos run flutter:test` (placeholder values from `apps/citizen/secrets/env.example.json`, no secrets needed).
 
-## Required repository secrets
+A new push to a pull request cancels the older CI run for that PR. Runs that are not pull requests are never cancelled.
 
-Add these repository secrets under Settings → Secrets and variables → Actions:
+Golden tests only assert on macOS and Windows (see `packages/components/test/flutter_test_config.dart`), so they are skipped on this Ubuntu job. This is temporary until `golden_toolkit` is replaced.
 
-- `TOKEN` — Token used by release action to upload artifacts.
-- `CITIZEN_DEV_SECRETS` — Contents of `apps/citizen/secrets/development.json` (stringified JSON).
-- `CITIZEN_STAGING_SECRETS` — Contents of `apps/citizen/secrets/staging.json` (stringified JSON).
-- `CITIZEN_PROD_SECRETS` — Contents of `apps/citizen/secrets/production.json` (stringified JSON).
-
-Notes:
-- Secrets must be valid JSON files; the workflow will write them to `apps/citizen/secrets/<flavor>.json` at runtime.
-- Keep secrets out of git history; the repo already ignores `/secrets/`.
-
-## Local verification
-
-To reproduce CI locally:
-
-1. Checkout branch and run:
-
-```bash
-# from repo root
-dart pub global activate melos
-melos bootstrap
-melos run flutter:analyze
-melos exec --dir-exists="test" -- "flutter test --no-pub"
-```
-
-2. To build a flavor locally (citizen production example):
+**Run the same checks before you open a pull request:**
 
 ```bash
-flutter build apk --flavor production --target lib/main.dart --dart-define-from-file=apps/citizen/secrets/production.json --split-per-abi
+melos run ci:check
 ```
 
-## Troubleshooting
+It formats files, so commit whatever it changes.
 
-- If CI fails with "secrets not set" make sure repository secrets are present and valid JSON strings.
-- If builds fail on macOS runners, ensure CocoaPods and Xcode versions are compatible; see `ios/ExportOptions.plist` for archive settings.
+## Secrets used
+| Secret | Used by | Purpose |
+|---|---|---|
+| `ENCODED_DEVELOPMENT_JSON_CITIZEN` | `cd.yml` | Base64 of `apps/citizen/secrets/development.json` |
+
+`cd.yml` uses the built-in `GITHUB_TOKEN` (with `contents: write` on the build jobs only) to publish releases. The older `TOKEN`, `CITIZEN_*_SECRETS` secrets are no longer used by any workflow.
+
+To create or update the environment secret:
+
+```bash
+base64 -i apps/citizen/secrets/development.json | tr -d '\n' | gh secret set ENCODED_DEVELOPMENT_JSON_CITIZEN
+```
+
+## Changing things
+- **Bump Flutter:** edit `.fvmrc` (and the minimum in the pubspecs if needed). Check Shorebird supports it first.
+- **Update an action by hand:** find the tag's commit SHA, replace the SHA and the version comment. Dependabot normally does this in one monthly pull request.
+- **A workflow needs more permissions:** add them to that job only, never to the whole workflow.
+- **CI is red for an unrelated reason:** re-run it once. If it stays red, fix or revert the cause; do not skip the check.
