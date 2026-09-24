@@ -102,9 +102,11 @@ The workspace has about 27 real test cases: 21 component goldens (10 components)
 | `melos run ci:check` | One command that does what CI does, to run before a PR |
 | Melos activated globally in CI and CD (`melos` version taken from `pubspec.lock`) | Melos scripts call each other through the `melos` command, which `dart run melos` does not provide. Found while simulating CI locally. `README.md` and `AGENTS.md` FVM instructions corrected for the same reason |
 
-**Verification:** `actionlint` clean. Every CI step run locally in CI mode: bootstrap, generate, format check, generated-files check (no files changed), analyze, test all exit 0; `melos run ci:check` exits 0. **Live CI: see the PR.** GitHub Actions was disabled for the repository (`actions/permissions` `enabled: false`), which is why PRs #37 to #39 had no runs; it is enabled when this PR is ready.
+**Verification:** `actionlint` clean. Every CI step run locally in CI mode: bootstrap, generate, format check, generated-files check (no files changed), analyze, test all exit 0; `melos run ci:check` exits 0. **Live CI (24 Sept 2026, Ubuntu, Flutter 3.47.5 from `.fvmrc`, Java 21): green after one fix.** The first live run failed the generated-files check because `flutter pub get` writes `apps/admin/macos/Flutter/GeneratedPluginRegistrant.swift` differently on Linux; OS-dependent plugin registrants are now excluded from that check. Labeling workflow green. GitHub Actions was disabled for the repository (`actions/permissions` `enabled: false`), which is why PRs #37 to #39 had no runs; it is enabled when this PR is ready.
 
-**Open after this PR:** goldens are not asserted in CI (Ubuntu) until Phase 2; repository secrets `TOKEN` and `CITIZEN_*_SECRETS` are now unused and can be deleted by the owner; required status check on `develop`; Dependabot `pub` and `npm` entries (Phase 7; Dependabot's docs do not mention pub workspaces, so test before relying on it).
+**Done with this PR:** GitHub Actions enabled (`enabled: true`, default token read-only); branch protection on `develop` requires the check `Format, analyze and test` (admins can bypass, force pushes and deletion blocked, no review requirement).
+
+**Open after this PR:** goldens are not asserted in CI (Ubuntu) until Phase 2; repository secrets `TOKEN` and `CITIZEN_*_SECRETS` are now unused and can be deleted by the owner; Dependabot `pub` and `npm` entries (Phase 7; Dependabot's docs do not mention pub workspaces, so test before relying on it).
 
 ### 1.7 Still open
 
