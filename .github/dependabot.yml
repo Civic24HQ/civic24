@@ -3,7 +3,7 @@
 #
 # - github-actions: every action is pinned to a full commit SHA with the version
 #   in a comment, and Dependabot updates both together.
-# - pub: Dart and Flutter packages of the pub workspace (root, apps, packages).
+# - pub: Dart and Flutter packages of the pub workspace (from the workspace root).
 # - npm: the Firebase Cloud Functions in backend/functions.
 #
 # Minor and patch updates are grouped by family (one PR per family). Major
@@ -31,13 +31,12 @@ updates:
       - dependencies
 
   # ---------------------------------------------------------------------------
-  # Pub workspace. The root pubspec lists the members; each member declares its
-  # own dependencies, so every folder is listed.
+  # Pub workspace. Dependabot must be pointed at the workspace root only: the
+  # first run with the member folders listed too failed with "dependency_services
+  # failed: Only apply dependency_services to the root of the workspace."
+  # It reads the Flutter version from .fvmrc.
   - package-ecosystem: pub
-    directories:
-      - /
-      - /apps/*
-      - /packages/*
+    directory: /
     schedule:
       interval: monthly
     open-pull-requests-limit: 10
