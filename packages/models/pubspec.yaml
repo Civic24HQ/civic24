@@ -16,7 +16,7 @@ dependencies:
   # General Dependencies
   freezed_annotation: ^3.1.0
   json_annotation: ^4.9.0
-  uuid: ^4.5.0
+  uuid: ^4.6.0
   faker: ^2.2.0
   solar_icons: ^0.1.0
   cloud_firestore: ^6.1.2
@@ -41,7 +41,7 @@ dev_dependencies:
   # Utility Packages
   freezed: ^4.0.1
   json_serializable: ^6.9.5
-  build_runner: ^2.10.5
+  build_runner: ^2.15.2
 
 flutter:
   uses-material-design: true

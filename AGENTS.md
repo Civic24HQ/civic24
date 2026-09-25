@@ -61,9 +61,13 @@ Civic24 is an open-source civic reporting app where citizens report community is
    * `test:golden` and the `*:golden` scripts run goldens without changing baselines. Only `melos run components:update:golden` overwrites them, and only for an intentional visual change.
    * Golden assertions run on macOS and Windows only (`flutter_test_config.dart`), so Linux CI skips them.
    * `golden_toolkit` is discontinued; replacing it is Phase 2 work.
-7. **Launcher Icons:**
+7. **Stale build_runner cache:**
+   * After upgrading `flutter_gen_runner` (or if `assets.gen.dart` / `fonts.gen.dart` show up deleted after generating), run `dart run build_runner clean` in `packages/assets`, `apps/citizen` and `apps/admin`, then `melos run flutter:build`. Fresh checkouts and CI are not affected.
+8. **`flex_color_scheme` is held at 8.4.0:**
+   * Version 9 is built on the standalone `material_ui` package, so `FlexThemeData` returns `material_ui`'s `ThemeData`, not Flutter's, and `packages/styles` no longer compiles. Upgrade it together with the Material/Cupertino decoupling migration (`package:flutter/material.dart` to `material_ui`).
+9. **Launcher Icons:**
    * `flutter_launcher_icons` is not a workspace dependency (it needs `cli_util` 0.4 while Melos 8 needs 0.5). Run it as a global tool: `dart pub global activate flutter_launcher_icons`, then `dart pub global run flutter_launcher_icons -f <config>` from the app folder.
-8. **Secrets are Not in Git:**
+10. **Secrets are Not in Git:**
    * Flavor JSON files, Google service files, and keystores are gitignored.
    * Real citizen Firebase and OAuth configs are absent on fresh checkouts; environment-specific auth cannot be verified without credentials and project access. Never claim tests passed if real credentials or active Firebase settings are missing.
 

@@ -72,9 +72,7 @@ class $AssetsSvgGen {
   List<SvgGenImage> get values => [civic24AppLogo];
 }
 
-class Assets {
-  const Assets._();
-
+abstract final class Assets {
   static const $AssetsPngGen png = $AssetsPngGen();
   static const $AssetsSvgGen svg = $AssetsSvgGen();
 }

@@ -4,6 +4,37 @@ Running log for the refactor described in `docs/CIVIC24_REFACTOR_PROMPT.md` (mas
 
 ---
 
+## Phase 2: Dependency upgrade and deprecations (started 25 Sept 2026)
+
+Six PRs (owner approved): (1) tooling and leaf packages, (2) Firebase suite, (3) device plugins, (4) UI packages, (5) replace `golden_toolkit` with `alchemist`, (6) deprecations. Everything goes to the latest version unless a strong reason is logged. Evidence level: local analysis, generation, format check and tests; the app cannot be built or launched until the development secrets are added and Phase 3 and 4 land.
+
+### 2.1 PR 1: tooling and leaf packages (`chore/upgrade-tooling-and-leaf-packages`)
+
+| Package | From | To | Notes |
+|---|---|---|---|
+| `flutter_gen_runner` | 5.12.0 | 5.15.0 | Old `build_runner` caches made it skip its output and delete `assets.gen.dart` and `fonts.gen.dart`. Fix: `dart run build_runner clean` once. Generated output changed by a few lines |
+| `flutter_svg` | 2.2.0 | 2.3.0 | |
+| `build_runner` | 2.15.2 | 2.16.1 range (`^2.15.2`) | |
+| `freezed` | 4.0.1 | 4.0.2 range | |
+| `uuid` | 4.5.3 | 4.6.0 | |
+| `hive_ce` | 2.15.1 | 2.20.0 | |
+| `crypto`, `mime`, `path_provider`, `platform`, `flutter_native_splash` | patch and minor | latest | |
+| `flutter_timezone` | 4.1.1 | 5.1.0 | Its API now returns `TimezoneInfo`, but nothing in the code calls it (see below) |
+
+Lower bounds were tightened to the versions tested (`flutter pub upgrade --tighten`).
+
+**Held back, with the reason (the one exception to "everything to the latest"):**
+- **`flex_color_scheme` stays at 8.4.0 (latest is 9.0.0).** Version 9 depends on the standalone `material_ui` and `cupertino_ui` packages, so `FlexThemeData` returns `material_ui`'s `ThemeData` instead of Flutter's. `packages/styles` failed with about 10 type errors (`ThemeData`, `Typography`, `TextTheme`, `DialogThemeData`, theme extensions). Adopting it means migrating every `package:flutter/material.dart` import to `material_ui`, which is the Material and Cupertino decoupling migration, planned as its own PR before the November 2026 stable. Version 9 also defaults `useExpressiveOnContainerColors` to true, which changes light theme on-container colors.
+- **`timezone` stays at ^0.10.0** (latest 0.11.1): `flutter_local_notifications` 19 requires `^0.10`. It moves in PR 3 with `flutter_local_notifications` 22.
+
+**Findings**
+- `flutter_timezone` and `timezone` are declared in `packages/utils` but no Dart file uses them. Cleanup candidate for the refactor PR (PR 6) or Phase 8.
+- Tests, analysis, format check and golden tests pass after the upgrade (`melos run ci:check` exit 0). No golden baselines changed.
+
+**Google Auth Platform notice (owner email, 17 Sept 2026), for Phase 5.** Google will delete OAuth clients in `civic24-sdg11` that have been inactive for 5 months, 30 days after the email, so around **17 October 2026**. Deleted clients can be restored in the Cloud Console for 30 days. The clients the production app needs are the Web client (`WEB_CLIENT_ID`), the Android client for `co.civic24.citizen`, and the iOS client for the production bundle ID (the iOS app has never shipped, so it is likely one of the inactive ones). A client counts as used when it is used in a Sign in with Google flow. Owner to list the clients in the Cloud Console (open it directly, not through the email links) and sign in with Google on the live production app to refresh the Web and Android ones. The iOS one can only be refreshed once an iOS build exists (after Phase 3), or restored after deletion.
+
+---
+
 ## Phase 1: Toolchain, workspaces and Melos (24 Sept 2026)
 
 Branch `chore/pin-flutter-and-migrate-to-pub-workspaces` (PR 1 of 2). PR 2, the CI repair (`ci/repair-workflows-and-unify-versions`), starts after PR 1 is merged.

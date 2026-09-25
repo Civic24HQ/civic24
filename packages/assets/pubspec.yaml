@@ -14,7 +14,7 @@ dependencies:
     sdk: flutter
     
   # General Dependencies
-  flutter_svg: ^2.2.0
+  flutter_svg: ^2.3.0
   
   # Package Dependencies
 
@@ -28,8 +28,8 @@ dev_dependencies:
     path: ../rules
 
   # Utility Packages
-  flutter_gen_runner: ^5.10.0
-  build_runner: ^2.7.1
+  flutter_gen_runner: ^5.15.0
+  build_runner: ^2.15.2
 
 flutter:
   uses-material-design: true

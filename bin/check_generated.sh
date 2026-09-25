@@ -22,6 +22,7 @@ after="$(state)"
 
 if [ "$before" != "$after" ]; then
   echo "::error::Generated files are out of date. Review the changes made by 'melos run flutter:build' and commit them." >&2
+  echo "If generated files were DELETED (for example assets.gen.dart after upgrading flutter_gen_runner), run 'dart run build_runner clean' in that package and generate again." >&2
   git status --short -- . ':(exclude)**/GeneratedPluginRegistrant.*' ':(exclude)**/generated_plugin*'
   exit 1
 fi
