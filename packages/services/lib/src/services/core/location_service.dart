@@ -57,7 +57,7 @@ class LocationService {
   Future<Map<String, String>> getUserLocationData() async {
     try {
       final position = await _determinePosition();
-      final placemarks = await placemarkFromCoordinates(position.latitude, position.longitude);
+      final placemarks = await Geocoding().placemarkFromCoordinates(position.latitude, position.longitude);
       if (placemarks.isEmpty) return {'state': '', 'country': ''};
 
       final place = placemarks.first;

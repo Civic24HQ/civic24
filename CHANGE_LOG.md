@@ -58,6 +58,42 @@ Platform interface and web packages moved with them (30 packages changed in the 
 
 **Verification:** `melos run ci:check` exit 0 (generation, generated-files check, format, analyze, tests). App build and Firebase behavior not verified (Level 1 to 2 only).
 
+### 2.3 PR 3: device plugins (`chore/upgrade-device-plugins`)
+
+| Package | From | To | Code change |
+|---|---|---|---|
+| `flutter_local_notifications` | 19.5.0 | 22.3.1 | Yes: `initialize` and `show` now take named parameters (`settings:`, `id:`, `title:`, `body:`, `notificationDetails:`) in `LocalNotificationService` |
+| `geocoding` | 4.0.0 | 5.0.0 | Yes: functions moved into a `Geocoding` class (`Geocoding().placemarkFromCoordinates(...)`) in `LocationService` |
+| `timezone` | 0.10.1 | 0.11.1 | No (moves with `flutter_local_notifications`) |
+| `sign_in_with_apple` | 7.0.1 | 8.2.0 | No. Adds Swift Package Manager support; minimum Flutter 3.44 |
+| `permission_handler` | 11.4.0 | 12.0.3 (**held**, latest is 13.0.2) | No. See the hold note below |
+| `image_cropper` | 11.0.0 | 12.2.1 | No. iOS crop UI moves to TOCropViewController 3.1.1 (new Liquid Glass look) |
+| `package_info_plus` | 9.0.1 | 10.2.1 | No |
+| `app_settings` | 7.0.0 | 9.0.0 | No |
+| `internet_connection_checker_plus` | 2.9.1+2 | 3.1.2 | No |
+| `google_sign_in` | 7.1.1 | 7.2.0 | No (still the v7 API) |
+| `geolocator` 14.0.3, `image_picker` 1.2.3, `android_intent_plus` 6.1.0, `flutter_image_compress` 2.5.1, `shorebird_code_push` 2.0.7 | patch | latest | No |
+
+`flutter_image_compress_common` 1.1.1, `sign_in_with_apple` 8.2.0 and `permission_handler_apple` 9.6.1 are the three plugins that were CocoaPods-only in the Phase 0 audit; they now ship Swift Package Manager support.
+
+**Verification:** `melos run ci:check` exit 0. Not verified: runtime behavior of any of these plugins on a device (the test suite is nearly empty). Device test list for Phase 5: local and foreground notification display and tap, Google and Apple sign-in, location permission prompts and address lookup, image pick and crop, app settings deep link, connectivity banner.
+
+**Notes for Phase 3 and 4 (found while upgrading):**
+- **`permission_handler` is held at 12.0.3 (exception to "everything to the latest", raised in PR review).** `permission_handler_android` 14.1.0 (from `permission_handler` 13) compiles against `compileSdk = 37`, and Android requires **AGP 9.1.1 or newer with Gradle 9.3.1 or newer** for API 37. Flutter 3.47 and Shorebird are validated on AGP 8.11.x, so 13 would force a new major Android toolchain. Every other Android plugin compiles at 36 or lower (checked in the plugin sources). 12.0.3 resolves with `permission_handler_android` 13.0.1 and `permission_handler_apple` 9.6.1 (Swift Package Manager ready). **Phase 4 decision for the owner:** move to AGP 9.1.1+ and Gradle 9.3.1+ (then take `permission_handler` 13), or stay on AGP 8.11.x and keep 12.x.
+- **AGP 8.11.1:** `flutter_local_notifications` 22.3.1 lists AGP 8.11.1 in its own `build.gradle`; that is how the plugin builds itself, not a requirement for apps. Phase 4 raises AGP to at least 8.11.1 anyway (Shorebird's minimum for Flutter 3.47), so no action.
+- **Defect D17 (found in review, not caused by this PR): permanent denial is lost on Android.** `PermissionService._init()` and `refreshPermissions()` store `Permission.status`, but on Android `status` can never report `permanentlyDenied` (the plugin source says a status check cannot detect it); only the `request()` result can. After an app restart, `isLocationPermissionDenied` and `isNotificationPermissionDenied` are false even after "don't ask again". Fix in a separate `fix/` PR after Phase 2 (remember the denial and clear it only when granted), then confirm on a device in Phase 5.
+- **Podfile:** `permission_handler` still relies on `GCC_PREPROCESSOR_DEFINITIONS` in the Podfile (`PERMISSION_LOCATION=1`, `PERMISSION_LOCATION_WHENINUSE=0`, `PERMISSION_NOTIFICATIONS=1`). Those are removed with CocoaPods in Phase 3, so the permissions have to be enabled in the way `permission_handler_apple` documents for Swift Package Manager.
+- **iOS 15:** the minimum iOS deployment target moves to 15.0 (Flutter raised it automatically in a trial build).
+
+**iOS build trial after PR 2 (development flavor, using the owner's development files):** `flutter build ios --no-codesign --flavor development` now gets through "Xcode is fetching Swift Package Manager dependencies" with no resolution error, which is the failure the CD run hit. It then stops because `ios/Flutter/Release.xcconfig` (and Debug and Staging) do not exist: only `*.xcconfig.template` files are in the repo, and the owner adds the real ones. The templates also say "copy to Development.xcconfig" while the files are named Debug, Release and Staging; fix the wording in Phase 3.
+During that build Flutter edited the tracked iOS project on its own (it was reverted, nothing committed): `AppDelegate.swift` adopts `FlutterImplicitEngineDelegate` (`didInitializeImplicitFlutterEngine` registers plugins), `Info.plist` moves `GIDClientID` and the Google URL scheme entries and drops their comments, `MinimumOSVersion` removed from `AppFrameworkInfo.plist`, `Podfile`, `Podfile.lock` and `project.pbxproj` rewritten, and Swift Package Manager workspace folders added. Phase 3 does these deliberately and reviews each diff.
+
+**iOS build trial with the xcconfigs in place (branch with all PR 3 upgrades, development flavor, `flutter build ios --no-codesign --flavor development`):**
+- Swift Package Manager resolves and downloads every dependency (no `flutterfire` version conflict). All plugins, including the upgraded ones, compile. The build then fails **only** in the Crashlytics symbol-upload Run Script: `Could not find the Crashlytics upload symbols script at ".../DerivedData/Runner-.../SourcePackages/checkouts/firebase-ios-sdk/Crashlytics/run"`. For `flutter build ios` (command line) the Swift package checkouts are under `apps/citizen/build/ios/SourcePackages/checkouts/firebase-ios-sdk/Crashlytics/run`, not under DerivedData; the script only looks under DerivedData (the comment in the script explains the Firebase docs path did not work either). Phase 3 rewrites the script to check both locations.
+- Two local tooling gaps found on the way: the FlutterFire CLI must be installed (`dart pub global activate flutterfire_cli`; the same script calls it), and a failed build leaves read-only files under `build/ios/SourcePackages` ("grpc.framework couldn't be removed"); fix by deleting `build/ios` and `~/Library/Developer/Xcode/DerivedData/Runner-*` before rebuilding.
+- **The xcconfigs are not per flavor (important for Phase 3).** `project.pbxproj` uses `Debug.xcconfig` for every `Debug-*` configuration (development, staging and production), and `Release.xcconfig` for every `Release-*` and `Profile-*` configuration of all three flavors. `Staging.xcconfig` is not referenced by any configuration. So `GOOGLE_CLIENT_ID` and `GOOGLE_REVERSED_CLIENT_ID` are the same for all flavors in a given build mode, and a staging or production Release build reads the same client ID as development. That cannot be right for flavors with different bundle IDs and Firebase apps (the iOS OAuth client is tied to the bundle ID). This is a strong reason to derive both values from each flavor's `GoogleService-Info.plist` (Phase 3 plan) instead of hand-written xcconfigs. The bundle ID line in the xcconfig is ignored (the project sets `PRODUCT_BUNDLE_IDENTIFIER` per configuration).
+- `Release.xcconfig` was first created as `Release.xccconfig` (typo); git did not ignore it, so it showed up as untracked and could have been committed. Renamed; the `.gitignore` rule now matches.
+
 ---
 
 ## Phase 1: Toolchain, workspaces and Melos (24 Sept 2026)
