@@ -364,13 +364,15 @@
 			files = (
 			);
 			inputPaths = (
+				"${TARGET_BUILD_DIR}/${INFOPLIST_PATH}",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/GoogleService-Info.plist",
 			);
 			name = "Register Google Sign-In URL Scheme";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "# Register the flavor's reversed client ID as the URL scheme Google Sign-In returns to.\n# It is read from the GoogleService-Info.plist that the flavor phase copied into the app and\n# written into the built Info.plist, so the two always match. This phase runs last, after\n# Info.plist has been processed and before the app is signed.\nBUILT_INFO_PLIST=\"${TARGET_BUILD_DIR}/${INFOPLIST_PATH}\"\nBUILT_GOOGLE_PLIST=\"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/GoogleService-Info.plist\"\nREVERSED_CLIENT_ID=$(/usr/libexec/PlistBuddy -c \"Print :REVERSED_CLIENT_ID\" \"$BUILT_GOOGLE_PLIST\" 2>/dev/null)\nif [ -z \"$REVERSED_CLIENT_ID\" ]; then\n  message=\"No REVERSED_CLIENT_ID in the GoogleService-Info.plist for this flavor, so Google Sign-In cannot return to the app. Register the iOS app and enable Google sign-in in Firebase, then download the file again.\"\n  if [ \"$CONFIGURATION\" = \"Release-production\" ]; then\n    echo \"error: $message\"\n    exit 1\n  fi\n  echo \"warning: $message\"\nelse\n  /usr/libexec/PlistBuddy -c \"Set :CFBundleURLTypes:0:CFBundleURLSchemes:0 $REVERSED_CLIENT_ID\" \"$BUILT_INFO_PLIST\"\n  echo \"Registered the Google Sign-In URL scheme.\"\nfi\n";
+			shellScript = "# Register the flavor's reversed client ID as the URL scheme Google Sign-In returns to.\n# It is read from the GoogleService-Info.plist that the flavor phase copied into the app and\n# written into the built Info.plist, so the two always match. This phase runs last, after\n# Info.plist has been processed and before the app is signed.\nBUILT_INFO_PLIST=\"${TARGET_BUILD_DIR}/${INFOPLIST_PATH}\"\nBUILT_GOOGLE_PLIST=\"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/GoogleService-Info.plist\"\nREVERSED_CLIENT_ID=$(/usr/libexec/PlistBuddy -c \"Print :REVERSED_CLIENT_ID\" \"$BUILT_GOOGLE_PLIST\" 2>/dev/null)\nif [ -z \"$REVERSED_CLIENT_ID\" ]; then\n  message=\"No REVERSED_CLIENT_ID in the GoogleService-Info.plist for this flavor, so Google Sign-In cannot return to the app. Register the iOS app and enable Google sign-in in Firebase, then download the file again.\"\n  if [ \"$CONFIGURATION\" = \"Release-production\" ]; then\n    echo \"error: $message\"\n    exit 1\n  fi\n  echo \"warning: $message\"\nelse\n  if ! /usr/libexec/PlistBuddy -c \"Set :CFBundleURLTypes:0:CFBundleURLSchemes:0 $REVERSED_CLIENT_ID\" \"$BUILT_INFO_PLIST\"; then\n    echo \"error: Could not write the Google Sign-In URL scheme into $BUILT_INFO_PLIST.\"\n    exit 1\n  fi\n  echo \"Registered the Google Sign-In URL scheme.\"\nfi\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
