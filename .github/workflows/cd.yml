@@ -1,13 +1,20 @@
 name: CD
 
-# Builds the citizen app (development flavor) for Android and iOS on every push
-# to develop and attaches the build to a GitHub Release.
-# Pull requests are checked by ci.yml, not here. Store delivery (Play internal
-# track, TestFlight) is added in a later phase.
+# Builds the citizen app (development flavor) for Android and iOS and attaches
+# the build to a GitHub Release.
+#
+# PAUSED: this only runs when started by hand (Actions tab, Run workflow). It
+# failed on the first push to develop on Flutter 3.47.5:
+#   - Android: the Gradle wrapper (8.13) is older than Flutter's minimum (8.14)
+#   - iOS: the FlutterFire packages are at mismatched versions, so Swift Package
+#     Manager cannot resolve them
+# Those are fixed in Phase 4 (Android) and Phase 2 (Firebase suite). Phase 7 puts
+# the push trigger back (`push: branches: [develop]`), fixes the release race
+# between the two jobs, and adds store delivery. Pull requests are checked by
+# ci.yml, not here.
 
 on:
-  push:
-    branches: [develop]
+  workflow_dispatch:
 
 # Never cancel a delivery run half way; queue the next one instead.
 concurrency:
@@ -96,7 +103,7 @@ jobs:
 
   build-android:
     name: Build Android - citizen development
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     timeout-minutes: 45
     permissions:
       contents: write
