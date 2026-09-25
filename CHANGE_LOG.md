@@ -94,6 +94,25 @@ During that build Flutter edited the tracked iOS project on its own (it was reve
 - **The xcconfigs are not per flavor (important for Phase 3).** `project.pbxproj` uses `Debug.xcconfig` for every `Debug-*` configuration (development, staging and production), and `Release.xcconfig` for every `Release-*` and `Profile-*` configuration of all three flavors. `Staging.xcconfig` is not referenced by any configuration. So `GOOGLE_CLIENT_ID` and `GOOGLE_REVERSED_CLIENT_ID` are the same for all flavors in a given build mode, and a staging or production Release build reads the same client ID as development. That cannot be right for flavors with different bundle IDs and Firebase apps (the iOS OAuth client is tied to the bundle ID). This is a strong reason to derive both values from each flavor's `GoogleService-Info.plist` (Phase 3 plan) instead of hand-written xcconfigs. The bundle ID line in the xcconfig is ignored (the project sets `PRODUCT_BUNDLE_IDENTIFIER` per configuration).
 - `Release.xcconfig` was first created as `Release.xccconfig` (typo); git did not ignore it, so it showed up as untracked and could have been committed. Renamed; the `.gitignore` rule now matches.
 
+### 2.4 PR 4: UI packages (`chore/upgrade-ui-packages`)
+
+| Package | From | To | Code change |
+|---|---|---|---|
+| `country_flags` | 3.3.0 | 4.1.2 | Yes: flag size moved into `ImageTheme` (`CountryFlag.fromCountryCode(code, theme: const ImageTheme(height: ..., width: ...))`) in `ProfileView` and `CompleteProfileView` |
+| `dotted_border` | 2.1.0 | 3.1.0 | Yes: options moved into `RoundedRectDottedBorderOptions` in `FileUpload` |
+| `cached_network_image` | 3.4.1 | 4.0.2 | No. Version 4 depends on the standalone `material_ui` package instead of `flutter/material.dart` (see note) |
+| `shimmer` | 2.0.0 | 4.0.0 | No |
+| `smooth_page_indicator` | 1.2.1 | 3.0.0 | No |
+| `lottie` | 3.3.1 | 3.6.1 | No |
+
+**Golden baselines:** 3 images changed and were refreshed in their own commit: `FileUpload.png`, `FileUpload - General.png` and `Civic24_Components_Showcase.png` (0.1 to 0.6 percent of pixels). Compared side by side and with the diff image: layout, colors and text are identical; only the dashes of the dotted border are drawn slightly differently (`dotted_border` 3). All other goldens, including the ones that use shimmer and smooth_page_indicator, are unchanged.
+
+**Note:** `cached_network_image` 4 pulls `material_ui` (and `cupertino_ui`) into the app as transitive dependencies, next to Flutter's own Material. It compiles and nothing in our code touches its Material types. The Material and Cupertino decoupling PR (before the November 2026 stable) will bring `flex_color_scheme` 9 with it.
+
+**Held back (all still at the latest allowed):** `flex_color_scheme` 8.4.0 (needs the `material_ui` migration), `freezed` 4.0.1 (`intl_utils` needs `analyzer` 13), `permission_handler` 12.0.3 (needs AGP 9.1.1+ for 13), `platform` 3.1.6 (another package's constraint).
+
+**Verification:** `melos run ci:check` exit 0. Not verified on a device: image loading and caching, shimmer placeholders, page indicators, Lottie animations, country flags in the pickers, and the dotted upload border.
+
 ---
 
 ## Phase 1: Toolchain, workspaces and Melos (24 Sept 2026)
