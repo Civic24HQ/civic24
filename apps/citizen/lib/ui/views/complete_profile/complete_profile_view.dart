@@ -84,8 +84,7 @@ class CompleteProfileView extends StackedView<CompleteProfileViewModel> with $Co
                               itemLabel: (c) => c.name,
                               leading: (c) => CountryFlag.fromCountryCode(
                                 c.iso2,
-                                height: AppDimensions.size16,
-                                width: AppDimensions.size24,
+                                theme: const ImageTheme(height: AppDimensions.size16, width: AppDimensions.size24),
                               ),
                               onChanged: (selected) => viewModel.onCountryChanged(selected?.name),
                             ),
