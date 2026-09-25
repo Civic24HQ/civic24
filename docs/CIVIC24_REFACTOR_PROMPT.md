@@ -69,6 +69,7 @@ Do not assume the dependencies or implementation are untouched or that this list
 The Phase 0 audit in `CHANGE_LOG.md` confirmed the list above and changed or added the following. Where this section and a phase below differ, this section wins.
 
 - **Versions:** latest stable Flutter is 3.47.5 (Dart 3.13.4) and latest Melos is 8.9.0 (needs pub workspaces). Pin Flutter 3.47.x if the Shorebird CLI supports it. Shorebird's docs list 3.47.1; check 3.47.5 with the CLI.
+- **Apple Developer account: none for now.** Everything that needs a paid Apple account is **SUSPENDED (Apple account)** and collected in `docs/APPLE_DEVELOPER_ACCOUNT.md` (ids A1 to A15) for a separate phase later: entitlements and capabilities (Phase 3 item 10), APNs, Sign in with Apple keys, the Apple cells and iOS push in the Phase 5 matrix, production App Check on iOS, signing, fastlane and TestFlight, the App Store checklist, submission and the iOS Shorebird release (Phase 7), iOS push in Phase 9. Do not start or plan around them; continue with everything else and add new items to that file.
 - **Firebase layout:** production is `civic24-sdg11`; development and staging share `civic24test-f9352` for now. Revisit a separate staging project before the first App Store release.
 - **Phase 1:**
   - Replace the exact `flutter: 3.41.6` pin with a minimum range (for example `>=3.47.0`) in every pubspec, and make `.fvmrc` the exact version. Un-ignore `.fvmrc` in `.gitignore` (it is currently ignored).
@@ -203,7 +204,7 @@ Context: Flutter 3.44 makes Swift Package Manager the default. Firebase stops pu
    - Set `NSLocationWhenInUseUsageDescription` to something accurate, for example: "Civic24 uses your location to tag the precise location of civic issues you report."
    - Check the camera, photo library and notification usage strings, and set `ITSAppUsesNonExemptEncryption` to `false` if the app only uses standard HTTPS.
 9. Add `apps/citizen/ios/Runner/PrivacyInfo.xcprivacy` with the required API declarations (at least `NSPrivacyAccessedAPICategoryUserDefaults`) and the data collection types, matching what the plugins and the app actually do.
-10. Push notifications: APNs key uploaded to each Firebase project, Push Notifications and Background Modes capabilities on, entitlements correct per flavor.
+10. **SUSPENDED (Apple account, A2 to A4 in `docs/APPLE_DEVELOPER_ACCOUNT.md`)**: Push notifications: APNs key uploaded to each Firebase project, Push Notifications and Background Modes capabilities on, entitlements correct per flavor.
 11. Apply the same analysis to other Apple targets in the monorepo only if they are maintained or built by CI. Do not silently expand the migration into unrelated targets.
 
 The App Store compliance features themselves (report, block, terms, account deletion) are feature work and live in Phase 7, not here.
