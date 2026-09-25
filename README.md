@@ -230,7 +230,19 @@ Every test run, including CI, checks them: `melos run flutter:test`.
 
 ### Output Location
 
-Baselines are saved next to each test as `goldens/macos/<fileName>.png` and `goldens/ci/<fileName>.png`. Only `goldens/ci` is committed; the repository `.gitignore` keeps the readable `goldens/macos` images local.
+Baselines are saved next to each test as `goldens/macos/<fileName>.png` and `goldens/ci/<fileName>.png`. Commit both sets. The readable `goldens/macos` images are only checked on macOS, so update them on a Mac.
+
+---
+
+## 🧠 Skills
+
+Reusable, step-by-step guides that people read and AI coding agents can load. They follow the open [Agent Skills](https://agentskills.io) format: one folder per skill containing a `SKILL.md` (name and description in the header, instructions below) and optional `references/`, `scripts/` and `assets/` folders. They live in `.agents/skills/`, a tool-neutral location.
+
+| Skill | What it covers |
+|---|---|
+| [`golden-toolkit`](.agents/skills/golden-toolkit/SKILL.md) | Setting up, writing and running Flutter golden tests with the `golden_toolkit` package (discontinued), for projects that cannot use `alchemist` |
+
+**Using them:** read the `SKILL.md` directly on GitHub. Tools that scan `.agents/skills/` pick them up automatically. Claude Code reads `.claude/skills/`, so copy or link a skill folder there (`mkdir -p .claude/skills && ln -s ../../.agents/skills/golden-toolkit .claude/skills/golden-toolkit`). **Adding one:** create `.agents/skills/<name>/SKILL.md` (the folder name must equal `name`, lowercase with hyphens, description under 1024 characters), keep `SKILL.md` under 500 lines, move long examples to `references/`, list it in this table, and validate it with `skills-ref validate .agents/skills/<name>`.
 
 ---
 
