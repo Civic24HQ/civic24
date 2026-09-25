@@ -46,7 +46,7 @@
 	<key>GIDClientID</key>
 	<string>$(GOOGLE_CLIENT_ID)</string>
 	<key>ITSAppUsesNonExemptEncryption</key>
-	<string>NO</string>
+	<false/>
 	<key>LSApplicationQueriesSchemes</key>
 	<array>
 		<string>https</string>
@@ -65,14 +65,8 @@
 	<string>Access to the camera is required to take photos.</string>
 	<key>NSLocalNetworkUsageDescription</key>
 	<string>This app requires access to the local network for debugging and development purposes.</string>
-	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
-	<string>Enable your location at all times to easily complete your profile, even if Civic24 is in the background.</string>
-	<key>NSLocationAlwaysUsageDescription</key>
-	<string>Allow location access at all times to complete your profile, even when Civic24 is not actively in use.</string>
-	<key>NSLocationUsageDescription</key>
-	<string>Location access helps display your accurate location to easily complete your profile on older devices.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>Enable your location to complete your profile while using Civic24.</string>
+	<string>Civic24 uses your location while the app is open to fill in your area when you complete your profile.</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>Access to the photo library is required to select and upload images.</string>
 	<key>UIApplicationSceneManifest</key>
@@ -102,7 +96,6 @@
 	<array>
 		<string>fetch</string>
 		<string>remote-notification</string>
-		<string>location</string>
 	</array>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
