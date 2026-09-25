@@ -70,3 +70,24 @@ base64 -i apps/citizen/secrets/development.json | tr -d '\n' | gh secret set ENC
 - **Update an action by hand:** find the tag's commit SHA, replace the SHA and the version comment. Dependabot normally does this in one monthly pull request.
 - **A workflow needs more permissions:** add them to that job only, never to the whole workflow.
 - **CI is red for an unrelated reason:** re-run it once. If it stays red, fix or revert the cause; do not skip the check.
+
+## Dependency updates (Dependabot)
+`.github/dependabot.yml` makes Dependabot check monthly and open pull requests for:
+- **GitHub Actions** (pinned SHAs and their version comments), one grouped PR.
+- **Pub packages** of the workspace (`/`, `/apps/*`, `/packages/*`). Minor and patch updates come grouped by family: `firebase`, `ui-packages`, `device-plugins`, `build-and-test-tools`. Major updates come as separate PRs. New releases wait 3 days (majors 7) before being proposed.
+- **npm packages** of `backend/functions`, grouped the same way.
+
+Dependabot only opens PRs; nothing changes until one is merged, and CI runs on each. It does not fix code, so a major update PR can be red until someone adapts the code, or it can be closed.
+
+**Handling a Dependabot PR**
+1. CI green on a grouped minor or patch PR: skim the changelog links in the description, then merge.
+2. CI red: check out the branch, run `melos run ci:check`, fix what the new version needs (see the migration notes of the package), push to the same branch.
+3. A major update you do not want yet: comment `@dependabot ignore this major version` on the PR. To stop it for good, add an `ignore` entry in `dependabot.yml` with the reason.
+4. Useful comments: `@dependabot rebase`, `@dependabot recreate`, `@dependabot ignore this dependency`.
+5. Dependabot never touches Flutter itself: change `.fvmrc` by hand (check Shorebird supports the version first).
+
+**Held back on purpose** (listed under `ignore:`): `flex_color_scheme` and `permission_handler` majors. Remove the entry when the reason in `CHANGE_LOG.md` is resolved.
+
+**Checking that it works.** After a change to `dependabot.yml` is merged, open Insights, Dependency graph, Dependabot on GitHub and read the log of the last run per ecosystem. Dart pub workspaces are not mentioned in GitHub's Dependabot documentation, so if the `pub` run fails or opens no PRs for member packages, the log says why; the fallback is Renovate.
+
+Security updates (separate from this schedule) are turned on in the repository settings and open a PR as soon as a vulnerability is published for a dependency.
