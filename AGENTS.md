@@ -278,7 +278,7 @@ These files are gitignored and must stay out of git:
 * **No Background Location:**  
   Never add `location` to `UIBackgroundModes` in `apps/citizen/ios/Runner/Info.plist`. Civic24 only needs location when the app is in use (`whenInUse`) to tag issues. Background location leads to rejection under **Guideline 2.5.4**.
 * **Clear Permission Strings:**  
-  `NSLocationWhenInUseUsageDescription` must clearly say that location is used to attach coordinates to reported issues.
+  `NSLocationWhenInUseUsageDescription` must describe what the app really does with the location. Today the only use is filling in country and state on the complete-profile screen (its "use accurate location" button is commented out); nothing attaches coordinates to issue reports. If issue tagging ships, update the string and the privacy manifest in the same change.
 * **User-Generated Content (Guideline 1.2):**  
   * Feed cards must have a "Report / Flag" button.
   * User profiles and issue details must have a "Block User" option.
