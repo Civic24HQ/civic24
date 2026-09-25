@@ -62,11 +62,18 @@ Civic24 is an open-source civic reporting app where citizens report community is
    * Golden tests use `alchemist`. Each test has readable macOS images (`goldens/macos`, real fonts) and portable CI images (`goldens/ci`, text as squares, 0.5 percent tolerance). Both are committed; the macOS set is only checked on macOS. Fonts for the macOS images are loaded by `test/helpers/load_app_fonts.dart`.
 7. **Stale build_runner cache:**
    * After upgrading `flutter_gen_runner` (or if `assets.gen.dart` / `fonts.gen.dart` show up deleted after generating), run `dart run build_runner clean` in `packages/assets`, `apps/citizen` and `apps/admin`, then `melos run flutter:build`. Fresh checkouts and CI are not affected.
-8. **`flex_color_scheme` is held at 8.4.0:**
-   * Version 9 is built on the standalone `material_ui` package, so `FlexThemeData` returns `material_ui`'s `ThemeData`, not Flutter's, and `packages/styles` no longer compiles. Upgrade it together with the Material/Cupertino decoupling migration (`package:flutter/material.dart` to `material_ui`).
+8. **Dependencies held below latest (four, each on purpose):**
+   * `flex_color_scheme` 8.4.0: version 9 is built on the standalone `material_ui` package, so `FlexThemeData` returns `material_ui`'s `ThemeData` and `packages/styles` no longer compiles. Upgrade it with the Material/Cupertino decoupling migration.
+   * `permission_handler` 12.0.3: 13 needs `compileSdk` 37, which needs AGP 9.1.1+ and Gradle 9.3.1+. Decide in Phase 4.
+   * `freezed` 4.0.1: 4.0.2 needs `analyzer` ^14 but `intl_utils` needs ^13.
+   * `platform` 3.1.6: another package's constraint. Check with `flutter pub outdated`.
+   * `flutter pub upgrade --major-versions --unlock-transitive <packages>` crashes pub in this workspace; set the constraints in the pubspecs and run `flutter pub get`.
 9. **Launcher Icons:**
    * `flutter_launcher_icons` is not a workspace dependency (it needs `cli_util` 0.4 while Melos 8 needs 0.5). Run it as a global tool: `dart pub global activate flutter_launcher_icons`, then `dart pub global run flutter_launcher_icons -f <config>` from the app folder.
-10. **Secrets are Not in Git:**
+10. **Native builds are not green yet:**
+   * Android: Gradle 8.13 is below Flutter 3.47's minimum 8.14 (Phase 4). `flutter build ios` compiles all plugins but fails in the Crashlytics upload Run Script, which only looks under DerivedData while `flutter build ios` puts Swift packages in `apps/citizen/build/ios/SourcePackages` (Phase 3). `Debug.xcconfig` and `Release.xcconfig` are shared by all flavors, so the Google client ID is not per flavor (Phase 3 reads it from each flavor's `GoogleService-Info.plist`).
+   * `cd.yml` is manual-only until these are fixed.
+11. **Secrets are Not in Git:**
    * Flavor JSON files, Google service files, and keystores are gitignored.
    * Real citizen Firebase and OAuth configs are absent on fresh checkouts; environment-specific auth cannot be verified without credentials and project access. Never claim tests passed if real credentials or active Firebase settings are missing.
 
