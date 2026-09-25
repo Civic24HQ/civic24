@@ -182,7 +182,13 @@ class AuthenticationService {
 
   Future<void> initializeGoogleSignIn() async {
     try {
-      await _googleSignIn.initialize(serverClientId: EnvironmentConstants.webClientId);
+      // On iOS the client ID of the running flavor's Firebase project comes from the
+      // flavor's env JSON, not from Info.plist, so each flavor signs in against its own project.
+      final isIos = !kIsWeb && defaultTargetPlatform == TargetPlatform.iOS;
+      await _googleSignIn.initialize(
+        clientId: isIos ? EnvironmentConstants.iosClientId : null,
+        serverClientId: EnvironmentConstants.webClientId,
+      );
       _isGoogleSignInInitialized = true;
       _log.i('Initialized Google Sign-In successfully');
     } catch (e) {

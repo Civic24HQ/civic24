@@ -47,7 +47,4 @@ app.*.map.json
 # Ignore Files
 /GoogleService-Info.plist
 /google-services.json
-/ios/Flutter/Debug.xcconfig
-/ios/Flutter/Release.xcconfig
-/ios/Flutter/Staging.xcconfig
 **/ios/config/

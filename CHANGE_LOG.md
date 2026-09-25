@@ -27,6 +27,27 @@ Owner answers: no Apple Developer account for now (see the suspended-work sectio
 
 **Local notes:** the FlutterFire CLI had to be installed for the upload script; a failed build leaves read-only files under `build/ios/SourcePackages` (delete with `chmod -R u+w` first); the Mac's data disk was at 98 percent (4 GB free) and a build failed with "database or disk is full", so about 4 GB of regenerable build files (`apps/citizen/build`, DerivedData) were deleted. A full iOS build needs several GB free.
 
+### 3.2 PR 2: permissions, privacy manifest, Google config, display names (`chore/clean-up-ios-permissions-and-google-config`)
+
+| Change | Why |
+|---|---|
+| `location` background mode, `NSLocationAlwaysAndWhenInUseUsageDescription`, `NSLocationAlwaysUsageDescription` and `NSLocationUsageDescription` removed; when-in-use text reworded | Owner decision. The app reads the location once while open (`Geolocator.getCurrentPosition`), so it never needs background or Always access. Answers the CodeRabbit comment on #60 |
+| `ITSAppUsesNonExemptEncryption` is now boolean `false` (was the string `NO`) | Apple expects a boolean |
+| `Runner/PrivacyInfo.xcprivacy` added and registered in the Runner Resources phase | Apple requires an app manifest (tracking, collected data, required-reason APIs). Draft from the plugins in use; **owner to confirm the data table before any submission** |
+| Google Sign-In: Dart passes `IOS_CLIENT_ID` (already an env key) to `GoogleSignIn.initialize` on iOS; new last Run Script phase "Register Google Sign-In URL Scheme" writes the flavor plist's `REVERSED_CLIENT_ID` into the built `Info.plist`; `GIDClientID` removed | The IDs used to come from `Debug.xcconfig` and `Release.xcconfig`, which every `Debug-*` and `Release-*`/`Profile-*` configuration shares, so all flavors got one Google ID. The URL-scheme step must run after Info.plist processing: in the flavor-plist phase it was overwritten (found while testing) |
+| xcconfig templates and Google values deleted; plain `#include "Generated.xcconfig"` versions of `Debug.xcconfig` and `Release.xcconfig` committed and un-ignored; unused `Staging.xcconfig` removed | Nothing custom is left in them. Bundle IDs and product names were already per-configuration build settings |
+| `CFBundleDisplayName` = `$(APP_DISPLAY_NAME)` with `Civic24 DEV`, `Civic24 STG`, `Civic24` per configuration | Owner decision: distinguishable icons |
+| `permission_handler_apple` reviewed (no change needed) | 9.6.1 ships an SPM manifest that enables permissions from the `Info.plist` usage strings. Resolved for this app: camera, photos, location while in use, notifications on; everything else, including Always location, off |
+| Tool-generated `customLLDBInitFile` line in the staging scheme committed | Flutter added it during builds |
+
+**Verification.** Built app inspected for all three flavors (`flutter build ios --simulator --debug`; production only as a Debug build, nothing signed in): display names as above, URL scheme equals each flavor's plist `REVERSED_CLIENT_ID`, `GIDClientID` absent, `PrivacyInfo.xcprivacy` present (development). **Sign-in (owner, iPhone 17 Pro simulator, development flavor):** before the change (baseline on `develop`) and after it, "Continue with Google" opened the sheet, returned to the app and logged in. `melos` bootstrap-free checks run separately: generated files up to date, format clean, analyze clean, `melos run flutter:test` passes. `melos run ci:check` as one command hung for 1 h 27 min at 0% CPU (parallel test runs waiting, probably clashing with simultaneous Flutter builds; not diagnosed) and was killed; the steps were then rerun one at a time.
+
+**Not verified:** sign-in on staging and production; the URL scheme in Release builds (a Release production build is deliberately not made locally); Sign in with Apple (suspended, no entitlement); whether App Check is enforced (sign-in and the feed worked on the simulator); the privacy manifest against Apple's validator (needs App Store Connect); runtime permission prompts.
+
+**Contributor impact:** an iOS contributor needs their own `ios/config/<flavor>/GoogleService-Info.plist` and `IOS_CLIENT_ID` in their env JSON; no xcconfig editing. Old local xcconfigs with real values should be replaced by the committed ones. The client ID is a public identifier and was not rotated.
+
+Owner-facing follow-ups: confirm the privacy manifest data table.
+
 ---
 
 ## Apple Developer account: suspended work (25 Sept 2026)

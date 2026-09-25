@@ -227,7 +227,6 @@ These files are gitignored and must stay out of git:
 * `apps/citizen/secrets/{development,staging,production}.json`
 * `apps/citizen/android/app/src/{development,staging,production}/google-services.json`
 * `apps/citizen/ios/config/{development,staging,production}/GoogleService-Info.plist`
-* `apps/citizen/ios/Flutter/{Debug,Staging,Release}.xcconfig`
 * `apps/citizen/android/key.properties` and keystores (`*.jks`, `*.keystore`)
 
 ### 5.2 When Missing Credentials: Stop & Ask
@@ -242,7 +241,7 @@ These files are gitignored and must stay out of git:
   3. **Google Play App Signing Key** (from Play Console $\rightarrow$ App Integrity)  
   ...are added in Firebase Console for each package ID (`co.civic24.citizen`, `.dev`, `.stg`).
 * **Web Client ID:** `WEB_CLIENT_ID` in `secrets/<flavor>.json` must match the OAuth 2.0 Web Client ID in Google Cloud Console. A mismatch causes `ApiException 10`.
-* **iOS:** Ensure `ios/Flutter/*.xcconfig` contains `GIDClientID` and `GOOGLE_REVERSED_CLIENT_ID` matching the bundle ID, and that the reversed scheme is in `Info.plist`.
+* **iOS:** two values come from each flavor's own files, never from an xcconfig. The **client ID** is `IOS_CLIENT_ID` in `secrets/<flavor>.json` (the `CLIENT_ID` key of that flavor's `GoogleService-Info.plist`); Dart passes it to `GoogleSignIn.initialize` on iOS (`authentication_service.dart`). The **reversed client ID** (the URL scheme Google returns to) is read from the flavor's `GoogleService-Info.plist` by the last Run Script phase, "Register Google Sign-In URL Scheme", and written into the built `Info.plist`; the source `Info.plist` holds a placeholder. If the plist has no `REVERSED_CLIENT_ID` (iOS app not registered or Google sign-in not enabled in Firebase) the build warns, and fails for `Release-production`. The client ID is a public identifier, not a secret; do not "rotate" it. Check with the sign-in flow after changing any of this.
 
 ### 5.4 Firebase App Check
 * Configured in `apps/citizen/lib/bootstrap.dart`.
@@ -269,13 +268,17 @@ These files are gitignored and must stay out of git:
 * **Schemes:** each flavor scheme (`development`, `staging`, `production`) has the "Run Prepare Flutter Framework Script" pre-action Flutter added. If you add a scheme, run `flutter build ios --config-only --flavor <name> ...` once so Flutter adds it.
 * **Crashlytics symbol upload** (Run Script "FlutterFire: flutterfire upload-crashlytics-symbols"): needs the FlutterFire CLI (`dart pub global activate flutterfire_cli`). It skips Debug builds, looks for `firebase-ios-sdk` in `<project>/build/ios/SourcePackages` (command line builds) and in DerivedData (Xcode), and only fails the build for `Release-production`; other configurations warn.
 * **UIScene:** `AppDelegate` is a `FlutterImplicitEngineDelegate` and `Info.plist` has `UIApplicationSceneManifest` (Flutter's UIScene migration). Plugins are registered in `didInitializeImplicitFlutterEngine`.
-* Local (ignored) `ios/Flutter/*.xcconfig` files may still contain an optional `#include? "Pods/..."` line; it is harmless and can be deleted.
+* **xcconfigs:** `ios/Flutter/Debug.xcconfig` and `Release.xcconfig` are committed and contain only `#include "Generated.xcconfig"`. Nothing custom belongs in them (bundle IDs and names are per-configuration build settings in the Xcode project). If you have old local copies with Google IDs or a `Pods` include, replace them with the committed ones.
+* **Display names:** `CFBundleDisplayName` is `$(APP_DISPLAY_NAME)`, set per configuration: `Civic24 DEV`, `Civic24 STG`, `Civic24`.
+* **Permissions:** `permission_handler_apple` (9.6+) turns permission code on from the `NS...UsageDescription` keys in `Runner/Info.plist` (camera, photos, location while in use); notifications are on by default. No Podfile macros exist any more. Adding or removing a usage string changes which permissions work. To see what resolved: `cd apps/citizen/ios && PERMISSION_HANDLER_VERBOSE=1 swift package --package-path ~/.pub-cache/hosted/pub.dev/permission_handler_apple-<version>/ios/permission_handler_apple dump-package`. Builds started from Xcode.app (not `flutter run` or `xcodebuild`) cannot find the plist; set `PERMISSION_HANDLER_INFO_PLIST` to its path first.
+* **Location:** the app reads the location once while open. Never add the `location` background mode or the `NSLocationAlways*` strings.
+* **Privacy manifest:** `Runner/PrivacyInfo.xcprivacy` declares no tracking and the collected data types (draft, owner to confirm before submission). Keep it in step with the app and its SDKs when data collection changes.
 
 ### 6.2 App Store Review Requirements
 * **No Background Location:**  
   Never add `location` to `UIBackgroundModes` in `apps/citizen/ios/Runner/Info.plist`. Civic24 only needs location when the app is in use (`whenInUse`) to tag issues. Background location leads to rejection under **Guideline 2.5.4**.
 * **Clear Permission Strings:**  
-  `NSLocationWhenInUseUsageDescription` must clearly say that location is used to attach coordinates to reported issues.
+  `NSLocationWhenInUseUsageDescription` must describe what the app really does with the location. Today the only use is filling in country and state on the complete-profile screen (its "use accurate location" button is commented out); nothing attaches coordinates to issue reports. If issue tagging ships, update the string and the privacy manifest in the same change.
 * **User-Generated Content (Guideline 1.2):**  
   * Feed cards must have a "Report / Flag" button.
   * User profiles and issue details must have a "Block User" option.
