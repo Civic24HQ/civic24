@@ -19,7 +19,7 @@ dependencies:
   intl: ^0.20.2
   logger: ^2.6.1
   flutter_timezone: ^5.1.0
-  timezone: ^0.10.0
+  timezone: ^0.11.1
 
   # Package Dependencies
   localization:

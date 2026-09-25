@@ -58,6 +58,34 @@ Platform interface and web packages moved with them (30 packages changed in the 
 
 **Verification:** `melos run ci:check` exit 0 (generation, generated-files check, format, analyze, tests). App build and Firebase behavior not verified (Level 1 to 2 only).
 
+### 2.3 PR 3: device plugins (`chore/upgrade-device-plugins`)
+
+| Package | From | To | Code change |
+|---|---|---|---|
+| `flutter_local_notifications` | 19.5.0 | 22.3.1 | Yes: `initialize` and `show` now take named parameters (`settings:`, `id:`, `title:`, `body:`, `notificationDetails:`) in `LocalNotificationService` |
+| `geocoding` | 4.0.0 | 5.0.0 | Yes: functions moved into a `Geocoding` class (`Geocoding().placemarkFromCoordinates(...)`) in `LocationService` |
+| `timezone` | 0.10.1 | 0.11.1 | No (moves with `flutter_local_notifications`) |
+| `sign_in_with_apple` | 7.0.1 | 8.2.0 | No. Adds Swift Package Manager support; minimum Flutter 3.44 |
+| `permission_handler` | 11.4.0 | 13.0.2 | No. See Android note below |
+| `image_cropper` | 11.0.0 | 12.2.1 | No. iOS crop UI moves to TOCropViewController 3.1.1 (new Liquid Glass look) |
+| `package_info_plus` | 9.0.1 | 10.2.1 | No |
+| `app_settings` | 7.0.0 | 9.0.0 | No |
+| `internet_connection_checker_plus` | 2.9.1+2 | 3.1.2 | No |
+| `google_sign_in` | 7.1.1 | 7.2.0 | No (still the v7 API) |
+| `geolocator` 14.0.3, `image_picker` 1.2.3, `android_intent_plus` 6.1.0, `flutter_image_compress` 2.5.1, `shorebird_code_push` 2.0.7 | patch | latest | No |
+
+`flutter_image_compress_common` 1.1.1, `sign_in_with_apple` 8.2.0 and `permission_handler_apple` 9.6.1 are the three plugins that were CocoaPods-only in the Phase 0 audit; they now ship Swift Package Manager support.
+
+**Verification:** `melos run ci:check` exit 0. Not verified: runtime behavior of any of these plugins on a device (the test suite is nearly empty). Device test list for Phase 5: local and foreground notification display and tap, Google and Apple sign-in, location permission prompts and address lookup, image pick and crop, app settings deep link, connectivity banner.
+
+**Notes for Phase 3 and 4 (found while upgrading):**
+- **Android `compileSdk`:** `permission_handler_android` 14.1.0 compiles against `compileSdk = 37` (its `build.gradle.kts` declares AGP 9.0.1 and Kotlin 2.3.20). The app is on `compileSdk = 36` and AGP 8.11.0. Phase 4 must check which AGP supports API 37 and raise `compileSdk` for the app, or pin `permission_handler` below 13. Android SDK platform 37 is installed on the dev machine. This conflicts with the master plan's `compileSdk = 36` and Shorebird's 3.47.x note (AGP 8.11.1): decide in Phase 4.
+- **Podfile:** `permission_handler` still relies on `GCC_PREPROCESSOR_DEFINITIONS` in the Podfile (`PERMISSION_LOCATION=1`, `PERMISSION_LOCATION_WHENINUSE=0`, `PERMISSION_NOTIFICATIONS=1`). Those are removed with CocoaPods in Phase 3, so the permissions have to be enabled in the way `permission_handler_apple` documents for Swift Package Manager.
+- **iOS 15:** the minimum iOS deployment target moves to 15.0 (Flutter raised it automatically in a trial build).
+
+**iOS build trial after PR 2 (development flavor, using the owner's development files):** `flutter build ios --no-codesign --flavor development` now gets through "Xcode is fetching Swift Package Manager dependencies" with no resolution error, which is the failure the CD run hit. It then stops because `ios/Flutter/Release.xcconfig` (and Debug and Staging) do not exist: only `*.xcconfig.template` files are in the repo, and the owner adds the real ones. The templates also say "copy to Development.xcconfig" while the files are named Debug, Release and Staging; fix the wording in Phase 3.
+During that build Flutter edited the tracked iOS project on its own (it was reverted, nothing committed): `AppDelegate.swift` adopts `FlutterImplicitEngineDelegate` (`didInitializeImplicitFlutterEngine` registers plugins), `Info.plist` moves `GIDClientID` and the Google URL scheme entries and drops their comments, `MinimumOSVersion` removed from `AppFrameworkInfo.plist`, `Podfile`, `Podfile.lock` and `project.pbxproj` rewritten, and Swift Package Manager workspace folders added. Phase 3 does these deliberately and reviews each diff.
+
 ---
 
 ## Phase 1: Toolchain, workspaces and Melos (24 Sept 2026)

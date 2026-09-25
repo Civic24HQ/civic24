@@ -27,7 +27,7 @@ class LocalNotificationService {
     );
 
     await _localNotifications.initialize(
-      initializationSettings,
+      settings: initializationSettings,
       onDidReceiveNotificationResponse: _onLocalNotificationReceived,
     );
   }
@@ -114,7 +114,13 @@ class LocalNotificationService {
 
     _log.i('showNotification: $title / $body / $type / ${message.data}');
     final platformChannelDetails = getPlatformChannelDetails(type);
-    _localNotifications.show(title.hashCode, title, body, platformChannelDetails, payload: jsonEncode(message.toMap()));
+    _localNotifications.show(
+      id: title.hashCode,
+      title: title,
+      body: body,
+      notificationDetails: platformChannelDetails,
+      payload: jsonEncode(message.toMap()),
+    );
   }
 }
 
