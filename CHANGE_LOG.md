@@ -4,6 +4,31 @@ Running log for the refactor described in `docs/CIVIC24_REFACTOR_PROMPT.md` (mas
 
 ---
 
+## Phase 3: iOS, Swift Package Manager and native config (started 25 Sept 2026)
+
+Owner answers: no Apple Developer account for now (see the suspended-work section below), remove background location, include Sign in with Apple, adopt UIScene, add the privacy manifest, separate flavor display names.
+
+### 3.1 PR 1: Swift Package Manager (`chore/migrate-ios-to-swift-package-manager`)
+
+| Change | Why |
+|---|---|
+| Flutter's own migration integrated `FlutterGeneratedPluginSwiftPackage` (frameworks phase, package reference) and added the "Run Prepare Flutter Framework Script" pre-action to all three flavor schemes | Flutter only migrates the scheme it builds, so `flutter build ios --config-only` was run for development, staging and production |
+| CocoaPods removed: `pod deintegrate`, `Podfile`, `Podfile.lock`, the `Pods` group and the `Pods.xcodeproj` workspace reference | Flutter reported "All plugins found for ios are Swift Packages". The 310 lockfile entries and the `post_install` hook (forced 13.0, silenced warnings, `PERMISSION_LOCATION=1`) are gone |
+| One deployment target, 15.0, in every configuration; `MinimumOSVersion` removed from `AppFrameworkInfo.plist` | Was 13.0 in the project and 15.0 in the Podfile; Firebase iOS SDK 12.19.0 needs 15 |
+| `Package.resolved` committed (`Runner.xcworkspace/xcshareddata/swiftpm/`); the duplicate under `Runner.xcodeproj` and the `configuration` folders are ignored | Reproducible builds. `firebase-ios-sdk` 12.19.0, 21 pins |
+| Crashlytics symbol-upload Run Script rewritten | The old script only looked in DerivedData, so `flutter build ios` failed (found in the Phase 2 trial). Now: skip Debug builds, look in `<project>/build/ios/SourcePackages` and DerivedData, fail the build only for `Release-production`, warn for other configurations, warn if the FlutterFire CLI is missing |
+| UIScene lifecycle adopted (own commit): `AppDelegate` is a `FlutterImplicitEngineDelegate`, `Info.plist` gets `UIApplicationSceneManifest` | Owner approved; part of the same Flutter migration run, kept as a separate commit |
+
+**Verification (Level 2, local build):** `flutter build ios --no-codesign --flavor development -t lib/main.dart --dart-define-from-file=secrets/development.json` exits 0 (`Built build/ios/iphoneos/Civic24_DEV.app`, 97 MB) with no CocoaPods. This is the first successful iOS build of the refactor.
+
+**Simulator run (Level 2):** `flutter build ios --simulator --debug --flavor development ...` builds, and the app installs and launches on an iPhone 17 Pro simulator (iOS 26.5): splash screen, then the login screen (Poppins, logo, email and password fields, "Continue with Google"). The log shows Firebase 12.19.0 (Core, Crashlytics, Analytics, Remote Config, Messaging) starting, "Connecting to Firebase on Development" from `bootstrap.dart`, and no crash. The only Firebase error is `no valid "aps-environment" entitlement` when registering for remote notifications, which is expected: there is no entitlements file until the Apple account exists (items A3 and A4 in `docs/APPLE_DEVELOPER_ACCOUNT.md`).
+
+**Not verified:** sign-in (needs an interactive session), Firestore reads (App Check enforcement not checked), the Xcode GUI, staging and production builds (production is deliberately not built here because a Release-production build uploads symbols to the production Crashlytics project), a physical device, a symbolicated crash (needs Firebase, Phase 5).
+
+**Local notes:** the FlutterFire CLI had to be installed for the upload script; a failed build leaves read-only files under `build/ios/SourcePackages` (delete with `chmod -R u+w` first); the Mac's data disk was at 98 percent (4 GB free) and a build failed with "database or disk is full", so about 4 GB of regenerable build files (`apps/citizen/build`, DerivedData) were deleted. A full iOS build needs several GB free.
+
+---
+
 ## Apple Developer account: suspended work (25 Sept 2026)
 
 Owner decision: there is no Apple Developer Program account for now (Phase 3 questions, answer 1). Everything that needs one is suspended and collected in `docs/APPLE_DEVELOPER_ACCOUNT.md` (items A1 to A15, effects per phase, and the order of a separate "Apple phase" to run once the account exists). Phase 3 PR 3 (entitlements and capabilities) is suspended; PR 1 and PR 2 go ahead. The plan and `AGENTS.md` carry the same rule. Phase 3 decisions taken with this: remove background location, include Sign in with Apple in the app (its capability is suspended), adopt the UIScene change, add the privacy manifest, separate flavor display names.
