@@ -64,7 +64,7 @@
 	<key>NSLocalNetworkUsageDescription</key>
 	<string>This app requires access to the local network for debugging and development purposes.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>Civic24 uses your location while the app is open to fill in your area when you complete your profile.</string>
+	<string>Your location is used only while the app is open, to fill in your country and state when you complete your profile.</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>Access to the photo library is required to select and upload images.</string>
 	<key>UIApplicationSceneManifest</key>
