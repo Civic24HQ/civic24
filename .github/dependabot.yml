@@ -1,17 +1,25 @@
-# Dependabot keeps the GitHub Actions used by our workflows up to date.
-# Every action is pinned to a full commit SHA with the version in a comment,
-# and Dependabot updates both together in one pull request.
+# Dependabot keeps dependencies up to date. It opens pull requests; we review
+# and merge them (CI runs on each one). Nothing changes until a PR is merged.
+#
+# - github-actions: every action is pinned to a full commit SHA with the version
+#   in a comment, and Dependabot updates both together.
+# - pub: Dart and Flutter packages of the pub workspace (root, apps, packages).
+# - npm: the Firebase Cloud Functions in backend/functions.
+#
+# Minor and patch updates are grouped by family (one PR per family). Major
+# updates come as separate PRs because they often need code changes; CI will be
+# red until someone fixes them, or we close the PR.
 #
 # Docs: https://docs.github.com/code-security/dependabot/working-with-dependabot/dependabot-options-reference
 version: 2
 
 updates:
+  # ---------------------------------------------------------------------------
   - package-ecosystem: github-actions
     directory: /
     schedule:
       interval: monthly
     open-pull-requests-limit: 5
-    # One pull request for all action updates instead of one per action.
     groups:
       github-actions:
         patterns:
@@ -20,4 +28,121 @@ updates:
       prefix: "ci(deps)"
     labels:
       - ci
+      - dependencies
+
+  # ---------------------------------------------------------------------------
+  # Pub workspace. The root pubspec lists the members; each member declares its
+  # own dependencies, so every folder is listed.
+  - package-ecosystem: pub
+    directories:
+      - /
+      - /apps/*
+      - /packages/*
+    schedule:
+      interval: monthly
+    open-pull-requests-limit: 10
+    # Wait a few days after a release before proposing it (majors longer), so a
+    # broken release is usually pulled before it reaches us.
+    cooldown:
+      default-days: 3
+      semver-major-days: 7
+    groups:
+      firebase:
+        patterns:
+          - "firebase_*"
+          - "cloud_firestore*"
+        update-types: [minor, patch]
+      ui-packages:
+        patterns:
+          - "cached_network_image*"
+          - "country_flags"
+          - "dotted_border"
+          - "flutter_animate"
+          - "flutter_svg"
+          - "font_awesome_flutter"
+          - "iconsax_plus"
+          - "lottie"
+          - "overlay_support"
+          - "shimmer"
+          - "smooth_page_indicator"
+          - "solar_icons"
+        update-types: [minor, patch]
+      device-plugins:
+        patterns:
+          - "android_intent_plus"
+          - "app_settings"
+          - "flutter_image_compress*"
+          - "flutter_local_notifications*"
+          - "geocoding*"
+          - "geolocator*"
+          - "google_sign_in*"
+          - "hive_ce*"
+          - "image_cropper*"
+          - "image_picker*"
+          - "internet_connection_checker_plus"
+          - "package_info_plus"
+          - "path_provider*"
+          - "permission_handler*"
+          - "shorebird_code_push"
+          - "sign_in_with_apple*"
+          - "url_launcher*"
+        update-types: [minor, patch]
+      build-and-test-tools:
+        patterns:
+          - "alchemist"
+          - "build_runner"
+          - "flutter_gen_runner"
+          - "flutter_native_splash"
+          - "freezed*"
+          - "intl_utils"
+          - "json_annotation"
+          - "json_serializable"
+          - "melos"
+          - "mockito"
+          - "stacked_generator"
+        update-types: [minor, patch]
+    # Held back on purpose (reasons in CHANGE_LOG.md, section 2). Remove an entry
+    # when the blocker is gone.
+    ignore:
+      # 9.x needs the Material/Cupertino decoupling migration (material_ui).
+      - dependency-name: flex_color_scheme
+        update-types: ["version-update:semver-major"]
+      # 13.x needs compileSdk 37, which needs AGP 9.1.1+ (Android toolchain decision).
+      - dependency-name: permission_handler
+        update-types: ["version-update:semver-major"]
+    commit-message:
+      prefix: "chore(deps)"
+    labels:
+      - dependencies
+
+  # ---------------------------------------------------------------------------
+  - package-ecosystem: npm
+    directory: /backend/functions
+    schedule:
+      interval: monthly
+    open-pull-requests-limit: 5
+    cooldown:
+      default-days: 3
+      semver-major-days: 7
+    groups:
+      firebase-functions:
+        patterns:
+          - "firebase-*"
+        update-types: [minor, patch]
+      typescript-and-lint:
+        patterns:
+          - "typescript"
+          - "@types/*"
+          - "eslint*"
+          - "@typescript-eslint/*"
+        update-types: [minor, patch]
+    ignore:
+      # ESLint 9 needs the flat config migration, planned with the backend phase.
+      - dependency-name: eslint
+        update-types: ["version-update:semver-major"]
+      - dependency-name: "@typescript-eslint/*"
+        update-types: ["version-update:semver-major"]
+    commit-message:
+      prefix: "chore(deps)"
+    labels:
       - dependencies
