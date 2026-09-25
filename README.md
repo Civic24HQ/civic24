@@ -128,6 +128,15 @@ dart pub global activate flutter_launcher_icons
 cd apps/citizen && dart pub global run flutter_launcher_icons -f flutter_launcher_icons-development.yaml
 ```
 
+### Running on iOS
+
+iOS uses Swift Package Manager (no CocoaPods). To run a flavor you need two files of your own, both gitignored, from your own Firebase project:
+
+- `apps/citizen/ios/config/<flavor>/GoogleService-Info.plist`
+- `apps/citizen/secrets/<flavor>.json`, including `IOS_CLIENT_ID` (the `CLIENT_ID` value in that plist; see `secrets/env.example.json`)
+
+Then `melos run citizen:run:development`, or `flutter run -d <simulator> --flavor development -t lib/main.dart --dart-define-from-file=secrets/development.json` from `apps/citizen`. Install the FlutterFire CLI once (`dart pub global activate flutterfire_cli`) for the Crashlytics upload step. There is nothing to edit in Xcode or any xcconfig. The three flavors show as Civic24 DEV, Civic24 STG and Civic24.
+
 ---
 
 ## Firebase & Supabase
