@@ -4,6 +4,12 @@ Running log for the refactor described in `docs/CIVIC24_REFACTOR_PROMPT.md` (mas
 
 ---
 
+## Apple Developer account: suspended work (25 Sept 2026)
+
+Owner decision: there is no Apple Developer Program account for now (Phase 3 questions, answer 1). Everything that needs one is suspended and collected in `docs/APPLE_DEVELOPER_ACCOUNT.md` (items A1 to A15, effects per phase, and the order of a separate "Apple phase" to run once the account exists). Phase 3 PR 3 (entitlements and capabilities) is suspended; PR 1 and PR 2 go ahead. The plan and `AGENTS.md` carry the same rule. Phase 3 decisions taken with this: remove background location, include Sign in with Apple in the app (its capability is suspended), adopt the UIScene change, add the privacy manifest, separate flavor display names.
+
+---
+
 ## Phase 2: Dependency upgrade and deprecations (completed 25 Sept 2026)
 
 Six PRs (owner approved): (1) tooling and leaf packages, (2) Firebase suite, (3) device plugins, (4) UI packages, (5) replace `golden_toolkit` with `alchemist`, (6) deprecations. Everything goes to the latest version unless a strong reason is logged. Evidence level: local analysis, generation, format check and tests; the app cannot be built or launched until the development secrets are added and Phase 3 and 4 land.

@@ -255,6 +255,8 @@ These files are gitignored and must stay out of git:
 
 ## 6. iOS, Android & Store Guidelines
 
+> **No Apple Developer account for now.** Anything that needs a paid Apple account (capabilities and entitlements, APNs, Sign in with Apple keys, signing, TestFlight, App Store Connect, iOS Shorebird release) is suspended and listed in `docs/APPLE_DEVELOPER_ACCOUNT.md`. Do not attempt it; mark it `SUSPENDED (Apple account)` and add new items to that file.
+
 ### 6.1 iOS & Swift Package Manager
 * iOS dependencies are managed by **Swift Package Manager (SPM)**; CocoaPods is gone (no `Podfile`, `Podfile.lock` or `Pods/`). Flutter generates one local package, `ios/Flutter/ephemeral/Packages/FlutterGeneratedPluginSwiftPackage`, that pulls together the SPM dependency of every plugin. `ios/Runner.xcworkspace/xcshareddata/swiftpm/Package.resolved` is committed (it pins, for example, `firebase-ios-sdk` 12.19.0).
 * **Never add Firebase (or any plugin's SDK) in Xcode yourself.** Each FlutterFire plugin declares its own dependency on `firebase-ios-sdk`, pinned to an exact version, in its `Package.swift`.
