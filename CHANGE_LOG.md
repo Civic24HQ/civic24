@@ -66,7 +66,7 @@ Platform interface and web packages moved with them (30 packages changed in the 
 | `geocoding` | 4.0.0 | 5.0.0 | Yes: functions moved into a `Geocoding` class (`Geocoding().placemarkFromCoordinates(...)`) in `LocationService` |
 | `timezone` | 0.10.1 | 0.11.1 | No (moves with `flutter_local_notifications`) |
 | `sign_in_with_apple` | 7.0.1 | 8.2.0 | No. Adds Swift Package Manager support; minimum Flutter 3.44 |
-| `permission_handler` | 11.4.0 | 13.0.2 | No. See Android note below |
+| `permission_handler` | 11.4.0 | 12.0.3 (**held**, latest is 13.0.2) | No. See the hold note below |
 | `image_cropper` | 11.0.0 | 12.2.1 | No. iOS crop UI moves to TOCropViewController 3.1.1 (new Liquid Glass look) |
 | `package_info_plus` | 9.0.1 | 10.2.1 | No |
 | `app_settings` | 7.0.0 | 9.0.0 | No |
@@ -79,7 +79,9 @@ Platform interface and web packages moved with them (30 packages changed in the 
 **Verification:** `melos run ci:check` exit 0. Not verified: runtime behavior of any of these plugins on a device (the test suite is nearly empty). Device test list for Phase 5: local and foreground notification display and tap, Google and Apple sign-in, location permission prompts and address lookup, image pick and crop, app settings deep link, connectivity banner.
 
 **Notes for Phase 3 and 4 (found while upgrading):**
-- **Android `compileSdk`:** `permission_handler_android` 14.1.0 compiles against `compileSdk = 37` (its `build.gradle.kts` declares AGP 9.0.1 and Kotlin 2.3.20). The app is on `compileSdk = 36` and AGP 8.11.0. Phase 4 must check which AGP supports API 37 and raise `compileSdk` for the app, or pin `permission_handler` below 13. Android SDK platform 37 is installed on the dev machine. This conflicts with the master plan's `compileSdk = 36` and Shorebird's 3.47.x note (AGP 8.11.1): decide in Phase 4.
+- **`permission_handler` is held at 12.0.3 (exception to "everything to the latest", raised in PR review).** `permission_handler_android` 14.1.0 (from `permission_handler` 13) compiles against `compileSdk = 37`, and Android requires **AGP 9.1.1 or newer with Gradle 9.3.1 or newer** for API 37. Flutter 3.47 and Shorebird are validated on AGP 8.11.x, so 13 would force a new major Android toolchain. Every other Android plugin compiles at 36 or lower (checked in the plugin sources). 12.0.3 resolves with `permission_handler_android` 13.0.1 and `permission_handler_apple` 9.6.1 (Swift Package Manager ready). **Phase 4 decision for the owner:** move to AGP 9.1.1+ and Gradle 9.3.1+ (then take `permission_handler` 13), or stay on AGP 8.11.x and keep 12.x.
+- **AGP 8.11.1:** `flutter_local_notifications` 22.3.1 lists AGP 8.11.1 in its own `build.gradle`; that is how the plugin builds itself, not a requirement for apps. Phase 4 raises AGP to at least 8.11.1 anyway (Shorebird's minimum for Flutter 3.47), so no action.
+- **Defect D17 (found in review, not caused by this PR): permanent denial is lost on Android.** `PermissionService._init()` and `refreshPermissions()` store `Permission.status`, but on Android `status` can never report `permanentlyDenied` (the plugin source says a status check cannot detect it); only the `request()` result can. After an app restart, `isLocationPermissionDenied` and `isNotificationPermissionDenied` are false even after "don't ask again". Fix in a separate `fix/` PR after Phase 2 (remember the denial and clear it only when granted), then confirm on a device in Phase 5.
 - **Podfile:** `permission_handler` still relies on `GCC_PREPROCESSOR_DEFINITIONS` in the Podfile (`PERMISSION_LOCATION=1`, `PERMISSION_LOCATION_WHENINUSE=0`, `PERMISSION_NOTIFICATIONS=1`). Those are removed with CocoaPods in Phase 3, so the permissions have to be enabled in the way `permission_handler_apple` documents for Swift Package Manager.
 - **iOS 15:** the minimum iOS deployment target moves to 15.0 (Flutter raised it automatically in a trial build).
 
