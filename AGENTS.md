@@ -48,7 +48,7 @@ Civic24 is an open-source civic reporting app where citizens report community is
    * FVM is optional for developers; the pinned version is what matters.
    * Flutter 3.47 starts decoupling Material and Cupertino into `material_ui` and `cupertino_ui`. The old `package:flutter/material.dart` imports still work; formal deprecation is planned for the November 2026 stable. Plan the migration for a later phase.
 2. **CI Limits:**
-   * `ci.yml` runs on Ubuntu and checks the golden tests too (alchemist CI goldens, identical on every OS).
+   * `ci.yml` runs on Ubuntu and checks the portable golden images (`goldens/ci`). The readable ones (`goldens/macos`) are only checked on macOS: run `melos run components:golden` on a Mac and refresh both sets with `melos run components:update:golden` after an intentional visual change.
    * Run `melos run ci:check` before opening a PR: it does what CI does. See `.github/workflows/README.md`.
 3. **Single Entry Point:**
    * The citizen app entry point is `apps/citizen/lib/main.dart`.
@@ -59,7 +59,7 @@ Civic24 is an open-source civic reporting app where citizens report community is
    * `apps/citizen` and `apps/admin` have zero test cases (their test files are empty groups). The workspace has about 27 real cases, 21 of them component goldens. Broader coverage is Phase 8 work.
 6. **Golden Tests Caution:**
    * `test:golden` and the `*:golden` scripts run goldens without changing baselines. Only `melos run components:update:golden` overwrites them, and only for an intentional visual change.
-   * Golden tests use `alchemist`. The committed baselines are CI goldens (`goldens/ci/`, text drawn as squares) that pass on every OS; platform goldens are switched off in `packages/components/test/flutter_test_config.dart`.
+   * Golden tests use `alchemist`. Each test has readable macOS images (`goldens/macos`, real fonts) and portable CI images (`goldens/ci`, text as squares, 0.5 percent tolerance). Both are committed. Fonts for the macOS images are loaded by `test/helpers/load_app_fonts.dart`.
 7. **Stale build_runner cache:**
    * After upgrading `flutter_gen_runner` (or if `assets.gen.dart` / `fonts.gen.dart` show up deleted after generating), run `dart run build_runner clean` in `packages/assets`, `apps/citizen` and `apps/admin`, then `melos run flutter:build`. Fresh checkouts and CI are not affected.
 8. **`flex_color_scheme` is held at 8.4.0:**

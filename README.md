@@ -190,7 +190,9 @@ This is triggered when a PR is opened or updated. It automatically labels PRs (e
 Golden tests capture snapshots of widgets to catch visual regressions. They use [alchemist](https://pub.dev/packages/alchemist) and live in `packages/components/test`.
 
 ### How they look
-The committed baselines are **CI goldens**: text is drawn as coloured squares (the Ahem font) and shadows are off, so the images are identical on macOS, Linux and Windows. That is what lets CI check them on every pull request. A change in font size, spacing, colour or layout still shows up; the wording of a label does not.
+Two sets of images are kept next to every test:
+- **`goldens/macos/`**: readable images with the real fonts and icons. Checked on macOS only. **Open these to see what a component looks like.**
+- **`goldens/ci/`**: text and icons drawn as coloured squares (the Ahem font), shadows off. These are what CI checks on Ubuntu. Because anti-aliasing differs slightly between operating systems, a difference of up to 0.5 percent of the pixels is tolerated. A change in font size, spacing, colour or layout still fails; the wording of a label does not.
 
 ### How to Write a Golden Test
 
@@ -221,16 +223,14 @@ Use `goldenDeviceScenarios` to render the scenarios at phone or tablet size (`Go
 
 ```bash
 melos run components:golden          # check the baselines
-melos run components:update:golden   # refresh them (only for an intentional visual change)
+melos run components:update:golden   # refresh both sets (on a Mac, only for an intentional visual change)
 ```
 
 Every test run, including CI, checks them: `melos run flutter:test`.
 
 ### Output Location
 
-Baselines are saved next to each test as `goldens/ci/<fileName>.png`.
-
-> To see readable text while working, set `platformGoldensConfig: PlatformGoldensConfig(enabled: true)` in `packages/components/test/flutter_test_config.dart` and update locally. Do not commit those images, they differ between machines.
+Baselines are saved next to each test as `goldens/macos/<fileName>.png` and `goldens/ci/<fileName>.png`. Commit both sets.
 
 ---
 
