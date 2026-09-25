@@ -31,10 +31,10 @@ dependencies:
   permission_handler: ^11.4.0
   rxdart: ^0.28.0
   intl: ^0.20.2
-  crypto: ^3.0.6
+  crypto: ^3.0.7
   logger: ^2.5.0
-  hive_ce: ^2.10.1
-  path_provider: ^2.1.5
+  hive_ce: ^2.20.0
+  path_provider: ^2.1.6
   android_intent_plus: ^6.0.0
   url_launcher: ^6.3.2
   image_picker: ^1.2.1
@@ -45,7 +45,7 @@ dependencies:
   flutter_local_notifications: ^19.0.0
   http: ^1.6.0
   http_parser: ^4.1.2
-  mime: ^2.0.0
+  mime: ^2.1.0
   internet_connection_checker_plus: ^2.9.1+2
   google_sign_in: ^7.1.1
   sign_in_with_apple: ^7.0.1
@@ -72,7 +72,7 @@ dev_dependencies:
     path: ../rules
 
   # Utility Packages
-  build_runner: ^2.7.1
+  build_runner: ^2.16.1
   stacked_generator: ^2.0.0
   mockito: ^5.4.4
 
