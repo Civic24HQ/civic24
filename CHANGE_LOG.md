@@ -119,6 +119,8 @@ The workspace has about 27 real test cases: 21 component goldens (10 components)
 - iOS: Swift Package Manager cannot resolve `firebase_remote_config 6.2.0` (needs FlutterFire package 4.5.0) together with `firebase_storage 13.0.6` (needs 4.4.0). The Firebase packages are at mismatched versions (storage 13.0.6, auth 6.1.4, remote config 6.2.0, and so on). Phase 2 Group C must upgrade the whole FlutterFire suite as one compatible set.
 `cd.yml` now runs only by hand (`workflow_dispatch`); Phase 7 restores the push trigger, fixes the release race and adds store delivery. This is the first real evidence that the app does not build on 3.47.5 yet, so the Phase 0 unknown "does it build" is answered: not until Phases 2 and 4.
 
+**Runner pin:** GitHub announced `ubuntu-latest` moves to Ubuntu 26 from 19 October 2026, so all workflows now use `ubuntu-24.04` (and the existing `macos-15`). Moving to a newer image is a deliberate change, tested in its own PR.
+
 **Open after this PR:** goldens are not asserted in CI (Ubuntu) until Phase 2; repository secrets `TOKEN` and `CITIZEN_*_SECRETS` are now unused and can be deleted by the owner; Dependabot `pub` and `npm` entries (Phase 7; Dependabot's docs do not mention pub workspaces, so test before relying on it).
 
 ### 1.7 Still open

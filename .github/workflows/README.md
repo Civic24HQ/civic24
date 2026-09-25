@@ -20,6 +20,7 @@ Until then it only runs when started by hand (Actions tab, Run workflow). Phase 
 ## Versions come from one place
 - **Flutter:** `.fvmrc`. Both `ci.yml` and `cd.yml` read it with `flutter-version-file`, so changing the version is a one-line edit there.
 - **Java:** 21, `zulu` distribution, in every workflow.
+- **Runners:** pinned to `ubuntu-24.04` and `macos-15`, not `-latest`, so an operating system upgrade (GitHub moves `ubuntu-latest` to Ubuntu 26 from 19 October 2026) is a deliberate change, not a surprise.
 - **Melos:** the exact version in `pubspec.lock`. The workflows activate it globally because Melos scripts call each other through the `melos` command.
 
 ## `ci.yml` steps
