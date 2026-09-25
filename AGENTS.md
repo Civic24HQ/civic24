@@ -258,10 +258,18 @@ These files are gitignored and must stay out of git:
 > **No Apple Developer account for now.** Anything that needs a paid Apple account (capabilities and entitlements, APNs, Sign in with Apple keys, signing, TestFlight, App Store Connect, iOS Shorebird release) is suspended and listed in `docs/APPLE_DEVELOPER_ACCOUNT.md`. Do not attempt it; mark it `SUSPENDED (Apple account)` and add new items to that file.
 
 ### 6.1 iOS & Swift Package Manager
-* The iOS project is moving from CocoaPods to Swift Package Manager (SPM).
-* **Crashlytics Run Script:** Update the Run Script in `Runner.xcodeproj` to use the SPM checkouts path instead of `${PODS_ROOT}/FirebaseCrashlytics/run`:
-  `"${BUILD_DIR%Build/*}SourcePackages/checkouts/firebase-ios-sdk/Crashlytics/run"`.
-* **Deployment Target:** Set the minimum iOS target to `15.0` (or what Firebase requires) directly in Xcode. Remove any Podfile `post_install` overrides forcing lower versions.
+* iOS dependencies are managed by **Swift Package Manager (SPM)**; CocoaPods is gone (no `Podfile`, `Podfile.lock` or `Pods/`). Flutter generates one local package, `ios/Flutter/ephemeral/Packages/FlutterGeneratedPluginSwiftPackage`, that pulls together the SPM dependency of every plugin. `ios/Runner.xcworkspace/xcshareddata/swiftpm/Package.resolved` is committed (it pins, for example, `firebase-ios-sdk` 12.19.0).
+* **Never add Firebase (or any plugin's SDK) in Xcode yourself.** Each FlutterFire plugin declares its own dependency on `firebase-ios-sdk`, pinned to an exact version, in its `Package.swift`.
+* **Updating Firebase on iOS:**
+  1. Raise all ten FlutterFire packages together in the pubspecs, then `flutter pub get`.
+  2. Check that every plugin pins the same Firebase iOS SDK: `grep -h "let firebaseSdkVersion" ~/.pub-cache/hosted/pub.dev/firebase_*-<version>/ios/*/Package.swift` (one value for all). Mixed values make SPM fail to resolve.
+  3. `flutter build ios --no-codesign --flavor development -t lib/main.dart --dart-define-from-file=secrets/development.json`. Xcode resolves and downloads packages, which can take a few minutes, and updates `Package.resolved`; commit it.
+  4. If resolution fails: `flutter clean`, `flutter pub get`; then delete `apps/citizen/build/ios` (`chmod -R u+w` first, the binary packages are read-only), `~/Library/Developer/Xcode/DerivedData/Runner-*` and `~/Library/Caches/org.swift.swiftpm`, or use File, Packages, Reset Package Caches in Xcode.
+* **Deployment target:** `15.0` for every configuration (Firebase iOS SDK 12 needs 15). Change it in the Xcode project, not in any script.
+* **Schemes:** each flavor scheme (`development`, `staging`, `production`) has the "Run Prepare Flutter Framework Script" pre-action Flutter added. If you add a scheme, run `flutter build ios --config-only --flavor <name> ...` once so Flutter adds it.
+* **Crashlytics symbol upload** (Run Script "FlutterFire: flutterfire upload-crashlytics-symbols"): needs the FlutterFire CLI (`dart pub global activate flutterfire_cli`). It skips Debug builds, looks for `firebase-ios-sdk` in `<project>/build/ios/SourcePackages` (command line builds) and in DerivedData (Xcode), and only fails the build for `Release-production`; other configurations warn.
+* **UIScene:** `AppDelegate` is a `FlutterImplicitEngineDelegate` and `Info.plist` has `UIApplicationSceneManifest` (Flutter's UIScene migration). Plugins are registered in `didInitializeImplicitFlutterEngine`.
+* Local (ignored) `ios/Flutter/*.xcconfig` files may still contain an optional `#include? "Pods/..."` line; it is harmless and can be deleted.
 
 ### 6.2 App Store Review Requirements
 * **No Background Location:**  
