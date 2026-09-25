@@ -208,6 +208,7 @@
 				97C146EC1CF9000F007C117D /* Resources */,
 				9705A1C41CF9048500538489 /* Embed Frameworks */,
 				3B06AD1E1E4923F5004D2608 /* Thin Binary */,
+				B0A1C0DE00000000000000C1 /* Register Google Sign-In URL Scheme */,
 				507766EBF4782CF1BE21E63B /* FlutterFire: "flutterfire upload-crashlytics-symbols" */,
 			);
 			buildRules = (
@@ -357,6 +358,20 @@
 			shellPath = /bin/sh;
 			shellScript = "/bin/sh \"$FLUTTER_ROOT/packages/flutter_tools/bin/xcode_backend.sh\" build\n";
 		};
+		B0A1C0DE00000000000000C1 /* Register Google Sign-In URL Scheme */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Register Google Sign-In URL Scheme";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Register the flavor's reversed client ID as the URL scheme Google Sign-In returns to.\n# It is read from the GoogleService-Info.plist that the flavor phase copied into the app and\n# written into the built Info.plist, so the two always match. This phase runs last, after\n# Info.plist has been processed and before the app is signed.\nBUILT_INFO_PLIST=\"${TARGET_BUILD_DIR}/${INFOPLIST_PATH}\"\nBUILT_GOOGLE_PLIST=\"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/GoogleService-Info.plist\"\nREVERSED_CLIENT_ID=$(/usr/libexec/PlistBuddy -c \"Print :REVERSED_CLIENT_ID\" \"$BUILT_GOOGLE_PLIST\" 2>/dev/null)\nif [ -z \"$REVERSED_CLIENT_ID\" ]; then\n  message=\"No REVERSED_CLIENT_ID in the GoogleService-Info.plist for this flavor, so Google Sign-In cannot return to the app. Register the iOS app and enable Google sign-in in Firebase, then download the file again.\"\n  if [ \"$CONFIGURATION\" = \"Release-production\" ]; then\n    echo \"error: $message\"\n    exit 1\n  fi\n  echo \"warning: $message\"\nelse\n  /usr/libexec/PlistBuddy -c \"Set :CFBundleURLTypes:0:CFBundleURLSchemes:0 $REVERSED_CLIENT_ID\" \"$BUILT_INFO_PLIST\"\n  echo \"Registered the Google Sign-In URL scheme.\"\nfi\n";
+		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -477,6 +492,7 @@
 				);
 				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = co.civic24.citizen;
+				APP_DISPLAY_NAME = "Civic24";
 				PRODUCT_NAME = Civic24;
 				SWIFT_OBJC_BRIDGING_HEADER = "Runner/Runner-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
@@ -593,6 +609,7 @@
 				);
 				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = co.civic24.citizen.dev;
+				APP_DISPLAY_NAME = "Civic24 DEV";
 				PRODUCT_NAME = Civic24_DEV;
 				SWIFT_OBJC_BRIDGING_HEADER = "Runner/Runner-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -695,6 +712,7 @@
 				);
 				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = co.civic24.citizen.stg;
+				APP_DISPLAY_NAME = "Civic24 STG";
 				PRODUCT_NAME = Civic24_STG;
 				SWIFT_OBJC_BRIDGING_HEADER = "Runner/Runner-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -797,6 +815,7 @@
 				);
 				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = co.civic24.citizen;
+				APP_DISPLAY_NAME = "Civic24";
 				PRODUCT_NAME = Civic24;
 				SWIFT_OBJC_BRIDGING_HEADER = "Runner/Runner-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -896,6 +915,7 @@
 				);
 				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = co.civic24.citizen.stg;
+				APP_DISPLAY_NAME = "Civic24 STG";
 				PRODUCT_NAME = Civic24_STG;
 				SWIFT_OBJC_BRIDGING_HEADER = "Runner/Runner-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
@@ -992,6 +1012,7 @@
 				);
 				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = co.civic24.citizen.dev;
+				APP_DISPLAY_NAME = "Civic24 DEV";
 				PRODUCT_NAME = Civic24_DEV;
 				SWIFT_OBJC_BRIDGING_HEADER = "Runner/Runner-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
@@ -1086,6 +1107,7 @@
 				);
 				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = co.civic24.citizen.stg;
+				APP_DISPLAY_NAME = "Civic24 STG";
 				PRODUCT_NAME = Civic24_STG;
 				SWIFT_OBJC_BRIDGING_HEADER = "Runner/Runner-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
@@ -1180,6 +1202,7 @@
 				);
 				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = co.civic24.citizen.dev;
+				APP_DISPLAY_NAME = "Civic24 DEV";
 				PRODUCT_NAME = Civic24_DEV;
 				SWIFT_OBJC_BRIDGING_HEADER = "Runner/Runner-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
@@ -1276,6 +1299,7 @@
 				);
 				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = co.civic24.citizen;
+				APP_DISPLAY_NAME = "Civic24";
 				PRODUCT_NAME = Civic24;
 				SWIFT_OBJC_BRIDGING_HEADER = "Runner/Runner-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
