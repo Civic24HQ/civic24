@@ -14,17 +14,17 @@ Six PRs (owner approved): (1) tooling and leaf packages, (2) Firebase suite, (3)
 |---|---|---|---|
 | `flutter_gen_runner` | 5.12.0 | 5.15.0 | Old `build_runner` caches made it skip its output and delete `assets.gen.dart` and `fonts.gen.dart`. Fix: `dart run build_runner clean` once. Generated output changed by a few lines |
 | `flutter_svg` | 2.2.0 | 2.3.0 | |
-| `build_runner` | 2.15.2 | 2.16.1 range (`^2.15.2`) | |
-| `freezed` | 4.0.1 | 4.0.2 range | |
+| `build_runner` | 2.15.2 | 2.16.1 | needed `--unlock-transitive` (`build` 4.0.11) |
 | `uuid` | 4.5.3 | 4.6.0 | |
 | `hive_ce` | 2.15.1 | 2.20.0 | |
-| `crypto`, `mime`, `path_provider`, `platform`, `flutter_native_splash` | patch and minor | latest | |
+| `crypto`, `mime`, `path_provider`, `flutter_native_splash` (2.4.8) | patch and minor | latest | |
 | `flutter_timezone` | 4.1.1 | 5.1.0 | Its API now returns `TimezoneInfo`, but nothing in the code calls it (see below) |
 
 Lower bounds were tightened to the versions tested (`flutter pub upgrade --tighten`).
 
 **Held back, with the reason (the one exception to "everything to the latest"):**
 - **`flex_color_scheme` stays at 8.4.0 (latest is 9.0.0).** Version 9 depends on the standalone `material_ui` and `cupertino_ui` packages, so `FlexThemeData` returns `material_ui`'s `ThemeData` instead of Flutter's. `packages/styles` failed with about 10 type errors (`ThemeData`, `Typography`, `TextTheme`, `DialogThemeData`, theme extensions). Adopting it means migrating every `package:flutter/material.dart` import to `material_ui`, which is the Material and Cupertino decoupling migration, planned as its own PR before the November 2026 stable. Version 9 also defaults `useExpressiveOnContainerColors` to true, which changes light theme on-container colors.
+- **`freezed` stays at 4.0.1** (latest 4.0.2): 4.0.2 needs `analyzer` ^14, but `intl_utils` 2.8.16 (the latest, used in `packages/localization`) needs `analyzer` ^13. Moves when `intl_utils` supports `analyzer` 14. `platform` stays at 3.1.6 (latest 3.2.0): another package's constraint stops it resolving today; recheck after PR 3.
 - **`timezone` stays at ^0.10.0** (latest 0.11.1): `flutter_local_notifications` 19 requires `^0.10`. It moves in PR 3 with `flutter_local_notifications` 22.
 
 **Findings**
