@@ -187,49 +187,62 @@ This is triggered when a PR is opened or updated. It automatically labels PRs (e
 
 ## 🖼️ Golden Tests Guide
 
-Golden tests capture pixel-perfect snapshots of widgets to catch visual regressions.
+Golden tests capture snapshots of widgets to catch visual regressions. They use [alchemist](https://pub.dev/packages/alchemist) and live in `packages/components/test`.
+
+### How they look
+Two sets of images are kept next to every test:
+- **`goldens/macos/`**: readable images with the real fonts and icons. Checked on macOS only. **Open these to see what a component looks like.**
+- **`goldens/ci/`**: text and icons drawn as coloured squares (the Ahem font), shadows off. These are what CI checks on Ubuntu. Because anti-aliasing differs slightly between operating systems, a difference of up to 0.5 percent of the pixels is tolerated. A change in font size, spacing, colour or layout still fails; the wording of a label does not.
 
 ### How to Write a Golden Test
 
-Use the `testableWidget` helper to wrap your widget with theme, localization, and layout context.
+Use the `testableWidget` helper to wrap your widget with theme, localization and layout context, and the `goldenScenarios` helper for a set of named scenarios.
 
 ```dart
-testGoldens('MyWidget', (tester) async {
-  final builder = GoldenBuilder.column()
-    ..addScenario('MyWidget - Active State', testableWidget(const MyWidget()));
-
-  await tester.pumpWidgetBuilder(builder.build());
-  await screenMatchesGolden(tester, 'my_widget');
-});
+void main() {
+  goldenScenarios(
+    'MyWidget',
+    fileName: 'my_widget',
+    scenarios: [
+      GoldenTestScenario(
+        name: 'light theme',
+        child: SizedBox(height: 120, child: testableWidget(const MyWidget())),
+      ),
+      GoldenTestScenario(
+        name: 'dark theme',
+        child: SizedBox(height: 120, child: testableWidget(const MyWidget(), dark: true)),
+      ),
+    ],
+  );
+}
 ```
 
-You can also use `DeviceBuilder` if you want to test responsiveness across devices.
+Use `goldenDeviceScenarios` to render the scenarios at phone or tablet size (`GoldenDevice.phone`, `GoldenDevice.tabletPortrait`).
 
 ### Running Golden Tests
 
-Run golden tests with:
-
 ```bash
-flutter test --tags golden
+melos run components:golden          # check the baselines
+melos run components:update:golden   # refresh both sets (on a Mac, only for an intentional visual change)
 ```
 
-To update reference images:
-
-```bash
-flutter test --tags golden --update-goldens
-```
-
-> Only use `--update-goldens` when you intentionally want to refresh the snapshots.
+Every test run, including CI, checks them: `melos run flutter:test`.
 
 ### Output Location
 
-Golden snapshot images are saved under:
+Baselines are saved next to each test as `goldens/macos/<fileName>.png` and `goldens/ci/<fileName>.png`. Commit both sets. The readable `goldens/macos` images are only checked on macOS, so update them on a Mac.
 
-```
-goldens/
-```
+---
 
-> Each `.png` file is matched against its test description name.
+## 🧠 Skills
+
+Reusable, step-by-step guides that people read and AI coding agents can load. They follow the open [Agent Skills](https://agentskills.io) format: one folder per skill containing a `SKILL.md` (name and description in the header, instructions below) and optional `references/`, `scripts/` and `assets/` folders. They live in `.agents/skills/`, a tool-neutral location.
+
+| Skill | What it covers |
+|---|---|
+| [`golden-toolkit`](.agents/skills/golden-toolkit/SKILL.md) | Setting up, writing and running Flutter golden tests with the `golden_toolkit` package (discontinued), for projects that cannot use `alchemist` |
+
+**Using them:** read the `SKILL.md` directly on GitHub. Tools that scan `.agents/skills/` pick them up automatically. Claude Code reads `.claude/skills/`, so copy or link a skill folder there (`mkdir -p .claude/skills && ln -s ../../.agents/skills/golden-toolkit .claude/skills/golden-toolkit`). **Adding one:** create `.agents/skills/<name>/SKILL.md` (the folder name must equal `name`, lowercase with hyphens, description under 1024 characters), keep `SKILL.md` under 500 lines, move long examples to `references/`, list it in this table, and validate it with `skills-ref validate .agents/skills/<name>`.
 
 ---
 

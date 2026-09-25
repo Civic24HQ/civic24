@@ -1,21 +1,21 @@
+import 'package:alchemist/alchemist.dart';
 import 'package:components/components.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_test/flutter_test.dart';
-import 'package:golden_toolkit/golden_toolkit.dart';
 import 'package:styles/styles.dart';
 
 import '../helpers/golden_test_helpers.dart';
+import '../helpers/golden_test_utils.dart';
 
 void main() {
-  final devices = [Device.phone];
+  const scenarioHeight = 120.0;
 
-  // Run basic golden test for AppFilterChip
-  testGoldens('$AppFilterChip', (WidgetTester tester) async {
-    const scenarioHeight = 120.0;
-    final builder = GoldenBuilder.column()
-      ..addScenario(
-        '$AppFilterChip unselected state with light theme',
-        SizedBox(
+  goldenScenarios(
+    '$AppFilterChip',
+    fileName: 'app_filter_chip',
+    scenarios: [
+      GoldenTestScenario(
+        name: '$AppFilterChip unselected state with light theme',
+        child: SizedBox(
           height: scenarioHeight,
           child: testableWidget(
             AppFilterChip(
@@ -28,10 +28,10 @@ void main() {
             ),
           ),
         ),
-      )
-      ..addScenario(
-        '$AppFilterChip unselected state with dark theme',
-        SizedBox(
+      ),
+      GoldenTestScenario(
+        name: '$AppFilterChip unselected state with dark theme',
+        child: SizedBox(
           height: scenarioHeight,
           child: testableWidget(
             AppFilterChip(
@@ -46,10 +46,10 @@ void main() {
             dark: true,
           ),
         ),
-      )
-      ..addScenario(
-        '$AppFilterChip selected state with light theme',
-        SizedBox(
+      ),
+      GoldenTestScenario(
+        name: '$AppFilterChip selected state with light theme',
+        child: SizedBox(
           height: scenarioHeight,
           child: testableWidget(
             AppFilterChip(
@@ -64,10 +64,10 @@ void main() {
             ),
           ),
         ),
-      )
-      ..addScenario(
-        '$AppFilterChip selected state with dark theme',
-        SizedBox(
+      ),
+      GoldenTestScenario(
+        name: '$AppFilterChip selected state with dark theme',
+        child: SizedBox(
           height: scenarioHeight,
           child: testableWidget(
             AppFilterChip(
@@ -83,17 +83,17 @@ void main() {
             dark: true,
           ),
         ),
-      );
-    await tester.pumpWidgetBuilder(builder.build(), surfaceSize: const Size(500, 1000));
-    await screenMatchesGolden(tester, '$AppFilterChip');
-  });
+      ),
+    ],
+  );
 
-  // Run device-specific golden tests for AppFilterChip
-  testGoldens('$AppFilterChip – General', (tester) async {
-    final builder = DeviceBuilder()
-      ..overrideDevicesForAllScenarios(devices: devices)
-      ..addScenario(
-        widget: testableWidget(
+  goldenDeviceScenarios(
+    '$AppFilterChip – General',
+    fileName: 'app_filter_chip_general',
+    scenarios: [
+      GoldenTestScenario(
+        name: '$AppFilterChip – General with light theme',
+        child: testableWidget(
           Padding(
             padding: const EdgeInsets.all(AppDimensions.padding16),
             child: AppFilterChip(
@@ -106,10 +106,10 @@ void main() {
             ),
           ),
         ),
-        name: '$AppFilterChip – General with light theme',
-      )
-      ..addScenario(
-        widget: testableWidget(
+      ),
+      GoldenTestScenario(
+        name: '$AppFilterChip – General with dark theme',
+        child: testableWidget(
           Padding(
             padding: const EdgeInsets.all(AppDimensions.padding16),
             child: AppFilterChip(
@@ -123,10 +123,7 @@ void main() {
           ),
           dark: true,
         ),
-        name: '$AppFilterChip – General with dark theme',
-      );
-
-    await tester.pumpDeviceBuilder(builder);
-    await screenMatchesGolden(tester, '$AppFilterChip – General', autoHeight: true);
-  });
+      ),
+    ],
+  );
 }

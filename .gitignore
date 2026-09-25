@@ -149,8 +149,8 @@
 # Golden Tests related
 **/failures/**/*.png
 
-# Ignore platform-specific goldens
-**/goldens/macos
+# Golden images: goldens/ci and goldens/macos are committed. Linux and Windows
+# platform goldens are not generated (platform goldens run on macOS only).
 **/goldens/linux
 **/goldens/windows
 # Leftover Melos 6 files (workspaces replace them)

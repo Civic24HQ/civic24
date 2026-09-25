@@ -76,6 +76,7 @@ jobs:
         run: melos run flutter:analyze
 
       # Uses the placeholder values in apps/citizen/secrets/env.example.json.
-      # Golden assertions only run on macOS and Windows, so they are skipped here.
+      # Includes the golden tests: the portable CI images (goldens/ci) are checked here.
+      # The readable macOS images (goldens/macos) are only checked on macOS.
       - name: Run tests
         run: melos run flutter:test

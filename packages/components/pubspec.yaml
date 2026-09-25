@@ -46,7 +46,7 @@ dev_dependencies:
     path: ../rules
 
   # Utility Packages
-  golden_toolkit: ^0.15.0
+  alchemist: ^0.14.0
 
 flutter:
   uses-material-design: true

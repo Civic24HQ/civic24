@@ -113,6 +113,27 @@ During that build Flutter edited the tracked iOS project on its own (it was reve
 
 **Verification:** `melos run ci:check` exit 0. Not verified on a device: image loading and caching, shimmer placeholders, page indicators, Lottie animations, country flags in the pickers, and the dotted upload border.
 
+### 2.5 PR 5: replace `golden_toolkit` with `alchemist` (`test/replace-golden-toolkit-with-alchemist`)
+
+`golden_toolkit` 0.15.0 (last published February 2023) is discontinued on pub.dev. It was a dev dependency of `components`, `citizen` and `admin`; only `components` used it. Replaced by `alchemist` 0.14.0 (maintained by Betterment, heavily inspired by `golden_toolkit`).
+
+**What changed**
+- `alchemist` added to `components`; `golden_toolkit` removed from all three packages.
+- `test/flutter_test_config.dart` uses `AlchemistConfig` with **two sets of images**: readable **macOS platform goldens** (`goldens/macos`, real Poppins and icons, loaded by `test/helpers/load_app_fonts.dart`, checked on macOS only, like the old images) and portable **CI goldens** (`goldens/ci`, text and icons drawn as squares with the Ahem font, shadows off, checked everywhere). Result: golden tests now assert on GitHub Actions too, so the temporary "goldens are skipped in CI" rule from Phase 1 is gone.
+- The 10 test files were converted with the two helpers in `test/helpers/golden_test_utils.dart`: `goldenScenarios` (was `testGoldens` with `GoldenBuilder.column`) and `goldenDeviceScenarios` (was `DeviceBuilder`, now with `GoldenDevice.phone` 375x667 and `GoldenDevice.tabletPortrait` 768x1024). The two unused old helpers (`runBasicGoldenTest`, `runInteractiveGoldenTest`) were replaced by these.
+- The old baselines (`goldens/*.png`, 19 images) were deleted and replaced by 19 portable `goldens/ci/<name>.png` and 19 readable `goldens/macos/<name>.png`, both committed. Names are now snake case without spaces or dashes.
+- The empty `citizen:golden` and `admin:golden` Melos scripts were removed (those apps have no golden tests). README golden guide, `AGENTS.md`, workflow README and `ci.yml` updated.
+
+**Old versus new baselines (comparison required by the plan).** Compared side by side. The new `goldens/macos` images show the same content as the old ones (real text, icons, layout, colours, spacing) with two cosmetic differences: alchemist draws the scenario title above each scenario on a blue frame instead of the old grey canvas, and images are sized to their content. The `goldens/ci` images show the same layout with text and icons as squares by design.
+
+**Where the readable images live (owner decision: commit both sets).** The repository `.gitignore` used to ignore `**/goldens/macos`; that rule was removed (Linux and Windows platform goldens stay ignored, none are generated). alchemist names the folder after the host operating system on purpose: readable images differ between operating systems, so they are only checked on macOS (`platforms: {HostPlatform.macOS}`); on Windows and Linux only the portable `goldens/ci` set runs. Trade-offs accepted: the readable images can differ between Macs (OS version, chip), only a Mac can update or verify them, they double the image files in git, and CI does not check them. `GoldenDevice.tabletPortrait` was aligned with golden_toolkit's size (1024x1366) and `tabletLandscape` added.
+
+**Skill for the old library.** `.agents/skills/golden-toolkit/` holds a general, repository-independent guide to setting up and running `golden_toolkit` (which is discontinued), following the open Agent Skills format (folder with `SKILL.md`, plus `references/EXAMPLES.md`). It is listed in the README under "Skills".
+
+**First attempt, and the fix (owner feedback on the PR).** The first commit only had the CI images, so the committed baselines looked like blank boxes where text and icons should be, which is hard to read in review. Adding the readable macOS set fixed that. Separately, the first CI run failed on Ubuntu because images generated on macOS differ from Ubuntu by anti-aliasing: `file_upload` 0.39 percent, `app_tabs` 3 pixels and the showcase 22 pixels (the other 16 matched exactly). The CI set now tolerates 0.5 percent difference, so Ubuntu passes and a real layout, size or colour change still fails.
+
+**Verification:** `melos run ci:check` exit 0 on macOS with both sets (38 golden checks). Live proof that the CI set passes on Ubuntu: the CI run of this PR.
+
 ---
 
 ## Phase 1: Toolchain, workspaces and Melos (24 Sept 2026)

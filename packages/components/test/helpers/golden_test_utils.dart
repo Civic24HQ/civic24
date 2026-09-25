@@ -1,77 +1,72 @@
+import 'package:alchemist/alchemist.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_test/flutter_test.dart';
-import 'package:golden_toolkit/golden_toolkit.dart';
-import 'package:styles/styles.dart';
 
-import 'golden_test_helpers.dart';
+/// A screen size used to render a scenario the way a device would show it.
+enum GoldenDevice {
+  phone(375, 667),
+  tabletPortrait(1024, 1366),
+  tabletLandscape(1366, 1024);
 
-/// The [runBasicGoldenTest] is a basic snapshot test (Light & Dark themes)
-///
-/// void main() {
-///   runBasicGoldenTest(
-///     name: 'MyWidget',
-///     widget: MyWidget(),
-///     surfaceSize: const Size(500, 900),
-///   );
-/// }
-///
-void runBasicGoldenTest({
-  required String name,
-  required Widget widget,
-  double scenarioHeight = AppDimensions.size120,
-  Size surfaceSize = const Size(500, 900),
-}) {
-  testGoldens(name, (WidgetTester tester) async {
-    final builder = GoldenBuilder.column()
-      ..addScenario('$name – Light Theme', SizedBox(height: scenarioHeight, child: testableWidget(widget)))
-      ..addScenario('$name – Dark Theme', SizedBox(height: scenarioHeight, child: testableWidget(widget, dark: true)));
+  const GoldenDevice(this.width, this.height);
 
-    await tester.pumpWidgetBuilder(builder.build(), surfaceSize: surfaceSize);
-
-    await screenMatchesGolden(tester, name.toLowerCase().replaceAll(' ', '_'), autoHeight: true);
-  });
+  final double width;
+  final double height;
 }
 
-/// The [runInteractiveGoldenTest] is a basic snapshot test with interaction support using DeviceBuilder.
+/// A basic golden test: one column of named scenarios (for example a light and
+/// a dark theme), each as wide as [width].
 ///
+/// ```dart
 /// void main() {
-///   runInteractiveGoldenTest(
-///     name: 'ExpandingDotsIndicator Interaction',
-///     build: (key) => ExpandingDotsIndicator(
-///       key: key,
-///       count: 4,
-///       currentIndex: 1,
-///       onDotClicked: (index) {
-///         -- Simulate onTap, hover and state update or callback for the widget --
-///       },
-///     ),
-///     onCreate: (tester, key) async {
-///       final finder = find
-///           .descendant(of: find.byKey(key), matching: find.byType(GestureDetector))
-///           .at(2);
-///       expect(finder, findsOneWidget);
-///       await tester.tap(finder);
-///       await tester.pumpAndSettle();
-///     },
+///   goldenScenarios(
+///     'MyWidget',
+///     fileName: 'my_widget',
+///     scenarios: [
+///       GoldenTestScenario(name: 'light theme', child: SizedBox(height: 120, child: testableWidget(MyWidget()))),
+///       GoldenTestScenario(name: 'dark theme', child: SizedBox(height: 120, child: testableWidget(MyWidget(), dark: true))),
+///     ],
 ///   );
 /// }
-///
-void runInteractiveGoldenTest({
-  required String name,
-  required Widget Function(Key key) build,
-  required Future<void> Function(WidgetTester tester, Key key) onCreate,
-  List<Device> devices = const [Device.phone, Device.tabletLandscape],
-  bool isDarkMode = false,
+/// ```
+void goldenScenarios(
+  String description, {
+  required String fileName,
+  required List<GoldenTestScenario> scenarios,
+  double width = 500,
 }) {
-  testGoldens(name, (tester) async {
-    final scenarioKey = UniqueKey();
+  goldenTest(
+    description,
+    fileName: fileName,
+    constraints: BoxConstraints(maxWidth: width),
+    builder: () => GoldenTestGroup(columns: 1, children: scenarios),
+  );
+}
 
-    final builder = DeviceBuilder()
-      ..overrideDevicesForAllScenarios(devices: devices)
-      ..addScenario(name: 'Interactive $name', widget: build(scenarioKey), onCreate: (key) => onCreate(tester, key));
-
-    await tester.pumpDeviceBuilder(builder, wrapper: customMaterialAppWrapper(dark: isDarkMode));
-
-    await screenMatchesGolden(tester, name.toLowerCase().replaceAll(' ', '_'));
-  });
+/// A golden test that renders every scenario inside each of the given
+/// [devices], sized like that device (for example a phone screen). The scenario
+/// name gets the device name appended.
+void goldenDeviceScenarios(
+  String description, {
+  required String fileName,
+  required List<GoldenTestScenario> scenarios,
+  List<GoldenDevice> devices = const [GoldenDevice.phone],
+}) {
+  final maxWidth = devices.map((d) => d.width).reduce((a, b) => a > b ? a : b);
+  goldenTest(
+    description,
+    fileName: fileName,
+    constraints: BoxConstraints(maxWidth: maxWidth),
+    builder: () => GoldenTestGroup(
+      columns: 1,
+      children: [
+        for (final device in devices)
+          for (final scenario in scenarios)
+            GoldenTestScenario.builder(
+              name: devices.length == 1 ? scenario.name : '${scenario.name} (${device.name})',
+              builder: (context) =>
+                  SizedBox(width: device.width, height: device.height, child: scenario.builder(context)),
+            ),
+      ],
+    ),
+  );
 }
