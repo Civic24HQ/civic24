@@ -16,7 +16,7 @@
   "main": "lib/index.js",
   "dependencies": {
     "firebase-admin": "^13.8.0",
-    "firebase-functions": "^7.2.5"
+    "firebase-functions": "^7.4.0"
   },
   "devDependencies": {
     "@types/node": "^22.0.0",
@@ -25,7 +25,7 @@
     "eslint": "^8.57.0",
     "eslint-config-google": "^0.14.0",
     "eslint-plugin-import": "^2.29.0",
-    "firebase-functions-test": "^3.4.1",
+    "firebase-functions-test": "^3.5.0",
     "typescript": "~5.7.0"
   },
   "private": true
