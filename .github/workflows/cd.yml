@@ -1,189 +1,154 @@
-name: Civic 24 Continuous Integration / Continuous Deployment (CI/CD)
+name: CD
+
+# Builds the citizen app (development flavor) for Android and iOS and attaches
+# the build to a GitHub Release.
+#
+# PAUSED: this only runs when started by hand (Actions tab, Run workflow). It
+# failed on the first push to develop on Flutter 3.47.5:
+#   - Android: the Gradle wrapper (8.13) is older than Flutter's minimum (8.14)
+#   - iOS: the FlutterFire packages are at mismatched versions, so Swift Package
+#     Manager cannot resolve them
+# Those are fixed in Phase 4 (Android) and Phase 2 (Firebase suite). Phase 7 puts
+# the push trigger back (`push: branches: [develop]`), fixes the release race
+# between the two jobs, and adds store delivery. Pull requests are checked by
+# ci.yml, not here.
 
 on:
-  push:
-    branches: [develop]
-  pull_request:
-    branches: [develop]
+  workflow_dispatch:
 
-env:
-  FLUTTER_VERSION: "3.38.7"
+# Never cancel a delivery run half way; queue the next one instead.
+concurrency:
+  group: cd-${{ github.ref }}
+  cancel-in-progress: false
+
+permissions:
+  contents: read
 
 jobs:
   build-ios:
-    name: Build iOS - ${{ matrix.app }} ${{ matrix.flavor }}
+    name: Build iOS - citizen development
     runs-on: macos-15
-
-    strategy:
-      fail-fast: false
-      matrix:
-        include:
-          - app: citizen
-            flavor: development
-
+    timeout-minutes: 60
+    permissions:
+      contents: write
     env:
-      FLUTTER_VERSION: "3.38.7"
-      cwd: code/apps/${{ matrix.app }}
+      APP_DIR: apps/citizen
 
     steps:
-      - name: 📚 Checkout
-        uses: actions/checkout@v6
+      - name: Check out the repository
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
-          fetch-depth: 1
-          path: code
+          persist-credentials: false
 
-      - name: ☕ Setup Java
-        uses: actions/setup-java@v5
+      - name: Set up Java
+        uses: actions/setup-java@de7274f081f381c8f8158605e0321c36c376e2e6 # v6.0.1
         with:
           distribution: zulu
-          java-version: "25.x"
+          java-version: "21"
 
-      - name: 🐦 Setup Flutter
-        uses: subosito/flutter-action@v2
+      - name: Set up Flutter
+        uses: subosito/flutter-action@1a449444c387b1966244ae4d4f8c696479add0b2 # v2.23.0
         with:
+          flutter-version-file: .fvmrc
           channel: stable
-          flutter-version: ${{ env.FLUTTER_VERSION }}
+          cache: true
 
-      - name: 📦 Install Melos & bootstrap
+      - name: Install dependencies and Melos
         run: |
-          dart pub global activate melos
+          flutter pub get
+          dart pub global activate melos "$(dart run melos --version)"
+          echo "$HOME/.pub-cache/bin" >> "$GITHUB_PATH"
           melos bootstrap
-        working-directory: code
 
-      - name: 🧬 Run code generation
-        run: melos run flutter:build
-        working-directory: code
-
-      - name: ✨ Analyze code
-        run: melos run flutter:analyze
-        working-directory: code
-
-      # 🔐 Decode Secrets
-      - name: 🔐 Decode secrets JSON
-        working-directory: ${{ env.cwd }}
-        shell: bash
+      # The secret is passed through an environment variable, never written
+      # into the script text.
+      - name: Write the environment file
+        env:
+          ENV_JSON_BASE64: ${{ secrets.ENCODED_DEVELOPMENT_JSON_CITIZEN }}
         run: |
           set -euo pipefail
-          mkdir -p secrets
-          SECRET_VALUE="${{ secrets[format('ENCODED_DEVELOPMENT_JSON_CITIZEN', matrix.app)] }}"
-          [ -z "$SECRET_VALUE" ] && echo "Missing Base64 secret" && exit 1
+          [ -n "$ENV_JSON_BASE64" ] || { echo "::error::Missing ENCODED_DEVELOPMENT_JSON_CITIZEN secret"; exit 1; }
+          mkdir -p "$APP_DIR/secrets"
+          printf '%s' "$ENV_JSON_BASE64" | base64 --decode > "$APP_DIR/secrets/development.json"
+          python3 -m json.tool "$APP_DIR/secrets/development.json" > /dev/null
 
-          printf '%s' "$SECRET_VALUE" | base64 --decode > secrets/development.json
-          python -m json.tool secrets/development.json >/dev/null
+      - name: Reset iOS Pods
+        run: rm -rf "$APP_DIR/ios/Pods" "$APP_DIR/ios/Podfile.lock"
 
-      # 🧹 Clean iOS Pods
-      - name: 🧹 Reset iOS Pods
-        working-directory: ${{ env.cwd }}/ios
-        run: |
-          rm -rf Pods Podfile.lock
-
-      # 📦 Install Dart dependencies
-      - name: 📦 Flutter pub get
-        working-directory: ${{ env.cwd }}
-        run: flutter pub get
-
-      # 🔥 Install FlutterFire CLI
-      - name: 🔥 Install FlutterFire CLI
+      - name: Install FlutterFire CLI
         run: |
           dart pub global activate flutterfire_cli
-          echo "$HOME/.pub-cache/bin" >> $GITHUB_PATH
+          echo "$HOME/.pub-cache/bin" >> "$GITHUB_PATH"
 
-      # 📱 Build IPA
-      - name: 📱 Build iOS IPA (unsigned)
-        working-directory: ${{ env.cwd }}
+      - name: Build iOS archive (unsigned)
+        working-directory: apps/citizen
         run: |
           flutter build ipa \
             --no-codesign \
             --flavor development \
             --dart-define-from-file=secrets/development.json
 
-    # 🗜️ Zip the archive
-      - name: 🗜️ Zip iOS Archive
-        working-directory: ${{ env.cwd }}
-        run: |
-          cd build/ios/archive
-          zip -r AppArchive.zip *.xcarchive
+      - name: Zip the archive
+        working-directory: apps/citizen/build/ios/archive
+        run: zip -r AppArchive.zip ./*.xcarchive
 
-      # 🚀 Upload Artifact
-      - name: 🚀 Upload iOS Archive to Release
-        uses: ncipollo/release-action@v1
+      - name: Upload iOS archive to a release
+        uses: ncipollo/release-action@339a81892b84b4eeb0f6e744e4574d79d0d9b8dd # v1.21.0
         with:
-          artifacts: ${{ env.cwd }}/build/ios/archive/AppArchive.zip
-          tag: ${{ matrix.app }}-${{ matrix.flavor }}-v1.0.${{ github.run_number }}
-          token: ${{ secrets.TOKEN }}
+          artifacts: apps/citizen/build/ios/archive/AppArchive.zip
+          tag: citizen-development-v1.0.${{ github.run_number }}
+          token: ${{ secrets.GITHUB_TOKEN }}
           allowUpdates: true
           replacesArtifacts: false
 
   build-android:
-    name: Build Android - ${{ matrix.app }} ${{ matrix.flavor }}
-    runs-on: ubuntu-latest
-
-    strategy:
-      fail-fast: false
-      matrix:
-        include:
-          - app: citizen
-            flavor: development
-
+    name: Build Android - citizen development
+    runs-on: ubuntu-24.04
+    timeout-minutes: 45
+    permissions:
+      contents: write
     env:
-      cwd: code/apps/${{ matrix.app }}
+      APP_DIR: apps/citizen
 
     steps:
-      - name: 📚 Checkout
-        uses: actions/checkout@v6
+      - name: Check out the repository
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
-          fetch-depth: 1
-          path: code
+          persist-credentials: false
 
-      - name: ☕ Setup Java
-        uses: actions/setup-java@v5
+      - name: Set up Java
+        uses: actions/setup-java@de7274f081f381c8f8158605e0321c36c376e2e6 # v6.0.1
         with:
           distribution: zulu
-          java-version: "21.x"
+          java-version: "21"
 
-      - name: 🐦 Setup Flutter
-        uses: subosito/flutter-action@v2
+      - name: Set up Flutter
+        uses: subosito/flutter-action@1a449444c387b1966244ae4d4f8c696479add0b2 # v2.23.0
         with:
+          flutter-version-file: .fvmrc
           channel: stable
-          flutter-version: ${{ env.FLUTTER_VERSION }}
+          cache: true
 
-      - name: 📦 Install Melos & bootstrap
-        run: |
-          dart pub global activate melos
-          melos bootstrap
-        working-directory: code
-
-      - name: 🧬 Run code generation
-        run: melos run flutter:build
-        working-directory: code
-
-      - name: ✨ Analyze code
-        run: melos run flutter:analyze
-        working-directory: code
-
-      # 🔐 Decode Secrets
-      - name: 🔐 Decode secrets JSON
-        working-directory: ${{ env.cwd }}
-        shell: bash
-        run: |
-          set -euo pipefail
-          mkdir -p secrets
-          SECRET_VALUE="${{ secrets[format('ENCODED_DEVELOPMENT_JSON_CITIZEN', matrix.app)] }}"
-          if [ -z "$SECRET_VALUE" ]; then
-            echo "Missing Base64 secret" && exit 1
-          fi
-
-          printf '%s' "$SECRET_VALUE" | \
-            (base64 --decode 2>/dev/null || base64 -d 2>/dev/null || python -c "import sys,base64;sys.stdout.buffer.write(base64.b64decode(sys.stdin.read()))") \
-            > secrets/development.json
-
-          python -m json.tool secrets/development.json >/dev/null
-
-      # ---- Android Build ----
-      - name: Build Android Release APKs
-        working-directory: ${{ env.cwd }}
+      - name: Install dependencies and Melos
         run: |
           flutter pub get
+          dart pub global activate melos "$(dart run melos --version)"
+          echo "$HOME/.pub-cache/bin" >> "$GITHUB_PATH"
+          melos bootstrap
+
+      - name: Write the environment file
+        env:
+          ENV_JSON_BASE64: ${{ secrets.ENCODED_DEVELOPMENT_JSON_CITIZEN }}
+        run: |
+          set -euo pipefail
+          [ -n "$ENV_JSON_BASE64" ] || { echo "::error::Missing ENCODED_DEVELOPMENT_JSON_CITIZEN secret"; exit 1; }
+          mkdir -p "$APP_DIR/secrets"
+          printf '%s' "$ENV_JSON_BASE64" | base64 --decode > "$APP_DIR/secrets/development.json"
+          python3 -m json.tool "$APP_DIR/secrets/development.json" > /dev/null
+
+      - name: Build Android release APKs
+        working-directory: apps/citizen
+        run: |
           flutter build apk \
             --release \
             --flavor development \
@@ -191,12 +156,11 @@ jobs:
             --dart-define-from-file=secrets/development.json \
             --split-per-abi
 
-      # 🚀 Upload Artifact
-      - name: 🚀 Upload Android APKs to Release
-        uses: ncipollo/release-action@v1
+      - name: Upload Android APKs to a release
+        uses: ncipollo/release-action@339a81892b84b4eeb0f6e744e4574d79d0d9b8dd # v1.21.0
         with:
-          artifacts: "${{ env.cwd }}/build/app/outputs/apk/${{ matrix.flavor }}/release/*.apk"
-          tag: ${{ matrix.app }}-${{ matrix.flavor }}-v1.0.${{ github.run_number }}
-          token: ${{ secrets.TOKEN }}
+          artifacts: apps/citizen/build/app/outputs/apk/development/release/*.apk
+          tag: citizen-development-v1.0.${{ github.run_number }}
+          token: ${{ secrets.GITHUB_TOKEN }}
           allowUpdates: true
           replacesArtifacts: false

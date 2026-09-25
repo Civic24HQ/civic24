@@ -1,3 +1,32 @@
+# Labels for pull requests, used by .github/workflows/open_pr.yml (actions/labeler).
+# Rules match the changed files, the head branch name (a regular expression)
+# or the base branch. Branch labels follow our type/kebab-description names.
+
+# ---- Labels from the branch name ----
+feature:
+  - head-branch: ["^feature/", "^feat/"]
+
+fix:
+  - head-branch: ["^fix/"]
+
+chore:
+  - head-branch: ["^chore/", "^refactor/"]
+
+docs:
+  - head-branch: ["^docs/"]
+  - changed-files:
+      - any-glob-to-any-file: ["**/*.md"]
+
+ci:
+  - head-branch: ["^ci/"]
+
+test:
+  - head-branch: ["^test/"]
+
+build:
+  - head-branch: ["^build/"]
+
+# ---- Labels from the changed files ----
 automation:
   - changed-files:
       - any-glob-to-any-file:
@@ -45,7 +74,7 @@ services:
 
 style:
   - changed-files:
-      - any-glob-to-any-file: ["packages/style/**/*"]
+      - any-glob-to-any-file: ["packages/styles/**/*"]
 
 utils:
   - changed-files:
@@ -59,13 +88,9 @@ pubspec:
   - changed-files:
       - any-glob-to-any-file: ["**/*pubspec.yaml", "**/*pubspec.lock"]
 
-docs:
-  - changed-files:
-      - any-glob-to-any-file: ["**/*.md"]
-
 scripts:
   - changed-files:
       - any-glob-to-any-file: ["**/*.sh"]
 
 release:
-  - base-branch: "main"
+  - base-branch: "^main$"

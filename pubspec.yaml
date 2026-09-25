@@ -110,6 +110,15 @@ melos:
         melos run utils:analyze
       description: Analyze all packages
 
+    ci:check:
+      run: |
+        melos bootstrap &&
+        $MELOS_ROOT_PATH/bin/check_generated.sh &&
+        melos run flutter:format &&
+        melos run flutter:analyze &&
+        melos run flutter:test
+      description: Run what CI runs (bootstrap, generate and check generated files, format, analyze, test). Run it before opening a pull request. Format rewrites files, so commit any changes it makes.
+
     flutter:check:
       run: |
         melos clean &&

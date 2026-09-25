@@ -58,8 +58,9 @@ cd civic24
 fvm install
 fvm flutter --version                  # should match .fvmrc
 export MELOS_SDK_PATH=.fvm/flutter_sdk # makes Melos scripts use the FVM SDK
-fvm flutter pub get
-fvm dart run melos bootstrap
+fvm dart pub global activate melos
+export PATH="$PATH:$HOME/.pub-cache/bin"   # add to ~/.zshrc too, or `melos` is "command not found"
+melos bootstrap
 ```
 
 ```bash
@@ -67,10 +68,11 @@ fvm dart run melos bootstrap
 # (the SDK on your PATH must match it), then:
 flutter --version
 dart pub global activate melos
+export PATH="$PATH:$HOME/.pub-cache/bin"   # add to ~/.zshrc too, or `melos` is "command not found"
 melos bootstrap
 ```
 
-The rest of this README writes `melos ...`. With FVM, run the same command as `fvm dart run melos ...` (with `MELOS_SDK_PATH` exported). The pubspecs require `flutter >= 3.47.0`, so `pub get` stops with a clear message on an older Flutter.
+The rest of this README writes `melos ...`; the commands are the same with or without FVM once `MELOS_SDK_PATH` is exported. Melos scripts call each other through the `melos` command, so Melos must be activated globally, not only run with `dart run`. The pubspecs require `flutter >= 3.47.0`, so `pub get` stops with a clear message on an older Flutter.
 
 The repository is a Dart pub workspace: there is a single `pubspec.lock` at the root and no `pubspec_overrides.yaml` files. Melos scripts live in the root `pubspec.yaml` under `melos:`.
 
@@ -150,31 +152,36 @@ cd apps/citizen && dart pub global run flutter_launcher_icons -f flutter_launche
 Civic24 uses **GitHub Actions** to automate Continuous Integration (CI), Continuous Deployment (CD) and Pull Request (PR) management.
 
 ### Continuous Integration (`ci.yml`)
-Runs automatically on all Pull Requests targeting the `develop` branch.
+Runs on every Pull Request into `develop` or `main`, and again on each new push to that PR.
 
-**Key checks include:**
-- **Link Packages** – Sets up the monorepo using `melos bootstrap`
-- **Code Formatting** – Runs custom format script using `melos run flutter:format`
-- **Code Generation** – Runs code generators using `melos run flutter:build`
-- **Code Analysis** – Ensures static analysis using `melos run flutter:analyze`
+**Key checks:**
+- **Code generation** – `melos run flutter:build`
+- **Formatting** – `melos run flutter:format` (fails instead of rewriting files in CI)
+- **Generated files up to date** – fails if generation changed any committed file
+- **Analysis** – `melos run flutter:analyze` (must be clean)
+- **Tests** – `melos run flutter:test` (placeholder values, no secrets)
 
-### Continuous Deployment (`cd.yml`)
-Handles preview deployments and publishing of artifacts on successful merge to the `main` branch.
-
-**Secrets note:** For flavor-based secrets (e.g., `apps/citizen/secrets/development.json`) store the JSON in a GitHub repository secret encoded in base64 to preserve formatting and avoid shell escaping/newline issues. Example:
+Run the same checks locally before opening a PR:
 
 ```bash
-base64 -w0 apps/citizen/secrets/development.json | gh secret set CITIZEN_DEV_SECRETS -b -
+melos run ci:check
 ```
 
-The workflow decodes this secret at runtime into `apps/citizen/secrets/development.json` before building.
+### Continuous Deployment (`cd.yml`)
+Runs on every push to `develop`. It builds the citizen app (development flavor) for Android and iOS and attaches the builds to a GitHub Release. It needs the `ENCODED_DEVELOPMENT_JSON_CITIZEN` repository secret (base64 of `apps/citizen/secrets/development.json`):
+
+```bash
+base64 -i apps/citizen/secrets/development.json | tr -d '\n' | gh secret set ENCODED_DEVELOPMENT_JSON_CITIZEN
+```
+
+Full details, versions and how to change them: [`.github/workflows/README.md`](.github/workflows/README.md).
 
 ### Pull Request Intelligence (`open_pr.yml`)
 This is triggered when a PR is opened or updated. It automatically labels PRs (e.g. `apps/admin`, `packages/constants`) based on which files changed.
 
 ### Best Practices
 - Use **Draft PRs** while work is in progress.
-- Ensure commits pass the CI before requesting review.
+- Run `melos run ci:check` before opening a PR, and make sure CI is green before requesting review.
 
 ---
 
