@@ -48,6 +48,15 @@ Owner answers: no Apple Developer account for now (see the suspended-work sectio
 
 Owner-facing follow-ups: confirm the privacy manifest data table.
 
+### 3.4 Fix: D17, permanent permission denial lost on Android (`fix/keep-permanent-permission-denial`)
+**Problem.** `PermissionService` stored `Permission.status` at start-up and in `refreshPermissions()`. On Android `status` never reports `permanentlyDenied` (only a `request()` result can), so after "don't ask again" and a restart, `isLocationPermissionDenied` and `isNotificationPermissionDenied` were false. No screen reads those getters yet, so the bug was latent.
+
+**Fix.** A permanent denial seen in a request (or reported directly by the platform, as iOS does) is remembered in the settings box (`SettingsStorageService.isPermissionPermanentlyDenied` / `setPermissionPermanentlyDenied`, keyed by the permission's value) and restored whenever `status` reports plain `denied`. It is cleared when the permission is granted, limited or provisional. Notification denials are still counted as before.
+
+**Known limit.** Sign-out clears every storage box, including this flag. That self-heals: on Android, requesting a permission after "don't ask again" returns `permanentlyDenied` at once without a dialog, and the flag is stored again.
+
+**Verification (Level 2).** Six new unit tests in `permission_service_test.dart` fake the permission plugin's platform channel and use an in-memory settings store. Run against the old `PermissionService` they fail (3 of 6: denial remembered after a restart, for location and for notifications, and iOS-reported denial remembered); with the fix all 6 pass. Generated files, format, analyze and the whole test suite pass, run one step at a time. **Not verified:** on a real Android device or emulator (Android cannot be built until Phase 4; confirm there in Phase 5), and how the plugin behaves on Android versions with the runtime notification permission.
+
 ---
 
 ## Apple Developer account: suspended work (25 Sept 2026)
