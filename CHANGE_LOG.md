@@ -161,6 +161,10 @@ Plan step 7 was to fix analyzer-reported deprecations (`withOpacity`, `WillPopSc
 
 **Note for Phase 6.** CI only checks the Flutter code, so backend PRs are not tested by it; a `backend` job (npm ci, build, lint) should be added before relying on Dependabot for `backend/functions`.
 
+### 2.9 Cleanup: unused timezone packages (PR #57)
+
+`flutter_timezone` and `timezone` were declared in `packages/utils` but no Dart file imports either (only a model field is called `timezone`). Both were removed. `flutter_timezone` left the lockfile, which drops one native plugin from the iOS, Android and desktop builds (the desktop `generated_plugins.cmake` and `generated_plugin_registrant.cc` files were regenerated); `timezone` stays only as a transitive dependency of `flutter_local_notifications`. `melos run ci:check` exit 0. Also removed the "Supabase CLI" prerequisite from `README.md` (no Supabase code or dependency exists); the other Supabase mentions in the README are still to be corrected in Phase 8.
+
 ---
 
 ## Phase 1: Toolchain, workspaces and Melos (24 Sept 2026)

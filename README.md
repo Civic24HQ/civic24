@@ -41,7 +41,6 @@ Make sure the following tools are installed:
 - Dart SDK (comes with Flutter)
 - [Melos](https://melos.invertase.dev/) 8 (`dart pub global activate melos`)
 - [Firebase CLI](https://firebase.google.com/docs/cli)
-- [Supabase CLI](https://supabase.com/docs/guides/cli)
 - [Git](https://git-scm.com/)
 - [VS Code](https://code.visualstudio.com/)
 
