@@ -4,7 +4,7 @@ Running log for the refactor described in `docs/CIVIC24_REFACTOR_PROMPT.md` (mas
 
 ---
 
-## Phase 2: Dependency upgrade and deprecations (started 25 Sept 2026)
+## Phase 2: Dependency upgrade and deprecations (completed 25 Sept 2026)
 
 Six PRs (owner approved): (1) tooling and leaf packages, (2) Firebase suite, (3) device plugins, (4) UI packages, (5) replace `golden_toolkit` with `alchemist`, (6) deprecations. Everything goes to the latest version unless a strong reason is logged. Evidence level: local analysis, generation, format check and tests; the app cannot be built or launched until the development secrets are added and Phase 3 and 4 land.
 
@@ -133,6 +133,21 @@ During that build Flutter edited the tracked iOS project on its own (it was reve
 **First attempt, and the fix (owner feedback on the PR).** The first commit only had the CI images, so the committed baselines looked like blank boxes where text and icons should be, which is hard to read in review. Adding the readable macOS set fixed that. Separately, the first CI run failed on Ubuntu because images generated on macOS differ from Ubuntu by anti-aliasing: `file_upload` 0.39 percent, `app_tabs` 3 pixels and the showcase 22 pixels (the other 16 matched exactly). The CI set now tolerates 0.5 percent difference, so Ubuntu passes and a real layout, size or colour change still fails.
 
 **Verification:** `melos run ci:check` exit 0 on macOS with both sets (38 golden checks). Live proof that the CI set passes on Ubuntu: the CI run of this PR.
+
+### 2.6 PR 6: deprecations (no PR needed)
+
+Plan step 7 was to fix analyzer-reported deprecations (`withOpacity`, `WillPopScope`, Material 3 theme properties). Checked on 25 Sept 2026 after all upgrades: `melos run flutter:analyze` reports **no issues** (the `deprecated_member_use` lint is active in `packages/rules`, nothing turns it off), `dart fix --dry-run` says "Nothing to fix!", and a search finds no `withOpacity`, `WillPopScope` or `MaterialState` left (the code already uses `withValues`, `PopScope` and `WidgetState`). The only places that silence deprecations are generated files (`*.gen.dart`, mocks). No code change, so no PR. The Material and Cupertino decoupling is separate work planned before the November 2026 Flutter stable.
+
+### 2.7 Phase 2 report
+
+- **What changed and why:** PRs #44 to #48 (see 2.1 to 2.5): leaf packages, Firebase suite, device plugins, UI packages and the `golden_toolkit` to `alchemist` migration. 43 direct dependencies were behind at the start of Phase 2; 4 still are, each for a logged reason.
+- **Still behind latest, on purpose:** `flex_color_scheme` 8.4.0 (9.x needs the `material_ui` migration), `permission_handler` 12.0.3 (13.x needs `compileSdk` 37 and AGP 9.1.1+), `freezed` 4.0.1 (4.0.2 needs `analyzer` ^14, `intl_utils` needs ^13), `platform` 3.1.6 (another package's constraint).
+- **What broke and how it was fixed:** `flutter_gen_runner` deleted generated files after an upgrade (`dart run build_runner clean`); `flex_color_scheme` 9 broke the theme types (held); `flutter_local_notifications` 22 and `geocoding` 5 needed API changes; `country_flags` 4 and `dotted_border` 3 needed API changes; `pub upgrade --major-versions --unlock-transitive` crashes in this workspace (constraints set directly); CI failed once on Ubuntu because macOS-made golden images differ by anti-aliasing (tolerance added).
+- **Verification:** `melos run ci:check` exit 0 (generation, generated-files check, format, analyze, tests including 38 golden checks on macOS); CI green on every PR. Level 1 to 2 only: no device or simulator run, no Firebase check.
+- **iOS build trial (development flavor):** Swift Package Manager resolves and every plugin compiles; only the Crashlytics symbol-upload Run Script fails (Phase 3).
+- **Android:** still cannot build: Gradle 8.13 is below Flutter 3.47's minimum 8.14 (Phase 4).
+- **Blocked on the owner:** Google Auth Platform OAuth clients notice (deadline about 17 Oct 2026), Firebase inactivity check, production and staging secrets for Phase 5, decision on the Phase 4 Android toolchain (`permission_handler` 13 needs AGP 9.1.1+).
+- **Next:** Dependabot for `pub` and `npm` (agreed for right after Phase 2), an optional cleanup of unused dependencies, then Phase 3 (iOS and Swift Package Manager).
 
 ---
 
