@@ -55,13 +55,13 @@ dependencies:
   shorebird_code_push: ^2.0.5
 
   # Google/Firebase Dependencies
-  firebase_auth: ^6.1.4
-  firebase_messaging: ^16.1.1
-  firebase_analytics: ^12.1.1
-  firebase_crashlytics: ^5.0.7
-  firebase_storage: ^13.0.6
-  firebase_remote_config: ^6.2.0
-  cloud_firestore: ^6.1.2
+  firebase_auth: ^6.7.0
+  firebase_messaging: ^16.7.0
+  firebase_analytics: ^12.6.0
+  firebase_crashlytics: ^5.4.0
+  firebase_storage: ^13.6.0
+  firebase_remote_config: ^6.7.0
+  cloud_firestore: ^6.10.0
 
 dev_dependencies:
   flutter_test:
