@@ -18,15 +18,15 @@ dependencies:
   stacked_services: ^1.6.0
 
   # Google/Firebase
-  firebase_core: ^4.4.0
-  firebase_auth: ^6.1.4
-  firebase_messaging: ^16.1.1
-  firebase_analytics: ^12.1.1
-  firebase_crashlytics: ^5.0.7
-  firebase_storage: ^13.0.6
-  cloud_firestore: ^6.1.2
-  firebase_performance: ^0.11.1+4
-  firebase_app_check: ^0.4.3
+  firebase_core: ^4.15.0
+  firebase_auth: ^6.7.0
+  firebase_messaging: ^16.7.0
+  firebase_analytics: ^12.6.0
+  firebase_crashlytics: ^5.4.0
+  firebase_storage: ^13.6.0
+  cloud_firestore: ^6.10.0
+  firebase_performance: ^0.11.6
+  firebase_app_check: ^0.4.8
 
   # Internal Packages
   assets:

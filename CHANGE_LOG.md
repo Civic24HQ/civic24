@@ -33,6 +33,31 @@ Lower bounds were tightened to the versions tested (`flutter pub upgrade --tight
 
 **Google Auth Platform notice (owner email, 17 Sept 2026), for Phase 5.** Google will delete OAuth clients in `civic24-sdg11` that have been inactive for 5 months, 30 days after the email, so around **17 October 2026**. Deleted clients can be restored in the Cloud Console for 30 days. The clients the production app needs are the Web client (`WEB_CLIENT_ID`), the Android client for `co.civic24.citizen`, and the iOS client for the production bundle ID (the iOS app has never shipped, so it is likely one of the inactive ones). A client counts as used when it is used in a Sign in with Google flow. Owner to list the clients in the Cloud Console (open it directly, not through the email links) and sign in with Google on the live production app to refresh the Web and Android ones. The iOS one can only be refreshed once an iOS build exists (after Phase 3), or restored after deletion.
 
+### 2.2 PR 2: Firebase suite (`chore/upgrade-firebase-suite`)
+
+All ten FlutterFire packages upgraded together, within their current majors (no code changes were needed):
+
+| Package | From | To |
+|---|---|---|
+| `firebase_core` | 4.7.0 | 4.15.0 |
+| `firebase_auth` | 6.1.4 | 6.7.0 |
+| `cloud_firestore` | 6.1.2 | 6.10.0 |
+| `firebase_messaging` | 16.1.1 | 16.7.0 |
+| `firebase_analytics` | 12.1.1 | 12.6.0 |
+| `firebase_crashlytics` | 5.0.7 | 5.4.0 |
+| `firebase_storage` | 13.0.6 | 13.6.0 |
+| `firebase_remote_config` | 6.2.0 | 6.7.0 |
+| `firebase_performance` | 0.11.1+4 | 0.11.6 |
+| `firebase_app_check` | 0.4.3 | 0.4.8 |
+
+Platform interface and web packages moved with them (30 packages changed in the lockfile).
+
+**Why:** the iOS CD build failed because `firebase_remote_config 6.2.0` and `firebase_storage 13.0.6` needed different FlutterFire Swift packages. Checked in the plugin sources: all ten plugins now pin the **same** Firebase iOS SDK (`12.19.0`) in their `Package.swift`, so Swift Package Manager can resolve them. Not yet proven by an actual `flutter build ios` (needs the development secrets and Firebase files).
+
+**Tooling note:** `flutter pub upgrade --major-versions --unlock-transitive <packages>` crashes pub in this workspace ("Null check operator used on a null value" in `package_graph.dart`); the constraints were set directly to the latest versions and resolved with `flutter pub get`.
+
+**Verification:** `melos run ci:check` exit 0 (generation, generated-files check, format, analyze, tests). App build and Firebase behavior not verified (Level 1 to 2 only).
+
 ---
 
 ## Phase 1: Toolchain, workspaces and Melos (24 Sept 2026)

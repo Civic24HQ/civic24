@@ -19,7 +19,7 @@ dependencies:
   uuid: ^4.6.0
   faker: ^2.2.0
   solar_icons: ^0.1.0
-  cloud_firestore: ^6.1.2
+  cloud_firestore: ^6.10.0
   meta: ^1.15.0
 
   # Package Dependencies
