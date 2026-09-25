@@ -113,6 +113,21 @@ During that build Flutter edited the tracked iOS project on its own (it was reve
 
 **Verification:** `melos run ci:check` exit 0. Not verified on a device: image loading and caching, shimmer placeholders, page indicators, Lottie animations, country flags in the pickers, and the dotted upload border.
 
+### 2.5 PR 5: replace `golden_toolkit` with `alchemist` (`test/replace-golden-toolkit-with-alchemist`)
+
+`golden_toolkit` 0.15.0 (last published February 2023) is discontinued on pub.dev. It was a dev dependency of `components`, `citizen` and `admin`; only `components` used it. Replaced by `alchemist` 0.14.0 (maintained by Betterment, heavily inspired by `golden_toolkit`).
+
+**What changed**
+- `alchemist` added to `components`; `golden_toolkit` removed from all three packages.
+- `test/flutter_test_config.dart` uses `AlchemistConfig`. **CI goldens are on** (text drawn as coloured squares with the Ahem font, shadows off, identical on macOS, Linux and Windows); **platform goldens are off** (readable text, differ between machines). Result: golden tests now assert everywhere, including GitHub Actions on Ubuntu, so the temporary "goldens are skipped in CI" rule from Phase 1 is gone.
+- The 10 test files were converted with the two helpers in `test/helpers/golden_test_utils.dart`: `goldenScenarios` (was `testGoldens` with `GoldenBuilder.column`) and `goldenDeviceScenarios` (was `DeviceBuilder`, now with `GoldenDevice.phone` 375x667 and `GoldenDevice.tabletPortrait` 768x1024). The two unused old helpers (`runBasicGoldenTest`, `runInteractiveGoldenTest`) were replaced by these.
+- The old baselines (`goldens/*.png`, 19 images) were deleted and 19 new ones generated as `goldens/ci/<name>.png`, same 19 cases (21 counting the two sizes of the general tests, unchanged). Names are now snake case without spaces or dashes.
+- The empty `citizen:golden` and `admin:golden` Melos scripts were removed (those apps have no golden tests). README golden guide, `AGENTS.md`, workflow README and `ci.yml` updated.
+
+**Old versus new baselines (comparison required by the plan).** Compared side by side (for example `AppTextField`): layout, colours, borders, spacing and element sizes are the same. What differs, by design: text is drawn as solid squares instead of Poppins glyphs, and each scenario title is drawn as a block on a dark title bar instead of plain text, so images are taller (for example 864 px instead of 1000 px, because the old ones were cropped to a fixed canvas). Consequence: a label's wording is no longer checked by goldens, but font size, spacing, colour and layout still are. The old readable macOS baselines remain in git history.
+
+**Verification:** `melos run ci:check` exit 0 on macOS with the new baselines. Live proof that macOS-generated CI goldens also pass on Ubuntu: the CI run of this PR (see the PR).
+
 ---
 
 ## Phase 1: Toolchain, workspaces and Melos (24 Sept 2026)

@@ -34,7 +34,7 @@ Until then it only runs when started by hand (Actions tab, Run workflow). Phase 
 
 A new push to a pull request cancels the older CI run for that PR. Runs that are not pull requests are never cancelled.
 
-Golden tests only assert on macOS and Windows (see `packages/components/test/flutter_test_config.dart`), so they are skipped on this Ubuntu job. This is temporary until `golden_toolkit` is replaced.
+Golden tests run here too: the committed baselines are alchemist CI goldens (text as squares, no shadows), which are the same on every operating system. Platform goldens (readable text) are off; see `packages/components/test/flutter_test_config.dart`.
 
 **Run the same checks before you open a pull request:**
 

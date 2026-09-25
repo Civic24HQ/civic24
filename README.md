@@ -187,49 +187,50 @@ This is triggered when a PR is opened or updated. It automatically labels PRs (e
 
 ## 🖼️ Golden Tests Guide
 
-Golden tests capture pixel-perfect snapshots of widgets to catch visual regressions.
+Golden tests capture snapshots of widgets to catch visual regressions. They use [alchemist](https://pub.dev/packages/alchemist) and live in `packages/components/test`.
+
+### How they look
+The committed baselines are **CI goldens**: text is drawn as coloured squares (the Ahem font) and shadows are off, so the images are identical on macOS, Linux and Windows. That is what lets CI check them on every pull request. A change in font size, spacing, colour or layout still shows up; the wording of a label does not.
 
 ### How to Write a Golden Test
 
-Use the `testableWidget` helper to wrap your widget with theme, localization, and layout context.
+Use the `testableWidget` helper to wrap your widget with theme, localization and layout context, and the `goldenScenarios` helper for a set of named scenarios.
 
 ```dart
-testGoldens('MyWidget', (tester) async {
-  final builder = GoldenBuilder.column()
-    ..addScenario('MyWidget - Active State', testableWidget(const MyWidget()));
-
-  await tester.pumpWidgetBuilder(builder.build());
-  await screenMatchesGolden(tester, 'my_widget');
-});
+void main() {
+  goldenScenarios(
+    'MyWidget',
+    fileName: 'my_widget',
+    scenarios: [
+      GoldenTestScenario(
+        name: 'light theme',
+        child: SizedBox(height: 120, child: testableWidget(const MyWidget())),
+      ),
+      GoldenTestScenario(
+        name: 'dark theme',
+        child: SizedBox(height: 120, child: testableWidget(const MyWidget(), dark: true)),
+      ),
+    ],
+  );
+}
 ```
 
-You can also use `DeviceBuilder` if you want to test responsiveness across devices.
+Use `goldenDeviceScenarios` to render the scenarios at phone or tablet size (`GoldenDevice.phone`, `GoldenDevice.tabletPortrait`).
 
 ### Running Golden Tests
 
-Run golden tests with:
-
 ```bash
-flutter test --tags golden
+melos run components:golden          # check the baselines
+melos run components:update:golden   # refresh them (only for an intentional visual change)
 ```
 
-To update reference images:
-
-```bash
-flutter test --tags golden --update-goldens
-```
-
-> Only use `--update-goldens` when you intentionally want to refresh the snapshots.
+Every test run, including CI, checks them: `melos run flutter:test`.
 
 ### Output Location
 
-Golden snapshot images are saved under:
+Baselines are saved next to each test as `goldens/ci/<fileName>.png`.
 
-```
-goldens/
-```
-
-> Each `.png` file is matched against its test description name.
+> To see readable text while working, set `platformGoldensConfig: PlatformGoldensConfig(enabled: true)` in `packages/components/test/flutter_test_config.dart` and update locally. Do not commit those images, they differ between machines.
 
 ---
 
