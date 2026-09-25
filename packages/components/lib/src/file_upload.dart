@@ -11,12 +11,13 @@ class FileUpload extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DottedBorder(
-      padding: const EdgeInsets.all(0.5),
-      strokeWidth: 1.5,
-      color: context.primary,
-      dashPattern: const [4, 2],
-      borderType: BorderType.RRect,
-      radius: const Radius.circular(AppDimensions.size16),
+      options: RoundedRectDottedBorderOptions(
+        padding: const EdgeInsets.all(0.5),
+        strokeWidth: 1.5,
+        color: context.primary,
+        dashPattern: const [4, 2],
+        radius: const Radius.circular(AppDimensions.size16),
+      ),
       child: InkWell(
         onTap: onUpload,
         child: Container(
