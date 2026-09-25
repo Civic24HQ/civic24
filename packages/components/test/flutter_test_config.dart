@@ -1,26 +1,20 @@
 import 'dart:async';
-import 'dart:io';
 
-import 'package:flutter/foundation.dart';
-import 'package:flutter_test/flutter_test.dart';
-import 'package:golden_toolkit/golden_toolkit.dart';
+import 'package:alchemist/alchemist.dart';
 
+/// Golden test configuration for the components package (alchemist).
+///
+/// CI goldens render text as colored squares with the Ahem font, so they look
+/// the same on macOS, Linux and Windows and are checked everywhere, including
+/// GitHub Actions. They are the committed baselines (`goldens/ci/`).
+///
+/// Platform goldens (readable text, host operating system only) are switched
+/// off: they differ between machines and would fail for other developers. To
+/// look at readable images while working, set `enabled: true` locally and run
+/// `flutter test --update-goldens`, but do not commit them.
 Future<void> testExecutable(FutureOr<void> Function() testMain) async {
-  TestWidgetsFlutterBinding.ensureInitialized();
-
-  // Ensure that the app fonts are loaded before running tests
-  await loadAppFonts();
-
-  // Run the tests with Golden Toolkit configuration
-  // This configuration is set to skip golden assertions on web and non-MacOS/Windows
-  // platforms, and enables real shadows for golden tests.
-  return GoldenToolkit.runWithConfiguration(
-    testMain,
-    config: GoldenToolkitConfiguration(
-      skipGoldenAssertion:
-          () => kIsWeb || !Platform.isMacOS && !Platform.isWindows,
-      enableRealShadows: true,
-      defaultDevices: const [Device.iphone11],
-    ),
+  return AlchemistConfig.runWithConfig(
+    config: const AlchemistConfig(platformGoldensConfig: PlatformGoldensConfig(enabled: false)),
+    run: testMain,
   );
 }

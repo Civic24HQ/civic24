@@ -184,9 +184,6 @@ melos:
     citizen:bottomsheet:
       run: melos exec --fail-fast --scope="citizen" --dir-exists="lib" -- "stacked create bottom_sheet"
 
-    citizen:golden:
-      run: melos exec --fail-fast --scope="citizen" --dir-exists="lib" -- "$MELOS_ROOT_PATH/bin/test.sh --tags=golden"
-
     citizen:build:
       run: melos exec --fail-fast --scope="citizen" --depends-on="build_runner" --dir-exists="lib" -- "dart run build_runner build --delete-conflicting-outputs"
 
@@ -255,9 +252,6 @@ melos:
 
     admin:bottomsheet:
       run: melos exec --fail-fast --scope="admin" --dir-exists="lib" -- "stacked create bottom_sheet"
-
-    admin:golden:
-      run: melos exec --fail-fast --scope="admin" --dir-exists="lib" -- "$MELOS_ROOT_PATH/bin/test.sh --tags=golden"
 
     admin:build:
       run: | 

@@ -1,20 +1,21 @@
+import 'package:alchemist/alchemist.dart';
 import 'package:components/components.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_test/flutter_test.dart';
-import 'package:golden_toolkit/golden_toolkit.dart';
 import 'package:styles/styles.dart';
+
 import '../helpers/golden_test_helpers.dart';
+import '../helpers/golden_test_utils.dart';
 
 void main() {
-  final devices = [Device.phone];
+  const scenarioHeight = 120.0;
 
-  // Run basic golden test for AppTextField
-  testGoldens('$AppTextField', (WidgetTester tester) async {
-    const scenarioHeight = 120.0;
-    final builder = GoldenBuilder.column()
-      ..addScenario(
-        '$AppTextField with light theme',
-        SizedBox(
+  goldenScenarios(
+    '$AppTextField',
+    fileName: 'app_text_field',
+    scenarios: [
+      GoldenTestScenario(
+        name: '$AppTextField with light theme',
+        child: SizedBox(
           height: scenarioHeight,
           child: testableWidget(
             Padding(
@@ -28,10 +29,10 @@ void main() {
             ),
           ),
         ),
-      )
-      ..addScenario(
-        '$AppTextField with dark theme',
-        SizedBox(
+      ),
+      GoldenTestScenario(
+        name: '$AppTextField with dark theme',
+        child: SizedBox(
           height: scenarioHeight,
           child: testableWidget(
             Padding(
@@ -46,10 +47,10 @@ void main() {
             dark: true,
           ),
         ),
-      )
-      ..addScenario(
-        '$AppTextField multiline with light theme',
-        SizedBox(
+      ),
+      GoldenTestScenario(
+        name: '$AppTextField multiline with light theme',
+        child: SizedBox(
           height: 200,
           child: testableWidget(
             Padding(
@@ -66,10 +67,10 @@ void main() {
             ),
           ),
         ),
-      )
-      ..addScenario(
-        '$AppTextField multiline with dark theme',
-        SizedBox(
+      ),
+      GoldenTestScenario(
+        name: '$AppTextField multiline with dark theme',
+        child: SizedBox(
           height: 200,
           child: testableWidget(
             Padding(
@@ -87,17 +88,17 @@ void main() {
             dark: true,
           ),
         ),
-      );
-    await tester.pumpWidgetBuilder(builder.build(), surfaceSize: const Size(500, 1000));
-    await screenMatchesGolden(tester, '$AppTextField');
-  });
+      ),
+    ],
+  );
 
-  // Run device-specific golden tests for AppTextField
-  testGoldens('$AppTextField – General', (tester) async {
-    final builder = DeviceBuilder()
-      ..overrideDevicesForAllScenarios(devices: devices)
-      ..addScenario(
-        widget: testableWidget(
+  goldenDeviceScenarios(
+    '$AppTextField – General',
+    fileName: 'app_text_field_general',
+    scenarios: [
+      GoldenTestScenario(
+        name: '$AppTextField – General with light theme',
+        child: testableWidget(
           Padding(
             padding: const EdgeInsets.all(AppDimensions.padding16),
             child: AppTextField(
@@ -109,10 +110,10 @@ void main() {
             ),
           ),
         ),
-        name: '$AppTextField – General with light theme',
-      )
-      ..addScenario(
-        widget: testableWidget(
+      ),
+      GoldenTestScenario(
+        name: '$AppTextField – General with dark theme',
+        child: testableWidget(
           Padding(
             padding: const EdgeInsets.all(AppDimensions.padding16),
             child: AppTextField(
@@ -125,10 +126,7 @@ void main() {
           ),
           dark: true,
         ),
-        name: '$AppTextField – General with dark theme',
-      );
-
-    await tester.pumpDeviceBuilder(builder);
-    await screenMatchesGolden(tester, '$AppTextField – General', autoHeight: true);
-  });
+      ),
+    ],
+  );
 }

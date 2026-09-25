@@ -1,62 +1,58 @@
+import 'package:alchemist/alchemist.dart';
 import 'package:components/components.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_test/flutter_test.dart';
-import 'package:golden_toolkit/golden_toolkit.dart';
 import 'package:styles/styles.dart';
+
 import '../helpers/golden_test_helpers.dart';
+import '../helpers/golden_test_utils.dart';
 
 void main() {
-  final devices = [Device.phone];
+  const scenarioHeight = 120.0;
 
-  // Run basic golden test for ExpandingDotsIndicator
-  testGoldens('$ExpandingDotsIndicator', (WidgetTester tester) async {
-    const scenarioHeight = 120.0;
-    final builder = GoldenBuilder.column()
-      ..addScenario(
-        '$ExpandingDotsIndicator with light theme',
-        SizedBox(
+  goldenScenarios(
+    '$ExpandingDotsIndicator',
+    fileName: 'expanding_dots_indicator',
+    scenarios: [
+      GoldenTestScenario(
+        name: '$ExpandingDotsIndicator with light theme',
+        child: SizedBox(
           height: scenarioHeight,
           child: testableWidget(const ExpandingDotsIndicator(count: 3, currentIndex: 0)),
         ),
-      )
-      ..addScenario(
-        '$ExpandingDotsIndicator with dark theme',
-        SizedBox(
+      ),
+      GoldenTestScenario(
+        name: '$ExpandingDotsIndicator with dark theme',
+        child: SizedBox(
           height: scenarioHeight,
           child: testableWidget(const ExpandingDotsIndicator(count: 3, currentIndex: 0), dark: true),
         ),
-      );
-    await tester.pumpWidgetBuilder(builder.build(), surfaceSize: const Size(500, 700));
-    await screenMatchesGolden(tester, '$ExpandingDotsIndicator');
-  });
+      ),
+    ],
+  );
 
-
-  // Run device-specific golden tests for ExpandingDotsIndicator
-  testGoldens('$ExpandingDotsIndicator – General', (tester) async {
-    final builder = DeviceBuilder()
-      ..overrideDevicesForAllScenarios(devices: devices)
-      ..addScenario(
-        widget: testableWidget(
+  goldenDeviceScenarios(
+    '$ExpandingDotsIndicator – General',
+    fileName: 'expanding_dots_indicator_general',
+    scenarios: [
+      GoldenTestScenario(
+        name: '$ExpandingDotsIndicator – General with light theme',
+        child: testableWidget(
           Container(
             padding: const EdgeInsets.all(AppDimensions.padding16),
             child: const ExpandingDotsIndicator(count: 3, currentIndex: 0),
           ),
         ),
-        name: '$ExpandingDotsIndicator – General with light theme',
-      )
-      ..addScenario(
-        widget: testableWidget(
+      ),
+      GoldenTestScenario(
+        name: '$ExpandingDotsIndicator – General with dark theme',
+        child: testableWidget(
           Container(
             padding: const EdgeInsets.all(AppDimensions.padding16),
             child: const ExpandingDotsIndicator(count: 3, currentIndex: 0),
           ),
           dark: true,
         ),
-        name: '$ExpandingDotsIndicator – General with dark theme',
-      );
-
-    await tester.pumpDeviceBuilder(builder);
-    await screenMatchesGolden(tester, '$ExpandingDotsIndicator – General', autoHeight: true);
-  });
-
+      ),
+    ],
+  );
 }
