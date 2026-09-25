@@ -230,7 +230,7 @@ Every test run, including CI, checks them: `melos run flutter:test`.
 
 ### Output Location
 
-Baselines are saved next to each test as `goldens/macos/<fileName>.png` and `goldens/ci/<fileName>.png`. Commit both sets.
+Baselines are saved next to each test as `goldens/macos/<fileName>.png` and `goldens/ci/<fileName>.png`. Only `goldens/ci` is committed; the repository `.gitignore` keeps the readable `goldens/macos` images local.
 
 ---
 

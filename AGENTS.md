@@ -59,7 +59,7 @@ Civic24 is an open-source civic reporting app where citizens report community is
    * `apps/citizen` and `apps/admin` have zero test cases (their test files are empty groups). The workspace has about 27 real cases, 21 of them component goldens. Broader coverage is Phase 8 work.
 6. **Golden Tests Caution:**
    * `test:golden` and the `*:golden` scripts run goldens without changing baselines. Only `melos run components:update:golden` overwrites them, and only for an intentional visual change.
-   * Golden tests use `alchemist`. Each test has readable macOS images (`goldens/macos`, real fonts) and portable CI images (`goldens/ci`, text as squares, 0.5 percent tolerance). Both are committed. Fonts for the macOS images are loaded by `test/helpers/load_app_fonts.dart`.
+   * Golden tests use `alchemist`. Each test has readable macOS images (`goldens/macos`, real fonts) and portable CI images (`goldens/ci`, text as squares, 0.5 percent tolerance). Only `goldens/ci` is committed; `goldens/macos` is git-ignored (generated locally). Fonts for the macOS images are loaded by `test/helpers/load_app_fonts.dart`.
 7. **Stale build_runner cache:**
    * After upgrading `flutter_gen_runner` (or if `assets.gen.dart` / `fonts.gen.dart` show up deleted after generating), run `dart run build_runner clean` in `packages/assets`, `apps/citizen` and `apps/admin`, then `melos run flutter:build`. Fresh checkouts and CI are not affected.
 8. **`flex_color_scheme` is held at 8.4.0:**

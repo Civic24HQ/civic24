@@ -4,7 +4,8 @@ import 'package:flutter/material.dart';
 /// A screen size used to render a scenario the way a device would show it.
 enum GoldenDevice {
   phone(375, 667),
-  tabletPortrait(768, 1024);
+  tabletPortrait(1024, 1366),
+  tabletLandscape(1366, 1024);
 
   const GoldenDevice(this.width, this.height);
 
