@@ -7,8 +7,15 @@ updates the SHA and the comment together (see `.github/dependabot.yml`).
 | File | Runs on | What it does |
 |---|---|---|
 | `ci.yml` | Pull requests into `develop` or `main`, and manually | Format check, generated files up to date, analysis, tests |
-| `cd.yml` | Pushes to `develop` | Builds the citizen app (development flavor) for Android and iOS and attaches the builds to a GitHub Release |
+| `cd.yml` | **Manually only (paused)**, see below | Builds the citizen app (development flavor) for Android and iOS and attaches the builds to a GitHub Release |
 | `open_pr.yml` | Pull requests into `develop` or `main` (`pull_request_target`) | Assigns the author and adds labels from the branch name and changed files (`.github/labeler.yml`) |
+
+## `cd.yml` is paused
+It ran on the first push to `develop` on Flutter 3.47.5 and both builds failed for known reasons:
+- **Android:** the Gradle wrapper is 8.13 and Flutter 3.47 needs 8.14 or newer (Shorebird also lists AGP 8.11.1 and Kotlin 2.2.20). Fixed in Phase 4.
+- **iOS:** `firebase_remote_config 6.2.0` and `firebase_storage 13.0.6` need different FlutterFire Swift packages, so Swift Package Manager cannot resolve them. Fixed in Phase 2 by upgrading the Firebase suite as one set.
+
+Until then it only runs when started by hand (Actions tab, Run workflow). Phase 7 restores the push trigger, fixes the release race between the two jobs and adds store delivery.
 
 ## Versions come from one place
 - **Flutter:** `.fvmrc`. Both `ci.yml` and `cd.yml` read it with `flutter-version-file`, so changing the version is a one-line edit there.

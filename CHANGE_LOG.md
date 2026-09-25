@@ -114,6 +114,11 @@ The workspace has about 27 real test cases: 21 component goldens (10 components)
 
 **Follow-up PR `ci/label-pull-requests-from-forks`:** `open_pr.yml` now uses `pull_request_target` so fork and Dependabot PRs get labels and an assignee. Found while doing it: `TimonVS/pr-labeler-action` reads its config by the PR's head branch name from the base repo, so it cannot label fork PRs. It and `technote-space/assign-author` (both last updated in 2024) were replaced by `actions/labeler` (branch rules via `head-branch`, merged into `.github/labeler.yml`) and one `gh pr edit` call, leaving no third-party action in a workflow that has a write token. Bots are not assigned; assignment failures for non-collaborators are a warning. Fixed the `style` label glob (`packages/styles`). `pull_request_target` runs from the default branch (`develop`), also for PRs into `main`, so this can only be verified live after merge, on the next pull request.
 
+**CD paused (owner decision, option B), found on the first push to `develop` after PR #40.** Both `cd.yml` builds failed on Flutter 3.47.5, for reasons already on the plan:
+- Android: `Your project's Gradle version (8.13.0) is lower than Flutter's minimum supported version of 8.14.0`. Phase 4 must raise the Gradle wrapper to at least 8.14 (Shorebird's notes for 3.47.x also list AGP 8.11.1 and Kotlin 2.2.20).
+- iOS: Swift Package Manager cannot resolve `firebase_remote_config 6.2.0` (needs FlutterFire package 4.5.0) together with `firebase_storage 13.0.6` (needs 4.4.0). The Firebase packages are at mismatched versions (storage 13.0.6, auth 6.1.4, remote config 6.2.0, and so on). Phase 2 Group C must upgrade the whole FlutterFire suite as one compatible set.
+`cd.yml` now runs only by hand (`workflow_dispatch`); Phase 7 restores the push trigger, fixes the release race and adds store delivery. This is the first real evidence that the app does not build on 3.47.5 yet, so the Phase 0 unknown "does it build" is answered: not until Phases 2 and 4.
+
 **Open after this PR:** goldens are not asserted in CI (Ubuntu) until Phase 2; repository secrets `TOKEN` and `CITIZEN_*_SECRETS` are now unused and can be deleted by the owner; Dependabot `pub` and `npm` entries (Phase 7; Dependabot's docs do not mention pub workspaces, so test before relying on it).
 
 ### 1.7 Still open
