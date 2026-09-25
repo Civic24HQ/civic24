@@ -74,7 +74,7 @@ base64 -i apps/citizen/secrets/development.json | tr -d '\n' | gh secret set ENC
 ## Dependency updates (Dependabot)
 `.github/dependabot.yml` makes Dependabot check monthly and open pull requests for:
 - **GitHub Actions** (pinned SHAs and their version comments), one grouped PR.
-- **Pub packages** of the workspace (`/`, `/apps/*`, `/packages/*`). Minor and patch updates come grouped by family: `firebase`, `ui-packages`, `device-plugins`, `build-and-test-tools`. Major updates come as separate PRs. New releases wait 3 days (majors 7) before being proposed.
+- **Pub packages** of the whole workspace (Dependabot is pointed at the workspace root `/` only; listing the member folders too makes it fail). Minor and patch updates come grouped by family: `firebase`, `ui-packages`, `device-plugins`, `build-and-test-tools`. Major updates come as separate PRs. New releases wait 3 days (majors 7) before being proposed.
 - **npm packages** of `backend/functions`, grouped the same way.
 
 Dependabot only opens PRs; nothing changes until one is merged, and CI runs on each. It does not fix code, so a major update PR can be red until someone adapts the code, or it can be closed.
@@ -88,6 +88,6 @@ Dependabot only opens PRs; nothing changes until one is merged, and CI runs on e
 
 **Held back on purpose** (listed under `ignore:`): `flex_color_scheme` and `permission_handler` majors. Remove the entry when the reason in `CHANGE_LOG.md` is resolved.
 
-**Checking that it works.** After a change to `dependabot.yml` is merged, open Insights, Dependency graph, Dependabot on GitHub and read the log of the last run per ecosystem. Dart pub workspaces are not mentioned in GitHub's Dependabot documentation, so if the `pub` run fails or opens no PRs for member packages, the log says why; the fallback is Renovate.
+**Checking that it works.** After a change to `dependabot.yml` is merged, open Insights, Dependency graph, Dependabot on GitHub and read the log of the last run per ecosystem. Dart pub workspaces are not mentioned in GitHub's Dependabot documentation. The first `pub` run failed because the member folders were listed; the root-only setup is the fix. If it still fails or opens no PRs for member packages, the log says why; the fallback is Renovate.
 
 Security updates (separate from this schedule) are turned on in the repository settings and open a PR as soon as a vulnerability is published for a dependency.
