@@ -255,6 +255,8 @@ These files are gitignored and must stay out of git:
 
 ## 6. iOS, Android & Store Guidelines
 
+> **No Apple Developer account for now.** Anything that needs a paid Apple account (capabilities and entitlements, APNs, Sign in with Apple keys, signing, TestFlight, App Store Connect, iOS Shorebird release) is suspended and listed in `docs/APPLE_DEVELOPER_ACCOUNT.md`. Do not attempt it; mark it `SUSPENDED (Apple account)` and add new items to that file.
+
 ### 6.1 iOS & Swift Package Manager
 * The iOS project is moving from CocoaPods to Swift Package Manager (SPM).
 * **Crashlytics Run Script:** Update the Run Script in `Runner.xcodeproj` to use the SPM checkouts path instead of `${PODS_ROOT}/FirebaseCrashlytics/run`:
