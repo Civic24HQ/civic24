@@ -8,7 +8,7 @@ updates the SHA and the comment together (see `.github/dependabot.yml`).
 |---|---|---|
 | `ci.yml` | Pull requests into `develop` or `main`, and manually | Format check, generated files up to date, analysis, tests |
 | `cd.yml` | Pushes to `develop` | Builds the citizen app (development flavor) for Android and iOS and attaches the builds to a GitHub Release |
-| `open_pr.yml` | Pull requests into `develop` or `main` | Assigns the author and adds labels from the branch name and changed files |
+| `open_pr.yml` | Pull requests into `develop` or `main` (`pull_request_target`) | Assigns the author and adds labels from the branch name and changed files (`.github/labeler.yml`) |
 
 ## Versions come from one place
 - **Flutter:** `.fvmrc`. Both `ci.yml` and `cd.yml` read it with `flutter-version-file`, so changing the version is a one-line edit there.
@@ -36,12 +36,20 @@ melos run ci:check
 
 It formats files, so commit whatever it changes.
 
+## `open_pr.yml` and `pull_request_target`
+Labeling uses `pull_request_target` so it also works for pull requests from forks and from Dependabot, whose normal token is read-only. That trigger runs with a write token, so:
+- never add a checkout of the pull request, or run anything from it, to that workflow;
+- never put pull request text (title, branch name, body) directly into a script; pass it through `env`;
+- it runs the file, and reads `.github/labeler.yml`, from the default branch (`develop`), even for pull requests into `main`, so a change to it only takes effect after it is merged into `develop`.
+
+Labels are configured in `.github/labeler.yml` (branch name patterns and changed-file globs). Branch labels follow our `type/description` names (`feat/`, `fix/`, `chore/`, `docs/`, `ci/`, `test/`, `build/`).
+
 ## Secrets used
 | Secret | Used by | Purpose |
 |---|---|---|
 | `ENCODED_DEVELOPMENT_JSON_CITIZEN` | `cd.yml` | Base64 of `apps/citizen/secrets/development.json` |
 
-`cd.yml` uses the built-in `GITHUB_TOKEN` (with `contents: write` on the build jobs only) to publish releases. The older `TOKEN`, `CITIZEN_*_SECRETS` secrets are no longer used by any workflow.
+`cd.yml` uses the built-in `GITHUB_TOKEN` (with `contents: write` on the build jobs only) to publish releases. The old personal-token secret `TOKEN` is still used by the workflows on `main` until `develop` is merged into it; delete it after that.
 
 To create or update the environment secret:
 

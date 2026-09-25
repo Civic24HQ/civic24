@@ -1,7 +1,16 @@
 name: 🏷️ Pull Request Labeling
 
+# Assigns the author and adds labels to pull requests.
+#
+# This uses pull_request_target so it also works for pull requests from forks
+# and from Dependabot, whose normal token is read-only. That trigger runs with a
+# write token, so this workflow must NEVER check out or run code from the pull
+# request, and must never put pull request text into a script. It only calls the
+# GitHub API. It runs the version of this file that is on the default branch
+# (develop), so changes to it take effect after they are merged into develop.
+
 on:
-  pull_request:
+  pull_request_target:
     types: [opened, synchronize, reopened]
     branches:
       - develop
@@ -13,36 +22,35 @@ permissions:
 jobs:
   assign_author:
     name: 🙋‍♂️ Assign Author to PR
+    # Bots such as Dependabot cannot be assigned.
+    if: github.event.pull_request.user.type != 'Bot'
     permissions:
       contents: none
+      issues: write
       pull-requests: write
     runs-on: ubuntu-latest
     steps:
-      - name: 🔗 Auto-assign PR author
-        uses: technote-space/assign-author@9558557c5c4816f38bd06176fbc324ba14bb3160 # v1.6.2
-        with:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Assign the author
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          REPO: ${{ github.repository }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+          AUTHOR: ${{ github.event.pull_request.user.login }}
+        # People who are not collaborators (for example fork authors) cannot be
+        # assigned, which is not worth a red check.
+        run: |
+          gh pr edit "$PR_NUMBER" --repo "$REPO" --add-assignee "$AUTHOR" \
+            || echo "::warning::Could not assign $AUTHOR (not a collaborator?)"
 
   labeler:
     name: 🏷️ Add PR Labels
     permissions:
       contents: read
-      pull-requests: write
       issues: write
+      pull-requests: write
     runs-on: ubuntu-latest
     steps:
-      - name: 🏷️ Label PR by branch name
-        uses: TimonVS/pr-labeler-action@f9c084306ce8b3f488a8f3ee1ccedc6da131d1af # v5.0.0
-        with:
-          configuration-path: .github/pr-labeling/branch-name.yml
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: 🧠 Label PR by file changes
+      - name: Label by branch name and changed files
         uses: actions/labeler@bf12e9b00b37c5c0ca2b87b79b2daf7891dbda13 # v7.0.0
         with:
-          configuration-path: .github/pr-labeling/file-changes.yml
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          configuration-path: .github/labeler.yml
