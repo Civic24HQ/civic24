@@ -36,3 +36,6 @@ Runner/GeneratedPluginRegistrant.*
 !default.pbxuser
 !default.perspectivev3
 /GoogleService-Info.plist
+# Xcode writes the same Package.resolved into both workspaces; only Runner.xcworkspace is committed.
+Runner.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/
+**/xcshareddata/swiftpm/configuration/
