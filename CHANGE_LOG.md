@@ -149,6 +149,18 @@ Plan step 7 was to fix analyzer-reported deprecations (`withOpacity`, `WillPopSc
 - **Blocked on the owner:** Google Auth Platform OAuth clients notice (deadline about 17 Oct 2026), Firebase inactivity check, production and staging secrets for Phase 5, decision on the Phase 4 Android toolchain (`permission_handler` 13 needs AGP 9.1.1+).
 - **Next:** Dependabot for `pub` and `npm` (agreed for right after Phase 2), an optional cleanup of unused dependencies, then Phase 3 (iOS and Swift Package Manager).
 
+### 2.8 Dependabot for pub and npm (PRs #50 and #55)
+
+`.github/dependabot.yml` now covers `github-actions`, `pub` and `npm` (`/backend/functions`): monthly, minor and patch updates grouped by family (`firebase`, `ui-packages`, `device-plugins`, `build-and-test-tools`; npm: `firebase-functions`, `typescript-and-lint`), majors as separate PRs, a 3 day cooldown (7 for majors), `chore(deps)` prefix, `dependencies` label. It validates against GitHub's schema (`check-jsonschema --builtin-schema vendor.dependabot`). How to handle its PRs is in `.github/workflows/README.md`.
+
+**First run (25 Sept 2026).** GitHub Actions: nothing to update. npm: opened 4 PRs. pub: **failed** with `dependency_services failed: Only apply dependency_services to the root of the workspace.` Cause: the member folders (`/apps/*`, `/packages/*`) were listed as well. Fix: `directory: /` only (#55). The answer to the open question from Phase 2: Dependabot's pub support works with our pub workspace when pointed at the root. It also reads the Flutter version from `.fvmrc`.
+
+**Second run (after the fix): success.** It evaluated all dependencies of every workspace member (51 group checks) and opened no PR: the only packages behind latest are the four held ones (two are ignored in `dependabot.yml`; `freezed` 4.0.2 is inside the 3 day cooldown and blocked by `intl_utils` anyway; `platform` is blocked by another package).
+
+**npm PRs handled.** #51 (`firebase-functions` 7.4.0, `firebase-functions-test` 3.5.0, grouped minor/patch) was checked (`npm ci` and `npm run build` pass) and merged. #52 (`@types/node` 22 to 26), #53 (`firebase-admin` 13 to 14) and #54 (`typescript` 5.7 to 7.0.2) are major updates that belong to the backend phase (Phase 6): closed with `@dependabot ignore this major version`, so they will not reopen. Bring these three back in Phase 6 (remove nothing from `dependabot.yml`; Dependabot remembers the ignores, remove them with `@dependabot unignore` or by editing the PR history).
+
+**Note for Phase 6.** CI only checks the Flutter code, so backend PRs are not tested by it; a `backend` job (npm ci, build, lint) should be added before relying on Dependabot for `backend/functions`.
+
 ---
 
 ## Phase 1: Toolchain, workspaces and Melos (24 Sept 2026)
