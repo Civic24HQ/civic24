@@ -137,6 +137,13 @@ iOS uses Swift Package Manager (no CocoaPods). To run a flavor you need two file
 
 Then `melos run citizen:run:development`, or `flutter run -d <simulator> --flavor development -t lib/main.dart --dart-define-from-file=secrets/development.json` from `apps/citizen`. Install the FlutterFire CLI once (`dart pub global activate flutterfire_cli`) for the Crashlytics upload step. There is nothing to edit in Xcode or any xcconfig. The three flavors show as Civic24 DEV, Civic24 STG and Civic24.
 
+**Running from the Xcode app.** `flutter run` and `xcodebuild` work as they are. The Xcode app itself starts package resolution from `/`, where the `permission_handler_apple` package cannot find `ios/Runner/Info.plist`, so camera, photos and location would silently report "denied". Once per login (it resets on reboot), point it at the file, then restart Xcode and clear its cache:
+
+```bash
+launchctl setenv PERMISSION_HANDLER_INFO_PLIST "$PWD/apps/citizen/ios/Runner/Info.plist"   # run from the repository root
+rm -rf ~/Library/Developer/Xcode/DerivedData
+```
+
 ---
 
 ## Firebase & Supabase
