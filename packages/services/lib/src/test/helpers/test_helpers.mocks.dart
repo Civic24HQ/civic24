@@ -1178,6 +1178,24 @@ class MockSettingsStorageService extends _i1.Mock
   );
 
   @override
+  bool isPermissionPermanentlyDenied(String? name) => (super.noSuchMethod(
+    Invocation.method(#isPermissionPermanentlyDenied, [name]),
+    returnValue: false,
+    returnValueForMissingStub: false,
+  ) as bool);
+
+  @override
+  void setPermissionPermanentlyDenied(String? name, {required bool? denied}) =>
+      super.noSuchMethod(
+        Invocation.method(
+          #setPermissionPermanentlyDenied,
+          [name],
+          {#denied: denied},
+        ),
+        returnValueForMissingStub: null,
+      );
+
+  @override
   void setDisplayPreferences(_i3.DisplayPreferences? displayPreferences) =>
       super.noSuchMethod(
         Invocation.method(#setDisplayPreferences, [displayPreferences]),
