@@ -44,6 +44,12 @@ melos run ci:check
 
 It formats files, so commit whatever it changes.
 
+## Branch protection on `develop`
+- **Required check:** `Format, analyze and test` (the `ci.yml` job). If you rename the job, update the protection rule too, or every pull request waits for a check that never reports.
+- **Conversation resolution:** every review thread must be resolved before merging, including CodeRabbit's. Answer each one (fix, or reply with the reason) and resolve it. Turned on 26 Sept 2026.
+- **No approving review is required.** With a single maintainer an approval requirement would block every merge, since GitHub does not let you approve your own pull request. CodeRabbit's green check means its review finished, not that it approved.
+- Admins can bypass (`enforce_admins` is off). Force pushes and deletion of `develop` are blocked.
+
 ## `open_pr.yml` and `pull_request_target`
 Labeling uses `pull_request_target` so it also works for pull requests from forks and from Dependabot, whose normal token is read-only. That trigger runs with a write token, so:
 - never add a checkout of the pull request, or run anything from it, to that workflow;

@@ -68,6 +68,9 @@ Added `.agents/skills/swift-package-manager/` (`SKILL.md`, `references/FLUTTER.m
 
 **Verification (Level 2).** Eight unit tests in `permission_service_test.dart` (six in the first commit) fake the permission plugin's platform channel and use an in-memory settings store. Run against the old `PermissionService` they fail (3 of 6: denial remembered after a restart, for location and for notifications, and iOS-reported denial remembered); with the fix all 6 pass. Generated files, format, analyze and the whole test suite pass, run one step at a time. **Not verified:** on a real Android device or emulator (Android cannot be built until Phase 4; confirm there in Phase 5), and how the plugin behaves on Android versions with the runtime notification permission.
 
+### Repository setting: conversation resolution (26 Sept 2026)
+Owner asked to turn on "Require conversation resolution before merging" on `develop`. Done through the branch protection API with every other setting kept as it was (required check `Format, analyze and test`, non-strict; no required reviews; admins can bypass; force pushes and deletions blocked), checked before and after. Documented in `.github/workflows/README.md`.
+
 ---
 
 ## Apple Developer account: suspended work (25 Sept 2026)
