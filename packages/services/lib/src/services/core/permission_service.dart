@@ -26,12 +26,22 @@ class PermissionService with ListenableServiceMixin {
     PermissionStatus.denied,
   );
   bool get hasLocationPermission => _hasLocationPermission.value.isGranted;
+
+  /// Whether location was permanently denied ("don't ask again"), including a denial remembered across restarts.
+  ///
+  /// This can stay true after the user resets the permission in Settings to "Ask every time" (Android 11+)
+  /// without granting it. Call [requestLocationPermission] first and trust its result; use this only to
+  /// word a "go to Settings" message.
   bool get isLocationPermissionDenied => _hasLocationPermission.value.isPermanentlyDenied;
 
   final ReactiveValue<PermissionStatus> _hasNotificationPermission = ReactiveValue<PermissionStatus>(
     PermissionStatus.denied,
   );
   bool get hasNotificationPermission => _hasNotificationPermission.value.isGranted;
+
+  /// Whether notifications were permanently denied, including a denial remembered across restarts.
+  ///
+  /// Same caveat as [isLocationPermissionDenied]: request first and trust the result.
   bool get isNotificationPermissionDenied => _hasNotificationPermission.value.isPermanentlyDenied;
 
   final ReactiveValue<int> _notificationDenialCounter = ReactiveValue<int>(0);
@@ -54,18 +64,19 @@ class PermissionService with ListenableServiceMixin {
   }
 
   PermissionStatus _remember(Permission permission, PermissionStatus status) {
-    final name = permission.value.toString();
+    // The name (for example `Permission.location`) rather than the plugin's numeric index, so the stored
+    // flag cannot point at another permission if the plugin ever reorders its list.
+    final name = permission.toString();
+    final remembered = _settingsStorageService.isPermissionPermanentlyDenied(name);
     if (status.isGranted || status.isLimited || status.isProvisional) {
-      _settingsStorageService.setPermissionPermanentlyDenied(name, denied: false);
+      if (remembered) _settingsStorageService.setPermissionPermanentlyDenied(name, denied: false);
       return status;
     }
     if (status.isPermanentlyDenied) {
-      _settingsStorageService.setPermissionPermanentlyDenied(name, denied: true);
+      if (!remembered) _settingsStorageService.setPermissionPermanentlyDenied(name, denied: true);
       return status;
     }
-    if (status.isDenied && _settingsStorageService.isPermissionPermanentlyDenied(name)) {
-      return PermissionStatus.permanentlyDenied;
-    }
+    if (status.isDenied && remembered) return PermissionStatus.permanentlyDenied;
     return status;
   }
 

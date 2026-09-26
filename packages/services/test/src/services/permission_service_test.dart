@@ -8,12 +8,14 @@ import 'package:stacked_services/stacked_services.dart';
 /// An in-memory stand-in for the settings box, so remembered denials can be checked.
 class _FakeSettingsStorageService extends Fake implements SettingsStorageService {
   final Map<String, bool> denied = {};
+  int writes = 0;
 
   @override
   bool isPermissionPermanentlyDenied(String name) => denied[name] ?? false;
 
   @override
   void setPermissionPermanentlyDenied(String name, {required bool denied}) {
+    writes++;
     if (denied) {
       this.denied[name] = true;
     } else {
@@ -139,7 +141,16 @@ void main() {
       await settle();
 
       expect(service.isLocationPermissionDenied, isTrue);
-      expect(storage.isPermissionPermanentlyDenied(Permission.location.value.toString()), isTrue);
+      expect(storage.isPermissionPermanentlyDenied(Permission.location.toString()), isTrue);
+    });
+    test('storage is only written when the remembered value changes', () async {
+      statusOf[Permission.location.value] = PermissionStatus.granted;
+      statusOf[Permission.notification.value] = PermissionStatus.granted;
+      final service = build();
+      await settle();
+      await service.refreshPermissions();
+
+      expect(storage.writes, 0);
     });
   });
 }
