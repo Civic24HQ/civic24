@@ -14,4 +14,4 @@
 | Symlink or path errors in a generated package | Generated folder is stale | Regenerate it (for Flutter: `flutter clean`, `flutter pub get`, build) |
 | "checksum ... does not match" for a binary target | Many SDKs (Firebase, gRPC) ship as `binaryTarget` XCFrameworks with a published checksum. A mismatch means a corrupted download or cache, or a tampered artifact | Reset the caches and resolve again. If it persists, do not skip the check: confirm the package version and URL are the vendor's, then report it upstream |
 
-Binary targets are large (Firebase alone is several hundred MB) and their extracted folders are read-only, which is why deleting a build's `SourcePackages` can fail until you `chmod -R u+w` it.
+Binary targets are large (for one Flutter app using Firebase, the downloaded binary artifacts were about 880 MB) and their extracted folders are read-only, which is why deleting a build's `SourcePackages` can fail until you `chmod -R u+w` it.
