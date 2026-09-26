@@ -38,7 +38,7 @@ Do not assume the dependencies or implementation are untouched or that this list
 - `backend/`: Firestore rules and indexes, Cloud Functions in TypeScript (Node 24, firebase-functions 7, firebase-admin 13; only `index.ts` and `notification.ts`).
 - Architecture: Stacked 3.5 (views, viewmodels, generated router and locator via `stacked_generator`). Stacked 3.5.0 was last published about a year ago.
 - Flavors: `development`, `staging`, `production` on both platforms. Android application IDs `co.civic24.citizen`, `.dev`, `.stg`. iOS has three schemes plus a Run Script phase that copies `ios/config/<flavor>/GoogleService-Info.plist` at build time.
-- Config and secrets: Firebase options come from `--dart-define-from-file=secrets/<flavor>.json` (`apps/citizen/secrets/env.example.json` shows the keys, including `WEB_CLIENT_ID`). iOS Google Sign In reads `GIDClientID` and `$(GOOGLE_REVERSED_CLIENT_ID)` from per flavor xcconfig files created from `ios/Flutter/*.xcconfig.template`.
+- Config and secrets: Firebase options come from `--dart-define-from-file=secrets/<flavor>.json` (`apps/citizen/secrets/env.example.json` shows the keys, including `WEB_CLIENT_ID`). iOS Google Sign In (since #61): the client ID is `IOS_CLIENT_ID` in the flavor's secrets JSON, passed from Dart; the reversed client ID URL scheme is written into the built `Info.plist` from the flavor's `GoogleService-Info.plist` by the "Register Google Sign-In URL Scheme" build phase. No xcconfig holds Google values any more.
 - Shorebird code push is set up with a separate app ID per flavor (`apps/citizen/shorebird.yaml`, plus `melos run citizen:shorebird:*` scripts).
 - Google Sign In already uses the v7 API (`GoogleSignIn.instance`, explicit initialize). Sign in with Apple is present. Media uploads go through Cloudinary.
 - Existing unit and golden tests are in place.
@@ -47,7 +47,6 @@ Do not assume the dependencies or implementation are untouched or that this list
 - `apps/citizen/secrets/{development,staging,production}.json`
 - `apps/citizen/android/app/src/{development,staging,production}/google-services.json`
 - `apps/citizen/ios/config/{development,staging,production}/GoogleService-Info.plist`
-- `apps/citizen/ios/Flutter/{Debug,Staging,Release}.xcconfig`
 - `apps/citizen/android/key.properties` and the upload keystore
 
 **Problems already found**
@@ -238,9 +237,9 @@ The App Store compliance features themselves (report, block, terms, account dele
 ### Phase 5: Firebase projects, auth and Google Sign In across 3 flavors x 2 platforms
 **The owner must first log in to the Firebase console and confirm the project(s) are active.** Wait for that confirmation. Also ask for Firebase console access, each flavor and platform's configuration, the Android signing fingerprints, iOS signing access and test accounts before scheduling verification. If any of these are unavailable, finish all independent work and hand back a precise list of what is missing.
 
-1. For each flavor, run `flutterfire configure` against the correct Firebase project and bundle or application ID. Place outputs in the flavor paths listed in section 1. Regenerate the per flavor secrets JSON (from `env.example.json`) and xcconfig files. Make sure `WEB_CLIENT_ID` is the Google Cloud OAuth 2.0 Web Client ID of that flavor's Firebase project (a mismatch causes `ApiException 10`).
+1. For each flavor, run `flutterfire configure` against the correct Firebase project and bundle or application ID. Place outputs in the flavor paths listed in section 1. Regenerate the per flavor secrets JSON (from `env.example.json`), including `IOS_CLIENT_ID` (the plist's `CLIENT_ID`). Make sure `WEB_CLIENT_ID` is the Google Cloud OAuth 2.0 Web Client ID of that flavor's Firebase project (a mismatch causes `ApiException 10`).
 2. Android: add SHA 1 and SHA 256 for the debug keystore (`~/.android/debug.keystore`), the upload keystore (`key.properties`) **and the Play App Signing key** (Play Console, Release, Setup, App Integrity) to each Firebase Android app. A missing Play signing SHA is the most common reason Google Sign In works locally but fails in production.
-3. iOS: confirm each flavor's `GoogleService-Info.plist` is in place and copied correctly, that `GIDClientID` and `GOOGLE_REVERSED_CLIENT_ID` are in the xcconfig files, that the reversed client ID URL scheme is registered in `Info.plist`, and that the OAuth iOS client exists in Google Cloud for each bundle ID.
+3. iOS: confirm each flavor's `GoogleService-Info.plist` is in place and copied correctly, that `IOS_CLIENT_ID` in each secrets JSON matches that plist's `CLIENT_ID`, that the built app's URL scheme matches its `REVERSED_CLIENT_ID` (the build phase writes it; the plist must contain a `REVERSED_CLIENT_ID`), and that the OAuth iOS client exists in Google Cloud for each bundle ID.
 4. Confirm the OAuth consent screen is in production mode, not testing, and that each Firebase Auth provider (Google, Apple, Email) is enabled.
 5. App Check: in `apps/citizen/lib/bootstrap.dart`, use `AndroidDebugProvider` and `AppleDebugProvider` for development and staging, log the debug token and register it under App Check, Manage Debug Tokens. For production iOS, prepare App Attest with DeviceCheck fallback.
 6. Review auth logging for personal or credential data.
