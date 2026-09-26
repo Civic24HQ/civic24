@@ -3,7 +3,7 @@ name: swift-package-manager
 description: Set up and maintain Swift Package Manager (SPM) dependencies in an iOS or macOS Xcode project, step by step. Covers adding a package, version rules, committing Package.resolved, resolving and updating dependencies from Xcode and the command line, resetting caches, CI reproducibility, migrating from CocoaPods, and a periodic update routine. Flutter projects have their own section because Flutter generates the SPM package for you. Use when adding, pinning, updating, auditing or debugging SPM dependencies.
 license: MIT
 metadata:
-  verified-with: Xcode 26.6, Swift 6, Flutter 3.47
+  verified-with: Xcode 26.6, Swift 6.3, Flutter 3.47
   scope: apps that use Xcode projects; Flutter specifics in references/FLUTTER.md
 ---
 
@@ -67,7 +67,7 @@ If both exist and are identical, commit one and ignore the other; do not let the
 | Goal | Xcode | Command line |
 |---|---|---|
 | Fetch what `Package.resolved` says | File, Packages, Resolve Package Versions | `xcodebuild -resolvePackageDependencies -workspace App.xcworkspace -scheme App` |
-| Move to the newest versions your rules allow | File, Packages, Update to Latest Package Versions | Package.swift projects: `swift package update` (one package: `swift package update <name>`). Xcode projects: delete `Package.resolved`, then run the resolve command above (not run here) |
+| Move to the newest versions your rules allow | File, Packages, Update to Latest Package Versions (all packages); right-click one package in the navigator, Update Package (just that one) | Package.swift projects: `swift package update` (one package: `swift package update <name>`). Xcode projects: delete `Package.resolved`, then run the resolve command above; this updates **every** package at once (not run here) |
 | Clear a bad cache | File, Packages, Reset Package Caches | see section 6 |
 
 After any update: build, run the tests, then look at the `Package.resolved` diff before you commit. Big jumps (a major version, or many indirect changes) deserve their own commit and their own testing.
@@ -91,7 +91,7 @@ More cases: `references/TROUBLESHOOTING.md`.
 
 ## 7. Periodic update routine (monthly, or per release)
 1. Branch: `chore/update-swift-packages`.
-2. List what changed upstream: `swift package show-dependencies` (Package.swift) or read `Package.resolved`, then check each package's release notes for breaking changes and deployment-target changes.
+2. See what would change without touching anything: `swift package update --dry-run` **(help checked)** for Package.swift projects; for Xcode projects read `Package.resolved` and compare with each package's latest release. Check each package's release notes for breaking changes and deployment-target changes.
 3. Update (section 4).
 4. Check the minimum iOS/macOS version of every new version against your app's deployment target (a package raising its minimum is the most common reason an update fails).
 5. Build every configuration and run the tests. For apps with secrets or per-environment builds, build each environment.

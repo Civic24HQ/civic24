@@ -12,3 +12,6 @@
 | Works locally, fails in CI | CI resolves different versions, or has no network to the Git host | Use `-onlyUsePackageVersionsFromResolvedFile`, commit `Package.resolved`, cache the sources |
 | Merge conflict in `Package.resolved` | Two branches changed pins | Take one side, resolve, review the diff; do not merge by hand |
 | Symlink or path errors in a generated package | Generated folder is stale | Regenerate it (for Flutter: `flutter clean`, `flutter pub get`, build) |
+| "checksum ... does not match" for a binary target | Many SDKs (Firebase, gRPC) ship as `binaryTarget` XCFrameworks with a published checksum. A mismatch means a corrupted download or cache, or a tampered artifact | Reset the caches and resolve again. If it persists, do not skip the check: confirm the package version and URL are the vendor's, then report it upstream |
+
+Binary targets are large (Firebase alone is several hundred MB) and their extracted folders are read-only, which is why deleting a build's `SourcePackages` can fail until you `chmod -R u+w` it.
