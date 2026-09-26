@@ -54,6 +54,9 @@ Owner answers: no Apple Developer account for now (see the suspended-work sectio
 
 Owner-facing follow-ups: the privacy manifest data table was merged as a draft and still needs the owner's confirmation before any App Store submission.
 
+### 3.3 Skill: Swift Package Manager (`docs/add-swift-package-manager-skill`)
+Added `.agents/skills/swift-package-manager/` (`SKILL.md`, `references/FLUTTER.md`, `references/TROUBLESHOOTING.md`) in the Agent Skills format and listed it in the README skills table. General, not tied to this repository: adding a package and the version rules, `Package.resolved`, resolve and update from Xcode and the command line, CI reproducibility, cache resets, CocoaPods migration, a monthly update routine; Flutter specifics separate. **Verification:** the `xcodebuild` and `swift package` flags named in it were checked against `--help` on Xcode 26.6; `swift package show-dependencies` and `dump-package` were run; the update-by-deleting-`Package.resolved` route for Xcode projects and Dependabot's Swift support were not run and are marked as such. `skills-ref validate` was not available, so the format was checked by hand (folder name equals `name`, description 521 characters, `SKILL.md` 112 lines).
+
 ---
 
 ## Apple Developer account: suspended work (25 Sept 2026)

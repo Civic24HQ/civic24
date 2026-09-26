@@ -258,6 +258,7 @@ Reusable, step-by-step guides that people read and AI coding agents can load. Th
 | Skill | What it covers |
 |---|---|
 | [`golden-toolkit`](.agents/skills/golden-toolkit/SKILL.md) | Setting up, writing and running Flutter golden tests with the `golden_toolkit` package (discontinued), for projects that cannot use `alchemist` |
+| [`swift-package-manager`](.agents/skills/swift-package-manager/SKILL.md) | Setting up and maintaining Swift Package Manager dependencies in an iOS or macOS Xcode project: adding, pinning, `Package.resolved`, updating, CI, CocoaPods migration, a periodic update routine; Flutter specifics in a reference file |
 
 **Using them:** read the `SKILL.md` directly on GitHub. Tools that scan `.agents/skills/` pick them up automatically. Claude Code reads `.claude/skills/`, so copy or link a skill folder there (`mkdir -p .claude/skills && ln -s ../../.agents/skills/golden-toolkit .claude/skills/golden-toolkit`). **Adding one:** create `.agents/skills/<name>/SKILL.md` (the folder name must equal `name`, lowercase with hyphens, description under 1024 characters), keep `SKILL.md` under 500 lines, move long examples to `references/`, list it in this table, and validate it with `skills-ref validate .agents/skills/<name>`.
 
