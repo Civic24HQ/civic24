@@ -152,5 +152,19 @@ void main() {
 
       expect(storage.writes, 0);
     });
+    test('a plain denial from a new request clears the remembered denial (Settings reset, Android)', () async {
+      requestResultOf[Permission.location.value] = PermissionStatus.permanentlyDenied;
+      final service = build();
+      await settle();
+      await service.requestLocationPermission();
+      expect(service.isLocationPermissionDenied, isTrue);
+
+      // The user resets the permission to "Ask every time"; the next request shows the dialog and they deny once.
+      requestResultOf[Permission.location.value] = PermissionStatus.denied;
+      await service.requestLocationPermission();
+
+      expect(service.isLocationPermissionDenied, isFalse);
+      expect(storage.denied, isEmpty);
+    });
   });
 }

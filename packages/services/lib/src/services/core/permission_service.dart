@@ -30,8 +30,8 @@ class PermissionService with ListenableServiceMixin {
   /// Whether location was permanently denied ("don't ask again"), including a denial remembered across restarts.
   ///
   /// This can stay true after the user resets the permission in Settings to "Ask every time" (Android 11+)
-  /// without granting it. Call [requestLocationPermission] first and trust its result; use this only to
-  /// word a "go to Settings" message.
+  /// without granting it, until the next request corrects it. Call [requestLocationPermission] first and
+  /// trust its result; use this only to word a "go to Settings" message.
   bool get isLocationPermissionDenied => _hasLocationPermission.value.isPermanentlyDenied;
 
   final ReactiveValue<PermissionStatus> _hasNotificationPermission = ReactiveValue<PermissionStatus>(
@@ -63,7 +63,12 @@ class PermissionService with ListenableServiceMixin {
     return _remember(permission, status);
   }
 
-  PermissionStatus _remember(Permission permission, PermissionStatus status) {
+  /// Stores what [status] says about a permanent denial and returns the status to expose.
+  ///
+  /// With [fromRequest] the result came from `request()`, which is authoritative: a plain `denied` there means
+  /// the system could still show its dialog (for example after the user reset the permission in Settings), so a
+  /// remembered denial is cleared instead of restored.
+  PermissionStatus _remember(Permission permission, PermissionStatus status, {bool fromRequest = false}) {
     // The name (for example `Permission.location`) rather than the plugin's numeric index, so the stored
     // flag cannot point at another permission if the plugin ever reorders its list.
     final name = permission.toString();
@@ -76,13 +81,16 @@ class PermissionService with ListenableServiceMixin {
       if (!remembered) _settingsStorageService.setPermissionPermanentlyDenied(name, denied: true);
       return status;
     }
-    if (status.isDenied && remembered) return PermissionStatus.permanentlyDenied;
+    if (status.isDenied && remembered) {
+      if (!fromRequest) return PermissionStatus.permanentlyDenied;
+      _settingsStorageService.setPermissionPermanentlyDenied(name, denied: false);
+    }
     return status;
   }
 
   Future<void> requestLocationPermission() async {
     try {
-      final status = _remember(_locationPermission, await _locationPermission.request());
+      final status = _remember(_locationPermission, await _locationPermission.request(), fromRequest: true);
       _hasLocationPermission.value = status;
     } catch (e) {
       _log.e('Error requesting location permission', error: e);
@@ -91,7 +99,7 @@ class PermissionService with ListenableServiceMixin {
 
   Future<void> requestNotificationPermission() async {
     try {
-      final status = _remember(_notificationPermission, await _notificationPermission.request());
+      final status = _remember(_notificationPermission, await _notificationPermission.request(), fromRequest: true);
       _hasNotificationPermission.value = status;
 
       // If the permission was denied, increment the counter
