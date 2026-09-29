@@ -38,7 +38,7 @@ melos:
       description: Runs pub get for all apps and packages
 
     flutter:test:
-      # One package at a time: Melos defaults to 10 in parallel, and parallel `flutter test` runs
+      # One package at a time: Melos defaults to one run per CPU core, and parallel `flutter test` runs
       # queue on Flutter's global startup lock (a stalled holder hangs them all) and each writes
       # hundreds of MB of compiled test files to the temp folder at once.
       run: melos exec --concurrency=1 --fail-fast --dir-exists="test" -- "$MELOS_ROOT_PATH/bin/test.sh"
