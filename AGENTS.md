@@ -49,7 +49,7 @@ Civic24 is an open-source civic reporting app where citizens report community is
    * Flutter 3.47 starts decoupling Material and Cupertino into `material_ui` and `cupertino_ui`. The old `package:flutter/material.dart` imports still work; formal deprecation is planned for the November 2026 stable. Plan the migration for a later phase.
 2. **CI Limits:**
    * `ci.yml` runs on Ubuntu and checks the portable golden images (`goldens/ci`). The readable ones (`goldens/macos`) are only checked on macOS: run `melos run components:golden` on a Mac and refresh both sets with `melos run components:update:golden` after an intentional visual change.
-   * Run `melos run ci:check` before opening a PR: it does what CI does. See `.github/workflows/README.md`.
+   * Run `melos run ci:check` before opening a PR: it does what CI does. See `.github/workflows/README.md`. Tests run one package at a time on purpose (parallel `flutter test` runs queue on Flutter's startup lock and can fill the disk); do not raise `--concurrency` on `flutter:test`.
 3. **Single Entry Point:**
    * The citizen app entry point is `apps/citizen/lib/main.dart`.
    * *Ignore old references in README files to `main_development.dart`—they do not exist.*

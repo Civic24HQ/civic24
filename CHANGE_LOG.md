@@ -4,6 +4,17 @@ Running log for the refactor described in `docs/CIVIC24_REFACTOR_PROMPT.md` (mas
 
 ---
 
+## Phase 4: Android, Kotlin DSL, 16 KB pages, remaining Apple targets (started 29 Sept 2026)
+
+Owner answers: latest toolchain Flutter 3.47.5 supports (AGP 9.1.x, Gradle 9.3.1, Kotlin 2.4.0), apply the Firebase Performance plugin, migrate admin iOS, admin macOS and citizen macOS to Swift Package Manager (delete later if unused), release builds fail without `key.properties` (the owner's `storeFile` is now relative), remove the commented-out Android location permissions, production Android sign-in by the owner only. PR names describe the change, not the phase.
+
+### 4.1 Fix: local `ci:check` hang (`fix/local-ci-check-hang`)
+**Cause (reproduced 29 Sept 2026).** `melos exec` runs with concurrency 10 by default, so `melos run flutter:test` started `flutter test` in all nine packages at once. They queued on Flutter's global startup lock ("Waiting for another flutter command to release the startup lock", logged for every package), and each compiled the workspace into temporary `.dill` files of hundreds of MB. With 5 GB free the run filled the disk (`No space left on device`, errno 28) and the compilers exited. The earlier 1 h 27 min hang at 0% CPU fits the same mechanism: every run waiting on a lock whose holder had stalled (the owner's Flutter builds were running at the same time). CI passed because its runners have more disk.
+
+**Fix.** `flutter:test` runs `melos exec --concurrency=1`. **Verification (Level 2):** `melos run ci:check` in one go, exit 0 in 137 s, no startup-lock waits, every package's tests passed (38 in components, 9 in services), 6.7 GB free afterwards. The Phase 3 note that the hang was undiagnosed (3.2) is superseded by this entry.
+
+---
+
 ## Phase 3: iOS, Swift Package Manager and native config (started 25 Sept 2026)
 
 Owner answers: no Apple Developer account for now (see the suspended-work section below), remove background location, include Sign in with Apple, adopt UIScene, add the privacy manifest, separate flavor display names.
