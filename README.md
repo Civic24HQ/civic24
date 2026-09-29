@@ -264,6 +264,16 @@ Reusable, step-by-step guides that people read and AI coding agents can load. Th
 
 ---
 
+## Get the App
+
+[![Get it on Google Play](https://img.shields.io/badge/Google_Play-Get_it_on-414141?style=for-the-badge&logo=googleplay&logoColor=white)](https://play.google.com/store/apps/details?id=co.civic24.citizen)
+![App Store: coming soon](https://img.shields.io/badge/App_Store-Coming_soon-9E9E9E?style=for-the-badge&logo=apple&logoColor=white)
+
+- **Android:** live on [Google Play](https://play.google.com/store/apps/details?id=co.civic24.citizen).
+- **iOS:** coming soon to the App Store.
+
+---
+
 ## Download Civic24 App (Preview Builds)
 
 You can test the latest preview builds of the Civic24 mobile apps without setting up a development environment.
@@ -272,7 +282,7 @@ You can test the latest preview builds of the Civic24 mobile apps without settin
 Go to the official [Releases Page](https://github.com/Civic24HQ/civic24/releases/) to download:
 
 - `.apk` file for Android
-- `.ipa` file for iOS
+- `.ipa` file for iOS (not published yet: iOS builds need an Apple Developer account)
 
 Each release contains build artifacts generated from our CI pipelines.
 
