@@ -326,7 +326,7 @@ A task or phase is complete only when:
 ## 8. Git Workflow & PRs
 
 * **Branch from `develop`:** name the branch after the change, `<type>/<what-it-does>` (e.g. `chore/upgrade-android-gradle-toolchain`), never after a phase. Never push directly to `develop` or `main`.
-* **Conventional Commits:** Use standard prefixes: `feat:`, `fix:`, `chore:`, `refactor:`, `test:`, `docs:`.
+* **Conventional Commits:** commit messages and PR titles use the same types: `feat`, `fix`, `refactor`, `chore`, `docs`, `test`, `ci`, written `<type>(<optional scope>): <summary>` (for example `fix: …` or `chore(android): …`).
 * **One concern per PR:** Keep each PR focused on one specific step.
 * **Before opening a PR:** run `melos run ci:check` (bootstrap, generate, format, analyze, test). CI runs the same steps on every PR into `develop` or `main`, and it must be green before merge.
 * **Dependency updates:** Dependabot (`.github/dependabot.yml`) opens grouped monthly PRs for pub, npm and GitHub Actions; see `.github/workflows/README.md` for how to handle them.

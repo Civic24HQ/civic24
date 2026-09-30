@@ -158,7 +158,7 @@ The setting lasts until you log out or restart, and applies to every app started
 ## Developer Guidelines
 
 - Follow the Flutter linter rules in `packages/rules/analysis_options.yaml`
-- Use consistent commit naming: `feat:`, `fix:`, `chore:`, `refactor:`
+- Use [Conventional Commits](https://www.conventionalcommits.org) for commit messages and PR titles: `feat`, `fix`, `refactor`, `chore`, `docs`, `test`, `ci` (for example `fix(services): …`). The PR template has the details
 - Document all new features in PR Description
 - Write unit and golden tests where necessary
 
