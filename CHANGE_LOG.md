@@ -69,7 +69,7 @@ Owner answers: latest toolchain Flutter 3.47.5 supports (AGP 9.1.x, Gradle 9.3.1
 
 **Found, not fixed here:**
 - `local_notification_service.dart` uses `@drawable/ic_stat_notification` as the notification icon, but no such drawable exists in the Android project, and the initialisation icon is `background` (a full-colour PNG, which Android shows as a white square). Needs a white-on-transparent notification icon (design asset); for the notifications work.
-- The merged manifest includes `com.google.android.gms.permission.AD_ID` and the ad-services attribution permissions, from Firebase Analytics. Owner decision pending (keep and declare, or remove).
+- **`AD_ID` kept (owner decision, 30 Sept 2026).** Firebase Analytics merges in `com.google.android.gms.permission.AD_ID` and the ad-services attribution permissions. Play Console already declares "uses advertising ID: yes, for Analytics", so the app and the declaration match. The Play data safety form must list "Device or other IDs" (collected, Analytics) and the other data the app collects (name, email, user IDs, photos, posts and comments, app interactions, crash logs and diagnostics), matching the iOS privacy table; the owner updates it in Play Console. Removing `AD_ID` later means changing that declaration to "No" with the first release without it.
 
 ---
 

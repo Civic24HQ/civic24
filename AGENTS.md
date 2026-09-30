@@ -298,6 +298,7 @@ These files are gitignored and must stay out of git:
 * Do not add Gson or Freezed ProGuard keep rules. Freezed models are Dart, so R8 never touches them. Add a keep rule to `proguard-rules.pro` only when a real release build crash or a plugin's docs require it, and log why in `CHANGE_LOG.md`.
 * **Resources used by name from Dart** (for example a notification icon passed as a string) are invisible to the resource shrinker. List them in `app/src/main/res/raw/keep.xml` (`tools:keep`), or release builds lose them.
 * **Crashlytics mapping upload:** every release build uploads the R8 mapping file to the flavor's Firebase project. To build a release locally without uploading, add `--android-project-arg crashlyticsMappingUpload=false` to `flutter build` (or `-PcrashlyticsMappingUpload=false` to Gradle). Never build a production release for testing without it.
+* **Advertising ID:** the app keeps `AD_ID` (from Firebase Analytics) and Play Console declares it for Analytics. If a change adds, removes or repurposes collected data or permissions, update the Play data safety form and the iOS privacy manifest in the same release.
 * **Display names:** `Civic24 DEV`, `Civic24 STG`, `Civic24` (the `appName` manifest placeholder per flavor), matching iOS.
 * **No cleartext HTTP:** the manifest does not allow `usesCleartextTraffic`. If a debug build ever needs plain HTTP (for example the Firebase Local Emulator Suite), add a debug-only network security config for that host, never an app-wide flag.
 
