@@ -33,6 +33,13 @@ Owner answers: latest toolchain Flutter 3.47.5 supports (AGP 9.1.x, Gradle 9.3.1
 
 **Not verified here:** release builds (hardening PR), staging, `cd.yml`.
 
+### 4.3 Gradle scripts in Kotlin DSL (`refactor/android-gradle-kotlin-dsl`)
+`settings.gradle`, `build.gradle` and `app/build.gradle` renamed to `.gradle.kts` (history kept with `git mv`) and rewritten to match the Flutter 3.47 template. Flavors, application IDs, signing, SDK levels, desugaring and dependencies are unchanged. Removed as dead code: the `local.properties` version code and name (never read; the build uses `flutter.versionCode` and `flutter.versionName`) and `main.java.srcDirs += 'src/main/kotlin'` (Android includes `src/main/kotlin` by default).
+
+**Verification (Level 2, local): no behaviour change.** Before and after the conversion, for the development and production debug APKs: `aapt2 dump badging` (package name, versionCode and versionName, SDK levels, label, every merged permission) and the full list of files in the APK are identical. `./gradlew :app:signingReport` lists the same 12 variants with the same signing configs. The converted development build installs and launches on the emulator (`MainActivity` starts, no crash). Staging was not built (its configuration is covered by the identical variant list).
+
+**Noted for the release-hardening PR:** the merged manifest contains `com.google.android.gms.permission.AD_ID` and the ad-services attribution permissions, pulled in by Firebase Analytics. They affect the Play data-safety form; decide there whether to keep or remove them.
+
 ---
 
 ## Phase 3: iOS, Swift Package Manager and native config (started 25 Sept 2026)
