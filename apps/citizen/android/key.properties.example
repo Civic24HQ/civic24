@@ -1,0 +1,12 @@
+# Release signing values. Copy this file to key.properties (gitignored) and fill it in.
+# Only the maintainers who build signed releases need it: debug and development builds
+# are signed with your machine's own debug key and never read this file.
+#
+# NEVER commit key.properties or the keystore (*.jks, *.keystore). Both are gitignored.
+
+# The upload keystore, relative to android/app. Put the file there:
+# android/app/upload-keystore.jks
+storeFile=upload-keystore.jks
+storePassword=<keystore password>
+keyAlias=<key alias>
+keyPassword=<key password>

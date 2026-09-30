@@ -91,6 +91,16 @@ Owner answers: latest toolchain Flutter 3.47.5 supports (AGP 9.1.x, Gradle 9.3.1
 
 **Not changed:** the user-facing Google sign-in message still says "cancelled" for `[16]` failures (the text is shared with genuine cancels); the Cloudinary `HttpMetric` (owner: later, own PR).
 
+### 4.7 Android signing setup and docs (`chore/document-android-signing`)
+| Change | Why |
+|---|---|
+| `android/key.properties.example` (placeholders, relative `storeFile=upload-keystore.jks`) | Contributors and CI have a template; the real file and keystore stay gitignored |
+| Release tasks fail with a clear message unless `key.properties` is complete and its keystore exists | Owner decision: a release must never fall back to an unsigned or debug-signed build. Checks the file, the four keys and the keystore path |
+| `-PkeyProperties=<path>` | Lets CI point at a file decoded from a secret |
+| README "Running on Android"; AGENTS.md 6.3; `.github/workflows/README.md` | Per-flavor files, registering each machine's debug key (the cause of the sign-in failure), release signing for maintainers |
+
+**Verification (Level 2, local):** with `bundleProductionRelease --dry-run`: missing file, missing keys (`storePassword, keyPassword`) and a missing keystore each stop with the right message; the owner's real `key.properties` passes; a debug task with no key file at all is unaffected; `signingReport` still works. **Consequence:** `cd.yml` (a release APK in CI, no keystore) will fail until signing secrets are added; it is manual-only, documented, and belongs to the CD phase. **Not verified:** a signed release built with the new check (the earlier release builds ran before it; nothing else changed for a valid file).
+
 ---
 
 ## Phase 3: iOS, Swift Package Manager and native config (started 25 Sept 2026)

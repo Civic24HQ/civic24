@@ -50,6 +50,9 @@ It formats files, so commit whatever it changes.
 - **No approving review is required.** With a single maintainer an approval requirement would block every merge, since GitHub does not let you approve your own pull request. CodeRabbit's green check means its review finished, not that it approved.
 - Admins can bypass (`enforce_admins` is off). Force pushes and deletion of `develop` are blocked.
 
+## Android release signing and `cd.yml`
+Android release builds now stop unless `android/key.properties` (or the file named by `-PkeyProperties`) is complete. `cd.yml` runs `flutter build apk --release`, and CI has no keystore, so the Android job will fail until signing is provided from encrypted secrets (decode the keystore and a `key.properties` in the workflow, pass `-PkeyProperties`). `cd.yml` is manual-only until then; this belongs to the CD phase.
+
 ## `open_pr.yml` and `pull_request_target`
 Labeling uses `pull_request_target` so it also works for pull requests from forks and from Dependabot, whose normal token is read-only. That trigger runs with a write token, so:
 - never add a checkout of the pull request, or run anything from it, to that workflow;

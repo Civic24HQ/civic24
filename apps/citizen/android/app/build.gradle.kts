@@ -11,11 +11,34 @@ plugins {
     id("com.google.firebase.firebase-perf")
 }
 
-// Release signing values come from android/key.properties (gitignored).
+// Release signing values come from android/key.properties (gitignored; see key.properties.example).
+// -PkeyProperties=<path> points at another file, for example one that CI decodes from a secret.
 val keystoreProperties = Properties()
-val keystorePropertiesFile = rootProject.file("key.properties")
+val keystorePropertiesFile = rootProject.file(providers.gradleProperty("keyProperties").getOrElse("key.properties"))
 if (keystorePropertiesFile.exists()) {
     keystorePropertiesFile.inputStream().use { keystoreProperties.load(it) }
+}
+
+// A release build must never fall back to an unsigned or debug-signed app: stop with a clear message.
+if (gradle.startParameter.taskNames.any { it.contains("release", ignoreCase = true) }) {
+    val requiredKeys = listOf("storeFile", "storePassword", "keyAlias", "keyPassword")
+    val missing = requiredKeys.filter { keystoreProperties.getProperty(it).isNullOrBlank() }
+    val problem =
+        when {
+            !keystorePropertiesFile.exists() -> "${keystorePropertiesFile.path} does not exist."
+            missing.isNotEmpty() -> "${keystorePropertiesFile.name} is missing: ${missing.joinToString(", ")}."
+            !file(keystoreProperties.getProperty("storeFile")).exists() ->
+                "the keystore \"${keystoreProperties.getProperty("storeFile")}\" does not exist " +
+                    "(the path is relative to android/app)."
+            else -> null
+        }
+    if (problem != null) {
+        throw GradleException(
+            "Release builds must be signed, but $problem\n" +
+                "Copy android/key.properties.example to android/key.properties and fill it in. " +
+                "Debug and development builds do not need it.",
+        )
+    }
 }
 
 android {
