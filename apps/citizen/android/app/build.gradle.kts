@@ -19,19 +19,20 @@ if (keystorePropertiesFile.exists()) {
     keystorePropertiesFile.inputStream().use { keystoreProperties.load(it) }
 }
 
-// Release signing rules. Anyone can test a release build; only a store release needs the real key.
-// - Development and staging release builds without a usable key.properties are signed with the debug
-//   key and print a warning, so contributors and CI can try a release build.
-// - Production (and any build that includes it) without a usable key.properties stops with a message,
-//   so a store release is never debug-signed by accident. To test the production flavor locally, opt in:
+// Release signing: anyone can test a release build; only a store release needs the real key.
+// - The release build type is signed with the upload key when key.properties is usable, otherwise with the
+//   debug key (with a warning), so contributors and CI can try a release. This covers every flavor,
+//   including flavors added later. Never distribute a debug-signed build.
+// - A production release (or any task that includes one, such as `assemble`, `bundle` or `assembleRelease`)
+//   without a usable key.properties stops with a message, so a store build is never debug-signed by
+//   accident. To test the production flavor locally, opt in with
 //   `--android-project-arg debugSignRelease=true` (Flutter) or `-PdebugSignRelease=true` (Gradle).
-// - Never distribute a debug-signed build.
-// - Android Studio's "Generate Signed App Bundle" passes its own credentials
-//   (android.injected.signing.*); nothing is checked then.
-// The rules are applied per flavor, and the stop looks at the release tasks Gradle actually resolved
-// (`assemble<Flavor>Release`, `bundle<Flavor>Release`, ...), so aggregate tasks such as `assemble` or
-// `bundle` cannot bypass them. (Signing task names are not used: with no keystore Gradle creates none
-// and builds an unsigned production app.)
+// - The stop looks at the release tasks Gradle resolved, not at the command line, and not at signing
+//   task names: without a keystore Gradle creates no signing task and builds an unsigned app.
+// - Android Studio's "Generate Signed App Bundle" passes its own credentials (android.injected.signing.*),
+//   so nothing is checked then.
+// - Not checked for Gradle's configuration cache: the task graph hook below reads the project, and the
+//   cache is not enabled. Test this if it ever is.
 val ideSuppliesSigning = providers.gradleProperty("android.injected.signing.store.file").isPresent
 val debugSignRelease = providers.gradleProperty("debugSignRelease").map { it.toBoolean() }.getOrElse(false)
 val requiredKeys = listOf("storeFile", "storePassword", "keyAlias", "keyPassword")
@@ -47,26 +48,20 @@ val signingProblem: String? =
         else -> null
     }
 val signingHelp = "Copy android/key.properties.example to android/key.properties and fill it in."
-// Which flavors are signed with the debug key when there is no usable key.properties.
-val debugSignedFlavors = if (signingProblem == null) emptySet() else setOf("development", "staging") +
-    (if (debugSignRelease) setOf("production") else emptySet())
 
 gradle.taskGraph.whenReady {
     val releaseTaskPattern = Regex("^(assemble|bundle|install|package|sign)[A-Za-z]*Release(Bundle)?$")
     val releaseTasks = allTasks.filter { it.project == project && releaseTaskPattern.matches(it.name) }
     if (signingProblem != null && releaseTasks.isNotEmpty()) {
-        val flavors = debugSignedFlavors.filter { flavor -> releaseTasks.any { it.name.contains(flavor, ignoreCase = true) } }
-        if (releaseTasks.any { it.name.contains("Production", ignoreCase = true) } && "production" !in debugSignedFlavors) {
+        if (releaseTasks.any { it.name.contains("Production", ignoreCase = true) } && !debugSignRelease) {
             throw GradleException(
                 "Production release builds must be signed with the upload key, but $signingProblem\n$signingHelp " +
                     "To try a production release locally without it (never to distribute), add " +
-                    "--android-project-arg debugSignRelease=true. Debug builds and development or staging " +
+                    "--android-project-arg debugSignRelease=true. Debug builds and other flavors' " +
                     "release builds do not need any of this.",
             )
         }
-        if (flavors.isNotEmpty()) {
-            logger.warn("WARNING: signing the ${flavors.joinToString(", ")} release with the DEBUG key because $signingProblem\n$signingHelp Do not distribute this build.")
-        }
+        logger.warn("WARNING: signing this release with the DEBUG key because $signingProblem\n$signingHelp Do not distribute this build.")
     }
 }
 
@@ -74,6 +69,7 @@ android {
     namespace = "co.civic24.citizen"
     // 37 because permission_handler 13 compiles against it. targetSdk stays at 36.
     compileSdk = 37
+    // Same as Flutter 3.47's own value (flutter.ndkVersion); pinned here so a Flutter upgrade cannot change it silently.
     ndkVersion = "28.2.13676358"
 
     compileOptions {
@@ -96,6 +92,7 @@ android {
         // You can update the following values to match your application needs.
         // For more information, see: https://flutter.dev/to/review-gradle-config.
         minSdk = flutter.minSdkVersion
+        // Pinned (Flutter's value is also 36): Google Play sets target API deadlines, so raise it on purpose.
         targetSdk = 36
         versionCode = flutter.versionCode
         versionName = flutter.versionName
@@ -103,7 +100,7 @@ android {
 
     buildTypes {
         release {
-            // No signingConfig here: it is set per flavor below (release or debug, see the rules above).
+            signingConfig = signingConfigs.getByName(if (signingProblem == null) "release" else "debug")
             isMinifyEnabled = true
             isShrinkResources = true
             proguardFiles(
@@ -115,7 +112,7 @@ android {
             // `-PcrashlyticsMappingUpload=false` (Gradle) to build locally without uploading.
             configure<CrashlyticsExtension> {
                 mappingFileUploadEnabled =
-                    (project.findProperty("crashlyticsMappingUpload") as String?)?.toBoolean() ?: true
+                    providers.gradleProperty("crashlyticsMappingUpload").map { it.toBoolean() }.getOrElse(true)
             }
         }
     }
@@ -123,24 +120,20 @@ android {
     flavorDimensions += "default"
 
     productFlavors {
-        // The debug build type keeps its own debug signing; these apply to release builds.
         create("production") {
             dimension = "default"
             applicationIdSuffix = ""
             manifestPlaceholders["appName"] = "Civic24"
-            signingConfig = signingConfigs.getByName(if ("production" in debugSignedFlavors) "debug" else "release")
         }
         create("staging") {
             dimension = "default"
             applicationIdSuffix = ".stg"
             manifestPlaceholders["appName"] = "Civic24 STG"
-            signingConfig = signingConfigs.getByName(if ("staging" in debugSignedFlavors) "debug" else "release")
         }
         create("development") {
             dimension = "default"
             applicationIdSuffix = ".dev"
             manifestPlaceholders["appName"] = "Civic24 DEV"
-            signingConfig = signingConfigs.getByName(if ("development" in debugSignedFlavors) "debug" else "release")
         }
     }
 }
