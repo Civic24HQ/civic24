@@ -265,7 +265,7 @@ class AuthenticationService {
 
   /// Updates the user's display name.
   Future<void> updateDisplayName(String displayName) async {
-    _log.i('Updating display name to $displayName');
+    _log.i('Updating display name');
 
     if (firebaseUser == null) {
       _log.w('No authenticated user found');
@@ -283,7 +283,6 @@ class AuthenticationService {
       final result = await _firebaseAuth.createUserWithEmailAndPassword(email: email, password: password);
       _analyticsService.logSignUp(currentUserAuthProvider);
       _crashlyticsService.setupUserProfile(userId: result.user?.uid);
-      _log.i('User Details: ${result.user}');
       // _alertService.showSuccessAlert(title: l10n.featureSignUpSuccess, message: l10n.featureSignUpSuccessHint);
       return result.user != null;
     } catch (e) {
@@ -302,7 +301,6 @@ class AuthenticationService {
       final result = await _firebaseAuth.signInWithEmailAndPassword(email: email, password: password);
       _analyticsService.logLogin(currentUserAuthProvider);
       _crashlyticsService.setupUserProfile(userId: result.user?.uid);
-      _log.i('User Details: ${result.user}');
       _sessionService.recordSession();
       return result.user != null;
     } catch (e) {
@@ -371,9 +369,14 @@ class AuthenticationService {
       }
 
       _alertService.showErrorAlert(title: 'Google Sign In Failed', message: googleSignInExceptionToMessage(e));
-      _log
-        ..i(googleSignInExceptionToMessage(e))
-        ..i('Google Sign In error: code: ${e.code.name} description:${e.description} details:${e.details}', error: e);
+      // Google reports some configuration problems as `canceled` (for example "[16] Account reauth failed"
+      // when the app's signing fingerprint is not registered in Firebase), so the description is always logged.
+      final reason = 'code: ${e.code.name}, description: ${e.description}';
+      if (e.code == GoogleSignInExceptionCode.canceled) {
+        _log.w('Google sign-in cancelled or refused ($reason)');
+      } else {
+        _log.e('Google sign-in failed ($reason)', error: e);
+      }
       return false;
     } catch (e) {
       if (isAndroid && _isNoCredentialError(e)) {
@@ -577,7 +580,6 @@ class AuthenticationService {
         _analyticsService.setUserId(null),
         _analyticsService.setUserProperty(name: 'guest'),
         _crashlyticsService.setUserIdToCrashlytics(''),
-        _crashlyticsService.setUserEmailToCrashlytics(''),
       ]);
     } catch (e) {
       _log.e('Error signing out: $e');

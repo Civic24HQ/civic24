@@ -19,7 +19,7 @@ class UpdatePasswordViewModel extends AuthViewModel {
     }
     analyticsService.logButtonClick(kAnalyticButtonResetPassword);
     try {
-      _log.i('$emailValue');
+      _log.i('Sending password reset email');
       await runBusyFuture(authenticationService.sendPasswordResetEmail(emailValue!), throwException: true);
 
       final response = await _dialogService.showCustomDialog(

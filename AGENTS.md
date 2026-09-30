@@ -206,9 +206,13 @@ flutter run -d <device_id> --flavor production -t lib/main.dart --dart-define-fr
 * Use them in UI with `l10n.<stringKey>`.
 
 ### 4.5 Logging & Errors
-* Use `getLogger('ClassName')` from `packages/utils`.
-* Caught errors in services should be logged and sent to Firebase Crashlytics as non-fatal errors.
-* Never log auth tokens, passwords, or personal user data.
+* Use `getLogger('ClassName')` from `packages/utils`. Debug builds print to the console only; release builds send logs to Crashlytics (`CrashlyticsOutput`).
+* **What reaches Crashlytics, by level:** `fatal` → fatal error report; `error` → non-fatal error report; `warning` and `info` → breadcrumbs attached to the next report; `debug` and `trace` → never sent.
+* **Log caught errors with the error and stack trace:** `_log.e('What failed', error: e, stackTrace: s)`, so the report groups by the real failure and points at the failing code.
+* **Never put personal data in `info`, `warning`, `error` or `fatal` messages** (emails, names, addresses, locations, tokens, notification text, user-typed text, whole user objects). Log what happened, not the values. `debug` may show values for local debugging, but never tokens or passwords.
+* Crashlytics only receives the Firebase user ID (`setupUserProfile`), never an email or name.
+* Uncaught errors are fatal reports (`FlutterError.onError` and `PlatformDispatcher.instance.onError`, set up in `CrashlyticsService.setupFlutterErrorLogging`). Collection is off in debug and test runs.
+* `CrashlyticsService.crashApp()` force-crashes the app to test Crashlytics; it does nothing in the production flavor.
 
 ### 4.6 Tests & Mocks
 * Tests live in `apps/citizen/test/` and in each package's `test/` folder.

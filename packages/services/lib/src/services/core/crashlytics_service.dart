@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:constants/constants.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/foundation.dart';
 import 'package:logger/logger.dart';
@@ -10,78 +11,90 @@ import 'package:utils/utils.dart';
 ///
 /// It will also capture and log both fatal and non-fatal errors.
 class CrashlyticsService {
+  /// [crashlytics] is for tests; the app uses [FirebaseCrashlytics.instance].
+  CrashlyticsService({FirebaseCrashlytics? crashlytics})
+    : _firebaseCrashlytics = crashlytics ?? FirebaseCrashlytics.instance;
+
   final _log = getLogger('CrashlyticsService');
 
-  final _firebaseCrashlytics = FirebaseCrashlytics.instance;
+  final FirebaseCrashlytics _firebaseCrashlytics;
 
-  /// This method is used to sets the userID to anonymously identify the user
-  /// that experienced the crash in the crashlytics dashboard reports.
+  bool get _isDevelopmentRun => kDebugMode || isTest;
+
+  /// Sets the user ID shown on crash reports, so a user's crashes can be found by ID.
+  ///
+  /// Only the Firebase user ID is sent. Never send an email, name or other personal
+  /// data to Crashlytics: reports are kept outside the app's own data controls.
   Future<void> setUserIdToCrashlytics(String userId) async {
-    if (kDebugMode || isTest) {
-      _log.d('Crashlytics userId: $userId');
-      return;
-    }
+    if (_isDevelopmentRun) return;
     await _firebaseCrashlytics.setUserIdentifier(userId);
   }
 
-  /// This method is used to sets the user email to anonymously identify the user
-  /// that experienced the crash in the crashlytics dashboard reports.
-  Future<void> setUserEmailToCrashlytics(String email) async {
-    if (kDebugMode || isTest) {
-      _log.d('Crashlytics userEmail: $email');
-      return;
-    }
-    await _firebaseCrashlytics.setCustomKey('email', email);
+  /// Sets the user profile used on crash reports (the user ID only).
+  void setupUserProfile({String? userId}) {
+    if (userId != null) setUserIdToCrashlytics(userId);
   }
 
-  /// This method is used to set the user profile information
-  /// to anonymously identify the user that experienced the crash
-  /// in the crashlytics dashboard reports.
-  void setupUserProfile({String? userId, String? email}) {
-    if (userId != null) {
-      setUserIdToCrashlytics(userId);
-    }
-    if (email != null) {
-      setUserEmailToCrashlytics(email);
-    }
-  }
-
-  /// Initializes the Crashlytics service to configure the Crash Handlers
+  /// Sets up error reporting, following the FlutterFire Crashlytics guide.
   ///
-  /// This method handles all errors that are thrown within the Flutter framework by
-  /// overriding [FlutterError.onError] with _firebaseCrashlytics.recordFlutterFatalError.
+  /// - Collection is off in debug and test runs, so development crashes stay out of the dashboards.
+  /// - Uncaught Flutter framework errors ([FlutterError.onError]) are recorded as fatal.
+  /// - Uncaught asynchronous errors outside the framework ([PlatformDispatcher.onError]) are recorded as fatal.
+  ///
+  /// In debug and test runs errors are printed to the console instead.
   Future<void> setupFlutterErrorLogging() async {
+    await _firebaseCrashlytics.setCrashlyticsCollectionEnabled(!_isDevelopmentRun);
+
     FlutterError.onError = (FlutterErrorDetails details) {
-      if (kDebugMode || isTest) {
+      if (_isDevelopmentRun) {
         FlutterError.dumpErrorToConsole(details, forceReport: true);
-      } else {
-        _firebaseCrashlytics.recordFlutterError(details);
+        return;
       }
+      _firebaseCrashlytics.recordFlutterFatalError(details);
+    };
+
+    PlatformDispatcher.instance.onError = (Object error, StackTrace stack) {
+      if (_isDevelopmentRun) return false; // Let the default handler print it.
+      _firebaseCrashlytics.recordError(error, stack, fatal: true);
+      return true;
     };
     _log.i('Setup Flutter ErrorLogging');
   }
 
-  Future<void> logToCrashlytics(Level level, List<String> lines, StackTrace stacktrace) async {
-    if (level == Level.fatal) {
-      await _firebaseCrashlytics.recordError(lines.join('\n'), stacktrace, printDetails: true, fatal: true);
-    }
+  /// Sends a log event to Crashlytics (release builds only, see `setupLogOutputs`).
+  ///
+  /// - `fatal`: recorded as a fatal error.
+  /// - `error`: recorded as a non-fatal error.
+  /// - `warning` and `info`: added as breadcrumbs, shown with the next report.
+  /// - `debug` and `trace`: not sent. They are for development and may contain personal data.
+  ///
+  /// The error and stack trace passed to the logger (`_log.e('...', error: e, stackTrace: s)`)
+  /// are recorded, so reports group and point at the failing code, not at the logger.
+  Future<void> logToCrashlytics(OutputEvent event) async {
+    final level = event.level;
+    if (level.value < Level.info.value) return;
 
-    if (level == Level.error) {
-      await _firebaseCrashlytics.recordError(lines.join('\n'), stacktrace, printDetails: true);
+    final message = event.lines.join('\n');
+    if (level.value >= Level.error.value) {
+      final origin = event.origin;
+      await _firebaseCrashlytics.recordError(
+        origin.error ?? message,
+        origin.stackTrace ?? StackTrace.current,
+        reason: message,
+        fatal: level.value >= Level.fatal.value,
+      );
+      return;
     }
-
-    if (level == Level.info || level == Level.trace || level == Level.debug || level == Level.warning) {
-      await _firebaseCrashlytics.log(lines.join('\n'));
-    }
+    await _firebaseCrashlytics.log(message);
   }
 
   // !ONLY FOR TESTING!
-  /// This method is used to confirm that the Crashlytics setup is working correctly
-  /// on both Android and iOS including the native side
+  /// Force-crashes the app to check that Crashlytics receives native crashes with readable stack traces.
   ///
-  /// It uses the method provided by the Firebase Crashlytics instance called crash() to forcefully crash the app
+  /// Works in any build mode except in the production flavor, so the check can run on a
+  /// development Release build (symbols are only uploaded for Release builds).
   void crashApp() {
-    if (kReleaseMode) return;
+    if (EnvironmentConstants.isProduction) return;
     _log.w('Force crashing the app to test Crashlytics setup');
     return _firebaseCrashlytics.crash();
   }
@@ -91,7 +104,7 @@ class CrashlyticsOutput extends LogOutput {
   @override
   void output(OutputEvent event) {
     if (serviceLocator.isRegistered<CrashlyticsService>()) {
-      serviceLocator<CrashlyticsService>().logToCrashlytics(event.level, event.lines, StackTrace.current);
+      serviceLocator<CrashlyticsService>().logToCrashlytics(event);
     }
   }
 }

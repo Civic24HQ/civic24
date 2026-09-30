@@ -112,7 +112,7 @@ class LocalNotificationService {
     final body = notification?.body ?? '';
     final type = message.data['type'] as String?;
 
-    _log.i('showNotification: $title / $body / $type / ${message.data}');
+    _log.i('showNotification: type $type');
     final platformChannelDetails = getPlatformChannelDetails(type);
     _localNotifications.show(
       id: title.hashCode,

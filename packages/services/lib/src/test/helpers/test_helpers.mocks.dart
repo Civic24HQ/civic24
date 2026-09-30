@@ -2375,16 +2375,8 @@ class MockCrashlyticsService extends _i1.Mock
       ) as _i12.Future<void>);
 
   @override
-  _i12.Future<void> setUserEmailToCrashlytics(String? email) =>
-      (super.noSuchMethod(
-        Invocation.method(#setUserEmailToCrashlytics, [email]),
-        returnValue: _i12.Future<void>.value(),
-        returnValueForMissingStub: _i12.Future<void>.value(),
-      ) as _i12.Future<void>);
-
-  @override
-  void setupUserProfile({String? userId, String? email}) => super.noSuchMethod(
-    Invocation.method(#setupUserProfile, [], {#userId: userId, #email: email}),
+  void setupUserProfile({String? userId}) => super.noSuchMethod(
+    Invocation.method(#setupUserProfile, [], {#userId: userId}),
     returnValueForMissingStub: null,
   );
 
@@ -2396,15 +2388,12 @@ class MockCrashlyticsService extends _i1.Mock
   ) as _i12.Future<void>);
 
   @override
-  _i12.Future<void> logToCrashlytics(
-    _i2.Level? level,
-    List<String>? lines,
-    StackTrace? stacktrace,
-  ) => (super.noSuchMethod(
-    Invocation.method(#logToCrashlytics, [level, lines, stacktrace]),
-    returnValue: _i12.Future<void>.value(),
-    returnValueForMissingStub: _i12.Future<void>.value(),
-  ) as _i12.Future<void>);
+  _i12.Future<void> logToCrashlytics(_i2.OutputEvent? event) =>
+      (super.noSuchMethod(
+        Invocation.method(#logToCrashlytics, [event]),
+        returnValue: _i12.Future<void>.value(),
+        returnValueForMissingStub: _i12.Future<void>.value(),
+      ) as _i12.Future<void>);
 
   @override
   void crashApp() => super.noSuchMethod(

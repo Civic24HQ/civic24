@@ -68,7 +68,7 @@ class DeleteFeedbackSheetModel extends BaseViewModel {
             return e.toString().split('.').last;
           })
           .join(', ');
-      _log.i('Submitting account deletion feedback: $feedbackReason');
+      _log.i('Submitting account deletion feedback');
       await _userService.updateUser(
         _userService.user!.copyWith(
           account: _userService.user!.account.copyWith(deleteReason: feedbackReason, isDeleted: true),

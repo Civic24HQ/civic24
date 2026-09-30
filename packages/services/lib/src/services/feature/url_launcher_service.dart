@@ -20,7 +20,7 @@ class UrlLauncherService {
     final emailLaunchUrl = Uri(scheme: 'mailto', path: email, query: query);
 
     if (await canLaunchUrl(emailLaunchUrl)) {
-      _log.i('Sending email to $email');
+      _log.i('Opening the email app');
       await launchUrl(emailLaunchUrl);
     } else {
       _alertService.showErrorAlert(
