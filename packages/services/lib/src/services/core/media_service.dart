@@ -293,7 +293,7 @@ class MediaService {
     }
 
     if (!imageFile.existsSync()) {
-      _log.e('Image file does not exist: ${imageFile.path}');
+      _log.e('Image file does not exist');
       return null;
     }
 

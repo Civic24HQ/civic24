@@ -71,6 +71,26 @@ Owner answers: latest toolchain Flutter 3.47.5 supports (AGP 9.1.x, Gradle 9.3.1
 - `local_notification_service.dart` uses `@drawable/ic_stat_notification` as the notification icon, but no such drawable exists in the Android project, and the initialisation icon is `background` (a full-colour PNG, which Android shows as a white square). Needs a white-on-transparent notification icon (design asset); for the notifications work.
 - **`AD_ID` kept (owner decision, 30 Sept 2026).** Firebase Analytics merges in `com.google.android.gms.permission.AD_ID` and the ad-services attribution permissions. Play Console already declares "uses advertising ID: yes, for Analytics", so the app and the declaration match. The Play data safety form must list "Device or other IDs" (collected, Analytics) and the other data the app collects (name, email, user IDs, photos, posts and comments, app interactions, crash logs and diagnostics), matching the iOS privacy table; the owner updates it in Play Console. Removing `AD_ID` later means changing that declaration to "No" with the first release without it.
 
+### 4.6 Crashlytics error reporting (`refactor/crashlytics-error-reporting`)
+| Change | Why |
+|---|---|
+| `PlatformDispatcher.instance.onError` added; uncaught Flutter errors recorded with `recordFlutterFatalError` | Uncaught asynchronous errors were never reported. Both now follow the FlutterFire Crashlytics guide (fatal). The old code said "fatal" in its comment but recorded non-fatal |
+| `setCrashlyticsCollectionEnabled(false)` in debug and test runs | Keeps development crashes out of the dashboards |
+| Logged errors keep their own error and stack trace (`OutputEvent.origin`) | Reports used `StackTrace.current`, the logger's stack, so every logged error pointed at the logger and grouped together |
+| Only `info` and above leave the device; `debug` and `trace` are dropped | In release every log line went to Crashlytics, including `debug` lines with the Google user object, FCM and APNs tokens, emails and EXIF metadata |
+| Personal data removed from `info` messages: email in the two password-reset flows, the full Firebase user (`User Details: ...`, twice), display name, geocoded placemark, notification title, body and data, account-deletion feedback text, email recipient | Those reached Crashlytics as breadcrumbs |
+| Email method removed (`setUserEmailToCrashlytics`) | Correction: no code ever passed an email (earlier I said the app sent it; it only cleared it). Removed so nobody starts; only the user ID is set |
+| Google sign-in: codes other than `canceled` are reported as non-fatal errors; `canceled` is a warning breadcrumb with Google's description | Configuration failures were logged at `info` and never reported. `[16] Account reauth failed` (unregistered fingerprint) arrives as `canceled`, so the description is always kept |
+| `crashApp()` works in any build mode outside the production flavor | The Crashlytics test crash (Phase 5) needs a development Release build; it was blocked in release |
+| iOS privacy manifest: crash data and product interaction marked **linked** | The app attaches the user ID to Crashlytics and Analytics (owner confirmed the corrected table) |
+| `CrashlyticsService` takes an optional `FirebaseCrashlytics` (default: the real instance) | So the reporting rules can be unit tested |
+
+**Verification (Level 2, local):** 4 new unit tests (`crashlytics_service_test.dart`: debug and trace not sent, info and warning as breadcrumbs, error as non-fatal with the original error and stack, fatal as fatal); all 13 service tests pass. Generated files (mocks regenerated with build_runner), format, analyze and the whole test suite pass, run one step at a time. The development build starts normally on the emulator. **Not verified:** reports arriving in the Crashlytics console (needs a release build writing to a Firebase project; planned with the Phase 5 test crash); iOS runtime (Dart-only change plus the manifest values).
+
+**CodeRabbit follow-up (review on the PR).** Valid in part: 37 error-level calls, 17 of them interpolate exception text (`$e`), which can carry an email or token. `logToCrashlytics` now redacts email addresses, bearer tokens, JWTs and URL query strings from the message and from the error text (`redactPersonalData`); when the error text changes it is recorded as a `RedactedError` that keeps the original type name, otherwise the original object is recorded. Two file paths (`imageFile.path`, `file.path`) were also removed from error logs. Three more tests (7 in the file).
+
+**Not changed:** the user-facing Google sign-in message still says "cancelled" for `[16]` failures (the text is shared with genuine cancels); the Cloudinary `HttpMetric` (owner: later, own PR).
+
 ---
 
 ## Phase 3: iOS, Swift Package Manager and native config (started 25 Sept 2026)

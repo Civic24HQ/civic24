@@ -62,7 +62,7 @@ class LocationService {
 
       final place = placemarks.first;
       final result = {'state': place.administrativeArea ?? '', 'country': place.country ?? ''};
-      _log.i('User location: ${placemarks.first}');
+      _log.i('Resolved the user location to a country and state');
       return result;
     } catch (e, st) {
       _log.e('Failed to get current address', error: e, stackTrace: st);
