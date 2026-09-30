@@ -106,9 +106,6 @@ updates:
       # 9.x needs the Material/Cupertino decoupling migration (material_ui).
       - dependency-name: flex_color_scheme
         update-types: ["version-update:semver-major"]
-      # 13.x needs compileSdk 37, which needs AGP 9.1.1+ (Android toolchain decision).
-      - dependency-name: permission_handler
-        update-types: ["version-update:semver-major"]
     commit-message:
       prefix: "chore(deps)"
     labels:
