@@ -325,12 +325,14 @@ A task or phase is complete only when:
 
 ## 8. Git Workflow & PRs
 
-* **Branch from `develop`:** (e.g. `chore/2026-refactor-phase1`). Never push directly to `develop` or `main`.
+* **Branch from `develop`:** name the branch after the change, `<type>/<what-it-does>` (e.g. `chore/upgrade-android-gradle-toolchain`), never after a phase. Never push directly to `develop` or `main`.
 * **Conventional Commits:** Use standard prefixes: `feat:`, `fix:`, `chore:`, `refactor:`, `test:`, `docs:`.
 * **One concern per PR:** Keep each PR focused on one specific step.
 * **Before opening a PR:** run `melos run ci:check` (bootstrap, generate, format, analyze, test). CI runs the same steps on every PR into `develop` or `main`, and it must be green before merge.
 * **Dependency updates:** Dependabot (`.github/dependabot.yml`) opens grouped monthly PRs for pub, npm and GitHub Actions; see `.github/workflows/README.md` for how to handle them.
 * **Workflows:** pin every action to a full commit SHA with the version in a comment. Dependabot keeps them current (`.github/dependabot.yml`).
-* **PR Descriptions:** State what changed, why, what tests were run, and any open questions.
+* **PR titles:** Conventional Commits, `<type>(<optional scope>): <summary>` (e.g. `chore(android): upgrade Gradle, Android Gradle Plugin and Kotlin`).
+* **PR descriptions:** follow `.github/PULL_REQUEST_TEMPLATE.md` (Description, Type of Change). `gh pr create --body` skips the template, so build the body from it. In the Description state what changed, why, what was verified (with its level) and what was not, and any open questions.
+* **Draft or ready:** open as a Draft while work is in progress; open (or mark) Ready for review when it is complete and checks pass.
 * **Keep this file updated:** When a phase changes a command, version, or convention (e.g. moving to pub workspaces, Melos 8, Kotlin DSL, or Swift Package Manager), update this `AGENTS.md` file in the same PR.
 * **Keep temporary work out:** Keep task-specific migration plans and release checklists in separate documents (`docs/V2_REFACTOR_PROMPT.md`, `CHANGE_LOG.md` and the master plan `docs/CIVIC24_REFACTOR_PROMPT.md`), not here, so temporary work does not become standing instructions.
