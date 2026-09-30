@@ -40,6 +40,20 @@ Owner answers: latest toolchain Flutter 3.47.5 supports (AGP 9.1.x, Gradle 9.3.1
 
 **Noted for the release-hardening PR:** the merged manifest contains `com.google.android.gms.permission.AD_ID` and the ad-services attribution permissions, pulled in by Firebase Analytics. They affect the Play data-safety form; decide there whether to keep or remove them.
 
+### 4.4 Firebase Gradle plugins and `permission_handler` 13 (`chore/update-android-firebase-and-permissions`)
+| Change | Why |
+|---|---|
+| Firebase BoM 34.11.0 to **34.19.0** | Latest. The BoM only pins the native Android Firebase libraries the app module declares (`firebase-analytics`); the FlutterFire plugins bring their own |
+| google-services plugin 4.4.0 to **4.5.0** | Latest; Firebase lists AGP 9.0 support |
+| Crashlytics Gradle plugin 2.9.8 to **3.0.8** | Latest 3.x; fixes Gradle isolated-projects compatibility |
+| Performance Gradle plugin **2.0.2 applied** (was declared at 1.4.2 but never applied) | Owner decision. 2.0.2 fixes AGP 9 compatibility, and `flutterfire configure` adds this plugin for Android. **Limit found:** it instruments native Android HTTP code (some Firebase and Google SDK calls) only. The app's own Dart request (`CloudinaryStorageService`, `package:http`) is not captured automatically; that needs an `HttpMetric` in Dart (follow-up) |
+| `kotlin-stdlib-jdk7:1.9.20` removed | Stale pin; the Kotlin standard library comes with the Kotlin toolchain |
+| `permission_handler` 12.0.3 to **13.0.2** (`permission_handler_android` 13.0.1 to 14.1.0; `permission_handler_apple` unchanged at 9.6.1) and `compileSdk` 36 to **37** | The only breaking change in 13 is `compileSdk` 37. 13.0.2's README tells apps to detect a permanent denial from the `request()` result, which is what the D17 fix already does. `targetSdk` stays 36. Removed from Dependabot's ignore list |
+
+**Verification (Level 2, local):** development and production debug APKs build. Compared with `develop`, the only change in `aapt2 dump badging` is `compileSdkVersion` 36 to 37; `targetSdk` and every merged permission are identical. The development build installs and runs on the emulator (no app crash). Generated files, format, analyze and all tests pass (the 8 permission tests on 13), run one step at a time. iOS was not rebuilt: its native permission code (`permission_handler_apple` 9.6.1) did not change. Performance data in the Firebase console was not checked (no logcat output unless `firebase_performance_logcat_enabled` is set in the manifest).
+
+**Emulator note:** logcat shows `android.hardware.uwb-service` aborting every 5 seconds. That is the emulator image's ultra-wideband service (no `/dev/uwb0`), not the app.
+
 ---
 
 ## Phase 3: iOS, Swift Package Manager and native config (started 25 Sept 2026)

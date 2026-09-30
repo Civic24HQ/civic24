@@ -6,6 +6,8 @@ plugins {
     id("dev.flutter.flutter-gradle-plugin")
     id("com.google.gms.google-services")
     id("com.google.firebase.crashlytics")
+    // Automatic network request monitoring for Firebase Performance.
+    id("com.google.firebase.firebase-perf")
 }
 
 // Release signing values come from android/key.properties (gitignored).
@@ -17,7 +19,8 @@ if (keystorePropertiesFile.exists()) {
 
 android {
     namespace = "co.civic24.citizen"
-    compileSdk = 36
+    // 37 because permission_handler 13 compiles against it. targetSdk stays at 36.
+    compileSdk = 37
     ndkVersion = "28.2.13676358"
 
     compileOptions {
@@ -90,8 +93,7 @@ flutter {
 }
 
 dependencies {
-    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.9.20")
-    implementation(platform("com.google.firebase:firebase-bom:34.11.0"))
+    implementation(platform("com.google.firebase:firebase-bom:34.19.0"))
     implementation("com.google.firebase:firebase-analytics")
     coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:2.1.4")
 }

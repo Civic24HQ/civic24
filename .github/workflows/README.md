@@ -92,7 +92,7 @@ Dependabot only opens PRs; nothing changes until one is merged, and CI runs on e
 4. Useful comments: `@dependabot rebase`, `@dependabot recreate`, `@dependabot ignore this dependency`.
 5. Dependabot never touches Flutter itself: change `.fvmrc` by hand (check Shorebird supports the version first).
 
-**Held back on purpose** (listed under `ignore:`): `flex_color_scheme` and `permission_handler` majors. Remove the entry when the reason in `CHANGE_LOG.md` is resolved.
+**Held back on purpose** (listed under `ignore:`): `flex_color_scheme` majors (`permission_handler` was removed from the list when it moved to 13). Remove the entry when the reason in `CHANGE_LOG.md` is resolved.
 
 **Checking that it works.** After a change to `dependabot.yml` is merged, open Insights, Dependency graph, Dependabot on GitHub and read the log of the last run per ecosystem. Dart pub workspaces are not mentioned in GitHub's Dependabot documentation. The first `pub` run failed because the member folders were listed; the root-only setup is the fix. If it still fails or opens no PRs for member packages, the log says why; the fallback is Renovate.
 
