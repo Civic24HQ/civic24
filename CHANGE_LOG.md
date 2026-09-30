@@ -109,6 +109,21 @@ Owner answers: latest toolchain Flutter 3.47.5 supports (AGP 9.1.x, Gradle 9.3.1
 
 **Consequence for `cd.yml`:** its development-flavor release now builds without secrets, signed with the debug key. Properly signed CD builds are a Phase 7 task (separate CI-only keystore recommended, see the workflow README).
 
+### 4.8 Remaining Apple targets off CocoaPods (`chore/migrate-apple-targets-to-spm`)
+Admin iOS, admin macOS and citizen macOS still used CocoaPods (owner: migrate now, delete later if unused). Same method as #60, one commit per target (admin iOS has a second commit for UIScene): Flutter's automatic migration (`flutter build`), then by hand `pod deintegrate`, delete `Podfile` and `Podfile.lock`, remove the `Pods` includes from the xcconfigs, remove the `Pods` group and the `Pods.xcodeproj` workspace reference, and commit only `Runner.xcworkspace`'s `Package.resolved` (the duplicate under `Runner.xcodeproj` and the `configuration` folders are gitignored).
+
+| Target | Result |
+|---|---|
+| `apps/admin/ios` | Deployment target 15.0 (was 13.0); UIScene adopted (`Info.plist` gained only `UIApplicationSceneManifest`, no other key changed); builds for the simulator |
+| `apps/admin/macos` | Builds (`Debug`); macOS deployment target 12.0 |
+| `apps/citizen/macos` | Builds (`Debug` and `Release`); macOS deployment target 12.0. Its Crashlytics symbol-upload Run Script looked in the wrong place (`build/macos/Build/Products/SourcePackages`) and failed the build; rewritten like iOS: skip Debug, look in `build/macos/SourcePackages` and DerivedData, warn instead of fail (the macOS app is not shipped) |
+
+**Verification (Level 2, local).** All four Apple projects now report no CocoaPods integration and `git ls-files` shows no Podfile, lock or Pods. Admin iOS (simulator Debug), admin macOS (Debug), citizen macOS (Debug and Release) build with Swift Package Manager only. The Release run executed the rewritten Crashlytics script: it found the script, the upload failed (there is no real Firebase config, see below) and the build warned and continued. **Not verified:** running any of these apps, sign-in or push on macOS, Xcode (GUI) builds, code signing and notarization, and anything on a device. None of the four Apple projects besides citizen iOS is built by CI.
+
+**Build notes.** macOS needs `flutter config --enable-macos-desktop` (enabled on the owner's machine during this work; undo with `--no-enable-macos-desktop`). The admin and macOS builds need `--dart-define-from-file=apps/citizen/secrets/env.example.json` because the shared `constants` package asserts on its values (admin ships no secrets folder). The citizen macOS project lists `macos/Runner/GoogleService-Info.plist` as a resource; it is gitignored and absent, so a build stops at "Build input file cannot be found" (existing behaviour, not caused by this PR). To verify the build I used a throwaway placeholder file there and deleted it afterwards; it was never tracked, and cannot reach any Firebase project.
+
+**Found, not changed:** `.github/workflows/cd.yml` line 76 still runs `rm -rf ios/Pods ios/Podfile.lock` (now a no-op; fix with the CD phase). Admin's `AppDelegate`/`Info.plist` comments from the old `Info.plist` were dropped by Flutter's rewrite (no key changed, only comments and formatting).
+
 ---
 
 ## Phase 3: iOS, Swift Package Manager and native config (started 25 Sept 2026)
