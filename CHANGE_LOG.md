@@ -13,6 +13,26 @@ Owner answers: latest toolchain Flutter 3.47.5 supports (AGP 9.1.x, Gradle 9.3.1
 
 **Fix.** `flutter:test` runs `melos exec --concurrency=1`. **Verification (Level 2):** `melos run ci:check` in one go, exit 0 in 137 s, no startup-lock waits, every package's tests passed (38 in components, 9 in services), 6.7 GB free afterwards. The Phase 3 note that the hang was undiagnosed (3.2) is superseded by this entry.
 
+### 4.2 Android toolchain (`chore/upgrade-android-gradle-toolchain`)
+| Change | Why |
+|---|---|
+| Gradle 8.13 to **9.3.1** (`-all`, official SHA-256 in `gradle-wrapper.properties`) | Flutter 3.47 needs 8.14 or newer; 9.3.1 is the template version, the newest Flutter 3.47 supports, and AGP 9.1's minimum |
+| Android Gradle Plugin 8.11.0 to **9.1.1** | Latest 9.1 patch. Flutter 3.47 fully supports Kotlin up to AGP 9.1; `permission_handler` 13 needs 9.1.1 or newer. AGP 9.2 and 9.4 exist, but 9.4 needs Gradle 9.6, which Flutter 3.47 does not support |
+| Kotlin Gradle Plugin 2.2.20 to **2.4.0** | Template version and the newest Flutter 3.47 knows (2.4.20 exists but is past Flutter's supported range) |
+| `gradle.properties`: `android.newDsl=false`, `android.builtInKotlin=false`; Jetifier removed | Same flags as the Flutter 3.47 template. Jetifier is not needed: every dependency is AndroidX |
+| App module no longer applies `kotlin-android`; `kotlinOptions` replaced by `kotlin { compilerOptions { jvmTarget = JVM_17 } }` | Flutter's built-in Kotlin migration guide, step 3. The build warned that an app applying the Kotlin plugin "will cause build failures in future versions of Flutter" |
+| `rootProject.buildDir` / `project.buildDir` replaced by `layout.buildDirectory` | `buildDir` is removed in Gradle 9 |
+| `proguard-android.txt` to `proguard-android-optimize.txt` | AGP 9 refuses the old file (it disables R8 optimisation). Keep rules and release testing are the release-hardening PR |
+| Firebase BoM wrapped in `platform(...)` (same version, 34.11.0) | Declared as a plain dependency it never set versions, and on Gradle 9 `firebase-analytics` had no version and failed to resolve. The version bump is the Firebase PR |
+
+**Still warned (upstream, not fixable here):** 11 plugins still apply the Kotlin Gradle Plugin themselves (`app_settings`, the FlutterFire plugins, `flutter_image_compress_common`, `google_sign_in_android`). `builtInKotlin` can only become `true` when they are updated; Flutter will drop support for plugins applying KGP in a future release.
+
+**Local note:** the first build could not download AGP because macOS's DNS cache returned only IPv6 addresses for `dl.google.com` on an IPv4-only network; the owner flushed the cache. The first Gradle 9 build took 22 minutes (all dependencies downloaded); later builds about a minute.
+
+**Verification (Level 2, local):** `flutter build apk --debug --flavor development` succeeds. The development flavor installs and launches on the Pixel 10 Pro XL emulator (Android 37, Google Play image, **16 KB page size**): Firebase, Crashlytics and Remote Config initialise and the login screen shows. Shorebird has no published statement on AGP 9; `shorebird doctor` is clean, and a release build is checked in the release-hardening PR. **Android Google sign-in (owner, emulator, debug builds):** development and production both sign in (Google, then Firebase, then logged in) after the owner registered **this Mac's debug-key SHA-1 and SHA-256** in both Firebase Android apps. Before that, both failed with `GoogleSignInException(canceled, [16] Account reauth failed)`, which the app shows as "Sign-in was cancelled". Each project only had one fingerprint: development the old Mac's debug key, production the Play App Signing key. Every machine that runs debug builds has its own debug key and must register it (contributors in their own Firebase projects). No secrets or code changed. The upload key is not registered; only needed to sign in on a locally built release.
+
+**Not verified here:** release builds (hardening PR), staging, `cd.yml`.
+
 ---
 
 ## Phase 3: iOS, Swift Package Manager and native config (started 25 Sept 2026)

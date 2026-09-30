@@ -12,7 +12,7 @@ updates the SHA and the comment together (see `.github/dependabot.yml`).
 
 ## `cd.yml` is paused
 It ran on the first push to `develop` on Flutter 3.47.5 and both builds failed for known reasons:
-- **Android:** the Gradle wrapper is 8.13 and Flutter 3.47 needs 8.14 or newer (Shorebird also lists AGP 8.11.1 and Kotlin 2.2.20). Fixed in Phase 4.
+- **Android:** the Gradle wrapper was 8.13 and Flutter 3.47 needs 8.14 or newer. Fixed: Gradle 9.3.1, Android Gradle Plugin 9.1.1, Kotlin 2.4.0. Re-enable after a manual run passes.
 - **iOS:** `firebase_remote_config 6.2.0` and `firebase_storage 13.0.6` need different FlutterFire Swift packages, so Swift Package Manager cannot resolve them. Fixed in Phase 2 by upgrading the Firebase suite as one set.
 
 Until then it only runs when started by hand (Actions tab, Run workflow). Phase 7 restores the push trigger, fixes the release race between the two jobs and adds store delivery.
