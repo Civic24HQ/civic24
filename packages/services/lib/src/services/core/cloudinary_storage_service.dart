@@ -110,7 +110,7 @@ class CloudinaryStorageService {
       }
     }
 
-    _log.e('Upload failed after $maxRetries attempts for: ${file.path}');
+    _log.e('Upload failed after $maxRetries attempts');
     throw CloudinaryUploadException(filePath: file.path, attempts: maxRetries, cause: 'All upload attempts failed');
   }
 

@@ -75,5 +75,31 @@ void main() {
       expect(crashlytics.errors.single.fatal, isTrue);
       expect(crashlytics.errors.single.error, 'Unrecoverable state');
     });
+    test('redacts emails, tokens and URL queries from messages before sending', () async {
+      await service.logToCrashlytics(_event(Level.info, 'Sending to jane.doe@example.com'));
+      await service.logToCrashlytics(_event(Level.warning, 'Header Bearer abc.DEF-123 rejected'));
+
+      expect(crashlytics.breadcrumbs, ['Sending to <email>', 'Header Bearer <token> rejected']);
+    });
+
+    test('redacts personal data in error text but keeps the error type', () async {
+      const error = FormatException('bad input for jane.doe@example.com at https://x.test/a?token=secret123');
+      await service.logToCrashlytics(_event(Level.error, 'Reset failed: $error', error: error));
+
+      final recorded = crashlytics.errors.single;
+      expect(recorded.error, isA<RedactedError>());
+      expect(recorded.error.toString(), startsWith('FormatException: '));
+      expect(recorded.error.toString(), isNot(contains('jane.doe')));
+      expect(recorded.error.toString(), isNot(contains('secret123')));
+      expect(recorded.reason.toString(), isNot(contains('jane.doe')));
+      expect(recorded.reason.toString(), isNot(contains('secret123')));
+    });
+
+    test('an error with nothing to redact is recorded as the original object', () async {
+      final error = StateError('upload failed');
+      await service.logToCrashlytics(_event(Level.error, 'Upload failed', error: error));
+
+      expect(crashlytics.errors.single.error, same(error));
+    });
   });
 }

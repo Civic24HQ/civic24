@@ -87,6 +87,8 @@ Owner answers: latest toolchain Flutter 3.47.5 supports (AGP 9.1.x, Gradle 9.3.1
 
 **Verification (Level 2, local):** 4 new unit tests (`crashlytics_service_test.dart`: debug and trace not sent, info and warning as breadcrumbs, error as non-fatal with the original error and stack, fatal as fatal); all 13 service tests pass. Generated files (mocks regenerated with build_runner), format, analyze and the whole test suite pass, run one step at a time. The development build starts normally on the emulator. **Not verified:** reports arriving in the Crashlytics console (needs a release build writing to a Firebase project; planned with the Phase 5 test crash); iOS runtime (Dart-only change plus the manifest values).
 
+**CodeRabbit follow-up (review on the PR).** Valid in part: 37 error-level calls, 17 of them interpolate exception text (`$e`), which can carry an email or token. `logToCrashlytics` now redacts email addresses, bearer tokens, JWTs and URL query strings from the message and from the error text (`redactPersonalData`); when the error text changes it is recorded as a `RedactedError` that keeps the original type name, otherwise the original object is recorded. Two file paths (`imageFile.path`, `file.path`) were also removed from error logs. Three more tests (7 in the file).
+
 **Not changed:** the user-facing Google sign-in message still says "cancelled" for `[16]` failures (the text is shared with genuine cancels); the Cloudinary `HttpMetric` (owner: later, own PR).
 
 ---

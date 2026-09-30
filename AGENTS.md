@@ -211,6 +211,7 @@ flutter run -d <device_id> --flavor production -t lib/main.dart --dart-define-fr
 * **Log caught errors with the error and stack trace:** `_log.e('What failed', error: e, stackTrace: s)`, so the report groups by the real failure and points at the failing code.
 * **Never put personal data in `info`, `warning`, `error` or `fatal` messages** (emails, names, addresses, locations, tokens, notification text, user-typed text, whole user objects). Log what happened, not the values. `debug` may show values for local debugging, but never tokens or passwords.
 * Crashlytics only receives the Firebase user ID (`setupUserProfile`), never an email or name.
+* `logToCrashlytics` also redacts email addresses, bearer tokens, JWTs and URL query strings from messages and error text (`redactPersonalData`). That is a safety net for exception text, not permission to log personal data.
 * Uncaught errors are fatal reports (`FlutterError.onError` and `PlatformDispatcher.instance.onError`, set up in `CrashlyticsService.setupFlutterErrorLogging`). Collection is off in debug and test runs.
 * `CrashlyticsService.crashApp()` force-crashes the app to test Crashlytics; it does nothing in the production flavor.
 

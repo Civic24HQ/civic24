@@ -74,11 +74,17 @@ class CrashlyticsService {
     final level = event.level;
     if (level.value < Level.info.value) return;
 
-    final message = event.lines.join('\n');
+    final message = redactPersonalData(event.lines.join('\n'));
     if (level.value >= Level.error.value) {
       final origin = event.origin;
+      final error = origin.error;
+      // Exception text can carry personal data (an email in a validation error, a token in a URL).
+      // Keep the original object (and its type) when there is nothing to remove.
+      final redactedError = error == null ? null : redactPersonalData(error.toString());
       await _firebaseCrashlytics.recordError(
-        origin.error ?? message,
+        error == null
+            ? message
+            : (redactedError == error.toString() ? error : RedactedError(error.runtimeType, redactedError!)),
         origin.stackTrace ?? StackTrace.current,
         reason: message,
         fatal: level.value >= Level.fatal.value,
@@ -98,6 +104,35 @@ class CrashlyticsService {
     _log.w('Force crashing the app to test Crashlytics setup');
     return _firebaseCrashlytics.crash();
   }
+}
+
+final _emailPattern = RegExp(r'[A-Za-z0-9._%+\-]+@[A-Za-z0-9.\-]+\.[A-Za-z]{2,}');
+final _bearerPattern = RegExp(r'Bearer\s+[A-Za-z0-9._~+/=\-]+', caseSensitive: false);
+final _jwtPattern = RegExp(r'eyJ[A-Za-z0-9_\-]+\.[A-Za-z0-9_\-]+\.[A-Za-z0-9_\-]*');
+final _urlQueryPattern = RegExp(r'(https?://[^\s?#]+)\?[^\s#]*');
+
+/// Removes what must never reach Crashlytics from a message: email addresses, bearer tokens,
+/// JWTs and URL query strings (which often carry tokens or keys).
+///
+/// This is a safety net for exception text, not a licence to log personal data: messages should
+/// not contain it in the first place (see AGENTS.md, 4.5).
+@visibleForTesting
+String redactPersonalData(String text) => text
+    .replaceAll(_emailPattern, '<email>')
+    .replaceAll(_bearerPattern, 'Bearer <token>')
+    .replaceAll(_jwtPattern, '<token>')
+    .replaceAllMapped(_urlQueryPattern, (m) => '${m[1]}?<query>');
+
+/// An error whose text was redacted. Keeps the original type name so reports stay recognisable.
+@visibleForTesting
+class RedactedError implements Exception {
+  RedactedError(this.originalType, this.redactedText);
+
+  final Type originalType;
+  final String redactedText;
+
+  @override
+  String toString() => '$originalType: $redactedText';
 }
 
 class CrashlyticsOutput extends LogOutput {
