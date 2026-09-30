@@ -161,9 +161,11 @@ Then `melos run citizen:run:development`, or `flutter run --flavor development -
 keytool -list -v -keystore ~/.android/debug.keystore -alias androiddebugkey -storepass android -keypass android | grep -E "SHA1|SHA256"
 ```
 
-and add both values under Firebase console, Project settings, your Android app, **Add fingerprint**. Then re-download `google-services.json`. Nothing in the secrets file needs to change.
+and add both values under Firebase console, Project settings, your Android app, **Add fingerprint**. Google checks the fingerprint on its servers, so sign-in works after a few minutes; nothing in the secrets file needs to change. Re-downloading `google-services.json` is optional and only keeps your local copy in step.
 
-**Release builds** (Play Store, Shorebird) are signed with the upload keystore and are for maintainers only; contributors never need it. Copy `apps/citizen/android/key.properties.example` to `key.properties`, fill it in and put the keystore at the path it names (`storeFile` is relative to `android/app`). A release build without a complete `key.properties` stops with a message saying what is missing. Release builds also upload the R8 mapping file to the flavor's Firebase project, so for local checks add `--android-project-arg crashlyticsMappingUpload=false`.
+**Testing a release build (anyone):** `flutter build apk --release --flavor development -t lib/main.dart --dart-define-from-file=secrets/development.json --android-project-arg crashlyticsMappingUpload=false`. Without a `key.properties`, development and staging release builds are signed with your debug key and print a warning. To try the **production** flavor the same way, also add `--android-project-arg debugSignRelease=true` (without it, a production release stops so a store build is never debug-signed by accident). Never distribute a debug-signed build. Release builds upload the R8 mapping file to the flavor's Firebase project, so `crashlyticsMappingUpload=false` keeps a local check from writing to it.
+
+**Store releases** (Play Store, Shorebird) are signed with the upload keystore and are for maintainers only. Copy `apps/citizen/android/key.properties.example` to `key.properties`, fill it in and put the keystore at the path it names (`storeFile` is relative to `android/app`).
 
 ---
 

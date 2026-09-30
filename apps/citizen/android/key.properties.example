@@ -1,6 +1,8 @@
 # Release signing values. Copy this file to key.properties (gitignored) and fill it in.
-# Only the maintainers who build signed releases need it: debug and development builds
-# are signed with your machine's own debug key and never read this file.
+# Only the maintainers who build store releases need it. Debug builds are signed with your
+# machine's own debug key and never read this file. Without it, development and staging release
+# builds are signed with the debug key (with a warning), and a production release stops unless you
+# add --android-project-arg debugSignRelease=true to try it locally. Never distribute those builds.
 #
 # NEVER commit key.properties or the keystore (*.jks, *.keystore). Both are gitignored.
 

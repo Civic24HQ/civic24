@@ -51,7 +51,7 @@ It formats files, so commit whatever it changes.
 - Admins can bypass (`enforce_admins` is off). Force pushes and deletion of `develop` are blocked.
 
 ## Android release signing and `cd.yml`
-Android release builds now stop unless `android/key.properties` (or the file named by `-PkeyProperties`) is complete. `cd.yml` runs `flutter build apk --release`, and CI has no keystore, so the Android job will fail until signing is provided from encrypted secrets (decode the keystore and a `key.properties` in the workflow, pass `-PkeyProperties`). `cd.yml` is manual-only until then; this belongs to the CD phase.
+`cd.yml` builds a **development-flavor** release APK. With no keystore in CI it is now signed with the debug key (a warning is logged), which is fine for preview builds but not for distribution. A production release without `android/key.properties` (or the file named by `-PkeyProperties`) stops. For properly signed CD builds, give CI a **separate CI-only keystore** for the development flavor (base64 secret, decoded in the workflow, `-PkeyProperties`) and register its fingerprint in the development Firebase project; keep the real upload key for production releases only. `cd.yml` stays manual-only until the CD phase (Phase 7).
 
 ## `open_pr.yml` and `pull_request_target`
 Labeling uses `pull_request_target` so it also works for pull requests from forks and from Dependabot, whose normal token is read-only. That trigger runs with a write token, so:

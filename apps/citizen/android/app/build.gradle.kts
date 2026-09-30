@@ -19,8 +19,22 @@ if (keystorePropertiesFile.exists()) {
     keystorePropertiesFile.inputStream().use { keystoreProperties.load(it) }
 }
 
-// A release build must never fall back to an unsigned or debug-signed app: stop with a clear message.
-if (gradle.startParameter.taskNames.any { it.contains("release", ignoreCase = true) }) {
+// Release signing rules. Anyone can test a release build; only a store release needs the real key.
+// - Development and staging release builds without a usable key.properties are signed with the debug
+//   key and print a warning, so contributors and CI can try a release build.
+// - Production (and any build that includes it) without a usable key.properties stops with a message,
+//   so a store release is never debug-signed by accident. To test the production flavor locally, opt in:
+//   `--android-project-arg debugSignRelease=true` (Flutter) or `-PdebugSignRelease=true` (Gradle).
+// - Never distribute a debug-signed build.
+// - Android Studio's "Generate Signed App Bundle" passes its own credentials
+//   (android.injected.signing.*); nothing is checked then.
+val signingTaskPattern = Regex("(assemble|bundle|package|install|sign)\\w*Release", RegexOption.IGNORE_CASE)
+val signingTasks = gradle.startParameter.taskNames.filter { signingTaskPattern.containsMatchIn(it) }
+val ideSuppliesSigning = providers.gradleProperty("android.injected.signing.store.file").isPresent
+val debugSignRelease = providers.gradleProperty("debugSignRelease").map { it.toBoolean() }.getOrElse(false)
+var useDebugSigningForRelease = false
+
+if (signingTasks.isNotEmpty() && !ideSuppliesSigning) {
     val requiredKeys = listOf("storeFile", "storePassword", "keyAlias", "keyPassword")
     val missing = requiredKeys.filter { keystoreProperties.getProperty(it).isNullOrBlank() }
     val problem =
@@ -33,11 +47,19 @@ if (gradle.startParameter.taskNames.any { it.contains("release", ignoreCase = tr
             else -> null
         }
     if (problem != null) {
-        throw GradleException(
-            "Release builds must be signed, but $problem\n" +
-                "Copy android/key.properties.example to android/key.properties and fill it in. " +
-                "Debug and development builds do not need it.",
-        )
+        val includesProduction =
+            signingTasks.any { !it.contains("development", ignoreCase = true) && !it.contains("staging", ignoreCase = true) }
+        val help = "Copy android/key.properties.example to android/key.properties and fill it in."
+        if (includesProduction && !debugSignRelease) {
+            throw GradleException(
+                "Production release builds must be signed with the upload key, but $problem\n$help " +
+                    "To try a production release locally without it (never to distribute), add " +
+                    "--android-project-arg debugSignRelease=true. Debug builds and development or staging " +
+                    "release builds do not need any of this.",
+            )
+        }
+        useDebugSigningForRelease = true
+        logger.warn("WARNING: signing this release with the DEBUG key because $problem\n$help Do not distribute this build.")
     }
 }
 
@@ -74,7 +96,7 @@ android {
 
     buildTypes {
         release {
-            signingConfig = signingConfigs.getByName("release")
+            signingConfig = signingConfigs.getByName(if (useDebugSigningForRelease) "debug" else "release")
             isMinifyEnabled = true
             isShrinkResources = true
             proguardFiles(

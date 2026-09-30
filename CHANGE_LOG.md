@@ -95,11 +95,17 @@ Owner answers: latest toolchain Flutter 3.47.5 supports (AGP 9.1.x, Gradle 9.3.1
 | Change | Why |
 |---|---|
 | `android/key.properties.example` (placeholders, relative `storeFile=upload-keystore.jks`) | Contributors and CI have a template; the real file and keystore stay gitignored |
-| Release tasks fail with a clear message unless `key.properties` is complete and its keystore exists | Owner decision: a release must never fall back to an unsigned or debug-signed build. Checks the file, the four keys and the keystore path |
+| Release signing rules in `app/build.gradle.kts` (see below) | Anyone can test a release build, but a store build is never debug-signed by accident. The message names what is wrong (missing file, missing keys, missing keystore) |
 | `-PkeyProperties=<path>` | Lets CI point at a file decoded from a secret |
-| README "Running on Android"; AGENTS.md 6.3; `.github/workflows/README.md` | Per-flavor files, registering each machine's debug key (the cause of the sign-in failure), release signing for maintainers |
+| README "Running on Android"; AGENTS.md 6.3; `.github/workflows/README.md` | Per-flavor files, registering each machine's debug key (the cause of the sign-in failure), testing and store releases |
 
-**Verification (Level 2, local):** with `bundleProductionRelease --dry-run`: missing file, missing keys (`storePassword, keyPassword`) and a missing keystore each stop with the right message; the owner's real `key.properties` passes; a debug task with no key file at all is unaffected; `signingReport` still works. **Consequence:** `cd.yml` (a release APK in CI, no keystore) will fail until signing secrets are added; it is manual-only, documented, and belongs to the CD phase. **Not verified:** a signed release built with the new check (the earlier release builds ran before it; nothing else changed for a valid file).
+**The rules.** Checked only for tasks that sign (`assemble`, `bundle`, `package`, `install` or `sign` plus `Release`, so lint and unit-test tasks with "release" in the name are not affected). (1) Complete `key.properties` and existing keystore: signed with the upload key. (2) Missing or incomplete: **development and staging** are signed with the debug key and warn; **production** stops with a message unless `--android-project-arg debugSignRelease=true` (local testing only). (3) Android Studio's "Generate Signed App Bundle" passes `android.injected.signing.*`, so nothing is checked. First version (owner decision): every release stopped without `key.properties`. Changed after owner feedback that contributors must be able to test release builds, and after review found the first version would also block Android Studio's wizard.
+
+**Correction:** the change log first said a release "must never fall back to an unsigned build". The Android plugin already fails when the signing values are missing (I believe, with a less helpful message; not tested), so the stop is not new: the value is the clear message and the safe fallback.
+
+**Verification (Level 2, local).** Dry runs for every case: production with no file, incomplete file, or `debugSignRelease=false` stops; `assembleRelease` (all flavors) stops; development and staging warn and succeed; `debugSignRelease=true` and Android Studio injected signing succeed; a lint task and a debug task are unaffected; the real `key.properties` passes. **Real builds, signer checked with `apksigner` (digests compared, none printed):** production release with the real file is signed with the **upload key**; development release with no key file is signed with the **debug key** (and warns). Crashlytics mapping upload was switched off, nothing was uploaded. **Not verified:** a production build with `debugSignRelease=true` (dry run only), a build from Android Studio's wizard, `cd.yml`.
+
+**Consequence for `cd.yml`:** its development-flavor release now builds without secrets, signed with the debug key. Properly signed CD builds are a Phase 7 task (separate CI-only keystore recommended, see the workflow README).
 
 ---
 
