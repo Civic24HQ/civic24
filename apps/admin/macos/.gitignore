@@ -5,3 +5,7 @@
 # Xcode-related
 **/dgph
 **/xcuserdata/
+
+# Xcode writes the same Package.resolved into both workspaces; only Runner.xcworkspace is committed.
+Runner.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/
+**/xcshareddata/swiftpm/configuration/
