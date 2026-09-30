@@ -50,6 +50,9 @@ It formats files, so commit whatever it changes.
 - **No approving review is required.** With a single maintainer an approval requirement would block every merge, since GitHub does not let you approve your own pull request. CodeRabbit's green check means its review finished, not that it approved.
 - Admins can bypass (`enforce_admins` is off). Force pushes and deletion of `develop` are blocked.
 
+## Android release signing and `cd.yml`
+`cd.yml` builds a **development-flavor** release APK. With no keystore in CI it is now signed with the debug key (a warning is logged), which is fine for preview builds but not for distribution. A production release without `android/key.properties` (or the file named by `-PkeyProperties`) stops. For properly signed CD builds, give CI a **separate CI-only keystore** for the development flavor (base64 secret, decoded in the workflow, `-PkeyProperties`) and register its fingerprint in the development Firebase project; keep the real upload key for production releases only. `cd.yml` stays manual-only until the CD phase (Phase 7).
+
 ## `open_pr.yml` and `pull_request_target`
 Labeling uses `pull_request_target` so it also works for pull requests from forks and from Dependabot, whose normal token is read-only. That trigger runs with a write token, so:
 - never add a checkout of the pull request, or run anything from it, to that workflow;

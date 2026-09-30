@@ -146,6 +146,27 @@ rm -rf ~/Library/Developer/Xcode/DerivedData
 
 The setting lasts until you log out or restart, and applies to every app started after it (including other projects' builds). It stores an absolute path, so set it again if you move the clone. To remove it, run `launchctl unsetenv PERMISSION_HANDLER_INFO_PLIST`, then clear DerivedData again.
 
+### Running on Android
+
+You need two files of your own per flavor (both gitignored), from your own Firebase project:
+
+- `apps/citizen/android/app/src/<flavor>/google-services.json`
+- `apps/citizen/secrets/<flavor>.json` (`WEB_CLIENT_ID` is the web client of the same project; see `secrets/env.example.json`)
+
+Then `melos run citizen:run:development`, or `flutter run --flavor development -t lib/main.dart --dart-define-from-file=secrets/development.json` from `apps/citizen`. Use an emulator image **with Google Play** if you want to test Google sign-in. The three flavors show as Civic24 DEV, Civic24 STG and Civic24.
+
+**Google sign-in fails with "Sign-in was cancelled"?** Google refuses apps whose signing certificate it does not know, and reports it as `canceled` (the log shows `[16] Account reauth failed`). Every computer has its own debug key, so register yours: run
+
+```bash
+keytool -list -v -keystore ~/.android/debug.keystore -alias androiddebugkey -storepass android -keypass android | grep -E "SHA1|SHA256"
+```
+
+and add both values under Firebase console, Project settings, your Android app, **Add fingerprint**. Google checks the fingerprint on its servers, so sign-in works after a few minutes; nothing in the secrets file needs to change. Re-downloading `google-services.json` is optional and only keeps your local copy in step.
+
+**Testing a release build (anyone):** `flutter build apk --release --flavor development -t lib/main.dart --dart-define-from-file=secrets/development.json --android-project-arg crashlyticsMappingUpload=false`. Without a `key.properties`, development and staging release builds are signed with your debug key and print a warning. To try the **production** flavor the same way, also add `--android-project-arg debugSignRelease=true` (without it, a production release stops so a store build is never debug-signed by accident). Never distribute a debug-signed build. Release builds upload the R8 mapping file to the flavor's Firebase project, so `crashlyticsMappingUpload=false` keeps a local check from writing to it.
+
+**Store releases** (Play Store, Shorebird) are signed with the upload keystore and are for maintainers only. Copy `apps/citizen/android/key.properties.example` to `key.properties`, fill it in and put the keystore at the path it names (`storeFile` is relative to `android/app`).
+
 ---
 
 ## Firebase & Supabase
