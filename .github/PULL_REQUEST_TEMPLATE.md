@@ -1,13 +1,17 @@
 <!--
 🎉 Great work so far! Please take a moment to complete this PR template.
 
-Use a descriptive title in this format:
-<type>/<summary>
+Use a Conventional Commits title: <type>(<optional scope>): <summary>
+Types: feat, fix, refactor, chore, docs, test, ci
 Examples:
-  - feature/add user onboarding flow
-  - chore/update app icons
+  - feat(citizen): add user onboarding flow
+  - chore(android): upgrade Gradle, Android Gradle Plugin and Kotlin
+  - docs: link the Google Play listing
 
-📌 IMPORTANT: Please open this PR as a Draft unless it's fully ready for review.
+Branch names use the same type with a slash: feat/add-user-onboarding-flow
+
+📌 IMPORTANT: Open this PR as a Draft while work is still in progress.
+Mark it "Ready for review" once it is complete and the checks pass.
 -->
 
 ## ✏️ Description
