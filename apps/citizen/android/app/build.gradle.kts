@@ -28,38 +28,45 @@ if (keystorePropertiesFile.exists()) {
 // - Never distribute a debug-signed build.
 // - Android Studio's "Generate Signed App Bundle" passes its own credentials
 //   (android.injected.signing.*); nothing is checked then.
-val signingTaskPattern = Regex("(assemble|bundle|package|install|sign)\\w*Release", RegexOption.IGNORE_CASE)
-val signingTasks = gradle.startParameter.taskNames.filter { signingTaskPattern.containsMatchIn(it) }
+// The rules are applied per flavor, and the stop looks at the release tasks Gradle actually resolved
+// (`assemble<Flavor>Release`, `bundle<Flavor>Release`, ...), so aggregate tasks such as `assemble` or
+// `bundle` cannot bypass them. (Signing task names are not used: with no keystore Gradle creates none
+// and builds an unsigned production app.)
 val ideSuppliesSigning = providers.gradleProperty("android.injected.signing.store.file").isPresent
 val debugSignRelease = providers.gradleProperty("debugSignRelease").map { it.toBoolean() }.getOrElse(false)
-var useDebugSigningForRelease = false
+val requiredKeys = listOf("storeFile", "storePassword", "keyAlias", "keyPassword")
+val missingKeys = requiredKeys.filter { keystoreProperties.getProperty(it).isNullOrBlank() }
+val signingProblem: String? =
+    when {
+        ideSuppliesSigning -> null
+        !keystorePropertiesFile.exists() -> "${keystorePropertiesFile.path} does not exist."
+        missingKeys.isNotEmpty() -> "${keystorePropertiesFile.name} is missing: ${missingKeys.joinToString(", ")}."
+        !file(keystoreProperties.getProperty("storeFile")).exists() ->
+            "the keystore \"${keystoreProperties.getProperty("storeFile")}\" does not exist " +
+                "(the path is relative to android/app)."
+        else -> null
+    }
+val signingHelp = "Copy android/key.properties.example to android/key.properties and fill it in."
+// Which flavors are signed with the debug key when there is no usable key.properties.
+val debugSignedFlavors = if (signingProblem == null) emptySet() else setOf("development", "staging") +
+    (if (debugSignRelease) setOf("production") else emptySet())
 
-if (signingTasks.isNotEmpty() && !ideSuppliesSigning) {
-    val requiredKeys = listOf("storeFile", "storePassword", "keyAlias", "keyPassword")
-    val missing = requiredKeys.filter { keystoreProperties.getProperty(it).isNullOrBlank() }
-    val problem =
-        when {
-            !keystorePropertiesFile.exists() -> "${keystorePropertiesFile.path} does not exist."
-            missing.isNotEmpty() -> "${keystorePropertiesFile.name} is missing: ${missing.joinToString(", ")}."
-            !file(keystoreProperties.getProperty("storeFile")).exists() ->
-                "the keystore \"${keystoreProperties.getProperty("storeFile")}\" does not exist " +
-                    "(the path is relative to android/app)."
-            else -> null
-        }
-    if (problem != null) {
-        val includesProduction =
-            signingTasks.any { !it.contains("development", ignoreCase = true) && !it.contains("staging", ignoreCase = true) }
-        val help = "Copy android/key.properties.example to android/key.properties and fill it in."
-        if (includesProduction && !debugSignRelease) {
+gradle.taskGraph.whenReady {
+    val releaseTaskPattern = Regex("^(assemble|bundle|install|package|sign)[A-Za-z]*Release(Bundle)?$")
+    val releaseTasks = allTasks.filter { it.project == project && releaseTaskPattern.matches(it.name) }
+    if (signingProblem != null && releaseTasks.isNotEmpty()) {
+        val flavors = debugSignedFlavors.filter { flavor -> releaseTasks.any { it.name.contains(flavor, ignoreCase = true) } }
+        if (releaseTasks.any { it.name.contains("Production", ignoreCase = true) } && "production" !in debugSignedFlavors) {
             throw GradleException(
-                "Production release builds must be signed with the upload key, but $problem\n$help " +
+                "Production release builds must be signed with the upload key, but $signingProblem\n$signingHelp " +
                     "To try a production release locally without it (never to distribute), add " +
                     "--android-project-arg debugSignRelease=true. Debug builds and development or staging " +
                     "release builds do not need any of this.",
             )
         }
-        useDebugSigningForRelease = true
-        logger.warn("WARNING: signing this release with the DEBUG key because $problem\n$help Do not distribute this build.")
+        if (flavors.isNotEmpty()) {
+            logger.warn("WARNING: signing the ${flavors.joinToString(", ")} release with the DEBUG key because $signingProblem\n$signingHelp Do not distribute this build.")
+        }
     }
 }
 
@@ -96,7 +103,7 @@ android {
 
     buildTypes {
         release {
-            signingConfig = signingConfigs.getByName(if (useDebugSigningForRelease) "debug" else "release")
+            // No signingConfig here: it is set per flavor below (release or debug, see the rules above).
             isMinifyEnabled = true
             isShrinkResources = true
             proguardFiles(
@@ -116,20 +123,24 @@ android {
     flavorDimensions += "default"
 
     productFlavors {
+        // The debug build type keeps its own debug signing; these apply to release builds.
         create("production") {
             dimension = "default"
             applicationIdSuffix = ""
             manifestPlaceholders["appName"] = "Civic24"
+            signingConfig = signingConfigs.getByName(if ("production" in debugSignedFlavors) "debug" else "release")
         }
         create("staging") {
             dimension = "default"
             applicationIdSuffix = ".stg"
             manifestPlaceholders["appName"] = "Civic24 STG"
+            signingConfig = signingConfigs.getByName(if ("staging" in debugSignedFlavors) "debug" else "release")
         }
         create("development") {
             dimension = "default"
             applicationIdSuffix = ".dev"
             manifestPlaceholders["appName"] = "Civic24 DEV"
+            signingConfig = signingConfigs.getByName(if ("development" in debugSignedFlavors) "debug" else "release")
         }
     }
 }
