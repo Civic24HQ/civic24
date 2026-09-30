@@ -85,6 +85,42 @@ The Phase 0 audit in `CHANGE_LOG.md` confirmed the list above and changed or add
 - **After Phase 2 (own PR):** fix D17, `PermissionService` loses a permanent denial on Android because it stores `Permission.status`, which cannot report `permanentlyDenied`. **Done: see CHANGE_LOG.md 3.4 (device confirmation still due in Phase 5).**
 - **Phase 7:** put the `push: branches: [develop]` trigger back in `cd.yml`, then fix the release race in `cd.yml`: the iOS and Android build jobs both create the same release tag, so add one `release` job that waits for both builds (`needs`), downloads their artifacts and publishes once. `cd.yml` has not been run since the Phase 1 CI repair, so test it end to end. Android fastlane has no `Fastfile` (only `Appfile`, `Pluginfile`, README) and iOS has no fastlane folder, so both are written from scratch. Add GitHub Dependabot for pub, npm and GitHub Actions (monthly, Firebase packages grouped).
 
+### Decisions recorded during Phases 3 and 4 (30 Sept 2026, owner approved)
+
+Where this section and a phase below differ, this section wins. Evidence for each item is in `CHANGE_LOG.md` (section numbers in brackets).
+
+**Phase 3 (iOS)**
+- **Step 8, location:** no background mode and no "Always" strings, as planned. `NSLocationWhenInUseUsageDescription` is **not** the plan's example ("tag the precise location of civic issues you report"), because nothing attaches coordinates to reports. The only location code is the profile screen's "use accurate location" button, which is commented out. The string reads: "Your location is used only while the app is open, to fill in your country and state when you complete your profile." When that button returns, or issue tagging ships, update the string, the iOS privacy manifest, the Android manifest (`ACCESS_FINE_LOCATION` and `ACCESS_COARSE_LOCATION`) and the Play data-safety form in the same change. Never background location. [3.2, 4.5]
+- **Step 9, privacy manifest:** `NSPrivacyAccessedAPITypes` stays an **empty array**, not `UserDefaults` as the plan says: the app's own code uses none of the five required-reason API categories, about 40 SDK bundles in the built app carry their own manifests, and the plugins without one were scanned. Pre-filling reason codes would assert behaviour the app lacks and hide Apple's upload warning. The first App Store Connect upload is the real validator (blocked on the suspended Apple account); if it names an API, add that one entry. **Collected data declared** (owner confirmed): email, name, photos or videos, other user content, user ID, product interaction and crash data (all **linked** to the user, because the user ID is attached to Analytics and Crashlytics), device ID and performance data (not linked). Precise location is **not** declared until the feature ships. [3.2, 4.6]
+- **Step 11, other Apple targets:** the owner chose to migrate admin iOS, admin macOS and citizen macOS to Swift Package Manager now (delete the folders later if they prove unused). CocoaPods is gone from all four Apple projects. [4.8]
+- **Not done, Apple account:** step 10 (push, entitlements) and Sign in with Apple stay suspended (`docs/APPLE_DEVELOPER_ACCOUNT.md`).
+
+**Phase 4 (Android)**
+- **Step 4, release build and signing:** the plan's example sets `signingConfig = release` unconditionally. The release build type is signed with the upload key when `key.properties` is complete, otherwise with the debug key and a warning, so anyone can test a release. A **production** release (or any task that includes one) without a usable `key.properties` stops with a message unless `--android-project-arg debugSignRelease=true`. Android Studio's signed-bundle wizard is respected. `storeFile` is relative to `android/app`; `key.properties.example` is committed. Without a keystore Gradle would otherwise build an **unsigned** production app. [4.7]
+- **Crashlytics mapping upload:** every release build uploads the R8 mapping to the flavor's Firebase project. Local checks use `--android-project-arg crashlyticsMappingUpload=false`, typed literally (an unquoted shell variable drops it silently), with a dry-run preflight and an all-zero `build/app/crashlytics/<variant>/mappingFileId.txt` afterwards. [4.7]
+- **Manifest:** `usesCleartextTraffic` removed (all flavors use HTTPS); the commented-out location permissions removed; display names `Civic24 DEV`, `Civic24 STG`, `Civic24`. [4.5]
+- **`AD_ID` kept:** Firebase Analytics merges it in and Play Console already declares "uses advertising ID, for Analytics". The Play data-safety form must match the data table above (owner action before the next store release). [4.5]
+- **Performance:** the Firebase Performance Gradle plugin is applied. It only instruments native Android HTTP code; the app's own Dart request (`CloudinaryStorageService`) needs an `HttpMetric` (Phase 8). [4.4]
+- **Toolchain and packages:** Gradle 9.3.1, Android Gradle Plugin 9.1.1, Kotlin 2.4.0, `compileSdk` 37 (for `permission_handler` 13), `targetSdk` 36; Gradle scripts in Kotlin DSL; `android.newDsl=false` and `android.builtInKotlin=false` until the eleven plugins that still apply the Kotlin Gradle plugin are updated. [4.2, 4.3, 4.4]
+- **Crashlytics error reporting** follows the FlutterFire guide: uncaught errors fatal, real error and stack trace, only `info` and above leave the device, personal data redacted, only the user ID attached; the test crash works outside the production flavor in any build mode. [4.6]
+
+**Phase 5 additions**
+- **Crashlytics test crash (Phase 3 step 5, not yet done):** from a development-flavor **Release** build (symbols upload only for Release builds), call `CrashlyticsService.crashApp()` and confirm a symbolicated crash in the development Crashlytics console.
+- **Android sign-in needs each machine's debug key registered** (SHA-1 and SHA-256) in each Firebase Android app, plus the Play App Signing key in production; a missing one shows as `canceled` / `[16] Account reauth failed`. Verified on the Android emulator (development and production, debug builds). The upload key is only needed to sign in on a locally built release. **Still untested:** staging on Android and iOS, Sign in with Apple, a locally built release, App Check enforcement. [4.7]
+
+**Phase 6 additions**
+- Use the **Firebase Local Emulator Suite for rules and function tests** (run on the developer machine or in CI, not from the app). The app itself does not use the emulator; if it ever does, allow cleartext only for that host in a debug-only network security config.
+- **Held until this phase:** TypeScript 6 and `@types/node` (use 24, matching `engines.node`); Dependabot proposes them monthly unless an ignore rule is added.
+- Add a backend CI job (build and lint; `backend/` is not built by CI today).
+
+**Phase 7 additions**
+- **`cd.yml` Android signing:** with no keystore the development-flavor release is debug-signed. For properly signed CD builds use a **separate CI-only keystore** for development (base64 secret decoded in the workflow, `-PkeyProperties`) with its fingerprint registered in the development Firebase project; keep the upload key for production releases only. Also remove the no-op `rm -rf ios/Pods` step. [4.7, 4.8]
+- Add an Android build job to CI; none of the Android signing, release or Kotlin DSL changes is covered by CI today.
+- The notification icon `@drawable/ic_stat_notification` does not exist (and `background` is a full-colour PNG); it needs a white-on-transparent asset from design.
+
+**Phase 8 backlog**
+- `HttpMetric` for the Cloudinary upload; bump `desugar_jdk_libs` (2.1.4 to 2.1.5) and confirm with a release build; check whether the app module's own Firebase BoM and `firebase-analytics` lines are redundant with FlutterFire's (`firebase_core` 4.15.0 pins BoM 34.19.0); turn on `builtInKotlin` when the plugins allow it; consider Gradle's configuration cache (the signing hook reads the project and would need testing).
+
 ---
 
 ## 2. Rules of engagement
@@ -197,14 +233,14 @@ Context: Flutter 3.44 makes Swift Package Manager the default. Firebase stops pu
 5. Rewrite the Crashlytics dSYM upload Run Script for Swift Package Manager, using the path the current Firebase docs give (typically `"${BUILD_DIR%Build/*}SourcePackages/checkouts/firebase-ios-sdk/Crashlytics/run"`, or the Swift Package `upload-symbols` script). Confirm a symbolicated test crash appears in Crashlytics.
 6. Keep the flavor script that copies `ios/config/<flavor>/GoogleService-Info.plist` into `Runner/`, and make sure it runs before anything that reads Firebase config. Confirm all three flavors still select their correct Firebase and Google Sign In config.
 7. Audit the rest of the native config: schemes, build settings, entitlements, URL schemes, notification capabilities and build scripts.
-8. `apps/citizen/ios/Runner/Info.plist`:
+8. `apps/citizen/ios/Runner/Info.plist`: *(Decided differently: see "Decisions recorded during Phases 3 and 4" above.)*
    - Remove `location` from `UIBackgroundModes`. Keep only `fetch` and `remote-notification`.
    - Remove `NSLocationAlwaysUsageDescription` and `NSLocationAlwaysAndWhenInUseUsageDescription` unless real continuous background tracking is introduced. Only ask for when in use location, at the moment the user opens the camera or taps "Get Current Location".
    - Set `NSLocationWhenInUseUsageDescription` to something accurate, for example: "Civic24 uses your location to tag the precise location of civic issues you report."
    - Check the camera, photo library and notification usage strings, and set `ITSAppUsesNonExemptEncryption` to `false` if the app only uses standard HTTPS.
-9. Add `apps/citizen/ios/Runner/PrivacyInfo.xcprivacy` with the required API declarations (at least `NSPrivacyAccessedAPICategoryUserDefaults`) and the data collection types, matching what the plugins and the app actually do.
+9. Add `apps/citizen/ios/Runner/PrivacyInfo.xcprivacy` with the required API declarations (at least `NSPrivacyAccessedAPICategoryUserDefaults`) and the data collection types, matching what the plugins and the app actually do. *(Decided differently: see "Decisions recorded during Phases 3 and 4" above.)*
 10. **SUSPENDED (Apple account, A2 to A4 in `docs/APPLE_DEVELOPER_ACCOUNT.md`)**: Push notifications: APNs key uploaded to each Firebase project, Push Notifications and Background Modes capabilities on, entitlements correct per flavor.
-11. Apply the same analysis to other Apple targets in the monorepo only if they are maintained or built by CI. Do not silently expand the migration into unrelated targets.
+11. Apply the same analysis to other Apple targets in the monorepo only if they are maintained or built by CI. Do not silently expand the migration into unrelated targets. *(Decided differently: see "Decisions recorded during Phases 3 and 4" above.)*
 
 The App Store compliance features themselves (report, block, terms, account deletion) are feature work and live in Phase 7, not here.
 
@@ -214,7 +250,7 @@ The App Store compliance features themselves (report, block, terms, account dele
 1. Upgrade the Android Gradle Plugin, Gradle wrapper, Kotlin and JDK to the versions the new Flutter template recommends. Run `flutter analyze --suggestions` to see the compatibility matrix.
 2. Migrate `apps/citizen/android/settings.gradle`, `android/build.gradle` and `android/app/build.gradle` to Kotlin DSL (`.gradle.kts`), matching a freshly generated Flutter app.
 3. Clean up dependencies: `implementation(platform("com.google.firebase:firebase-bom:<latest>"))`, remove `kotlin-stdlib-jdk7:1.9.20`, bump `com.google.gms.google-services` (4.4.2 or newer) and `com.google.firebase.crashlytics` (3.x), and either apply the Performance plugin properly or remove the unused declaration.
-4. Release build type:
+4. Release build type: *(Decided differently: see "Decisions recorded during Phases 3 and 4" above.)*
    ```kotlin
    buildTypes {
        release {
