@@ -290,11 +290,16 @@ These files are gitignored and must stay out of git:
   Maintain `apps/citizen/ios/Runner/PrivacyInfo.xcprivacy` declaring accessed APIs (like `NSPrivacyAccessedAPICategoryUserDefaults`).
 
 ### 6.3 Android & 16 KB Page Support
-* Support **16 KB page sizes** as required for Android 15+ (Google Play 2026 rule).
-* Set `compileSdk = 36` and `targetSdk = 36`.
+* Support **16 KB page sizes** as required for Android 15+ (Google Play 2026 rule). Check a release APK with `zipalign -c -P 16 -v 4 <apk>` (build-tools) and, for each `lib/*/*.so`, `llvm-readelf -lW` (NDK): every `LOAD` segment must be aligned to at least `0x4000`. The Pixel emulator image used here has a 16 KB page size.
+* `compileSdk = 37` (needed by `permission_handler` 13) and `targetSdk = 36`.
 * Use Kotlin DSL (`build.gradle.kts`).
-* Use platform notation for the Firebase BOM: `implementation(platform("com.google.firebase:firebase-bom:<version>"))`. `<version>` is a placeholder, not a copyable value: replace it with the latest published BOM version from the Firebase Android release notes when you make the change (the repo currently uses 34.11.0).
+* Use platform notation for the Firebase BOM: `implementation(platform("com.google.firebase:firebase-bom:<version>"))`. `<version>` is a placeholder, not a copyable value: replace it with the latest published BOM version from the Firebase Android release notes when you make the change (the repo currently uses 34.19.0).
+* Release builds use R8 (`isMinifyEnabled`) and resource shrinking (`isShrinkResources`) with `proguard-android-optimize.txt` plus `app/proguard-rules.pro`.
 * Do not add Gson or Freezed ProGuard keep rules. Freezed models are Dart, so R8 never touches them. Add a keep rule to `proguard-rules.pro` only when a real release build crash or a plugin's docs require it, and log why in `CHANGE_LOG.md`.
+* **Resources used by name from Dart** (for example a notification icon passed as a string) are invisible to the resource shrinker. List them in `app/src/main/res/raw/keep.xml` (`tools:keep`), or release builds lose them.
+* **Crashlytics mapping upload:** every release build uploads the R8 mapping file to the flavor's Firebase project. To build a release locally without uploading, add `--android-project-arg crashlyticsMappingUpload=false` to `flutter build` (or `-PcrashlyticsMappingUpload=false` to Gradle). Never build a production release for testing without it.
+* **Display names:** `Civic24 DEV`, `Civic24 STG`, `Civic24` (the `appName` manifest placeholder per flavor), matching iOS.
+* **No cleartext HTTP:** the manifest does not allow `usesCleartextTraffic`. If a debug build ever needs plain HTTP (for example the Firebase Local Emulator Suite), add a debug-only network security config for that host, never an app-wide flag.
 
 ### 6.4 Shorebird Code Push
 * Shorebird cannot patch changes that touch native code (Gradle, Kotlin, Xcode, Podfile, SPM, or new native plugins).
