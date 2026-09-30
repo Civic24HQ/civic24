@@ -54,6 +54,23 @@ Owner answers: latest toolchain Flutter 3.47.5 supports (AGP 9.1.x, Gradle 9.3.1
 
 **Emulator note:** logcat shows `android.hardware.uwb-service` aborting every 5 seconds. That is the emulator image's ultra-wideband service (no `/dev/uwb0`), not the app.
 
+### 4.5 Release build hardening (`chore/harden-android-release-build`)
+| Change | Why |
+|---|---|
+| `isShrinkResources = true`; `proguardFiles(optimize, "proguard-rules.pro")` | Smaller release builds. `proguard-rules.pro` is new and empty on purpose: Flutter and every plugin ship consumer rules, and no release crash needed a rule |
+| `app/src/main/res/raw/keep.xml` keeps `@drawable/background` | Dart passes it by name to `AndroidInitializationSettings('background')`; the shrinker cannot see that and would remove it |
+| Release Crashlytics mapping upload switch: `crashlyticsMappingUpload` project property (default `true`) | Lets a release be built locally without writing to the production Firebase project. Verified with `--dry-run`: the `uploadCrashlyticsMappingFileProductionRelease` task is in the graph by default and absent with `false` |
+| `usesCleartextTraffic="true"` removed | Every flavor uses HTTPS (`BASE_URL`, no `http://` in code, no Firebase emulator); owner agreed |
+| Commented-out location permissions removed | Nothing requests location (the "use accurate location" button is commented out) and the location plugins declare no permissions. Re-add `ACCESS_FINE_LOCATION` and `ACCESS_COARSE_LOCATION` with that button, together with the iOS privacy manifest entry and the Play data-safety form; never background location |
+| Display names `Civic24 DEV` / `Civic24 STG` / `Civic24` | Same as iOS; owner decision |
+| Obsolete manifest `package` attribute and the CMake page-size argument removed | `namespace` replaces the attribute; the app has no native code of its own, so the CMake argument did nothing |
+
+**Verification (Level 2, local).** With `crashlyticsMappingUpload=false` (no upload to production): `flutter build appbundle --release --flavor production` (77.3 MB) and `flutter build apk --release --flavor production` (76.5 MB) succeed. **16 KB:** `zipalign -c -P 16` passes, and every native library (`libapp.so`, `libflutter.so`, `libdatastore_shared_counter.so`, for arm64-v8a, armeabi-v7a and x86_64) has `LOAD` segments aligned to 0x4000 or 0x10000. The R8-shrunk production release installs and launches on the 16 KB emulator to the login screen (3.6 s cold start, no crash). Development and staging debug builds show `Civic24 DEV` and `Civic24 STG`; no manifest contains `usesCleartextTraffic`. **Not verified:** Google sign-in on the local release build (signed with the upload key, which is not registered; expected), notifications in a release build, `shorebird release`.
+
+**Found, not fixed here:**
+- `local_notification_service.dart` uses `@drawable/ic_stat_notification` as the notification icon, but no such drawable exists in the Android project, and the initialisation icon is `background` (a full-colour PNG, which Android shows as a white square). Needs a white-on-transparent notification icon (design asset); for the notifications work.
+- **`AD_ID` kept (owner decision, 30 Sept 2026).** Firebase Analytics merges in `com.google.android.gms.permission.AD_ID` and the ad-services attribution permissions. Play Console already declares "uses advertising ID: yes, for Analytics", so the app and the declaration match. The Play data safety form must list "Device or other IDs" (collected, Analytics) and the other data the app collects (name, email, user IDs, photos, posts and comments, app interactions, crash logs and diagnostics), matching the iOS privacy table; the owner updates it in Play Console. Removing `AD_ID` later means changing that declaration to "No" with the first release without it.
+
 ---
 
 ## Phase 3: iOS, Swift Package Manager and native config (started 25 Sept 2026)

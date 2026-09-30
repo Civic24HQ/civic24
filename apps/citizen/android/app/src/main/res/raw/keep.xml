@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Resources the resource shrinker cannot see being used, because Dart code refers to
+  them by name at runtime. Without this, release builds (isShrinkResources) remove them.
+  - drawable/background: small icon passed to AndroidInitializationSettings('background')
+    in packages/services/.../local_notification_service.dart
+-->
+<resources xmlns:tools="http://schemas.android.com/tools"
+    tools:keep="@drawable/background" />

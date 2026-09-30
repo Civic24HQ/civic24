@@ -1,3 +1,4 @@
+import com.google.firebase.crashlytics.buildtools.gradle.CrashlyticsExtension
 import java.util.Properties
 
 plugins {
@@ -46,18 +47,24 @@ android {
         targetSdk = 36
         versionCode = flutter.versionCode
         versionName = flutter.versionName
-        externalNativeBuild {
-            cmake {
-                arguments += listOf("-DANDROID_SUPPORT_FLEXIBLE_PAGE_SIZES=ON")
-            }
-        }
     }
 
     buildTypes {
         release {
             signingConfig = signingConfigs.getByName("release")
             isMinifyEnabled = true
-            proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"))
+            isShrinkResources = true
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro",
+            )
+            // Release builds upload the R8 mapping file to the flavor's Firebase project.
+            // Pass `--android-project-arg crashlyticsMappingUpload=false` (Flutter) or
+            // `-PcrashlyticsMappingUpload=false` (Gradle) to build locally without uploading.
+            configure<CrashlyticsExtension> {
+                mappingFileUploadEnabled =
+                    (project.findProperty("crashlyticsMappingUpload") as String?)?.toBoolean() ?: true
+            }
         }
     }
 
@@ -72,12 +79,12 @@ android {
         create("staging") {
             dimension = "default"
             applicationIdSuffix = ".stg"
-            manifestPlaceholders["appName"] = "Civic24"
+            manifestPlaceholders["appName"] = "Civic24 STG"
         }
         create("development") {
             dimension = "default"
             applicationIdSuffix = ".dev"
-            manifestPlaceholders["appName"] = "Civic24"
+            manifestPlaceholders["appName"] = "Civic24 DEV"
         }
     }
 }
