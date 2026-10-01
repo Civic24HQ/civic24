@@ -32,3 +32,7 @@ Runner/GeneratedPluginRegistrant.*
 !default.mode2v3
 !default.pbxuser
 !default.perspectivev3
+
+# Xcode writes the same Package.resolved into both workspaces; only Runner.xcworkspace is committed.
+Runner.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/
+**/xcshareddata/swiftpm/configuration/
