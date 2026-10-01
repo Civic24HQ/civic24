@@ -124,6 +124,9 @@ Admin iOS, admin macOS and citizen macOS still used CocoaPods (owner: migrate no
 
 **Found, not changed:** `.github/workflows/cd.yml` line 76 still runs `rm -rf ios/Pods ios/Podfile.lock` (now a no-op; fix with the CD phase). Admin's `AppDelegate`/`Info.plist` comments from the old `Info.plist` were dropped by Flutter's rewrite (no key changed, only comments and formatting).
 
+### 4.9 Master plan decisions recorded (`docs/record-ios-privacy-and-location-decisions`)
+`docs/CIVIC24_REFACTOR_PROMPT.md` gets a new section, "Decisions recorded during Phases 3 and 4", next to the Phase 0 audit updates (it wins where a phase differs), plus a pointer on Phase 3 steps 8, 9 and 11 and Phase 4 step 4. It records where what was built differs from the plan (location string; empty required-reason API list; the signing rules instead of an unconditional release signing config) and the follow-ups for Phases 5 to 8 (Crashlytics test crash, untested sign-in combinations, Firebase emulator for rules tests, held TypeScript and `@types/node` majors, CD signing with a CI-only keystore, an Android CI job, the notification icon asset, `HttpMetric` and other cleanups). Documentation only; nothing was built or run for this entry. Section 4.8 is added by the Apple-targets PR (#78).
+
 ---
 
 ## Phase 3: iOS, Swift Package Manager and native config (started 25 Sept 2026)
