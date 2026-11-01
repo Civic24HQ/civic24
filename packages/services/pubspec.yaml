@@ -55,7 +55,7 @@ dependencies:
   shorebird_code_push: ^2.0.7
 
   # Google/Firebase Dependencies
-  firebase_auth: ^6.7.0
+  firebase_auth: ^6.7.1
   firebase_messaging: ^16.7.0
   firebase_analytics: ^12.6.0
   firebase_crashlytics: ^5.4.0
