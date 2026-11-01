@@ -59,7 +59,7 @@ dependencies:
   firebase_messaging: ^16.7.0
   firebase_analytics: ^12.6.0
   firebase_crashlytics: ^5.4.0
-  firebase_storage: ^13.6.0
+  firebase_storage: ^13.6.1
   firebase_remote_config: ^6.7.0
   cloud_firestore: ^6.10.0
 
