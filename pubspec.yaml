@@ -20,7 +20,7 @@ workspace:
   - packages/utils
 
 dev_dependencies:
-  melos: ^8.9.0
+  melos: ^8.10.0
   stacked_generator: ^2.0.0
 
 melos:

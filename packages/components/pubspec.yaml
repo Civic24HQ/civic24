@@ -46,7 +46,7 @@ dev_dependencies:
     path: ../rules
 
   # Utility Packages
-  alchemist: ^0.14.0
+  alchemist: ^0.14.1
 
 flutter:
   uses-material-design: true
